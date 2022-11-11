@@ -1,5 +1,5 @@
 #include <stdio>
-#include "gravilibcpp.h"
+#include "gravilib.h"
 
 using namespace std;
 

@@ -33,7 +33,7 @@ if __name__ == "__main__":
 #universe=gravilib.Dimension()
 
 if __name__ == "__main__":
-    print("program_name  Copyright (C) 2022 louwenus,griffon,kalyklos,alexis,gabriel",
+    print("program_name  Copyright (C) 2022 louwenus,Artefact42,kalyklos,alex3,gabriel",
     "This program comes with ABSOLUTELY NO WARRANTY; for details type `"+sys.argv[0]+" --no-warranty'.",
     "This is free software, and you are welcome to redistribute it",
     "under certain conditions; type `"+sys.argv[0]+" --redistribute' for details.",sep="\n")
