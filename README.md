@@ -3,6 +3,8 @@
 Projet de simulateur de gravitation en 3D, avec une librairie calculatoire en C++ et un frontend en python :<br/>
 Utilisation de [Cython](https://github.com/cython/cython)<br/><br/>
 
+Lisence GPLV3+ :
+lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails
 
 ## Instalation :<br/>
 - avec pip :<br/>
