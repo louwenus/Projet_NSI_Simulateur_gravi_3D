@@ -1,3 +1,5 @@
+#!python3
+
 #   <one line to give the program's name and a brief idea of what it does.>
 #   Copyright (C) <year>  <name of author>
 #
@@ -26,13 +28,13 @@ if __name__ == "__main__":
     #de meme avec les bonnes partie de lisence pour --no-warranty et --redistribute
     #si -h -help ou --help est présent, afficher l'aide et exit
     #si gravilib, cython, ... n'est pas présent, afficher les instruction de build
-import cython
-import gravilib
-universe=gravilib.Dimension()
+#import cython
+#import gravilib
+#universe=gravilib.Dimension()
 
-if __name__ == __main__:
-    print("program_name  Copyright (C) 2022 louwenus,griffon,kalyklos,alexis,gabriel
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `"+sys.argv[0]+" --no-warranty'.
-    This is free software, and you are welcome to redistribute it
-    under certain conditions; type `"+sys.argv[0]+" --redistribute' for details.")
-    universe.hello_world("This is a test")
+if __name__ == "__main__":
+    print("program_name  Copyright (C) 2022 louwenus,griffon,kalyklos,alexis,gabriel",
+    "This program comes with ABSOLUTELY NO WARRANTY; for details type `"+sys.argv[0]+" --no-warranty'.",
+    "This is free software, and you are welcome to redistribute it",
+    "under certain conditions; type `"+sys.argv[0]+" --redistribute' for details.",sep="\n")
+    #universe.hello_world("This is a test")
