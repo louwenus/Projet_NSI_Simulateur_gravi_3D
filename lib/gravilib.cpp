@@ -10,11 +10,11 @@ Dimension::Dimension() : hello_text("Hello World from CPP")
 Dimension::Dimension(string text) : hello_text(text)
 {}
 
-void Dimension::print_hello_world()
+void Dimension::print_hello_world() const
 {
     print("{}\n",this->hello_text);
 }
-string Dimension::return_hello_world()
+string Dimension::return_hello_world() const
 {
     return this->hello_text;
 }
