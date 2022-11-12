@@ -1,3 +1,6 @@
+#  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each
+#  new/modif of public class in gravilib.cpp
+
 #ifndef MAINGRAVI_CPP
 #define MAINGRAVI_CPP
 
