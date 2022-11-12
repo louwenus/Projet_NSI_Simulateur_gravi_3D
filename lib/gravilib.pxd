@@ -9,9 +9,6 @@ cdef extern from "gravilib.cpp":
 #Declare the class with cdef
 cdef extern from "gravilib.h":
     cdef cppclass Dimension:
-        string hello_text
-        Dimension() except +
-        Dimension(str) except +
-        str return_hello_world()
-        void print_hello_world()
-        void set_hello_world(str)
+        string hello_text;
+        Dimension() except +;
+        void print_hello_world();
