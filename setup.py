@@ -5,7 +5,7 @@ from Cython.Compiler import Options
 Options.language_level=3
 
 setup(
-    name='gravilib',
+    name='graviproject',
     ext_modules=cythonize("lib/pygravilib.pyx"),
     zip_safe=False,
 )
