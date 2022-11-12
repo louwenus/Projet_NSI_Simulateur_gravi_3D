@@ -2,13 +2,14 @@
 #  new/modif of public class in gravilib.cpp
 
 from libcpp.string cimport string
+from libcpp cimport void
 
 cdef extern from "gravilib.cpp":
     pass
 
 #Declare the class with cdef
 cdef extern from "gravilib.h":
-    cdef cppclass Dimension:
-        string hello_text;
-        Dimension() except +;
-        void print_hello_world();
+    cdef cppclass Dimension :
+        Dimension() except +
+        string hello_text
+        void print_hello_world()
