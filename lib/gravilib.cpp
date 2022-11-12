@@ -1,21 +1,19 @@
-#  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each
-#  new/modif of public class in gravilib.cpp
+//  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each
+//  new/modif of public class in gravilib.cpp
 
-#include <stdio>
+#include <iostream>
+#include <string>
 #include "gravilib.h"
 
-using namespace std;
+using std::string;
 
 
-Dimension::Dimension() : hello_text("Hello World from CPP")
-{}
-
-Dimension::Dimension(string text) : hello_text(text)
-{}
+Dimension::Dimension()
+{this->hello_text = "Hello World from cpp";}
 
 void Dimension::print_hello_world() const
 {
-    print("{}\n",this->hello_text);
+    std::cout << this->hello_text;
 }
 string Dimension::return_hello_world() const
 {

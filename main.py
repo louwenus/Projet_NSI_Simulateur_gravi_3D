@@ -28,9 +28,9 @@ if __name__ == "__main__":
     #de meme avec les bonnes partie de lisence pour --no-warranty et --redistribute
     #si -h -help ou --help est présent, afficher l'aide et exit
     #si gravilib, cython, ... n'est pas présent, afficher les instruction de build
-#import cython
-#import gravilib
-#universe=gravilib.Dimension()
+import cython
+import pygravilib
+universe=pygravilib.Dimension("Hello world from python")
 
 if __name__ == "__main__":
     print("program_name  Copyright (C) 2022 louwenus,Artefact42,kalyklos,alex3,gabriel",
