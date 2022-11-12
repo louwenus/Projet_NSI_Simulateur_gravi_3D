@@ -17,4 +17,4 @@ lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails
   - allez dans le répertoire nouvellement créé<br/>
   &emsp;`cd Projt_NSI_Simulateur_gravi_3D`<br/>
   - compilez le code c++ avec cython<br/>
-  &emsp;`python3 -m build`<br/>
+  &emsp;`python3 setup.py build_ext`<br/>
