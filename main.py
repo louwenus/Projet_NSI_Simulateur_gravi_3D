@@ -1,4 +1,4 @@
-#!/bin/sh -c python3
+#!/usr/bin/env python3
 
 #   Simulateur_gravi_3D : Un simulateur de gravité simple avec rendu 3D
 #   Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled
@@ -21,22 +21,34 @@
 #   Comme il est potentiellement réimporté par certaines dépendances, le code exécuté est inclus dans un if __name__ == "__main__"
 #   Ce fichier importe et gère la librairie c++,gravilib , et délegue l'affichage a un sous script, lib/affichage.py
 import sys
-if __name__ == "__main__":
-    pass
-    #   todo: check sys.argv
-    #   si --lisence, --show,-lisence,-show /lisence ou /show est présent, afficher la lisence et exit
-    #   de même avec les bonnes parties de licence pour --no-warranty et --redistribute
-    #   si -h -help ou --help est présent, afficher l'aide et exit
-    #   si gravilib, cython, ... n'est pas présent, afficher les instructions de build
-import cython
-import pygravilib
-universe=pygravilib.PyDimension()
+
+if __name__ == "__main__": #Disclaimer & parsing des options passées a l'appel
+    if {"--license","-license","/license","--show","-show","/show"}.intersection(sys.argv):
+        with open("LICENSE") as license:
+            print(license.read())
+            exit(0)
+    print("program_name  Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled",
+    "This program comes with ABSOLUTELY NO WARRANTY;",
+    "This is free software, and you are welcome to redistribute it under certain conditions;",
+    "type `"+sys.argv[0]+" --license' for details.",sep="\n")
+
+#import des diférente librairie avec debug
+try:
+    import cython
+except ModuleNotFoundError:
+    print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
+    exit(1)
+try:
+    import pygravilib
+except ModuleNotFoundError:
+    print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
+    exit(1)
+
+#on creer une dimension (classe principale de la librairie)
+universe: pygravilib.PyDimension
 
 if __name__ == "__main__":
-    print("program_name  Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled",
-    "This program comes with ABSOLUTELY NO WARRANTY; for details type `"+sys.argv[0]+" --no-warranty'.",
-    "This is free software, and you are welcome to redistribute it",
-    "under certain conditions; type `"+sys.argv[0]+" --redistribute' for details.",sep="\n")
+    universe=pygravilib.PyDimension()
     universe.print_hello_world()
     universe.hello_text="\nHello World from python\n"
     universe.print_hello_world()
