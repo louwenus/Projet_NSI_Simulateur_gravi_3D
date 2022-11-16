@@ -1,6 +1,6 @@
 #!python3
 
-#   <one line to give the program's name and a brief idea of what it does.>
+#   Simulateur_gravi_3D : Un simulateur de gravité simple avec rendu 3D
 #   Copyright (C) 2022  louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled
 #
 #   This program is free software: you can redistribute it and/or modify
