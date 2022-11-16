@@ -6,7 +6,7 @@ Utilisation de [Cython](https://github.com/cython/cython)<br/><br/>
 Lisence GPLV3+ :
 lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails
 
-## Instalation :<br/>
+## Installation :<br/>
 - avec pip :<br/>
 pas encore distribué...<br/>
 - en compilant :<br/>
