@@ -1,0 +1,7 @@
+#may change
+/lib/pygravilib.cpp
+
+/pygravilib.*.so
+/build/
+/dist/
+/graviproject.egg-info/
