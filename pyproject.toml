@@ -12,6 +12,3 @@ dependencies = ["cython"]
 [tool.setuptools]
 zip-safe = false
 license-files = ["LICENSE"]
-
-[project.scripts]
-graviproject = "main"

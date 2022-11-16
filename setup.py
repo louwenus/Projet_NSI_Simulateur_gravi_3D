@@ -5,5 +5,5 @@ from Cython.Compiler import Options
 Options.language_level=3
 
 setup(
-    ext_modules=cythonize("lib/pygravilib.pyx"),
+    ext_modules=cythonize("lib/cppgravilib.pyx"),
 )

@@ -1,7 +1,7 @@
 # may change
-/lib/pygravilib.cpp
-
-/pygravilib.*.so
+/lib/cppgravilib.cpp
+/.vscode/
+/src/cppgravilib.*.so
 /build/
 /dist/
 /Graviproject.egg-info/
