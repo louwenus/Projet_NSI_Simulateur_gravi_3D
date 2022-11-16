@@ -19,10 +19,10 @@
 
 #   Ceci est le fichier exécutable principal, lancé par l'utilisateur.
 #   Comme il est potentiellement réimporté par certaines dépendances, le code exécuté est inclus dans un if __name__ == "__main__"
-#   Ce fichier importe et gère la librairie c++,gravilib , et délegue l'affichage a un sous script, lib/affichage.py
+#   Ce fichier importe et gère la librairie c++, gravilib, et délègue l'affichage à un sous script, lib/affichage.py
 import sys
 
-if __name__ == "__main__": #Disclaimer & parsing des options passées a l'appel
+if __name__ == "__main__": # Disclaimer & parsing des options passées à l'appel
     if {"--license","-license","/license","--show","-show","/show"}.intersection(sys.argv):
         with open("LICENSE") as license:
             print(license.read())
@@ -32,7 +32,7 @@ if __name__ == "__main__": #Disclaimer & parsing des options passées a l'appel
     "This is free software, and you are welcome to redistribute it under certain conditions;",
     "type `"+sys.argv[0]+" --license' for details.",sep="\n")
 
-#import des diférente librairie avec debug
+# import des différentes librairies avec debug
 try:
     import cython
 except ModuleNotFoundError:
@@ -44,7 +44,7 @@ except ModuleNotFoundError:
     print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
 
-#on creer une dimension (classe principale de la librairie)
+# on crée une dimension (classe principale de la librairie)
 universe: pygravilib.PyDimension
 
 if __name__ == "__main__":
