@@ -15,6 +15,6 @@ pas encore distribué...<br/>
   - copiez le repo git<br/>
   `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
   - allez dans le répertoire nouvellement créé<br/>
-  `cd Projt_NSI_Simulateur_gravi_3D`<br/>
+  `cd Projet_NSI_Simulateur_gravi_3D`<br/>
   - compilez le code c++ avec cython<br/>
   `python3 setup.py build_ext`<br/>
