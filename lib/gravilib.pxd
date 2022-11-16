@@ -2,7 +2,6 @@
 #  new/modif of public class in gravilib.cpp
 
 from libcpp.string cimport string
-from libcpp cimport void
 
 cdef extern from "gravilib.cpp":
     pass
