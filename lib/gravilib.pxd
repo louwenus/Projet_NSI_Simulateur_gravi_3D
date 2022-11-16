@@ -1,5 +1,5 @@
-#  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each
-#  new/modif of public class in gravilib.cpp
+#  Note: Il faut penser a editer gravilib.h,gravilib.h & gravilb.pyx 
+#  avec chaque modif des classe publique de gravilib.cpp
 
 from libcpp.string cimport string
 
