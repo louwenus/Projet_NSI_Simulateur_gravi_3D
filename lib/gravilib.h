@@ -1,5 +1,5 @@
-//  Note: Il faut penser a editer gravilib.h,gravilib.h & gravilb.pyx 
-//  avec chaque modif des classe publique de gravilib.cpp
+//  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx 
+//  avec chaque modif des classes publiques de gravilib.cpp
 
 #ifndef MAINGRAVI_CPP
 #define MAINGRAVI_CPP
