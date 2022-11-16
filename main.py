@@ -1,4 +1,4 @@
-#!python3
+#!/bin/sh -c python3
 
 #   <one line to give the program's name and a brief idea of what it does.>
 #   Copyright (C) 2022  louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled
