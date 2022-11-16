@@ -33,7 +33,7 @@ import pygravilib
 universe=pygravilib.PyDimension()
 
 if __name__ == "__main__":
-    print("program_name  Copyright (C) 2022 louwenus,Artefact42,kalyklos,alex3,g-aled",
+    print("program_name  Copyright (C) 2022 louwenus,Artefact42,kalyklos,Bjctrhtg,g-aled",
     "This program comes with ABSOLUTELY NO WARRANTY; for details type `"+sys.argv[0]+" --no-warranty'.",
     "This is free software, and you are welcome to redistribute it",
     "under certain conditions; type `"+sys.argv[0]+" --redistribute' for details.",sep="\n")
