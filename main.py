@@ -18,7 +18,7 @@
 
 
 #ceci est le fichier executable principal, lancé par l'utilisateur.
-#Comme il est potentielement réimporté par certaine dépendance, le code executé est inclus dans un if __name__ == "__main__"
+#Comme il est potentiellement réimporté par certaine dépendance, le code executé est inclus dans un if __name__ == "__main__"
 #Ce fichier importe et gere la librairie c++,gravilib , et delegue l'affichage a un sous script, lib/affichage.py
 import sys
 if __name__ == "__main__":
