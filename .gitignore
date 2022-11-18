@@ -4,5 +4,5 @@
 /src/cppgravilib.*.so
 /build/
 /dist/
-/Graviproject.egg-info/
+/src/Graviproject.egg-info/
 __pycache__/
