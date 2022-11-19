@@ -1,10 +1,12 @@
+#  Basicaly a wrapper for the dimension class
+#  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each 
+#  new/modif of public class in gravilib.cpp
+
 # distutils: language = c++
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
-#  Basicaly a wrapper for the dimension class
-#  Note: Remenber to edit gravilib.h,gravilib.h & gravilb.pyx with each 
-#  new/modif of public class in gravilib.cpp
+
 #from libcpp.string cimport string
 from cppgravilib cimport Dimension
 import cython

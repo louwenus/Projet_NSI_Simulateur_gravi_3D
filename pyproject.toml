@@ -13,5 +13,12 @@ dependencies = ["cython"]
 zip-safe = false
 license-files = ["LICENSE"]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["Graviproject"]
+namespaces = false
+
+
+
 [project.scripts]
 Graviproject = "Graviproject.main:launch_app"
