@@ -1,2 +1,24 @@
 [build-system]
 requires = ["setuptools", "wheel", "Cython"]
+
+[project]
+name = "Graviproject"
+description = "C++ and python programme to simulate gravity over 3D objects"
+readme = "README.md"
+requires-python = ">=3.7"
+dynamic = ["version"]
+dependencies = ["cython"]
+
+[tool.setuptools]
+zip-safe = false
+license-files = ["LICENSE"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["Graviproject"]
+namespaces = false
+
+
+
+[project.scripts]
+Graviproject = "Graviproject.main:launch_app"

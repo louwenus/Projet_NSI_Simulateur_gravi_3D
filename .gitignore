@@ -1,0 +1,8 @@
+# may change
+/lib/cppgravilib.cpp
+/.vscode/
+/src/cppgravilib.*.so
+/build/
+/dist/
+/src/Graviproject.egg-info/
+__pycache__/
