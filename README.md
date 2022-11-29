@@ -11,7 +11,7 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
 pas encore distribué...<br/>
 - en compilant :<br/>
   - installez le système de build python et les dépendances,<br/>
-  `python3 -m pip install build cython setuptools`<br/>
+  `python3 -m pip install build cython setuptools pyside2`<br/>
   - copiez le repo git,<br/>
   `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
   - allez dans le répertoire nouvellement créé,<br/>

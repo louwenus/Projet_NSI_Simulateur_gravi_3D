@@ -7,7 +7,7 @@ description = "C++ and python programme to simulate gravity over 3D objects"
 readme = "README.md"
 requires-python = ">=3.7"
 dynamic = ["version"]
-dependencies = ["cython"]
+dependencies = ["cython","pyside2"]
 
 [tool.setuptools]
 zip-safe = false
