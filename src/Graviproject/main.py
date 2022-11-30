@@ -33,10 +33,11 @@ try:
 except ModuleNotFoundError:
     print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
-from .affichage import * #temporaire, a rafiné
+from .affichage import app #temporaire, à raffiner
 # on crée une dimension (classe principale de la librairie)
 universe: cppgravilib.PyDimension
 
 def launch_app():
     universe=cppgravilib.PyDimension()
     universe.print_hello_world()
+    sys.exit(app.exec_())
