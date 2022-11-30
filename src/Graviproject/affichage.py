@@ -2,9 +2,9 @@ print("Importation de affichage.py")
 
 
 try:
-    from PySide2.QtWidgets import QApplication, QLabel
+    from PySide6.QtWidgets import QApplication, QLabel
 except ModuleNotFoundError:
-    print("le module PySide2 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
+    print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
 
 import sys
 
