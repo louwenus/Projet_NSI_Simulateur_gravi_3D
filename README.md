@@ -7,6 +7,7 @@ Licence GPLV3+ :
 Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
 
 ## Installation :<br/>
+Vous avez besoin d'avoir python3 et pip préinstalés
 - avec pip :<br/>
   - Allez chercher la wheel corespondant a votre platforme [ici](https://mwaserv.hd.free.fr/downloads/graviproject/) puis installez la avec<br/>
   `pip install nom_du_fichier.whl`<br/>
