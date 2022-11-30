@@ -33,7 +33,7 @@ try:
 except ModuleNotFoundError:
     print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
-import affichage
+from .affichage import * #temporaire, a rafiné
 # on crée une dimension (classe principale de la librairie)
 universe: cppgravilib.PyDimension
 
