@@ -8,11 +8,13 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
 
 ## Installation :<br/>
 Vous avez besoin d'avoir python3 et pip préinstalés
-- avec pip :<br/>
+- avec les version deja compilées :<br/>
+  NB: Cette méthode n'est pas recomendée puisque les wheel ne sont pas build et uploadée régulierement, elle seront donc probablement pas a jour
   - Allez chercher la wheel corespondant a votre platforme [ici](https://mwaserv.hd.free.fr/downloads/graviproject/) puis installez la avec<br/>
   `pip install nom_du_fichier.whl`<br/>
   - vous pouvez lancer le programme avec la commande `Graviproject` si les script généré par pip sont bien dans le path.
 - en compilant :<br/>
+  Vous avez besoin d'un compilateur pour le c++
   - installez le système de build python et les dépendances,<br/>
   `python3 -m pip install build cython setuptools pyside2`<br/>
   - copiez le repo git, et compilez le code Cython et c++<br/>
