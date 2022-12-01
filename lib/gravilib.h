@@ -8,6 +8,11 @@
 #include <string>
 using std::string;
 
+typedef unsigned long long ull;
+typedef long long ll;
+typedef ll coord[3];
+
+
 class Dimension{
 public:
     //constructeurs
@@ -17,10 +22,22 @@ public:
     //mutateur
     //autres fonction
     //variable publiques (non recomendé)
-    string hello_text;
+    
 private:
     //variables
-    //string hello_text;
+    string hello_text;
     //fonctions privées
+};
+class SimpleSphere{
+public:
+    //constructeurs
+    SimpleSphere();
+    SimpleSphere(coord pos,ull masse,ull rayon,coord speed);
+    void gravite_on(coord pos,ull masse);
+private:
+    coord pos;
+    ull masse;
+    ull rayon;
+    coord speed;
 };
 #endif

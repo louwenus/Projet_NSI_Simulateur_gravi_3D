@@ -14,3 +14,9 @@ void Dimension::print_hello_world() const
 {
     std::cout << this->hello_text;
 }
+
+SimpleSphere::SimpleSphere(coord pos,ull masse,ull rayon,coord speed)
+{this->pos = pos;
+this->masse = masse;
+this->rayon = rayon;
+this->speed = speed;}

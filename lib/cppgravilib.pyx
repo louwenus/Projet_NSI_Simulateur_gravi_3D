@@ -17,9 +17,9 @@ cdef class PyDimension:
         self.c_dim = Dimension()
     def print_hello_world(self) -> None:
         self.c_dim.print_hello_world()
-    @property  #! pas pour les trucs privés
-    def hello_text(self) -> str:
-        return self.c_dim.hello_text
-    @hello_text.setter
-    def hello_text(self, str text) -> None:
-        self.c_dim.hello_text=text
+    #@property  #! pas pour les trucs privés
+    #def hello_text(self) -> str:
+    #    return self.c_dim.hello_text
+    #@hello_text.setter
+    #def hello_text(self, str text) -> None:
+    #    self.c_dim.hello_text=text
