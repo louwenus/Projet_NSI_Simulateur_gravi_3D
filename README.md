@@ -14,7 +14,7 @@ Vous avez besoin d'avoir python3 et pip préinstallés.
   `python3 -m pip install nom_du_fichier.whl`<br/>
   - vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path.
 - En compilant :<br/>
-  Vous avez besoin d'un compilateur pour le c++.
+  Vous avez besoin d'un compilateur pour le c++ (par exemple g++), et de python3-dev.
   - Installez le système de build python et les dépendances,<br/>
   `python3 -m pip install --upgrade build cython setuptools pyside6`<br/>
   - copiez le repo git, et compilez le code Cython et c++,<br/>
