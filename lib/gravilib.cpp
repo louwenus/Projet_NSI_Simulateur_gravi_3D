@@ -1,6 +1,5 @@
 //  Note: Il faut penser à éditer gravilib.cpp, gravilib.h & gravilb.pyx 
 //  avec chaque modif des classes publiques de gravilib.cpp
-//  et à ne pas faire de fautes d'ortographes
 
 #include <iostream>
 #include "gravilib.h"
