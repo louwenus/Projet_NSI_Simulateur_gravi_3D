@@ -16,7 +16,7 @@ Vous avez besoin d'avoir python3 et pip préinstallés.
 - En compilant :<br/>
   Vous avez besoin d'un compilateur pour le c++.
   - Installez le système de build python et les dépendances,<br/>
-  `python3 -m pip install build cython setuptools pyside6`<br/>
+  `python3 -m pip install --upgrade build cython setuptools pyside6`<br/>
   - copiez le repo git, et compilez le code Cython et c++,<br/>
   `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
   `cd Projet_NSI_Simulateur_gravi_3D`<br/>
