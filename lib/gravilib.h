@@ -11,7 +11,7 @@ using std::string;
 
 typedef unsigned long long ull;
 typedef long long ll;
-typedef std::array<ll, 3> coord;
+typedef ll coord[3];
 
 
 class Dimension{
