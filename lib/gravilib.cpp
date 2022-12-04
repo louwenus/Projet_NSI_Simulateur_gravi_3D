@@ -20,3 +20,10 @@ SimpleSphere::SimpleSphere(coord pos,ull masse,ull rayon,coord speed)
 this->masse = masse;
 this->rayon = rayon;
 this->speed = speed;}
+
+
+ForceGravitationnelle(masse1, masse2, distance){
+    constGravit = 6.6742*pow(10.0,-11);
+    force = (constGravit*masse1*masse2)/pow(distance,2);
+    return force
+}

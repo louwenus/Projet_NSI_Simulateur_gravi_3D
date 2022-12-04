@@ -41,4 +41,5 @@ private:
     ull rayon;
     coord speed;
 };
+
 #endif
