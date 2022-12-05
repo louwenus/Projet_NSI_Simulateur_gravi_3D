@@ -32,6 +32,9 @@ void SimpleSphere::gravite_coord(llco pos,uli masse){
     
     uli distance=
 }
-bool SimpleSphere::t_colision_avec(SimpleSphere* instance){}
-bool SimpleSphere::t_colision_coord(llco* pos,uli rayon){}
-bool SimpleSphere::t_coli_rapide(llco posmin,llco posmax){}
+
+bool SimpleSphere::t_collision_avec(SimpleSphere* instance){
+
+}
+bool SimpleSphere::t_collision_coord(llco* pos,uli rayon){}
+bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax){}
