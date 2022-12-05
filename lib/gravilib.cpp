@@ -47,8 +47,11 @@ const void SimpleSphere::gravite_avec(SimpleSphere &instance){ //cette function 
 void SimpleSphere::gravite_coord(const llco &pos,const uli masse){
     llco dif={pos[0]-this->pos[0],pos[1]-this->pos[1],pos[2]-this->pos[2]};  //diff pos par pos
     ulli divide=abs(dif[0])+pow(abs(dif[0]),2)+abs(dif[1])+pow(abs(dif[1]),2)+abs(dif[2])+pow(abs(dif[2]),2);  //diviseurs = dist^2 + sum (dif) (on remultiplie par les composantes de diff)
-    this->speed.data()+={dif[0]/divide,dif[1]/divide,dif[2]/divide};
+    this->speed[0]+=dif[0]/divide;
+    this->speed[1]+=dif[1]/divide;
+    this->speed[2]+=dif[2]/divide;
 }
-const bool SimpleSphere::t_collision_avec(const SimpleSphere* instance){}
+const bool SimpleSphere::t_collision_avec(const SimpleSphere &instance){
+}
 const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){}
 const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){}
