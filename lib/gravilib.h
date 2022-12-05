@@ -20,7 +20,7 @@
 #ifndef MAINGRAVI_CPP
 #define MAINGRAVI_CPP
 
-#include <stdio.h>
+#include <cmath>
 #include <string>
 #include <array>
 using std::string;
