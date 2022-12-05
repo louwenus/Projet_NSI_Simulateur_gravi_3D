@@ -1,3 +1,5 @@
+# encoding=utf8
+
 print("Importation de affichage.py")
 
 
