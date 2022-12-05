@@ -36,4 +36,7 @@ class MyWidget(QtWidgets.QWidget):
 app = QtWidgets.QApplication([])
 
 widget = MyWidget()
-widget.showMaximized()
+try:
+    widget.showMaximized()
+except:
+    widget.show()
