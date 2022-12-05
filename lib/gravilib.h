@@ -37,11 +37,11 @@ public:
     //constructeurs
     SimpleSphere();
     SimpleSphere(llco* pos,uli* masse,uli* rayon,lco* speed);
-    virtual void gravite_avec(SimpleSphere* instance);
-    virtual void gravite_coord(llco* pos,uli masse);
-    virtual bool t_colision_avec(SimpleSphere* instance);
-    virtual bool t_colision_coord(llco* pos,uli rayon);
-    virtual bool t_coli_rapide(llco posmin,llco posmax);
+    virtual const void gravite_avec(SimpleSphere* instance);
+    virtual void gravite_coord(const llco &pos,const uli &masse);
+    virtual const bool t_colision_avec(SimpleSphere* instance);
+    virtual const bool t_colision_coord(llco* pos,uli rayon);
+    virtual const bool t_coli_rapide(llco posmin,llco posmax);
 private:
     llco pos;
     uli masse;
