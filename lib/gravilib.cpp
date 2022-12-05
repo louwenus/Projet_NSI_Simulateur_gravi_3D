@@ -26,9 +26,12 @@ this->rayon = *rayon;
 this->speed = *speed;}
 
 void SimpleSphere::gravite_avec(SimpleSphere* instance){ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
-    instance->gravite_coord(&this->pos,this->masse)
+    instance->gravite_coord(this->pos,this->masse);
 }
-void SimpleSphere::gravite_coord(llco* pos,uli masse){}
+void SimpleSphere::gravite_coord(llco pos,uli masse){
+    
+    uli distance=
+}
 bool SimpleSphere::t_colision_avec(SimpleSphere* instance){}
 bool SimpleSphere::t_colision_coord(llco* pos,uli rayon){}
 bool SimpleSphere::t_coli_rapide(llco posmin,llco posmax){}
