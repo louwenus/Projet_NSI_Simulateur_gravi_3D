@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # encoding=utf8
 
 #   Simulateur_gravi_3D : Un simulateur de gravité simple avec rendu 3D
