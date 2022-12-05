@@ -31,6 +31,6 @@ const void SimpleSphere::gravite_avec(SimpleSphere* instance){ //cette function 
 void SimpleSphere::gravite_coord(const llco &pos,const uli masse){
     uli distance=0;
 }
-const bool SimpleSphere::t_colision_avec(const SimpleSphere* instance){}
-const bool SimpleSphere::t_colision_coord(const llco &pos,const uli rayon){}
-const bool SimpleSphere::t_coli_rapide(const llco &posmin,const llco &posmax){}
+const bool SimpleSphere::t_collision_avec(const SimpleSphere* instance){}
+const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){}
+const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){}
