@@ -9,9 +9,12 @@
 #include <array>
 using std::string;
 
-typedef unsigned long long ull;
-typedef long long ll;
-typedef std::array<ll, 3> coord;
+typedef unsigned long long int ulli;
+typedef long long int lli;
+typedef long int li;
+typedef unsigned long int uli;
+typedef std::array<lli, 3> llco;
+typedef std::array<li, 3> lco;
 
 
 class Dimension{
@@ -26,19 +29,23 @@ public:
     
 private:
     //variables
-    string hello_text;
+    //string hello_text;
     //fonctions privées
 };
 class SimpleSphere{
 public:
     //constructeurs
     SimpleSphere();
-    SimpleSphere(coord pos,ull masse,ull rayon,coord speed);
-    void gravite_on(coord pos,ull masse);
+    SimpleSphere(llco* pos,uli* masse,uli* rayon,lco* speed);
+    virtual void gravite_avec(SimpleSphere* instance);
+    virtual void gravite_coord(llco* pos,uli masse);
+    virtual bool t_colision_avec(SimpleSphere* instance);
+    virtual bool t_colision_coord(llco* pos,uli rayon);
+    virtual bool t_coli_rapide(llco posmin,llco posmax);
 private:
-    coord pos;
-    ull masse;
-    ull rayon;
-    coord speed;
+    llco pos;
+    uli masse;
+    uli rayon;
+    lco speed;
 };
 #endif
