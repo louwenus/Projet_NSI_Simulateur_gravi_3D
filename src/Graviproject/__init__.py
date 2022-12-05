@@ -1,3 +1,5 @@
+# encoding=utf8
+
 print("importing pygravilib")
 import sys
 if {"--license","-license","/license","--show","-show","/show"}.intersection(sys.argv):  # Disclaimer & parsing des options passées à l'appel
