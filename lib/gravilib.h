@@ -48,4 +48,5 @@ private:
     uli rayon;
     lco speed;
 };
+
 #endif
