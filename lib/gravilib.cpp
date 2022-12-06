@@ -41,12 +41,12 @@ this->masse = masse;
 this->rayon = rayon;
 this->speed = *speed;}
 
-const void SimpleSphere::gravite_avec(SimpleSphere &instance){ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
+const void SimpleSphere::gravite_avec(SimpleSphere &instance,const float temps){ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
     instance.gravite_coord(this->pos,this->masse);
 }
-void SimpleSphere::gravite_coord(const llco &pos,const uli masse){
+void SimpleSphere::gravite_coord(const llco &pos,const uli masse,const float temps){
     llco dif={pos[0]-this->pos[0],pos[1]-this->pos[1],pos[2]-this->pos[2]};  //diff pos par pos
-    ulli divide=abs(dif[0])+pow(abs(dif[0]),2)+abs(dif[1])+pow(abs(dif[1]),2)+abs(dif[2])+pow(abs(dif[2]),2);  //diviseurs = dist^2 + sum (dif) (on remultiplie par les composantes de diff)
+    float divide=(abs(dif[0])+pow(abs(dif[0]),2)+abs(dif[1])+pow(abs(dif[1]),2)+abs(dif[2])+pow(abs(dif[2]),2))/temps;  //diviseurs = dist^2 + sum (dif) (on remultiplie par les composantes de diff)
     this->speed[0]+=dif[0]/divide;
     this->speed[1]+=dif[1]/divide;
     this->speed[2]+=dif[2]/divide;

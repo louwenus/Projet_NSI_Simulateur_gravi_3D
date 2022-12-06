@@ -33,7 +33,7 @@ class MyWidget(QtWidgets.QWidget):
         self.text.setText(random.choice(self.hello))
 
 
-app = QtWidgets.QApplication([])
+app = QtWidgets.QApplication(sys.argv)
 
 widget = MyWidget()
 try:
