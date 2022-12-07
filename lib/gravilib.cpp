@@ -18,7 +18,7 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 #include <iostream>
-#include "gravilib.h"
+#include "gravilib.hpp"
 
 using std::string;
 
@@ -42,7 +42,7 @@ this->rayon = rayon;
 this->speed = *speed;}
 
 const void SimpleSphere::gravite_avec(SimpleSphere &instance,const float temps){ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
-    instance.gravite_coord(this->pos,this->masse);
+    instance.gravite_coord(this->pos,this->masse,temps);
 }
 void SimpleSphere::gravite_coord(const llco &pos,const uli masse,const float temps){
     llco dif={pos[0]-this->pos[0],pos[1]-this->pos[1],pos[2]-this->pos[2]};  //diff pos par pos
@@ -51,7 +51,10 @@ void SimpleSphere::gravite_coord(const llco &pos,const uli masse,const float tem
     this->speed[1]+=dif[1]/divide;
     this->speed[2]+=dif[2]/divide;
 }
-const bool SimpleSphere::t_collision_avec(const SimpleSphere &instance){
+const bool SimpleSphere::t_collision_avec(SimpleSphere &instance){
+    if (not instance.t_colli_rapide(this->posmin,this->posmax))
+    {return false;}
+    if (instance.t_collision_coord(this->pos,this->rayon)){}
 }
 const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){}
 const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){}

@@ -27,7 +27,7 @@ cdef extern from "gravilib.cpp":
     pass
 
 #Declare the class with cdef
-cdef extern from "gravilib.h":
+cdef extern from "gravilib.hpp":
     cdef cppclass Dimension :
         Dimension() except +
         string hello_text
