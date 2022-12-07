@@ -56,5 +56,14 @@ const bool SimpleSphere::t_collision_avec(SimpleSphere &instance){
     {return false;}
     if (instance.t_collision_coord(this->pos,this->rayon)){}
 }
-const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){}
-const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){}
+const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){
+    if (pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)
+    <pow(rayon+this->rayon,2)){return true;}
+    return false;
+}
+const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){
+    if (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
+     this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]) //test de collision rectangles
+     {return true;}
+     return false;
+}
