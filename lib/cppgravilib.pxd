@@ -23,12 +23,12 @@
 
 from libcpp.string cimport string
 
-cdef extern from "gravilib.cpp":
+cdef extern from "dimension.cpp":
     pass
 
 #Declare the class with cdef
-cdef extern from "gravilib.hpp":
-    cdef cppclass Dimension :
-        Dimension() except +
+cdef extern from "dimension.hpp":
+    cdef cppclass BaseDimension :
+        BaseDimension() except +
         string hello_text
         void print_hello_world()

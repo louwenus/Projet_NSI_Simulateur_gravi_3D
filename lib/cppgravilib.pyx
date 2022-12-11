@@ -24,13 +24,13 @@
 
 
 #from libcpp.string cimport string
-from cppgravilib cimport Dimension
+cimport cppgravilib
 import cython
 
 cdef class PyDimension:
-    cdef Dimension c_dim  # Hold a C++ instance, and we forfward everything
+    cdef BaseDimension c_dim  # Hold a C++ instance, and we forfward everything
     def __init__(self):
-        self.c_dim = Dimension()
+        self.c_dim = BaseDimension()
     def print_hello_world(self) -> None:
         self.c_dim.print_hello_world()
     #@property  #! pas pour les trucs privés

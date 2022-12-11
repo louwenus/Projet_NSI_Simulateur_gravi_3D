@@ -20,23 +20,13 @@
 #ifndef MAINGRAVI_CPP
 #define MAINGRAVI_CPP
 
-#include <cmath>
-#include <string>
-#include <array>
-using std::string;
+#include "typedef.hpp"
+#include "sphere.cpp"
 
-typedef unsigned long long int ulli;
-typedef long long int lli;
-typedef long int li;
-typedef unsigned long int uli;
-typedef std::array<lli, 3> llco;
-typedef std::array<li, 3> lco;
-
-
-class Dimension{
+class BaseDimension{
 public:
     //constructeurs
-    Dimension();
+    BaseDimension();
     //acceseurs (devrait tous finir par const)
     void print_hello_world() const;
     //mutateur
@@ -48,23 +38,6 @@ private:
     //string hello_text;
     //fonctions privées
 };
-class SimpleSphere{
-public:
-    //constructeurs
-    SimpleSphere();
-    SimpleSphere(llco* pos,uli masse,uli rayon,lco* speed);
-    virtual const void gravite_avec(SimpleSphere &instance,const float temps);
-    virtual void gravite_coord(const llco &pos,const uli masse,const float temps);
-    virtual const bool t_collision_avec(SimpleSphere &instance);
-    virtual const bool t_collision_coord(const llco &pos,uli rayon);
-    virtual const bool t_colli_rapide(const llco &posmin,const llco &posmax);
-private:
-    llco posmin;
-    llco posmax;
-    llco pos;
-    uli masse;
-    uli rayon;
-    lco speed;
-};
+
 
 #endif
