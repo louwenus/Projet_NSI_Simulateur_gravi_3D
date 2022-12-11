@@ -11,7 +11,7 @@ this->masse = masse;
 this->rayon = rayon;
 this->speed = *speed;}
 
-const void SimpleSphere::gravite_avec(SimpleSphere &instance,const float temps){ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
+void SimpleSphere::gravite_avec(SimpleSphere &instance,const float temps)const{ //cette function applique de la gravitation uniquement a l'instance argument (multithreading futur)
     instance.gravite_coord(this->pos,this->masse,temps);
 }
 void SimpleSphere::gravite_coord(const llco &pos,const uli masse,const float temps){
@@ -21,19 +21,25 @@ void SimpleSphere::gravite_coord(const llco &pos,const uli masse,const float tem
     this->speed[1]+=dif[1]/divide;
     this->speed[2]+=dif[2]/divide;
 }
-const bool SimpleSphere::t_collision_avec(SimpleSphere &instance){
+bool SimpleSphere::t_collision_avec(SimpleSphere &instance){
     if (not instance.t_colli_rapide(this->posmin,this->posmax))
     {return false;}
     if (instance.t_collision_coord(this->pos,this->rayon)){}
 }
-const bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon){
+bool SimpleSphere::t_collision_coord(const llco &pos,const uli rayon)const{
     if (pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)
     <pow(rayon+this->rayon,2)){return true;}
     return false;
 }
-const bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax){
-    if (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
-     this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]) //test de collision rectangles
-     {return true;}
-     return false;
+bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax)const{
+    return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
+     this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
 }
+//*******
+// Dummy sphere
+//*******
+void DummySphere::gravite_avec(SimpleSphere &instance,const float temps)const{return;}
+void DummySphere::gravite_coord(const llco &pos,const uli masse,const float temps){return;}
+bool DummySphere::t_collision_avec(SimpleSphere &instance){return false;}
+bool DummySphere::t_collision_coord(const llco &pos,const uli rayon)const{return false;}
+bool DummySphere::t_colli_rapide(const llco &posmin,const llco &posmax)const{return false;}
