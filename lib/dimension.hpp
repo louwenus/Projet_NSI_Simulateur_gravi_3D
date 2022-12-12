@@ -30,16 +30,18 @@ public:
     //acceseurs (devrait tous finir par const)
     void print_hello_world() const;
     virtual void gravite_all(float temps);
+    virtual void move_all(float temps);
     //mutateur
     //autres fonction
     //variable publiques (non recomendé)
     
-private:
+protected:
     //variables
     std::list<DummySphere> objets;
-    std::list<DummySphere>::iterator initer;
-    std::list<DummySphere>::iterator outiter;
+    std::list<std::thread> threads;
+    std::list<DummySphere>::iterator iter;
     //fonctions privées
+    virtual void gravite_for(DummySphere &instance,float temps);
 };
 
 
