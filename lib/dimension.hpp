@@ -29,13 +29,16 @@ public:
     BaseDimension();
     //acceseurs (devrait tous finir par const)
     void print_hello_world() const;
+    virtual void gravite_all(float temps);
     //mutateur
     //autres fonction
     //variable publiques (non recomendé)
     
 private:
     //variables
-    //string hello_text;
+    std::list<DummySphere> objets;
+    std::list<DummySphere>::iterator initer;
+    std::list<DummySphere>::iterator outiter;
     //fonctions privées
 };
 

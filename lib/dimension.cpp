@@ -25,8 +25,16 @@ using std::string;
 //*******
 //Dimmension
 //*******
-BaseDimension::BaseDimension(){}
-
+BaseDimension::BaseDimension(){
+    this->objets = {};
+}
+void BaseDimension::gravite_all(float temps){
+    for (this->outiter = this->objets.begin(); this->outiter != this->objets.end(); ++this->outiter){
+        for (std::list<DummySphere>::iterator init = this->objets.begin(); intit != this->objets.end(); ++intit){
+            
+        }
+    }
+}
 void BaseDimension::print_hello_world() const
 {
     std::cout << "Hello World";

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <string>
 #include <array>
+#include <list>
 using std::string;
 
 typedef unsigned long long int ulli;
