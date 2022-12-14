@@ -38,10 +38,9 @@ public:
 protected:
     //variables
     std::list<DummySphere> objets;
-    std::list<std::thread> threads;
     std::list<DummySphere>::iterator iter;
+    std::counting_semaphore<32> semaphore{0};
     //fonctions privées
-    virtual void gravite_for(DummySphere &instance,float temps);
 };
 
 

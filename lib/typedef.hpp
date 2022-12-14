@@ -6,6 +6,7 @@
 #include <array>
 #include <list>
 #include <thread>
+#include <semaphore>
 using std::string;
 
 typedef unsigned long long int ulli;

@@ -21,23 +21,20 @@
 #include "dimension.hpp"
 
 using std::string;
-
 //*******
 //Dimmension
 //*******
 BaseDimension::BaseDimension(){
     this->objets = {};
+    //this->semaphore{0};
 }
 void BaseDimension::gravite_all(float temps){
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
-        this->threads.push_back(std::thread (BaseDimension::gravite_for,this,*this->iter,temps));
+        
     }
 }
-void BaseDimension::gravite_for(DummySphere &instance,float temps){
-    for (std::list<DummySphere>::iterator it = this->objets.begin(); it != this->objets.end(); ++it){
-        it->gravite_avec(instance,temps);
-    }
-}
+
+
 void BaseDimension::print_hello_world() const
 {
     std::cout << "Hello World";
