@@ -26,7 +26,7 @@ using std::string;
 //*******
 BaseDimension::BaseDimension(){
     this->objets = {};
-    //this->semaphore{0};
+    this->semaphore(0);
 }
 void BaseDimension::gravite_all(float temps){
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
