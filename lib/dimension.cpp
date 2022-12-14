@@ -30,7 +30,7 @@ BaseDimension::BaseDimension(){
 }
 void BaseDimension::gravite_all(float temps){
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
-        this->threads.push_back(std::thread (&this->gravite_for,*this->iter,temps));
+        this->threads.push_back(std::thread (BaseDimension::gravite_for,this,*this->iter,temps));
     }
 }
 void BaseDimension::gravite_for(DummySphere &instance,float temps){
@@ -41,4 +41,4 @@ void BaseDimension::gravite_for(DummySphere &instance,float temps){
 void BaseDimension::print_hello_world() const
 {
     std::cout << "Hello World";
-}
+} 
