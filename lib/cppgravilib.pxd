@@ -23,11 +23,11 @@
 
 from libcpp.string cimport string
 
-cdef extern from "dimension.cpp":
+cdef extern from "main.hpp":
     pass
 
 #Declare the class with cdef
-cdef extern from "dimension.hpp":
+cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
         BaseDimension() except +
         string hello_text

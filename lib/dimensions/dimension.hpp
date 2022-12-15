@@ -1,4 +1,4 @@
-//  Note: Il faut penser à éditer gravilib.cpp, gravilib.h & gravilb.pyx
+//  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx 
 //  avec chaque modif des classes publiques de gravilib.cpp
 
 /* Simulateur_gravi_3D : Un simulateur de gravité simple avec rendu 3D
@@ -17,26 +17,31 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-#include <iostream>
-#include "dimension.hpp"
+#ifndef MAINGRAVI_CPP
+#define MAINGRAVI_CPP
 
-std::counting_semaphore<32> main_semaphore(0);
+#include "../typedef.hpp"
+#include "../spheres/all_spheres.hpp"
 
-using std::string;
-//*******
-//Dimmension
-//*******
-BaseDimension::BaseDimension() {
-    this->objets = {};
-}
-void BaseDimension::gravite_all(float temps){
-    for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
-        
-    }
-}
+class BaseDimension{
+public:
+    //constructeurs
+    BaseDimension();
+    //acceseurs (devrait tous finir par const)
+    void print_hello_world() const;
+    virtual void gravite_all(float temps);
+    virtual void move_all(float temps);
+    //mutateur
+    //autres fonction
+    //variable publiques (non recomendé)
+    
+protected:
+    //variables
+    std::list<DummySphere> objets;
+    std::list<DummySphere>::iterator iter;
+    std::list<DummySphere>::iterator iter2;
+    //fonctions privées
+};
 
 
-void BaseDimension::print_hello_world() const
-{
-    std::cout << "Hello World";
-} 
+#endif
