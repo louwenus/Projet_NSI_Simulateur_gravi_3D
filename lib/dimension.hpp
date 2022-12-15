@@ -39,7 +39,7 @@ protected:
     //variables
     std::list<DummySphere> objets;
     std::list<DummySphere>::iterator iter;
-    std::counting_semaphore<32> semaphore;
+    std::list<DummySphere>::iterator iter2;
     //fonctions privées
 };
 

@@ -20,13 +20,14 @@
 #include <iostream>
 #include "dimension.hpp"
 
+std::counting_semaphore<32> main_semaphore(0);
+
 using std::string;
 //*******
 //Dimmension
 //*******
-BaseDimension::BaseDimension(){
+BaseDimension::BaseDimension() {
     this->objets = {};
-    this->semaphore(0);
 }
 void BaseDimension::gravite_all(float temps){
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
