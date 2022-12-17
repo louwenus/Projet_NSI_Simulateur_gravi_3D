@@ -20,12 +20,11 @@
 #include <iostream>
 #include "dimension.hpp"
 
-std::counting_semaphore<32> main_semaphore(0);          //utilisé dans le multithreading
-
 using std::string;
 //*******
 //Dimmension
 //*******
+std::counting_semaphore<32> BaseDimension::semaphore(0);
 BaseDimension::BaseDimension() {
     this->objets = {};
 }

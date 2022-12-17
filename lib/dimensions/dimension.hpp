@@ -20,8 +20,8 @@
 #ifndef MAINGRAVI_CPP
 #define MAINGRAVI_CPP
 
-#include "../typedef.hpp"
-#include "../spheres/all_spheres.hpp"
+#include "../typedef.hpp"  //typedef and common stuff
+#include "../spheres/sphere.hpp"  //so sphere can be used in dims
 
 class BaseDimension{
 public:
@@ -40,6 +40,7 @@ protected:
     std::list<DummySphere> objets;
     std::list<DummySphere>::iterator iter;
     std::list<DummySphere>::iterator iter2;
+    static std::counting_semaphore<32> semaphore;
     //fonctions privées
 };
 
