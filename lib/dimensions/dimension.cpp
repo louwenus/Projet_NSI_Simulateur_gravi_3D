@@ -29,8 +29,22 @@ BaseDimension::BaseDimension() {
     this->objets = {};
 }
 void BaseDimension::gravite_all(float temps){
+    llco pos = {0,0,0};
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
-        
+        ulli masse = iter->gravite_stats(temps,pos);
+        this->semaphore.release(16);
+        for (this->iter2 = this->objets.begin(); this->iter2 != this->objets.end(); ++this->iter2){
+            if (this->iter!=this->iter2){
+                this->semaphore.acquire();
+                std::thread([masse,pos,this](DummySphere &sphere){
+                    sphere.gravite_pour(pos,masse);
+                    this->semaphore.release();
+                },std::ref(iter2));
+
+            }
+        }
+        for (short i=0;i<16;i++){
+        this->semaphore.acquire();}
     }
 }
 

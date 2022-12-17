@@ -9,7 +9,7 @@ Options.language_level=3
 #     'clang' : ['-std=c++20']   ,
 #     'msvc'  : []  }
 
-cppgravilib = [Extension("cppgravilib",sources=["lib/cppgravilib.pyx"],language="c++",extra_compile_args=['-std=c++20'])]
+cppgravilib = [Extension("cppgravilib",sources=["lib/cppgravilib.pyx"],language="c++",extra_compile_args=['-std=c++20','-g','-Og'])]
 
  #class build_ext_subclass( build_ext ):
  #   def build_extensions(self):
