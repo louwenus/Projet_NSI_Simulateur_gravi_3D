@@ -24,7 +24,7 @@ using std::string;
 //*******
 //Dimmension
 //*******
-std::counting_semaphore<32> BaseDimension::semaphore(0);
+std::counting_semaphore<MAX_THREAD_NUMBER> BaseDimension::semaphore(0);
 BaseDimension::BaseDimension() {
     this->objets = {};
 }
@@ -36,11 +36,8 @@ void BaseDimension::gravite_all(float temps){
         for (this->iter2 = this->objets.begin(); this->iter2 != this->objets.end(); ++this->iter2){
             if (this->iter!=this->iter2){
                 this->semaphore.acquire();
-                std::thread([masse,pos,this](DummySphere &sphere){
-                    sphere.gravite_pour(pos,masse);
-                    this->semaphore.release();
-                },std::ref(iter2));
-
+                //std::thread(gravite_thread,masse,std::ref(pos),iter2  ); //,std::ref(this->semaphore));
+                std::thread(test,masse,std::ref(pos),std::ref(this->semaphore));
             }
         }
         for (short i=0;i<16;i++){

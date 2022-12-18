@@ -40,9 +40,9 @@ protected:
     std::list<DummySphere> objets;
     std::list<DummySphere>::iterator iter;
     std::list<DummySphere>::iterator iter2;
-    static std::counting_semaphore<32> semaphore;
+    static std::counting_semaphore<MAX_THREAD_NUMBER> semaphore;
     //fonctions privées
 };
-
-
+void test(ulli masse, llco &pos,std::counting_semaphore<MAX_THREAD_NUMBER> &semaphore);
+void gravite_thread(ulli masse,const llco &position,DummySphere &instance  );  //,std::counting_semaphore<MAX_THREAD_NUMBER> &semaphore);
 #endif
