@@ -17,8 +17,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-#ifndef MAINGRAVI_CPP
-#define MAINGRAVI_CPP
+#ifndef DIMENSIONS_GENERAL_HEADER
+#define DIMENSIONS_GENERAL_HEADER
 
 #include "../typedef.hpp"  //typedef and common stuff
 #include "../spheres/sphere.hpp"  //so sphere can be used in dims

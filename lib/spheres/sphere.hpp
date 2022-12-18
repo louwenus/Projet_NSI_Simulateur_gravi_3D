@@ -1,5 +1,5 @@
-#ifndef MAIN_SPHERE_CPP
-#define MAIN_SPHERE_CPP
+#ifndef SPHERE_GENERAL_HEADER
+#define SPHERE_GENERAL_HEADER
 #include "../typedef.hpp"
 class DummySphere{ //may be used for pending deletion sphere for exemple, and as base class who do nothing
 public:

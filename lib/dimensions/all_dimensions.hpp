@@ -1,5 +1,5 @@
-#ifndef MAIN_SPHERE_CPP
-#define ALL_DIMENSIONS_CPP
+#ifndef DIMENSION_INCLUDER_HEADER
+#define DIMENSION_INCLUDER_HEADER
 
 #include "dimension.cpp"
 
