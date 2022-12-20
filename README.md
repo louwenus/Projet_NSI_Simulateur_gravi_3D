@@ -14,30 +14,34 @@ Dans tous les cas vous avez besoin d'avoir python3 et pip préinstallés.
   `python3 -m pip install nom_du_fichier.whl`<br/>
   - vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path.
 - En compilant :<br/>
-  - Vous devez compiler du c++ et du cython:
-    - Pour Windows:
-      Installez un compilateur c++ de votre choix capable de compiler du C++20, par exemple [a completer par Kaly](exemple.com)
-    - Pour Linux:
-      Vous avez besoin d'un compilateur pour le C++20 (par exemple `gcc`),et des header python (`python.h`), instalable selon votre distribution:
-      - Pour apt (Ubuntu, Debian...):<br/>
-        `sudo apt-get install python3-dev`
-      - Pour yum (CentOS, RHEL...):<br/>
-        `sudo yum install python3-devel`
-      - Pour dnf (Fedora...):<br/>
-        `sudo dnf install python3-devel`
-      - Pour zypper (openSUSE...):<br/>
-        `sudo zypper in python3-devel`
-      - Pour apk (Alpine...):<br/>
-        `sudo apk add python3-dev`
-      - Pour apt-cyg (Cygwin...):<br/>
-        `apt-cyg install python3-devel`
-      - Pour pacman (Arch, Manjaro...):<br/>
-        Vous avez deja les header instalés par default avec le paquet python3
+  - Vous devez compiler du c++ et du cython :
+    - Pour Windows :
 
-      Note: python3-dev couvre seulement l'instalation par default de python, si vous utilisez une version spécifique, par exemple python 3.8, vous devez installer python3.8-dev
-    - Pour MacOS:
-      Aucun d'entre nous n'a de mac sous la main pour tester, si quelqu'un peut fournir des instruction, ce sera avec plaisir.<br/>
-      Vous avez besoin d'un compilateur C++20 et peut etre des header python3 (`Python.h`)
+      Installez un compilateur c++ de votre choix capable de compiler du C++20, par exemple [à completer par Kaly](exemple.com).
+    - Pour Linux :
+
+      Vous avez besoin d'un compilateur pour le C++20 (par exemple `gcc`), et des headers python (`python.h`), instalables selon votre distribution :
+      - Pour apt (Ubuntu, Debian...) :<br/>
+        `sudo apt-get install python3-dev`
+      - Pour yum (CentOS, RHEL...) :<br/>
+        `sudo yum install python3-devel`
+      - Pour dnf (Fedora...) :<br/>
+        `sudo dnf install python3-devel`
+      - Pour zypper (openSUSE...) :<br/>
+        `sudo zypper in python3-devel`
+      - Pour apk (Alpine...) :<br/>
+        `sudo apk add python3-dev`
+      - Pour apt-cyg (Cygwin...) :<br/>
+        `apt-cyg install python3-devel`
+      - Pour pacman (Arch, Manjaro...) :<br/>
+        Vous avez deja les header instalés par default avec le paquet python3
+      
+      *NB : python3-dev couvre seulement l'instalation par default de python, si vous utilisez une version spécifique, par exemple python 3.8, vous devez installer python3.8-dev.*
+      
+    - Pour MacOS :
+
+      Aucun d'entre nous n'a de mac sous la main pour tester, si quelqu'un peut fournir des instructions, ce sera avec plaisir.<br/>
+      Vous avez besoin d'un compilateur C++20 et peut-être des headers python3 (`Python.h`).
   - Installez le système de build python et les dépendances,<br/>
   `python3 -m pip install --upgrade build cython setuptools pyside6`<br/>
   - copiez le repo git, et compilez le code Cython et c++,<br/>
