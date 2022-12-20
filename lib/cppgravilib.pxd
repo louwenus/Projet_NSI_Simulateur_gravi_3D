@@ -30,5 +30,4 @@ cdef extern from "main.hpp":
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
         BaseDimension() except +
-        string hello_text
         void print_hello_world()

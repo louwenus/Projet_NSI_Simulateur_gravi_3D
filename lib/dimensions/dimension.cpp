@@ -35,7 +35,9 @@ void BaseDimension::gravite_all(float temps){
         std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[pos,masse](DummySphere &sphere){sphere.gravite_pour(pos,masse);});
     }
 }
-
+void BaseDimension::move_all(float temps){
+    std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere &sphere){sphere.move(temps);});
+}
 
 void BaseDimension::print_hello_world() const
 {

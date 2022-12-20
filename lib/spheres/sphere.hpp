@@ -3,8 +3,7 @@
 #include "../typedef.hpp"
 class DummySphere{ //may be used for pending deletion sphere for exemple, and as base class who do nothing
 public:
-    //constructeurs
-    DummySphere();
+    //pas de constructeur
     
     virtual void move(float temps);
     virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,utilisé pour return la pos)

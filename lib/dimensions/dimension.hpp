@@ -27,20 +27,15 @@ class BaseDimension{
 public:
     //constructeurs
     BaseDimension();
-    //acceseurs (devrait tous finir par const)
+    //autres
     void print_hello_world() const;
     virtual void gravite_all(float temps);
     virtual void move_all(float temps);
-    //mutateur
-    //autres fonction
-    //variable publiques (non recomendé)
     
 protected:
     //variables
     std::list<DummySphere> objets;
     std::list<DummySphere>::iterator iter;
-    //std::list<DummySphere>::iterator iter2;
-    //static std::counting_semaphore<MAX_THREAD_NUMBER> semaphore;
     //fonctions privées
 };
 #endif
