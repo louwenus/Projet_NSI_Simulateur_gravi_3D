@@ -35,6 +35,9 @@ uli SimpleSphere::gravite_stats(float temps,llco &return_pos)const{ //cette func
 }
 void SimpleSphere::gravite_pour(const llco &pos,uli masse){
     llco dif={pos[0]-this->pos[0],pos[1]-this->pos[1],pos[2]-this->pos[2]};  //diff pos par pos
+    if (dif == llco{0,0,0}){
+        return;
+    }
     ulli divide=(abs(dif[0])+pow(dif[0],2)+abs(dif[1])+pow(dif[1],2)+abs(dif[2])+pow(dif[2],2));  //diviseurs = dist^2 + sum (dif) / temps(on remultiplie par les composantes de diff)
     this->speed[0]+=dif[0]*masse/divide;
     this->speed[1]+=dif[1]*masse/divide;

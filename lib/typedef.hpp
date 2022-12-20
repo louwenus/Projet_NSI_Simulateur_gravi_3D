@@ -5,8 +5,11 @@
 #include <string>
 #include <array>
 #include <list>
-#include <thread>
-#include <semaphore>
+#include <algorithm>
+#include <execution>
+//#include <thread>
+//#include <semaphore>
+#include <iostream>
 using std::string;
 
 //for easier args typing

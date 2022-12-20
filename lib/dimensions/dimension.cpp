@@ -17,14 +17,14 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-#include <iostream>
+
 #include "dimension.hpp"
 
 using std::string;
 //*******
 //Dimmension
 //*******
-std::counting_semaphore<MAX_THREAD_NUMBER> BaseDimension::semaphore(0);
+//std::counting_semaphore<MAX_THREAD_NUMBER> BaseDimension::semaphore(0);
 BaseDimension::BaseDimension() {
     this->objets = {};
 }
@@ -32,16 +32,7 @@ void BaseDimension::gravite_all(float temps){
     llco pos = {0,0,0};
     for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
         ulli masse = iter->gravite_stats(temps,pos);
-        this->semaphore.release(16);
-        for (this->iter2 = this->objets.begin(); this->iter2 != this->objets.end(); ++this->iter2){
-            if (this->iter!=this->iter2){
-                this->semaphore.acquire();
-                //std::thread(gravite_thread,masse,std::ref(pos),iter2  ); //,std::ref(this->semaphore));
-                std::thread(test,masse,std::ref(pos),std::ref(this->semaphore));
-            }
-        }
-        for (short i=0;i<16;i++){
-        this->semaphore.acquire();}
+        std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[pos,masse](DummySphere &sphere){sphere.gravite_pour(pos,masse);});
     }
 }
 
