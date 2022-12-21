@@ -35,8 +35,8 @@ class MyWidget(QtWidgets.QWidget):
 
 app = QtWidgets.QApplication(sys.argv)
 
-widget = MyWidget()
+widget = MyWidget()  
 try:
-    widget.showMaximized()
+    widget.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
 except:
-    widget.show()
+    widget.show() #Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
