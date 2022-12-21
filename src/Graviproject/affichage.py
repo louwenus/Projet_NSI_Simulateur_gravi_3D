@@ -54,6 +54,9 @@ class Main_window(QWidget):
         self.boutton_menu2.hide()
         self.boutton_menu1.show()
 
+    def fermeture(self):
+        menu.close()
+
         
 
 
