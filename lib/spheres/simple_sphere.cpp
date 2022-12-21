@@ -1,20 +1,21 @@
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(llco &pos,uli masse,uli rayon,lco &speed)
-{   this->pos = pos;
+SimpleSphere::SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,lli vx,lli vy,lli vz)
+{   this->pos = {x,y,z};
 
-    this->posmin[0]=this->pos[0]-this->rayon;
-    this->posmin[1]=this->pos[1]-this->rayon;
-    this->posmin[2]=this->pos[2]-this->rayon;
+    this->posmin[0]=x-rayon;
+    this->posmin[1]=y-rayon;
+    this->posmin[2]=z-rayon;
 
-    this->posmax[0]=this->pos[0]+this->rayon;
-    this->posmax[1]=this->pos[1]+this->rayon;
-    this->posmax[2]=this->pos[2]+this->rayon;
+    this->posmax[0]=x+rayon;
+    this->posmax[1]=y+rayon;
+    this->posmax[2]=z+rayon;
     
     this->masse = masse;
     this->rayon = rayon;
-    this->speed = speed;
+    this->speed = {vx,vy,vz};
 }
+
 void SimpleSphere::move(float temps){
     this->pos[0]+=this->speed[0]*temps;
     this->pos[1]+=this->speed[1]*temps;

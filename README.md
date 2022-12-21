@@ -43,6 +43,6 @@ Dans tous les cas vous avez besoin d'avoir python3 et pip préinstallés.
   - copiez le repo git, et compilez le code Cython et c++,<br/>
   `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
   `cd Projet_NSI_Simulateur_gravi_3D`<br/>
-  `python3 setup.py build_ext`<br/>
+  `python3 setup.py build_ext --force`<br/>
   - lancez le script avec : <br/>
   `python3 src/launch.py`

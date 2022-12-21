@@ -18,8 +18,8 @@ public:
 class SimpleSphere : public DummySphere {
 public:
     //constructeurs et destructeur
-    SimpleSphere();
-    SimpleSphere(llco &pos,uli masse,uli rayon,lco &speed);
+    //SimpleSphere();
+    SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,lli vx,lli vy,lli vz);
 
     virtual void move(float temps);
     virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,utilisé pour return la pos)
