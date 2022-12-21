@@ -17,8 +17,8 @@ class build_ext_subclass( build_ext ):
         print("Compilateur utilisé:",c)
         if copt.has_key(c):
             print("compilateur connu, arguments ajoutés")
-           for e in self.extensions:
-               e.extra_compile_args = copt[ c ]
+            for e in self.extensions:
+                e.extra_compile_args = copt[ c ]
         else:
             print("/!\\ ***************** /!\\\ncompilateur inconnu, la compile risque de ne pas marcher\n/!\\ ***************** /!\\")
         #if lopt.has_key(c):
