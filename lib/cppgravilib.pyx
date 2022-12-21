@@ -27,15 +27,41 @@
 cimport cppgravilib
 import cython
 
-cdef class PyDimension:
-    cdef BaseDimension c_dim  # Hold a C++ instance, and we forfward everything
-    def __init__(self):
-        self.c_dim = BaseDimension()
+cdef class PyBaseDimension:
+    cdef BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
+    
+    def __cinit__(self,*a,**kw):                       #cinit & dealoc pour heritage corect
+        if type(self) is PyBaseDimension:
+            self.c_base_dim = new BaseDimension()
+    def __dealloc__(self):
+        if type(self) is PyBaseDimension:
+            del self.c_base_dim
+    
+
+
     def print_hello_world(self) -> None:
         self.c_dim.print_hello_world()
+    def gravite_all(self) -> None:
+        self.c_dim.gravite_all()
+    def move_all(self) -> None:
+        self.c_dim.move_all()
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text
     #@hello_text.setter
     #def hello_text(self, str text) -> None:
     #    self.c_dim.hello_text=text
+
+cdef class PyDummySphere:
+    cdef DummySphere *c_dummy_sph #C++ instance
+    def __cinit__(self,*a,**kw):
+        if type(self) is PyDummySphere:
+            self.c_dummy_sph = new DummySphere()
+    def __dealloc__(self):
+        if type(self) is PyDummySphere:
+            del self.c_dummy_sph
+
+cdef class PySimpleSphere:
+    cdef SimpleSphere *c_simple_sphere #C++ instance
+    def __cinit__(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+        
