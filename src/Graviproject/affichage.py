@@ -4,39 +4,77 @@ print("Importation de affichage.py")
 
 
 try:
-    from PySide6 import QtCore, QtWidgets, QtGui
+    import PySide6
+    from PySide6.QtCore import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
 except ModuleNotFoundError:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
 
 import sys
-import random
 
 
-class MyWidget(QtWidgets.QWidget):
+class Main_window(QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Affichage")
 
-        self.hello = ["Hallo Welt", "Hei maailma", "Hola Mundo", "Привет мир"]
-
-        self.button = QtWidgets.QPushButton("Click me!")
-        self.text = QtWidgets.QLabel("Hello World",alignment=QtCore.Qt.AlignCenter)
-
-        self.layout = QtWidgets.QVBoxLayout()
-        self.layout.addWidget(self.text)
-        self.layout.addWidget(self.button)
+        self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        self.button.clicked.connect(self.magic)
+        self.widget_menu = Menu()
+        self.layout.addWidget(self.widget_menu)
 
-    @QtCore.Slot()
-    def magic(self):
-        self.text.setText(random.choice(self.hello))
+        self.boutton_menu1 = QPushButton("Détacher le menu")
+        self.layout.addWidget(self.boutton_menu1)
+
+        self.boutton_menu2 = QPushButton("Attacher le menu")
+        self.layout.addWidget(self.boutton_menu2)
+        self.boutton_menu2.hide()
+        
+        self.boutton_menu1.clicked.connect(self.detach_menu)
+        self.boutton_menu2.clicked.connect(self.attach_menu)
 
 
-app = QtWidgets.QApplication(sys.argv)
+    def hide_menu(self):
+        self.widget_menu.hide()
+        
+    def show_menu(self):
+        self.widget_menu.show()
 
-widget = MyWidget()
+    def detach_menu(self):
+        menu.show()
+        self.hide_menu()
+        self.boutton_menu1.hide()
+        self.boutton_menu2.show()
+
+    def attach_menu(self):
+        menu.hide()
+        self.show_menu()
+        self.boutton_menu2.hide()
+        self.boutton_menu1.show()
+
+        
+
+
+class Menu(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Menu")
+        
+        layout = QHBoxLayout()
+        self.setLayout(layout)
+        boutton = QPushButton("test")
+        layout.addWidget(boutton)
+
+
+
+app = QApplication(sys.argv)
+
+Fenetre_principale = Main_window()
+menu = Menu()
+
 try:
-    widget.showMaximized()
+    Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
 except:
-    widget.show()
+    Fenetre_principale.show() #Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
