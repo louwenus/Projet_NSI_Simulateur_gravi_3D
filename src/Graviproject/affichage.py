@@ -25,10 +25,15 @@ class Main_window(QWidget):
         self.widget_menu = Menu()
         self.layout.addWidget(self.widget_menu)
 
-        self.boutton_menu = QPushButton("Détacher le menu")
-        self.layout.addWidget(self.boutton_menu)
+        self.boutton_menu1 = QPushButton("Détacher le menu")
+        self.layout.addWidget(self.boutton_menu1)
 
-        self.boutton_menu.clicked.connect(self.detach_menu)
+        self.boutton_menu2 = QPushButton("Attacher le menu")
+        self.layout.addWidget(self.boutton_menu2)
+        self.boutton_menu2.hide()
+        
+        self.boutton_menu1.clicked.connect(self.detach_menu)
+        self.boutton_menu2.clicked.connect(self.attach_menu)
 
 
     def hide_menu(self):
@@ -40,6 +45,14 @@ class Main_window(QWidget):
     def detach_menu(self):
         menu.show()
         self.hide_menu()
+        self.boutton_menu1.hide()
+        self.boutton_menu2.show()
+
+    def attach_menu(self):
+        menu.hide()
+        self.show_menu()
+        self.boutton_menu2.hide()
+        self.boutton_menu1.show()
 
         
 
