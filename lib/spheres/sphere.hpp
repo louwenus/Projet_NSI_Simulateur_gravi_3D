@@ -1,7 +1,9 @@
+//  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+
 #ifndef SPHERE_GENERAL_HEADER
 #define SPHERE_GENERAL_HEADER
 #include "../typedef.hpp"
-class DummySphere{ //may be used for pending deletion sphere for exemple, and as base class who do nothing
+class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe de base de la hiérarchie d'héritage, et donc comme classe d'arguments de fonctions
 public:
     //pas de constructeur
     
@@ -15,7 +17,7 @@ public:
 
 };
 
-class SimpleSphere : public DummySphere {
+class SimpleSphere : public DummySphere {  //sphere basique
 public:
     //constructeurs et destructeur
     //SimpleSphere();

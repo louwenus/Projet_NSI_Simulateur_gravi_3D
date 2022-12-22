@@ -1,6 +1,6 @@
-# may change
 /lib/cppgravilib.cpp
 /.vscode/
+/.github/
 /src/cppgravilib.*
 /build/
 /dist/

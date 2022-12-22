@@ -1,3 +1,5 @@
+#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+
 # encoding=utf8
 
 print("importing pygravilib")
