@@ -7,6 +7,8 @@ class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe
 public:
     //pas de constructeur
     
+    virtual ~DummySphere() = default;
+
     virtual void move(float temps);
     virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,utilisé pour return la pos)
     virtual void gravite_pour(const llco &pos,uli masse);   //la masse doit etre multiplié par le temps au préalable (réduction du nombre de calcul)

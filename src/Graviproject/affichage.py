@@ -86,8 +86,7 @@ class Main_window(QWidget):
         self.boutton_menu1.show()
 
     def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
-        #sys.exit(0)
-        menu.close()
+        app.exit(0)
 
         
 
