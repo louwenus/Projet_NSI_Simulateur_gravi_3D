@@ -24,24 +24,12 @@ class Main_window(QWidget):
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        self.widget_menu = Controles()
-        self.layout.addWidget(self.widget_menu)
-
-        self.boutton_menu1 = QPushButton("Détacher le menu")
-        self.layout.addWidget(self.boutton_menu1)
-
-        self.boutton_menu2 = QPushButton("Attacher le menu")
-        self.layout.addWidget(self.boutton_menu2)
-        self.boutton_menu2.hide()
-        
-        self.boutton_menu1.clicked.connect(self.detach_controles)
-        self.boutton_menu2.clicked.connect(self.attach_controles)
+        self.widget_controles = Controles()
+        self.layout.addWidget(self.widget_controles)
         
         self.creer_actions()
         self.creer_barre_menu()
         self.connecter_actions()
-        
-
 
     def creer_barre_menu(self):
         self.menuBar = QMenuBar(self)
@@ -67,23 +55,19 @@ class Main_window(QWidget):
         self.detachAction.triggered.connect(self.detach_controles)
         self.attachAction.triggered.connect(self.attach_controles)
 
-    def hide_menu(self):
-        self.widget_menu.hide()
+    def hide_controles(self):
+        self.widget_controles.hide()
         
-    def show_menu(self):
-        self.widget_menu.show()
+    def show_controles(self):
+        self.widget_controles.show()
 
     def detach_controles(self):
         controles_graphiques.show()
-        self.hide_menu()
-        self.boutton_menu1.hide()
-        self.boutton_menu2.show()
+        self.hide_controles()
 
     def attach_controles(self):
         controles_graphiques.hide()
-        self.show_menu()
-        self.boutton_menu2.hide()
-        self.boutton_menu1.show()
+        self.show_controles()
 
     def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
@@ -94,18 +78,18 @@ class Main_window(QWidget):
 class Controles(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Menu")
+        self.setWindowTitle("Controles")
         
         layout = QHBoxLayout()
         self.setLayout(layout)
         
-        boutton1 = QPushButton("menu1")
+        boutton1 = QPushButton("controle1")
         layout.addWidget(boutton1)
 
-        boutton2 = QPushButton("menu2")
+        boutton2 = QPushButton("controle2")
         layout.addWidget(boutton2)
 
-        boutton3 = QPushButton("menu3")
+        boutton3 = QPushButton("controle3")
         layout.addWidget(boutton3)
 
 
