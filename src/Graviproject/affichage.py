@@ -24,7 +24,7 @@ class Main_window(QWidget):
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        self.widget_menu = Menu()
+        self.widget_menu = Controles()
         self.layout.addWidget(self.widget_menu)
 
         self.boutton_menu1 = QPushButton("Détacher le menu")
@@ -34,8 +34,8 @@ class Main_window(QWidget):
         self.layout.addWidget(self.boutton_menu2)
         self.boutton_menu2.hide()
         
-        self.boutton_menu1.clicked.connect(self.detach_menu)
-        self.boutton_menu2.clicked.connect(self.attach_menu)
+        self.boutton_menu1.clicked.connect(self.detach_controles)
+        self.boutton_menu2.clicked.connect(self.attach_controles)
         
         self.creer_actions()
         self.creer_barre_menu()
@@ -64,8 +64,8 @@ class Main_window(QWidget):
         self.licenseAction = QAction("&Lire la license", self)
 
     def connecter_actions(self):
-        self.detachAction.triggered.connect(self.detach_menu)
-        self.attachAction.triggered.connect(self.attach_menu)
+        self.detachAction.triggered.connect(self.detach_controles)
+        self.attachAction.triggered.connect(self.attach_controles)
 
     def hide_menu(self):
         self.widget_menu.hide()
@@ -73,26 +73,26 @@ class Main_window(QWidget):
     def show_menu(self):
         self.widget_menu.show()
 
-    def detach_menu(self):
-        menu.show()
+    def detach_controles(self):
+        controles_graphiques.show()
         self.hide_menu()
         self.boutton_menu1.hide()
         self.boutton_menu2.show()
 
-    def attach_menu(self):
-        menu.hide()
+    def attach_controles(self):
+        controles_graphiques.hide()
         self.show_menu()
         self.boutton_menu2.hide()
         self.boutton_menu1.show()
 
     def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         #sys.exit(0)
-        menu.close()
+        controles_graphiques.close()
 
         
 
 
-class Menu(QWidget):
+class Controles(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Menu")
@@ -114,7 +114,7 @@ class Menu(QWidget):
 app = QApplication(sys.argv)
 
 Fenetre_principale = Main_window()
-menu = Menu()
+controles_graphiques = Controles()
 
 try:
     Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
