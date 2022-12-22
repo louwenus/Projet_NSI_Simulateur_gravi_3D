@@ -35,9 +35,9 @@ except ModuleNotFoundError:
     exit(1)
 from .affichage import app #temporaire, à raffiner
 # on créé une dimension (classe principale de la librairie)
-universe: cppgravilib.PyDimension
+universe: cppgravilib.PyBaseDimension
 
 def launch_app():
-    universe=cppgravilib.PyDimension()
+    universe=cppgravilib.PyBaseDimension()
     universe.print_hello_world()
     sys.exit(app.exec_())

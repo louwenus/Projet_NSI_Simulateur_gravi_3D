@@ -38,5 +38,5 @@ cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere() except +
     
-    cdef cppclass SimpleSphere:
+    cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +

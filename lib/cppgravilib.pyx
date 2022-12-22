@@ -40,11 +40,11 @@ cdef class PyBaseDimension:
 
 
     def print_hello_world(self) -> None:
-        self.c_dim.print_hello_world()
-    def gravite_all(self) -> None:
-        self.c_dim.gravite_all()
-    def move_all(self) -> None:
-        self.c_dim.move_all()
+        self.c_base_dim.print_hello_world()
+    def gravite_all(self,float temps) -> None:
+        self.c_base_dim.gravite_all(temps)
+    def move_all(self,float temps) -> None:
+        self.c_base_dim.move_all(temps)
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text
@@ -53,15 +53,18 @@ cdef class PyBaseDimension:
     #    self.c_dim.hello_text=text
 
 cdef class PyDummySphere:
-    cdef DummySphere *c_dummy_sph #C++ instance
+    cdef DummySphere *c_dummy_sphere #C++ instance
     def __cinit__(self,*a,**kw):
         if type(self) is PyDummySphere:
-            self.c_dummy_sph = new DummySphere()
+            self.c_dummy_sphere = new DummySphere()
     def __dealloc__(self):
         if type(self) is PyDummySphere:
-            del self.c_dummy_sph
+            del self.c_dummy_sphere
 
-cdef class PySimpleSphere:
+cdef class PySimpleSphere(PyDummySphere):
     cdef SimpleSphere *c_simple_sphere #C++ instance
-    def __cinit__(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
-        
+    def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+        if type(self) is PySimpleSphere:
+            self.c_simple_sphere = self.c_dummy_sphere = new SimpleSphere(x,y,z,masse,rayon,vx,vy,vz)
+    def __dealloc__(self):
+        del self.c_simple_sphere
