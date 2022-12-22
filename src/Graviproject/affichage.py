@@ -39,6 +39,7 @@ class Main_window(QWidget):
         
         self.creer_actions()
         self.creer_barre_menu()
+        self.connecter_actions()
         
 
 
@@ -62,6 +63,9 @@ class Main_window(QWidget):
 
         self.licenseAction = QAction("&Lire la license", self)
 
+    def connecter_actions(self):
+        self.detachAction.triggered.connect(self.detach_menu)
+        self.attachAction.triggered.connect(self.attach_menu)
 
     def hide_menu(self):
         self.widget_menu.hide()
