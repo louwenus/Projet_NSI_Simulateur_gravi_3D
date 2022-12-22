@@ -34,6 +34,31 @@ class Main_window(QWidget):
         
         self.boutton_menu1.clicked.connect(self.detach_menu)
         self.boutton_menu2.clicked.connect(self.attach_menu)
+        
+        self.creer_actions()
+        self.creer_barre_menu()
+        
+
+
+    def creer_barre_menu(self):
+        self.menuBar = QMenuBar(self)
+        self.layout.addWidget(self.menuBar)
+        
+        self.affichageMenu = QMenu("&Affichage", self)
+        self.menuBar.addMenu(self.affichageMenu)
+        self.affichageMenu.addAction(self.detachAction)
+        self.affichageMenu.addAction(self.attachAction)
+
+
+        self.helpMenu = QMenu("&Help", self)
+        self.menuBar.addMenu(self.helpMenu)
+        self.helpMenu.addAction(self.licenseAction)
+
+    def creer_actions(self):
+        self.detachAction = QAction("&Détacher les contrôles", self)
+        self.attachAction = QAction("&Attacher les contrôles", self)
+
+        self.licenseAction = QAction("&Lire la license", self)
 
 
     def hide_menu(self):
