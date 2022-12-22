@@ -1,3 +1,5 @@
+//  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+
 #ifndef TYPEDEF_GRAVI_CPP
 #define TYPEDEF_GRAVI_CPP
 // external includes
@@ -10,7 +12,6 @@
 //#include <thread>
 //#include <semaphore>
 #include <iostream>
-using std::string;
 
 //for easier args typing
 typedef unsigned long long int ulli;

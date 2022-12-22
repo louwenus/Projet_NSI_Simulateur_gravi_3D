@@ -1,3 +1,5 @@
+//  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+
 #include "sphere.hpp"
 
 SimpleSphere::SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,lli vx,lli vy,lli vz)
