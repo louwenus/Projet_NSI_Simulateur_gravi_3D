@@ -68,8 +68,15 @@ class Menu(QWidget):
         
         layout = QHBoxLayout()
         self.setLayout(layout)
-        boutton = QPushButton("test")
-        layout.addWidget(boutton)
+        
+        boutton1 = QPushButton("menu1")
+        layout.addWidget(boutton1)
+
+        boutton2 = QPushButton("menu2")
+        layout.addWidget(boutton2)
+
+        boutton3 = QPushButton("menu3")
+        layout.addWidget(boutton3)
 
 
 
