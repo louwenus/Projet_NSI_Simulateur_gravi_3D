@@ -6,8 +6,9 @@ from Cython.Compiler import Options
 Options.language_level=3
 
 copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
-     #'mingw32' : ['-std=c++20']   ,
-     #'msvc'  : []  
+        #'mingw32' : ['-std=c++20']   ,
+        #'msvc'  : []  , 
+        #'cygiwin' : []
 }
 
 cppgravilib = [Extension("cppgravilib",sources=["lib/cppgravilib.pyx"],include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
