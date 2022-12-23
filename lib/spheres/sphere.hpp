@@ -10,8 +10,8 @@ public:
     virtual ~DummySphere() = default;
 
     virtual void move(float temps);
-    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,utilisé pour return la pos)
-    virtual void gravite_pour(const llco &pos,uli masse);   //la masse doit etre multiplié par le temps au préalable (réduction du nombre de calcul)
+    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
+    virtual void accel(const lco accel);   //la masse doit etre multiplié par le temps au préalable (réduction du nombre de calcul)
     virtual bool t_collision_avec(DummySphere &instance);
     virtual bool t_collision_coord(const llco &pos,uli rayon) const;
     virtual bool t_colli_rapide(const llco &posmin,const llco &posmax) const;
@@ -23,11 +23,11 @@ class SimpleSphere : public DummySphere {  //sphere basique
 public:
     //constructeurs et destructeur
     //SimpleSphere();
-    SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,lli vx,lli vy,lli vz);
+    SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,li vx,li vy,li vz);
 
     virtual void move(float temps);
-    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,utilisé pour return la pos)
-    virtual void gravite_pour(const llco &pos,uli masse);   //la masse doit etre multiplié par le temps au préalable (réduction du nombre de calcul)
+    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
+    virtual void accel(const lco accel);   //vecteur acceleration
     virtual bool t_collision_avec(DummySphere &instance);
     virtual bool t_collision_coord(const llco &pos,uli rayon) const;
     virtual bool t_colli_rapide(const llco &posmin,const llco &posmax) const;

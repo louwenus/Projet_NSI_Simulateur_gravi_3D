@@ -9,10 +9,25 @@ BaseDimension::BaseDimension() {
     this->objets = {};
 }
 void BaseDimension::gravite_all(float temps){
-    llco pos = {0,0,0};
-    for (this->iter = this->objets.begin(); this->iter != this->objets.end(); ++this->iter){
-        ulli masse = iter->gravite_stats(temps,pos);
-        std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[pos,masse](DummySphere &sphere){sphere.gravite_pour(pos,masse);});
+    llco pos1 = {0,0,0};            //pour eviter de recreer une variable a chaque fois
+
+    for (std::list<DummySphere>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator){
+        atlco accel = {0,0,0};  // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
+        uli masse1 = iterator->gravite_stats(temps,pos1);  //on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
+
+
+        std::for_each(std::execution::par,this->objets.begin(),iterator,   //pour chaque objets précédents dans la liste, on execule la fonction lambda de manierre parallèle
+            [temps,pos1,masse1,&accel,iterator](DummySphere &sphere){      //fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
+                llco temp_co;
+                uli masse2 = sphere.gravite_stats(temps,temp_co);  //on stock la pos dans temp_co
+                temp_co={temp_co[0]-pos1[0],temp_co[1]-pos1[1],temp_co[2]-pos1[2]};  //puis on y mets le vecteur distance
+                //divide = distance ^ 2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
+                ulli divide=(abs(temp_co[0])+temp_co[0]*temp_co[0]+abs(temp_co[1])+temp_co[1]*temp_co[1]+abs(temp_co[2])+temp_co[2]*temp_co[2]);
+                
+                //TODO : Finir le calcul de l'accel, et le passer en somme a accel / sphere.accel
+                
+        });
+        iterator->accel({accel[0],accel[1],accel[2]});
     }
 }
 void BaseDimension::move_all(float temps){
