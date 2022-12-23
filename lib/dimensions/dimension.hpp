@@ -13,6 +13,7 @@ class BaseDimension{
 public:
     //constructeurs
     BaseDimension();
+    virtual ~BaseDimension();
     //autres
     void print_hello_world() const;
     virtual void gravite_all(float temps);

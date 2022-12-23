@@ -8,6 +8,8 @@
 BaseDimension::BaseDimension() {
     this->objets = {};
 }
+BaseDimension::~BaseDimension(){}
+
 void BaseDimension::gravite_all(float temps){
     llco pos1 = {0,0,0};            //pour eviter de recreer une variable a chaque fois
 
