@@ -29,7 +29,7 @@ void BaseDimension::gravite_all(float temps){
                 //TODO : Finir le calcul de l'accel, et le passer en somme a accel / sphere.accel
                 
         });
-        iterator->accel({accel[0],accel[1],accel[2]});
+        iterator->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
     }
 }
 void BaseDimension::move_all(float temps){
