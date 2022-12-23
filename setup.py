@@ -5,8 +5,8 @@ from Cython.Compiler import Options
 
 Options.language_level=3
 
-copt =  {'unix': ['-std=c++20','-g','-Og','-pthread']  ,
-     #'clang' : ['-std=c++20']   ,
+copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
+     #'mingw32' : ['-std=c++20']   ,
      #'msvc'  : []  
 }
 
