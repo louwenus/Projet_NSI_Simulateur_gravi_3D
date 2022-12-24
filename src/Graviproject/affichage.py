@@ -14,7 +14,7 @@ except ModuleNotFoundError:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
 
 import sys
-
+import os
 
 class Main_window(QWidget):
     def __init__(self):
@@ -83,7 +83,9 @@ class Main_window(QWidget):
         self.fenetre_license.setWindowTitle("LICENSE")
         
         try:
-            with open("./Graviproject/LICENSE") as file:
+            path=os.path.abspath(os.path.dirname(__file__))
+            path=os.path.join(path, "LICENSE")
+            with open(path) as file:
                 self.licenseTextlabel = QLabel(file.read())
 
         except:
