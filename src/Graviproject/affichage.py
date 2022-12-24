@@ -87,9 +87,8 @@ class Main_window(QWidget):
             path=os.path.join(path, "LICENSE")
             with open(path) as file:
                 self.licenseTextlabel = QLabel(file.read())
-
         except:
-            self.licenseTextlabel = QLabel("arrg")
+            self.licenseTextlabel = QLabel("Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/src/Graviproject/LICENSE")
 
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()
@@ -97,10 +96,6 @@ class Main_window(QWidget):
         
         
         
-        
-
-
-
     def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
 
