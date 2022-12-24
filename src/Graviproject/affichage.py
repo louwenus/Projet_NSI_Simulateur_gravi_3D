@@ -30,11 +30,13 @@ class Main_window(QWidget):
         
         self.creer_actions()
         self.creer_barre_menu()
+
         self.layout.addWidget(self.widget_controles)
+        
         self.connecter_actions()
 
 
-        
+
 
     def creer_barre_menu(self):
         self.menuBar = QMenuBar(self)
@@ -43,7 +45,6 @@ class Main_window(QWidget):
         self.affichageMenu = QMenu("&Affichage", self)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
-
 
         self.helpMenu = QMenu("&Help", self)
         self.menuBar.addMenu(self.helpMenu)
