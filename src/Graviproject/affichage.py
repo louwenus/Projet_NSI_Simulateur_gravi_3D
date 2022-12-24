@@ -19,6 +19,8 @@ import sys
 class Main_window(QWidget):
     def __init__(self):
         super().__init__()
+        self.affichage_controles = True
+
         self.setWindowTitle("Affichage")
 
         self.layout = QHBoxLayout()
@@ -31,14 +33,16 @@ class Main_window(QWidget):
         self.layout.addWidget(self.widget_controles)
         self.connecter_actions()
 
+
+        
+
     def creer_barre_menu(self):
         self.menuBar = QMenuBar(self)
         self.layout.addWidget(self.menuBar)
         
         self.affichageMenu = QMenu("&Affichage", self)
         self.menuBar.addMenu(self.affichageMenu)
-        self.affichageMenu.addAction(self.detachAction)
-        self.affichageMenu.addAction(self.attachAction)
+        self.affichageMenu.addAction(self.attach_detachAction)
 
 
         self.helpMenu = QMenu("&Help", self)
@@ -46,20 +50,22 @@ class Main_window(QWidget):
         self.helpMenu.addAction(self.licenseAction)
 
     def creer_actions(self):
-        self.detachAction = QAction("&Détacher les contrôles", self)
-        self.attachAction = QAction("&Attacher les contrôles", self)
+        self.attach_detachAction = QAction("&Détacher les contrôles", self)
 
         self.licenseAction = QAction("&Lire la license", self)
 
     def connecter_actions(self):
-        self.detachAction.triggered.connect(self.detach_controles)
-        self.attachAction.triggered.connect(self.attach_controles)
+        self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+
+
+
 
     def hide_controles(self):
         self.widget_controles.hide()
-        
+
     def show_controles(self):
         self.widget_controles.show()
+
 
     def detach_controles(self):
         controles_graphiques.show()
@@ -68,6 +74,21 @@ class Main_window(QWidget):
     def attach_controles(self):
         controles_graphiques.hide()
         self.show_controles()
+
+
+    def attach_detach_controles(self):
+        if self.affichage_controles :
+            self.detach_controles()
+            self.attach_detachAction.setText("&Attacher les contrôles")
+            self.affichage_controles = False
+
+        else :
+            self.attach_controles()
+            self.attach_detachAction.setText("&Détacher les contrôles")
+            self.affichage_controles = True
+
+
+
 
     def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
