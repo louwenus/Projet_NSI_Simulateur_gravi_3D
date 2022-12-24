@@ -25,9 +25,16 @@ void BaseDimension::gravite_all(float temps){
                 temp_co={temp_co[0]-pos1[0],temp_co[1]-pos1[1],temp_co[2]-pos1[2]};  //puis on y mets le vecteur distance
                 //divide = distance ^ 2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
                 ulli divide=(abs(temp_co[0])+temp_co[0]*temp_co[0]+abs(temp_co[1])+temp_co[1]*temp_co[1]+abs(temp_co[2])+temp_co[2]*temp_co[2]);
-                
-                //TODO : Finir le calcul de l'accel, et le passer en somme a accel / sphere.accel
-                
+                //on augmente l'accel sur l'element exterieur
+                accel[0]+=(temp_co[0]*masse2)/divide;
+                accel[1]+=(temp_co[1]*masse2)/divide;
+                accel[2]+=(temp_co[2]*masse2)/divide;
+                //on calcule l'accel sur l'element de la boucle interne
+                temp_co[0]= -(temp_co[0]*masse1)/divide;
+                temp_co[1]= -(temp_co[1]*masse1)/divide;
+                temp_co[2]= -(temp_co[2]*masse1)/divide;
+                //qu'on applique
+                sphere.accel({(li)temp_co[0],(li)temp_co[1],(li)temp_co[2]});
         });
         iterator->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
     }
