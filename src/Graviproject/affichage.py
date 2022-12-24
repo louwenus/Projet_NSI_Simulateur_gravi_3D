@@ -32,7 +32,7 @@ class Main_window(QWidget):
         self.creer_barre_menu()
 
         self.layout.addWidget(self.widget_controles)
-        
+
         self.connecter_actions()
 
 
@@ -61,30 +61,16 @@ class Main_window(QWidget):
 
 
 
-    def hide_controles(self):
-        self.widget_controles.hide()
-
-    def show_controles(self):
-        self.widget_controles.show()
-
-
-    def detach_controles(self):
-        controles_graphiques.show()
-        self.hide_controles()
-
-    def attach_controles(self):
-        controles_graphiques.hide()
-        self.show_controles()
-
-
     def attach_detach_controles(self):
         if self.affichage_controles :
-            self.detach_controles()
+            controles_graphiques.show()
+            self.widget_controles.hide()
             self.attach_detachAction.setText("&Attacher les contrôles")
             self.affichage_controles = False
 
         else :
-            self.attach_controles()
+            controles_graphiques.hide()
+            self.widget_controles.show()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
 
