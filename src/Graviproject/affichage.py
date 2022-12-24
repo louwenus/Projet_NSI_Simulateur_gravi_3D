@@ -83,7 +83,7 @@ class Main_window(QWidget):
         self.fenetre_license.setWindowTitle("LICENSE")
         
         try:
-            with open("LICENSE") as file:
+            with open("./Graviproject/LICENSE") as file:
                 self.licenseTextlabel = QLabel(file.read())
 
         except:
