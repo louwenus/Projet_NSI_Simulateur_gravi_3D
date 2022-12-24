@@ -5,4 +5,7 @@
 
 #Fichier utilisé pour lancer le code depuis une compilation du code source
 import Graviproject.main
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 Graviproject.main.launch_app()
+
