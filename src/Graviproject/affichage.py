@@ -32,7 +32,7 @@ class Main_window(QWidget):
         self.creer_barre_menu()
 
         self.layout.addWidget(self.widget_controles)
-
+        
         self.connecter_actions()
 
 
@@ -57,6 +57,7 @@ class Main_window(QWidget):
 
     def connecter_actions(self):
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+        self.licenseAction.triggered.connect(self.affich_licence)
 
 
 
@@ -74,6 +75,27 @@ class Main_window(QWidget):
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
 
+
+
+
+    def affich_licence(self):
+        self.fenetre_license = QScrollArea()
+        self.fenetre_license.setWindowTitle("LICENSE")
+        
+        try:
+            with open("LICENSE","r") as file:
+                self.licenseTextlabel = QLabel(file.read())
+
+        except:
+            self.licenseTextlabel = QLabel("arrg")
+
+        self.fenetre_license.setWidget(self.licenseTextlabel)
+        self.fenetre_license.show()
+
+        
+        
+        
+        
 
 
 
