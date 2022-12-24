@@ -12,17 +12,18 @@ from libcpp.string cimport string
 cdef extern from "main.hpp":
     pass
 
-#Declare the class with cdef
-cdef extern from "dimensions/dimension.hpp":
-    cdef cppclass BaseDimension :
-        BaseDimension() except +
-        void print_hello_world()
-        void gravite_all(float temps) except +
-        void move_all(float temps) except +
-
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere() except +
     
     cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
+
+cdef extern from "dimensions/dimension.hpp":
+    cdef cppclass BaseDimension :
+        BaseDimension() except +
+        void print_hello_world()
+        void add_sphere(DummySphere*)
+        void gravite_all(float temps) except +
+        void move_all(float temps) except +
+

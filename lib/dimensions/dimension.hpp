@@ -15,9 +15,10 @@ public:
     BaseDimension();
     virtual ~BaseDimension();
     //autres
-    void print_hello_world() const;
+    static void print_hello_world();
     virtual void gravite_all(float temps);
     virtual void move_all(float temps);
+    virtual void add_sphere(DummySphere *instance);
     
 protected:
     //variables
