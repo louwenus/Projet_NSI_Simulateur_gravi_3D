@@ -8,3 +8,4 @@ void DummySphere::accel(const lco accel){return;}
 bool DummySphere::t_collision_avec(DummySphere &instance){return false;}
 bool DummySphere::t_collision_coord(const llco &pos,const uli rayon)const{return false;}
 bool DummySphere::t_colli_rapide(const llco &posmin,const llco &posmax)const{return false;}
+void DummySphere::debug() const {std::cout << "this is a dummy sphere\n" ;}
