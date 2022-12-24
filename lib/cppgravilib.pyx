@@ -21,6 +21,8 @@ cdef class PyBaseDimension:
     def __dealloc__(self):
         if type(self) is PyBaseDimension:
             del self.c_base_dim
+    def debug(self) -> None:
+        self.c_base_dim.debug()
     
     def print_hello_world(self) -> None:
         self.c_base_dim.print_hello_world()
@@ -45,7 +47,8 @@ cdef class PyDummySphere:
     def __dealloc__(self):
         if type(self) is PyDummySphere:
             del self.c_dummy_sphere
-
+    def debug(self):
+        self.c_dummy_sphere.debug()
 cdef class PySimpleSphere(PyDummySphere):
     cdef SimpleSphere *c_simple_sphere #C++ instance
     def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):

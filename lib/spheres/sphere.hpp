@@ -15,6 +15,7 @@ public:
     virtual bool t_collision_avec(DummySphere &instance);
     virtual bool t_collision_coord(const llco &pos,uli rayon) const;
     virtual bool t_colli_rapide(const llco &posmin,const llco &posmax) const;
+    virtual void debug() const;
     
 
 };
@@ -31,6 +32,7 @@ public:
     virtual bool t_collision_avec(DummySphere &instance);
     virtual bool t_collision_coord(const llco &pos,uli rayon) const;
     virtual bool t_colli_rapide(const llco &posmin,const llco &posmax) const;
+    virtual void debug() const;
 protected:
     llco posmin;  //utilisé pour les tests de collision rapide
     llco posmax;  //utilisé pour les tests de collision rapide

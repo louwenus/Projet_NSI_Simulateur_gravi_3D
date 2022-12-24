@@ -57,3 +57,6 @@ bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax)const{
     return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
      this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
 }
+void SimpleSphere::debug() const{
+    std::cout << "Position:" << this->pos[0] << '_' << this->pos[1] << '_' << this->pos[2] << '\n' ;
+}
