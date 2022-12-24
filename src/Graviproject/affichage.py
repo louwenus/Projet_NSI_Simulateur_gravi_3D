@@ -25,10 +25,10 @@ class Main_window(QWidget):
         self.setLayout(self.layout)
 
         self.widget_controles = Controles()
-        self.layout.addWidget(self.widget_controles)
         
         self.creer_actions()
         self.creer_barre_menu()
+        self.layout.addWidget(self.widget_controles)
         self.connecter_actions()
 
     def creer_barre_menu(self):
