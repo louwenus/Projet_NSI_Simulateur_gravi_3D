@@ -51,6 +51,6 @@ void BaseDimension::print_hello_world()
 } 
 
 void BaseDimension::debug(){
-    std::cout << "Debuging BaseDimension\n" ;
+    std::cout << "Debuging BaseDimension" ;
     std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere &sphere){sphere.debug();});
 }

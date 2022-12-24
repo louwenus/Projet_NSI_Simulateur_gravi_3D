@@ -32,6 +32,8 @@ cdef class PyBaseDimension:
         self.c_base_dim.move_all(temps)
     def add_sphere(self,PyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_dummy_sphere)
+    def add_simple(self,PySimpleSphere instance) -> None:
+        self.c_base_dim.add_sphere(instance.c_simple_sphere)
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text

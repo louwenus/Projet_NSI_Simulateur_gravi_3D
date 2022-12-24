@@ -24,7 +24,5 @@ public:
 protected:
     //variables
     std::list<DummySphere> objets;
-    std::list<DummySphere>::iterator iter;
-    //fonctions privées
 };
 #endif

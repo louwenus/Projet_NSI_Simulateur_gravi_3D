@@ -83,7 +83,7 @@ class Main_window(QWidget):
         self.fenetre_license.setWindowTitle("LICENSE")
         
         try:
-            with open("/home/alexis/Documents/projet/Projet_NSI_Simulateur_gravi_3D/src/Graviproject/LICENSE") as file:
+            with open("LICENSE") as file:
                 self.licenseTextlabel = QLabel(file.read())
 
         except:
