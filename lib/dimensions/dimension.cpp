@@ -39,10 +39,13 @@ void BaseDimension::gravite_all(float temps){
         iterator->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
     }
 }
+void BaseDimension::add_sphere(DummySphere *instance){
+    this->objets.push_back(*instance);
+}
 void BaseDimension::move_all(float temps){
     std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere &sphere){sphere.move(temps);});
 }
-void BaseDimension::print_hello_world() const
+void BaseDimension::print_hello_world()
 {
     std::cout << "Hello World";
 } 

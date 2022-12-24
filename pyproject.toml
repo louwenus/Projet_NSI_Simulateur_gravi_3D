@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel", "Cython"]
+requires = ["setuptools", "wheel", "Cython", "setuptools_scm[toml]>=6.2"]
 
 [project]
 name = "Graviproject"
@@ -8,6 +8,8 @@ readme = "README.md"
 requires-python = ">=3.7"
 dynamic = ["version"]
 dependencies = ["cython","pyside6"]
+
+[tool.setuptools_scm]
 
 [tool.setuptools]
 zip-safe = false
