@@ -3,9 +3,13 @@ from setuptools.command.build_ext import build_ext
 from Cython.Build import cythonize
 from Cython.Compiler import Options
 import os
+#import distutils.cygwinccompiler
+#distutils.cygwinccompiler.get_msvrc = lambda: []
+
+
 Options.language_level=3
 copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
-        #'mingw32' : ['-std=c++20']   ,
+        'mingw32' : ['-std=c++20','-g','-Og','-pthread','-ffast-math', "-Wl,-Bstatic", "-lpthread"]  ,
         #'msvc'  : []  , 
         #'cygiwin' : []
 }
