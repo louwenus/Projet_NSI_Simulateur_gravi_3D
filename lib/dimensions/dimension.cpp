@@ -26,6 +26,7 @@ void BaseDimension::gravite_all(float temps){
                 //divide = distance ^ 2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
                 ulli divide=(abs(temp_co[0])+temp_co[0]*temp_co[0]+abs(temp_co[1])+temp_co[1]*temp_co[1]+abs(temp_co[2])+temp_co[2]*temp_co[2]);
                 //on augmente l'accel sur l'element exterieur
+                if (divide!=0){
                 accel[0]+=(temp_co[0]*masse2)/divide;
                 accel[1]+=(temp_co[1]*masse2)/divide;
                 accel[2]+=(temp_co[2]*masse2)/divide;
@@ -34,13 +35,17 @@ void BaseDimension::gravite_all(float temps){
                 temp_co[1]= -(temp_co[1]*masse1)/divide;
                 temp_co[2]= -(temp_co[2]*masse1)/divide;
                 //qu'on applique
-                sphere.accel({(li)temp_co[0],(li)temp_co[1],(li)temp_co[2]});
+                sphere.accel({(li)temp_co[0],(li)temp_co[1],(li)temp_co[2]});}
         });
         iterator->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
     }
 }
 void BaseDimension::add_sphere(DummySphere *instance){
+    std::cout << "Type:" << typeid(instance).name() << "\n";
+    instance->debug();
     this->objets.push_back(*instance);
+    std::cout << "test";
+    objets.back().debug();
 }
 void BaseDimension::move_all(float temps){
     std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere &sphere){sphere.move(temps);});
@@ -51,6 +56,6 @@ void BaseDimension::print_hello_world()
 } 
 
 void BaseDimension::debug(){
-    std::cout << "Debuging BaseDimension" ;
-    std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere &sphere){sphere.debug();});
+    std::cout << "Debuging BaseDimension\n" ;
+    std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere &sphere){sphere.debug();std::cout << typeid(sphere).name() << "\n";});
 }

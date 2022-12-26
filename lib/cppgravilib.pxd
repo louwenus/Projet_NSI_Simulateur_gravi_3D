@@ -9,13 +9,10 @@
 
 from libcpp.string cimport string
 
-cdef extern from "main.hpp":
-    pass
-
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere() except +
-        void debug() except +
+        void debug()
     
     cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
@@ -25,6 +22,6 @@ cdef extern from "dimensions/dimension.hpp":
         BaseDimension() except +
         void print_hello_world()
         void add_sphere(DummySphere*)
-        void gravite_all(float temps) except +
-        void move_all(float temps) except +
-        void debug() except +
+        void gravite_all(float temps)
+        void move_all(float temps)
+        void debug()

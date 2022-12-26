@@ -1,7 +1,6 @@
 /lib/cppgravilib.cpp
 /.vscode/
-/.github/
-/src/cppgravilib.*
+/src/Graviproject/cppgravilib.*
 /build/
 /dist/
 /src/Graviproject.egg-info/

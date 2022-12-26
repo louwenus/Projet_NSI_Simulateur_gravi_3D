@@ -11,7 +11,7 @@ copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
         #'cygiwin' : []
 }
 
-cppgravilib = [Extension("cppgravilib",sources=["lib/cppgravilib.pyx"],include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
+cppgravilib = [Extension("Graviproject.cppgravilib",sources=["lib/dimensions/dimension.cpp","lib/spheres/simple_sphere.cpp","lib/spheres/dummy_sphere.cpp","lib/cppgravilib.pyx","lib/cppgravilib.pxd"],include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
 
 class build_ext_subclass( build_ext ):
     def build_extensions(self):
