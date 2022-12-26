@@ -14,7 +14,7 @@ except ModuleNotFoundError:
     print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
     exit(1)
 try:
-    import cppgravilib
+    import Graviproject.cppgravilib as cppgravilib
 except ModuleNotFoundError:
     print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
@@ -31,7 +31,6 @@ def launch_app():
     testboule4=cppgravilib.PySimpleSphere(0,0,1,1,1,0,0,0)
     universe.add_sphere(testboule1)
     universe.add_simple(testboule2)
-    print("manual debug:")
     universe.debug()
     universe.gravite_all(5)
     universe.move_all(10)

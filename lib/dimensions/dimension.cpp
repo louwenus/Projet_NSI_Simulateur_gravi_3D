@@ -13,15 +13,15 @@ BaseDimension::~BaseDimension(){}
 void BaseDimension::gravite_all(float temps){
     llco pos1 = {0,0,0};            //pour eviter de recreer une variable a chaque fois
 
-    for (std::list<DummySphere>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator){
+    for (std::list<DummySphere*>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator){
         atlco accel = {0,0,0};  // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
-        uli masse1 = iterator->gravite_stats(temps,pos1);  //on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
+        uli masse1 = (*iterator)->gravite_stats(temps,pos1);  //on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
 
 
         std::for_each(std::execution::par,this->objets.begin(),iterator,   //pour chaque objets précédents dans la liste, on execule la fonction lambda de manierre parallèle
-            [temps,pos1,masse1,&accel,iterator](DummySphere &sphere){      //fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
+            [temps,pos1,masse1,&accel,iterator](DummySphere* sphere){      //fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
                 llco temp_co;
-                uli masse2 = sphere.gravite_stats(temps,temp_co);  //on stock la pos dans temp_co
+                uli masse2 = sphere->gravite_stats(temps,temp_co);  //on stock la pos dans temp_co
                 temp_co={temp_co[0]-pos1[0],temp_co[1]-pos1[1],temp_co[2]-pos1[2]};  //puis on y mets le vecteur distance
                 //divide = distance ^ 2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
                 ulli divide=(abs(temp_co[0])+temp_co[0]*temp_co[0]+abs(temp_co[1])+temp_co[1]*temp_co[1]+abs(temp_co[2])+temp_co[2]*temp_co[2]);
@@ -35,20 +35,16 @@ void BaseDimension::gravite_all(float temps){
                 temp_co[1]= -(temp_co[1]*masse1)/divide;
                 temp_co[2]= -(temp_co[2]*masse1)/divide;
                 //qu'on applique
-                sphere.accel({(li)temp_co[0],(li)temp_co[1],(li)temp_co[2]});}
+                sphere->accel({(li)temp_co[0],(li)temp_co[1],(li)temp_co[2]});}
         });
-        iterator->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
+        (*iterator)->accel({accel[0],accel[1],accel[2]});  //ugly array reconstruction needed because of atomic type
     }
 }
 void BaseDimension::add_sphere(DummySphere *instance){
-    std::cout << "Type:" << typeid(instance).name() << "\n";
-    instance->debug();
-    this->objets.push_back(*instance);
-    std::cout << "test";
-    objets.back().debug();
+    this->objets.push_back(instance);
 }
 void BaseDimension::move_all(float temps){
-    std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere &sphere){sphere.move(temps);});
+    std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere* sphere){sphere->move(temps);});
 }
 void BaseDimension::print_hello_world()
 {
@@ -57,5 +53,5 @@ void BaseDimension::print_hello_world()
 
 void BaseDimension::debug(){
     std::cout << "Debuging BaseDimension\n" ;
-    std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere &sphere){sphere.debug();std::cout << typeid(sphere).name() << "\n";});
+    std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere* sphere){sphere->debug();});
 }

@@ -23,6 +23,6 @@ public:
     
 protected:
     //variables
-    std::list<DummySphere> objets;
+    std::list<DummySphere*> objets;
 };
 #endif
