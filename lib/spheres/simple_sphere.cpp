@@ -42,7 +42,7 @@ void SimpleSphere::accel(const lco accel){
     this->speed[2]+=accel[2];
 }
 //collision
-bool SimpleSphere::t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2){
+bool SimpleSphere::t_collision_avec(DummySphere *instance){
     if (not instance->t_colli_rapide(this->posmin,this->posmax))
     {return false;}
     if (instance->t_collision_coord(this->pos,this->rayon)){return true;}

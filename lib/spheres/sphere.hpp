@@ -29,7 +29,7 @@ public:
     virtual void move(float temps);
     virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
     virtual void accel(const lco accel);   //vecteur acceleration
-    virtual bool t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2);
+    virtual bool t_collision_avec(DummySphere *instance); //les veteurs force sont modifiés si collision, 
     virtual bool t_collision_coord(llco pos,uli rayon) const;
     virtual bool t_colli_rapide(llco posmin,llco posmax) const;
     virtual void debug() const;
