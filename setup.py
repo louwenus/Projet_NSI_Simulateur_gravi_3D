@@ -2,7 +2,7 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 from Cython.Build import cythonize
 from Cython.Compiler import Options
-
+import os
 Options.language_level=3
 
 copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
@@ -10,8 +10,14 @@ copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
         #'msvc'  : []  , 
         #'cygiwin' : []
 }
+sourcesfiles=[]
+for folder,folders,files in os.walk("lib"):
+    for file in files:
+        if file.split(".")[-1] in ("pxd","pyx","cpp"):
+            if file not in ("cppgravilib.cpp"):
+                sourcesfiles.append(folder + "/" + file)
 
-cppgravilib = [Extension("Graviproject.cppgravilib",sources=["lib/dimensions/dimension.cpp","lib/spheres/simple_sphere.cpp","lib/spheres/dummy_sphere.cpp","lib/cppgravilib.pyx","lib/cppgravilib.pxd"],include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
+cppgravilib = [Extension("Graviproject.cppgravilib",sources=sourcesfiles,include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
 
 class build_ext_subclass( build_ext ):
     def build_extensions(self):
