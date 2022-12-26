@@ -42,18 +42,18 @@ void SimpleSphere::accel(const lco accel){
     this->speed[2]+=accel[2];
 }
 //collision
-bool SimpleSphere::t_collision_avec(DummySphere &instance){
-    if (not instance.t_colli_rapide(this->posmin,this->posmax))
+bool SimpleSphere::t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2){
+    if (not instance->t_colli_rapide(this->posmin,this->posmax))
     {return false;}
-    if (instance.t_collision_coord(this->pos,this->rayon)){return true;}
+    if (instance->t_collision_coord(this->pos,this->rayon)){return true;}
     return false;
 }
-bool SimpleSphere::t_collision_coord(const llco &pos,uli rayon)const{
+bool SimpleSphere::t_collision_coord(llco pos,uli rayon)const{
     if (pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)
     <pow(rayon+this->rayon,2)){return true;}
     return false;
 }
-bool SimpleSphere::t_colli_rapide(const llco &posmin,const llco &posmax)const{
+bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{
     return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
      this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
 }
