@@ -16,7 +16,7 @@ for folder,folders,files in os.walk("lib"):
             if file not in ("cppgravilib.cpp"):
                 sourcesfiles.append(folder + "/" + file)
 
-cppgravilib = [Extension("Graviproject.cppgravilib",sources=sourcesfiles,include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++",extra_compile_args=['-std=c++20','-g','-Og','-pthread','-ffast-math'])]
+cppgravilib = [Extension("Graviproject.cppgravilib",sources=sourcesfiles,include_dirs=['./lib/', './lib/dimensions','./lib/spheres'],language="c++")]
 
 class build_ext_subclass( build_ext ):
     def build_extensions(self):
