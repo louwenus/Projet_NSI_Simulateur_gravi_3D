@@ -33,10 +33,10 @@ jobs:
     - name: 'Upload Wheel'
       uses: actions/upload-artifact@v3
       with:
-        name: 'build wheel'
+        name: 'build_wheel'
         path: dist/*.whl
     - name: 'Upload tar.gz'
       uses: actions/upload-artifact@v3
       with:
-        name: 'build archive'
+        name: 'build_archive'
         path: dist/*.tar.gz
