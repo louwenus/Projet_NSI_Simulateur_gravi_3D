@@ -9,7 +9,7 @@ import os
 
 Options.language_level=3
 copt =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
-        'mingw32' : ['-std=c++20','-g','-Og','-pthread','-ffast-math', "-Wl,-Bstatic", "-lpthread"]  ,
+        'mingw32' : ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
         'msvc'  : ['/O2','/std:c++20','/cgthreads8']  , 
         #'cygiwin' : []
 }
