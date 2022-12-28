@@ -63,7 +63,14 @@ jobs:
 
     #   If the Autobuild fails above, remove it and uncomment the following three lines.
     #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
+    - name: Set up Python 3.10 for building
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install python dependencies for building
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install --upgrade build cython PySide6
     - run: |
        echo "Run, Build Application using script"
        python3 setup.py build_ext --force
