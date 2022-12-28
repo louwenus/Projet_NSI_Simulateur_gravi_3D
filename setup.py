@@ -27,7 +27,7 @@ class build_ext_subclass( build_ext ):
         c = self.compiler.compiler_type
         print("using compiler:",c)
         if c in copt.keys():
-            print("wich is a knwon compiler, aplying extra args:",copt[c])
+            print("which is a known compiler, applying extra args:",copt[c])
             for e in self.extensions:
                 e.extra_compile_args = copt[ c ]
             build_ext.build_extensions(self)
