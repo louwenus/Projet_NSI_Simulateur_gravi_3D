@@ -30,3 +30,13 @@ jobs:
     - name: Build
       run: |
         python -m build
+    - name: 'Upload Wheel'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'build wheel'
+        path: dist/*.whl
+    - name: 'Upload tar.gz'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'build archive'
+        path: dist/*.tar.gz
