@@ -31,12 +31,7 @@ cdef class PyBaseDimension:
     def move_all(self,float temps) -> None:
         self.c_base_dim.move_all(temps)
     def add_sphere(self,PyDummySphere instance) -> None:
-        instance.c_dummy_sphere.debug()
         self.c_base_dim.add_sphere(instance.c_dummy_sphere)
-        instance.c_dummy_sphere.debug()
-    def add_simple(self,PySimpleSphere instance) -> None:
-        instance.c_simple_sphere.debug()
-        self.c_base_dim.add_sphere(instance.c_simple_sphere)
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text
@@ -49,7 +44,6 @@ cdef class PyDummySphere:
     def __cinit__(self,*a,**kw):
         if type(self) is PyDummySphere:
             self.c_dummy_sphere = new cppgravilib.DummySphere()
-            self.c_dummy_sphere.debug()
     def __dealloc__(self):
         if type(self) is PyDummySphere:
             del self.c_dummy_sphere
@@ -60,7 +54,5 @@ cdef class PySimpleSphere(PyDummySphere):
     def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
         if type(self) is PySimpleSphere:
             self.c_simple_sphere = self.c_dummy_sphere = new cppgravilib.SimpleSphere(x,y,z,masse,rayon,vx,vy,vz)
-            self.c_simple_sphere.debug()
-            self.c_dummy_sphere.debug()
     def __dealloc__(self):
         del self.c_simple_sphere

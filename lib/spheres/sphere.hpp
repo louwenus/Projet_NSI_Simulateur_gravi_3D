@@ -7,12 +7,12 @@ class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe
 public:
     //pas de constructeur
     
-    virtual ~DummySphere() = default;
+    virtual ~DummySphere() = default;  //constructeur par default requis pour etre virtuel
 
-    virtual void move(float temps);
-    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
-    virtual void accel(lco accel);   //la masse doit etre multiplié par le temps au préalable (réduction du nombre de calcul)
-    virtual bool t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2);
+    virtual void move(float temps);    //dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
+    virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)     obtention des stats de gravitation.  la masse est divisé par le temps
+    virtual void accel(lco accel);   //application d'un vecteur acceleration
+    virtual bool t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2);  //teste la collsion avec une autre sphere
     virtual bool t_collision_coord(llco pos,uli rayon) const;
     virtual bool t_colli_rapide(llco posmin,llco posmax) const;
     virtual void debug() const;
@@ -26,17 +26,17 @@ public:
     //SimpleSphere();
     SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,li vx,li vy,li vz);
 
-    virtual void move(float temps);
+    virtual void move(float temps);     //dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual uli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
     virtual void accel(const lco accel);   //vecteur acceleration
-    virtual bool t_collision_avec(DummySphere *instance); //les veteurs force sont modifiés si collision, 
+    virtual bool t_collision_avec(DummySphere *instance); //test de collision avec une autre sphere
     virtual bool t_collision_coord(llco pos,uli rayon) const;
     virtual bool t_colli_rapide(llco posmin,llco posmax) const;
     virtual void debug() const;
 protected:
     llco posmin;  //utilisé pour les tests de collision rapide
     llco posmax;  //utilisé pour les tests de collision rapide
-    llco pos;
+    llco pos;     //position
     uli masse;
     uli rayon;
     lco speed;

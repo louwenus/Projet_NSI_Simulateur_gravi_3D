@@ -16,21 +16,20 @@ except ModuleNotFoundError:
 try:
     import Graviproject.cppgravilib as cppgravilib
 except ModuleNotFoundError:
-    print("PyGravilib doit etre compilé ou téléchargé pour votre distribution pour que ce programme fonctionne, lisez README.md pour plus de détails")
+    print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
 from .affichage import app #temporaire, à raffiner
 # on créé une dimension (classe principale de la librairie)
 universe: cppgravilib.PyBaseDimension
 
 def launch_app():
-    universe=cppgravilib.PyBaseDimension()
-    universe.print_hello_world()
-    testboule1=cppgravilib.PySimpleSphere(0,0,0,1,1,0,0,0)
+    universe=cppgravilib.PyBaseDimension() # une dimension
+    testboule1=cppgravilib.PySimpleSphere(0,0,0,1,1,0,0,0) #4 simple spheres de test
     testboule2=cppgravilib.PySimpleSphere(1,0,0,1,1,0,0,0)
     testboule3=cppgravilib.PySimpleSphere(0,1,0,1,1,0,0,0)
     testboule4=cppgravilib.PySimpleSphere(0,0,1,1,1,0,0,0)
-    universe.add_sphere(testboule1)
-    universe.add_simple(testboule2)
+    universe.add_sphere(testboule1) 
+    universe.add_sphere(testboule2)
     universe.debug()
     universe.gravite_all(5)
     universe.move_all(10)
