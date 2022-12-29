@@ -3,7 +3,7 @@
 #include "sphere.hpp"
 
 void DummySphere::move(float temps){return;}
-uli DummySphere::gravite_stats(float temps,llco &return_pos) const{return 0;}
+ulli DummySphere::gravite_stats(float temps,llco &return_pos) const{return 0;}
 void DummySphere::accel(lco accel){return;}
 bool DummySphere::t_collision_avec(DummySphere *instance,llco &v_force,llco &v_force2){return false;}
 bool DummySphere::t_collision_coord(llco pos,const uli rayon)const{return false;}

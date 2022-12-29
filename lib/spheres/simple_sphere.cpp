@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(lli x,lli y,lli z,uli masse,uli rayon,li vx,li vy,li vz)  //crée une simple sphere, avec les stats indiqué
+SimpleSphere::SimpleSphere(lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz)  //crée une simple sphere, avec les stats indiqué
 {   this->pos = {x,y,z};
 
     this->posmin={x-rayon,y-rayon,z-rayon};
@@ -22,7 +22,7 @@ void SimpleSphere::move(float temps){
     this->posmax={this->pos[0]+this->rayon, this->pos[1]+this->rayon, this->pos[2]+this->rayon};
 }
 //gravitation
-uli SimpleSphere::gravite_stats(float temps,llco &return_pos)const{ //cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
+ulli SimpleSphere::gravite_stats(float temps,llco &return_pos)const{ //cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos=this->pos;
     return this->masse*temps;
 }
@@ -48,5 +48,5 @@ bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{  //cette foncti
      this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
 }
 void SimpleSphere::debug() const{
-    std::cout << "Position:" << this->pos[0] << '_' << this->pos[1] << '_' << this->pos[2] << '\n' ;
+    std::cout << "Position:" << this->pos[0] << '/' << this->pos[1] << '/' << this->pos[2] << " Vitesse:" << this->speed[0] << '/' << this->speed[1] << '/'  << this->speed[2] <<'\n' ;
 }
