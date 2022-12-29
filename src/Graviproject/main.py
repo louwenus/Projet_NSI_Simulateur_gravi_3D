@@ -14,7 +14,7 @@ except ModuleNotFoundError:
     print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
     exit(1)
 try:
-    import Graviproject.cppgravilib as cppgravilib
+    from . import cppgravilib
 except ModuleNotFoundError:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails")
     exit(1)
