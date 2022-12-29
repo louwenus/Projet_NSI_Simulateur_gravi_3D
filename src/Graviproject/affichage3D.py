@@ -29,6 +29,3 @@ class MaFenetre(QWidget):
 app = QApplication(sys.argv)
 fen = MaFenetre()
 sys.exit(app.exec_())
-"""
-je suis en rando
-"""
