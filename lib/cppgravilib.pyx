@@ -24,8 +24,6 @@ cdef class PyBaseDimension:
     def debug(self) -> None:
         self.c_base_dim.debug()
     
-    def print_hello_world(self) -> None:
-        self.c_base_dim.print_hello_world()
     def gravite_all(self,float temps) -> None:
         self.c_base_dim.gravite_all(temps)
     def move_all(self,float temps) -> None:

@@ -20,7 +20,6 @@ cdef extern from "spheres/sphere.hpp":
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
         BaseDimension() except +
-        void print_hello_world()
         void add_sphere(DummySphere*)
         void gravite_all(float temps)
         void move_all(float temps)
