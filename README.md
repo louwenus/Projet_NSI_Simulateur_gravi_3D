@@ -39,7 +39,8 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
   - Vous devez compiler du c++ et du cython :
     - Pour Windows :
 
-      Installez [python3](https://www.python.org/downloads/windows/), pip ansi que les header `Python.h` devrait être installé en meme temps.<br/>
+      Installez [python3](https://www.python.org/downloads/windows/)<br/>
+      *NB: normalement, les header python.h et pip sont installés en meme temps*<br/>
       Installez un compilateur c++ de votre choix capable de compiler du C++20, par exemple [msvc](https://aka.ms/vs/17/release/vs_BuildTools.exe).
 
     - Pour Linux :
