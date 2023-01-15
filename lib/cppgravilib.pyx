@@ -45,7 +45,7 @@ cdef class PyDummySphere:
     def __dealloc__(self):
         if type(self) is PyDummySphere:
             pass
-    def debug(self):
+    def debug(self) -> None:
         self.c_dummy_sphere.debug()
 cdef class PySimpleSphere(PyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere #C++ instance
