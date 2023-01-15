@@ -41,16 +41,16 @@ cdef class PyDummySphere:
     cdef cppgravilib.DummySphere *c_dummy_sphere #C++ instance
     def __cinit__(self,*a,**kw):
         if type(self) is PyDummySphere:
-            self.c_dummy_sphere = new cppgravilib.DummySphere()
+            self.c_dummy_sphere = NULL
     def __dealloc__(self):
         if type(self) is PyDummySphere:
-            del self.c_dummy_sphere
+            pass
     def debug(self):
         self.c_dummy_sphere.debug()
 cdef class PySimpleSphere(PyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere #C++ instance
-    def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+    def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,int dur):
         if type(self) is PySimpleSphere:
-            self.c_simple_sphere = self.c_dummy_sphere = new cppgravilib.SimpleSphere(x,y,z,masse,rayon,vx,vy,vz)
+            self.c_simple_sphere = self.c_dummy_sphere = new cppgravilib.SimpleSphere(x,y,z,masse,rayon,vx,vy,vz,dur)
     def __dealloc__(self):
         del self.c_simple_sphere

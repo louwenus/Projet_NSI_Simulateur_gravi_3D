@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz,u_short durete):durete(durete)  //crée une simple sphere, avec les stats indiqué
+SimpleSphere::SimpleSphere(lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz,u_short dur):dur(dur)  //crée une simple sphere, avec les stats indiqué
 {   this->pos = {x,y,z};
 
     this->posmin={x-rayon,y-rayon,z-rayon};
@@ -31,6 +31,7 @@ void SimpleSphere::accel(const lco accel){  //cette fonction aplique un vecteur 
     this->speed[1]+=accel[1];
     this->speed[2]+=accel[2];
 }
+
 //collision
 bool SimpleSphere::t_collision_avec(DummySphere *instance){  //cette fonction teste si cette sphere en collisione une autre
     if (not instance->t_colli_rapide(this->posmin,this->posmax))
@@ -49,7 +50,10 @@ bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{  //cette foncti
 }
 u_short SimpleSphere::colli_stats(lco &return_speed){
     return_speed=this->speed;
-    return this->durete;
+    return this->dur;
+}
+bool SimpleSphere::fusion(lco speed,u_short dur,DummySphere *instance){
+    return false; //simple sphere do not support collsion
 }
 void SimpleSphere::debug() const{
     std::cout << "Position:" << this->pos[0] << '/' << this->pos[1] << '/' << this->pos[2] << " Vitesse:" << this->speed[0] << '/' << this->speed[1] << '/'  << this->speed[2] <<'\n' ;

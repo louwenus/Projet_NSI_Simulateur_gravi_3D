@@ -15,7 +15,7 @@ cdef extern from "spheres/sphere.hpp":
         void debug()
     
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
+        SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,int dur) except +
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
