@@ -24,8 +24,8 @@ universe: cppgravilib.PyBaseDimension
 
 def launch_app():
     universe=cppgravilib.PyBaseDimension() # une dimension
-    testboule1=cppgravilib.PySimpleSphere(0,0,0,100,2,0,0,0) #4 simple spheres de test
-    testboule2=cppgravilib.PySimpleSphere(10,0,0,100,2,0,0,0)
+    testboule1=cppgravilib.PySimpleSphere(0,0,0,100,2,0,0,0,5000) #4 simple spheres de test
+    testboule2=cppgravilib.PySimpleSphere(10,0,0,100,2,0,0,0,5000)
     universe.add_sphere(testboule1) 
     universe.add_sphere(testboule2)
     universe.debug()
