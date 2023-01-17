@@ -59,6 +59,7 @@ bool SimpleSphere::collsion(lco speed,u_short dur,std::list<DummySphere*> &fragm
     for (char i=0;i<3;i++){
         this->speed[i]+=((speed[i]-this->speed[i])*dur)/10000;
     }
+    return false;
 }
 
 void SimpleSphere::debug() const{
