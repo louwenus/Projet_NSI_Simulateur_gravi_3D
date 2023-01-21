@@ -47,7 +47,7 @@ void BaseDimension::add_sphere(DummySphere *instance){
 void BaseDimension::move_all(float temps){
     std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere* sphere){sphere->move(temps);});
 }
-void BaseDimension::resolve_collsions(){
+void BaseDimension::detect_collsions(){
     
 }
 void BaseDimension::debug(){

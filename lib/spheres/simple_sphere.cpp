@@ -52,15 +52,6 @@ u_short SimpleSphere::colli_stats(lco &return_speed){
     return_speed=this->speed;
     return this->dur;
 }
-bool SimpleSphere::fusion(lco speed,u_short dur,DummySphere *instance){
-    return false; //simple sphere do not support collsion
-}
-bool SimpleSphere::collsion(lco speed,u_short dur,std::list<DummySphere*> &fragments){
-    for (char i=0;i<3;i++){
-        this->speed[i]+=((speed[i]-this->speed[i])*dur)/10000;
-    }
-    return false;
-}
 
 void SimpleSphere::debug() const{
     std::cout << "Position:" << this->pos[0] << '/' << this->pos[1] << '/' << this->pos[2] << " Vitesse:" << this->speed[0] << '/' << this->speed[1] << '/'  << this->speed[2] <<'\n' ;
