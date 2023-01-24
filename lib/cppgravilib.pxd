@@ -12,7 +12,6 @@ from libcpp.string cimport string
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere() except +
-        void debug()
     
     cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,int dur) except +

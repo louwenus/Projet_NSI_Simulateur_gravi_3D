@@ -13,25 +13,10 @@ try:
 except ModuleNotFoundError:
     print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
     exit(1)
-try:
-    from . import cppgravilib
-except ModuleNotFoundError:
-    print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails")
-    exit(1)
+from . import gravilib
 from .affichage import app #temporaire, à raffiner
 # on créé une dimension (classe principale de la librairie)
-universe: cppgravilib.PyBaseDimension
 
 def launch_app():
-    universe=cppgravilib.PyBaseDimension() # une dimension
-    testboule1=cppgravilib.PySimpleSphere(0,0,0,100,2,0,0,0,5000) #4 simple spheres de test
-    testboule2=cppgravilib.PySimpleSphere(10,0,0,100,2,0,0,0,5000)
-    universe.add_sphere(testboule1) 
-    universe.add_sphere(testboule2)
-    universe.debug()
-    universe.gravite_all(1)
-    universe.debug()
-    universe.move_all(1)
-    universe.debug()
 
     sys.exit(app.exec_())
