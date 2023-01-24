@@ -5,8 +5,8 @@
 #include "../typedef.hpp"
 class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe de base de la hiérarchie d'héritage, et donc comme classe d'arguments de fonctions
 public:
-    //virtual DummySphere() = 0;
-    virtual ~DummySphere() = 0;  //constructeur par default requis pour etre virtuel
+    DummySphere();
+    virtual ~DummySphere();  //constructeur par default requis pour etre virtuel
 
     //fonctions pour la collision
     virtual u_short colli_stats(lco &return_speed) = 0; // retourne la dureté entre 1 et 10 000, ansi que la vitesse

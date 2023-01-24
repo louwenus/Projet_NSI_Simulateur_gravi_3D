@@ -42,9 +42,9 @@ cdef class CyDummySphere:
     def __cinit__(self,*a,**kw):
         if type(self) is CyDummySphere:
             self.c_dummy_sphere = NULL
-    def __dealloc__(self):
-        if type(self) is CyDummySphere:
-            pass
+    #def __dealloc__(self):
+    #    if type(self) is CyDummySphere:
+    #        pass
     def debug(self) -> None:
         print("this is a dummy sphere")
 

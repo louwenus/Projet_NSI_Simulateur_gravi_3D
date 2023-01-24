@@ -12,7 +12,7 @@ except ModuleNotFoundError:
     raise(ModuleNotFoundError)
 
 
-universe: cppgravilib.PyBaseDimension
+universe: cppgravilib.CyBaseDimension
 class PySimpleSphere(cppgravilib.CySimpleSphere):
     def __init__(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int,dur:int) -> None:
         super().__init__(x,y,z,masse,rayon,vx,vy,vz,dur)
