@@ -5,8 +5,7 @@
 #include "../typedef.hpp"
 class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe de base de la hiérarchie d'héritage, et donc comme classe d'arguments de fonctions
 public:
-    //pas de constructeur
-    
+    //virtual DummySphere() = 0;
     virtual ~DummySphere() = 0;  //constructeur par default requis pour etre virtuel
 
     //fonctions pour la collision
