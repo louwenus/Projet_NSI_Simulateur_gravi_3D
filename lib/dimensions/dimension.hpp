@@ -19,6 +19,7 @@ public:
     virtual void move_all(float temps);
     virtual void add_sphere(DummySphere *instance);
     virtual void debug();
+    virtual PyObject* first_sphere();
     virtual void detect_collsions();
     
 protected:

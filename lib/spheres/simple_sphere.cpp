@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz,u_short dur):dur(dur)  //crée une simple sphere, avec les stats indiqué
+SimpleSphere::SimpleSphere(PyObject* parent,lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz):DummySphere(parent)  //crée une simple sphere, avec les stats indiqué
 {   this->pos = {x,y,z};
 
     this->posmin={x-rayon,y-rayon,z-rayon};
@@ -47,10 +47,6 @@ bool SimpleSphere::t_collision_coord(llco pos,uli rayon)const{  // cette fonctio
 bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{  //cette fonction teste rapidement (faux positifs) si cette sphere en touche une autre
     return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
      this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
-}
-u_short SimpleSphere::colli_stats(lco &return_speed){
-    return_speed=this->speed;
-    return this->dur;
 }
 
 void SimpleSphere::debug() const{

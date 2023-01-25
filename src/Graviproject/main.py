@@ -18,5 +18,8 @@ from .affichage import app #temporaire, à raffiner
 # on créé une dimension (classe principale de la librairie)
 
 def launch_app():
-
+    #tests:
+    test = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,0,0,0,0))
+    
+    
     sys.exit(app.exec_())

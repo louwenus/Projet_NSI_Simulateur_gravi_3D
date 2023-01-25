@@ -11,6 +11,7 @@
 #include <execution>
 #include <atomic>
 #include <iostream>
+#include "Python.h"
 
 //for easier args typing
 typedef uint64_t ulli;

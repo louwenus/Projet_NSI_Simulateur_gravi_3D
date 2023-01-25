@@ -3,13 +3,12 @@
 #ifndef SPHERE_GENERAL_HEADER
 #define SPHERE_GENERAL_HEADER
 #include "../typedef.hpp"
-class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe de base de la hiérarchie d'héritage, et donc comme classe d'arguments de fonctions
+class DummySphere{ //classe minimale inutile en elle meme, utilisé comme classe de base de la hiérarchie d'héritage, (définition de l'interface minimale)
 public:
-    DummySphere();
+    DummySphere(PyObject* parent);
     virtual ~DummySphere();  //constructeur par default requis pour etre virtuel
 
     //fonctions pour la collision
-    virtual u_short colli_stats(lco &return_speed) = 0; // retourne la dureté entre 1 et 10 000, ansi que la vitesse
     virtual bool t_collision_avec(DummySphere *instance) = 0;  //teste la collsion avec une autre sphere
     virtual bool t_collision_coord(llco pos,uli rayon) const = 0;                           //teste rapidement (faux positifs) la collsion
     virtual bool t_colli_rapide(llco posmin,llco posmax) const = 0;                         //teste mieux la collision
@@ -19,16 +18,17 @@ public:
     virtual void move(float temps) = 0;    //dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual void debug() const = 0;
     
+    //variable
+    PyObject* pyparent; 
 };
 
 class SimpleSphere : public DummySphere {  //sphere basique
 public:
     //constructeurs et destructeur
     //SimpleSphere();
-    SimpleSphere(lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz,u_short dur);
+    SimpleSphere(PyObject* parent,lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz);
 
     //fonctions pour la collision
-    virtual u_short colli_stats(lco &return_speed); // retourne la dureté entre 1 et 10 000, ansi que la vitesse
     virtual bool t_collision_avec(DummySphere *instance); //test de collision avec une autre sphere
     virtual bool t_collision_coord(llco pos,uli rayon) const;
     virtual bool t_colli_rapide(llco posmin,llco posmax) const;
@@ -44,7 +44,6 @@ protected:
     ulli masse;
     uli rayon;
     lco speed;
-    const u_short dur;  //dureté
 };
 
 #endif

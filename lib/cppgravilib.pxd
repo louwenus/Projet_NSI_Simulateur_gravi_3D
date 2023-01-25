@@ -8,12 +8,14 @@
 # cython: language_level=3
 
 from libcpp.string cimport string
+from cpython cimport PyObject
+cimport libcpp 
 
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         pass
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,int dur) except +
+        SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
@@ -22,3 +24,4 @@ cdef extern from "dimensions/dimension.hpp":
         void gravite_all(float temps)
         void move_all(float temps)
         void debug()
+        PyObject* first_sphere()

@@ -11,6 +11,7 @@
 #from libcpp.string cimport string
 cimport cppgravilib
 import cython
+from cpython cimport PyObject
 
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
@@ -29,7 +30,10 @@ cdef class CyBaseDimension:
     def move_all(self,float temps) -> None:
         self.c_base_dim.move_all(temps)
     def add_sphere(self,CyDummySphere instance) -> None:
-        self.c_base_dim.add_sphere(instance.c_dummy_sphere)
+        self.c_base_dim.add_sphere(instance.c_sphere)
+    
+    def return_first_sphere(self) -> object:
+        return <object>(self.c_base_dim.first_sphere())
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text
@@ -38,20 +42,18 @@ cdef class CyBaseDimension:
     #    self.c_dim.hello_text=text
 
 cdef class CyDummySphere:
-    cdef cppgravilib.DummySphere *c_dummy_sphere #C++ instance
+    cdef cppgravilib.DummySphere *c_sphere #C++ instance
     def __cinit__(self,*a,**kw):
         if type(self) is CyDummySphere:
-            self.c_dummy_sphere = NULL
-    #def __dealloc__(self):
-    #    if type(self) is CyDummySphere:
-    #        pass
+            self.c_sphere = NULL
+    def __dealloc__(self):
+        del self.c_sphere
     def debug(self) -> None:
         print("this is a dummy sphere")
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere #C++ instance
-    def __cinit__(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,int dur):
+    def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
         if type(self) is CySimpleSphere:
-            self.c_simple_sphere = self.c_dummy_sphere = new cppgravilib.SimpleSphere(x,y,z,masse,rayon,vx,vy,vz,dur)
-    def __dealloc__(self):
-        del self.c_simple_sphere
+            self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
+    

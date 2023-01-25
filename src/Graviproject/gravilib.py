@@ -1,4 +1,6 @@
 import sys
+from collections.abc import Iterable
+
 try:
     import cython
 except ModuleNotFoundError:
@@ -13,6 +15,8 @@ except ModuleNotFoundError:
 
 
 universe: cppgravilib.CyBaseDimension
-class PySimpleSphere(cppgravilib.CySimpleSphere):
-    def __init__(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int,dur:int) -> None:
-        super().__init__(x,y,z,masse,rayon,vx,vy,vz,dur)
+class PyBaseSphere():
+    def __init__(self,cy_sphere_type:cppgravilib.CyDummySphere,args:Iterable) -> None:
+        self.cy_sphere=cy_sphere_type(self,*args)
+    def render():
+        pass #todo ...

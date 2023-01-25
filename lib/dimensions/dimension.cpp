@@ -54,3 +54,6 @@ void BaseDimension::debug(){
     std::cout << "Debuging BaseDimension\n" ;
     std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere* sphere){sphere->debug();});
 }
+PyObject* BaseDimension::first_sphere(){
+    return this->objets.front()->pyparent;
+}
