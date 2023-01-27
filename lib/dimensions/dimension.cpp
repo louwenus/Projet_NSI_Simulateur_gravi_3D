@@ -47,13 +47,26 @@ void BaseDimension::add_sphere(DummySphere *instance){
 void BaseDimension::move_all(float temps){
     std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere* sphere){sphere->move(temps);});
 }
-void BaseDimension::detect_collsions(){
-    
+std::list<std::array<PyObject*,2>> BaseDimension::detect_collisions(){
+    std::list<std::array<PyObject*,2>> liste = {};
+    std::list<DummySphere*>::iterator iterator = this->objets.begin();
+    while( iterator != this->objets.end()){
+        std::list<DummySphere*>::iterator iterator2 = iterator;
+        while (iterator2 != this->objets.end()){
+            if ((*iterator)->t_collision_avec(*iterator2)){
+                liste.push_back(std::array<PyObject*,2> {(*iterator)->pyparent,(*iterator2)->pyparent});
+                this->objets.erase(iterator2);
+                iterator=this->objets.erase(iterator);
+                goto detect_collsion_endloop;
+            }
+            iterator2 ++;
+        }
+        iterator ++;
+        detect_collsion_endloop:;
+    }
+    return liste;
 }
 void BaseDimension::debug(){
     std::cout << "Debuging BaseDimension\n" ;
     std::for_each(std::execution::seq,this->objets.begin(),this->objets.end(),[](DummySphere* sphere){sphere->debug();});
-}
-PyObject* BaseDimension::first_sphere(){
-    return this->objets.front()->pyparent;
 }

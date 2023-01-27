@@ -11,6 +11,8 @@ from libcpp.string cimport string
 from cpython cimport PyObject
 cimport libcpp 
 
+
+
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         pass
@@ -24,4 +26,4 @@ cdef extern from "dimensions/dimension.hpp":
         void gravite_all(float temps)
         void move_all(float temps)
         void debug()
-        PyObject* first_sphere()
+        libcpp.list detect_collisions()

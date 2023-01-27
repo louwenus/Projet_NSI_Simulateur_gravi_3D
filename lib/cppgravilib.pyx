@@ -12,10 +12,11 @@
 cimport cppgravilib
 import cython
 from cpython cimport PyObject
+cimport libcpp
 
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
-    
+
     def __cinit__(self,*a,**kw):                       #cinit & dealoc pour heritage corect
         if type(self) is CyBaseDimension:
             self.c_base_dim = new cppgravilib.BaseDimension()
@@ -32,8 +33,11 @@ cdef class CyBaseDimension:
     def add_sphere(self,CyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_sphere)
     
-    def return_first_sphere(self) -> object:
-        return <object>(self.c_base_dim.first_sphere())
+    def collisions(self,fonction) -> None:
+        cdef libcpp.list liste=self.c_base_dim.detect_collisions()
+        for i in liste:
+            fonction(<object>i[0],<object>i[1])
+
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text
