@@ -4,3 +4,4 @@
 /dist/
 /src/Graviproject.egg-info/
 __pycache__/
+.vscode/
