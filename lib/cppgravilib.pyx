@@ -13,6 +13,8 @@ cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport PyObject
 from libcpp.list cimport list as clist
+from typing import Callable
+
 ctypedef PyObject* PyObjPtr
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
@@ -33,7 +35,7 @@ cdef class CyBaseDimension:
     def add_sphere(self,CyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_sphere)
     
-    def collisions(self,fonction:function) -> list:
+    def collisions(self,fonction:Callable) -> list:
         """Détecte les collisions dans une dimension, puis appelle la fonction passée en argument pour chacune:
       fonction(sphere1,sphere2,dimension), les retours de cette fonction sont ajoutés dans une liste, qui est renvoyée.
         
