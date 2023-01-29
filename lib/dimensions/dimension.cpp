@@ -47,14 +47,16 @@ void BaseDimension::add_sphere(DummySphere *instance){
 void BaseDimension::move_all(float temps){
     std::for_each(std::execution::par,this->objets.begin(),this->objets.end(),[temps](DummySphere* sphere){sphere->move(temps);});
 }
-std::list<std::array<PyObject*,2>> BaseDimension::detect_collisions(){
-    std::list<std::array<PyObject*,2>> liste = {};
+std::list<PyObject*> BaseDimension::detect_collisions(){
+    std::list<PyObject*> liste = {};
     std::list<DummySphere*>::iterator iterator = this->objets.begin();
     while( iterator != this->objets.end()){
-        std::list<DummySphere*>::iterator iterator2 = iterator;
-        while (iterator2 != this->objets.end()){
+        std::list<DummySphere*>::iterator iterator2 = this->objets.begin();
+        while (iterator2 != iterator){
             if ((*iterator)->t_collision_avec(*iterator2)){
-                liste.push_back(std::array<PyObject*,2> {(*iterator)->pyparent,(*iterator2)->pyparent});
+                std::cout << "colision detected\n" ;
+                liste.push_back((*iterator)->pyparent);
+                liste.push_back((*iterator2)->pyparent);
                 this->objets.erase(iterator2);
                 iterator=this->objets.erase(iterator);
                 goto detect_collsion_endloop;

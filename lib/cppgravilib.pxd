@@ -9,8 +9,8 @@
 
 from libcpp.string cimport string
 from cpython cimport PyObject
-cimport libcpp 
-
+from libcpp.list cimport list as clist
+ctypedef PyObject* PyObjPtr
 
 
 cdef extern from "spheres/sphere.hpp":
@@ -26,4 +26,4 @@ cdef extern from "dimensions/dimension.hpp":
         void gravite_all(float temps)
         void move_all(float temps)
         void debug()
-        libcpp.list detect_collisions()
+        clist[PyObjPtr] detect_collisions()

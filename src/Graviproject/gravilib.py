@@ -9,14 +9,23 @@ except ModuleNotFoundError:
 
 try:
     from . import cppgravilib
-except ModuleNotFoundError:
+except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails",file=sys.stderr)
-    raise(ModuleNotFoundError)
+    raise(e)
 
 
-universe: cppgravilib.CyBaseDimension
 class PyBaseSphere():
     def __init__(self,cy_sphere_type:cppgravilib.CyDummySphere,args:Iterable) -> None:
+        """crée une PyBaseSphere sur la base d'une cy_sphere passé en argument
+
+        Args:
+            cy_sphere_type (cppgravilib.CyDummySphere): Le type de cy_sphere sur lequel baser la PyBaseSphere
+            args (Iterable): arguments pour la construction de la cy_sphere
+        """
         self.cy_sphere=cy_sphere_type(self,*args)
     def render():
         pass #todo ...
+
+def collide(sph1:PyBaseSphere,sph2:PyBaseSphere,dim:cppgravilib.CyBaseDimension):
+    print("ttest")
+    return "mwhahaha"

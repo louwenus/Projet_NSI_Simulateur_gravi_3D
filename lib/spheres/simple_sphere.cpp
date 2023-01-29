@@ -45,8 +45,8 @@ bool SimpleSphere::t_collision_coord(llco pos,uli rayon)const{  // cette fonctio
     return false;
 }
 bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{  //cette fonction teste rapidement (faux positifs) si cette sphere en touche une autre
-    return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[0]<posmax[1] &&
-     this->posmin[0]>posmax[0] && this->posmin[1]>posmax[1] && this->posmin[0]>posmax[1]); //test de collision rectangles
+    return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[2]<posmax[2] &&
+     this->posmax[0]>posmin[0] && this->posmax[1]>posmin[1] && this->posmax[2]>posmin[2]); //test de collision rectangles
 }
 
 void SimpleSphere::debug() const{

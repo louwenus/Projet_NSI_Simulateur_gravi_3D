@@ -19,7 +19,7 @@ public:
     virtual void move_all(float temps);
     virtual void add_sphere(DummySphere *instance);
     virtual void debug();
-    virtual std::list<std::array<PyObject*,2>> detect_collisions();
+    virtual std::list<PyObject*> detect_collisions();
     
 protected:
     //variables

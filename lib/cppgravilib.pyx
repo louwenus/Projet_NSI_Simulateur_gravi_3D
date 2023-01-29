@@ -10,10 +10,10 @@
 
 #from libcpp.string cimport string
 cimport cppgravilib
-import cython
+from cython.operator import postincrement,dereference
 from cpython cimport PyObject
-cimport libcpp
-
+from libcpp.list cimport list as clist
+ctypedef PyObject* PyObjPtr
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
@@ -33,10 +33,28 @@ cdef class CyBaseDimension:
     def add_sphere(self,CyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_sphere)
     
-    def collisions(self,fonction) -> None:
-        cdef libcpp.list liste=self.c_base_dim.detect_collisions()
-        for i in liste:
-            fonction(<object>i[0],<object>i[1])
+    def collisions(self,fonction:function) -> list:
+        """Détecte les collisions dans une dimension, puis appelle la fonction passée en argument pour chacune:
+      fonction(sphere1,sphere2,dimension), les retours de cette fonction sont ajoutés dans une liste, qui est renvoyée.
+        
+        Args:
+            self (CyBaseDimension): La CyBaseDimension (ou compatible) sur laquelle on detecte les collisions
+            fonction (function): La fonction de collision, prend 3 arguments, 2 PyBaseSphere (ou compatible) et une CyBaseDimension(ou compatible)
+        
+        Returns:
+            retours (list): La concatenation sous forme de liste des résultats de la fonction sur chaque collisions
+        """
+        cdef clist[PyObjPtr] liste 
+        liste = self.c_base_dim.detect_collisions()
+        liste2 : list = []
+        cdef  clist[PyObjPtr].iterator iterator = liste.begin()
+        cdef object obje,obje2
+        while iterator!=liste.end():
+        #    liste2.append(<object>dereference(preincrement(iterator)))
+            obje = <object>dereference(postincrement(iterator))
+            obje2 = <object>dereference(postincrement(iterator))
+            liste2.append(fonction(obje,obje2,self))
+        return liste2
 
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
