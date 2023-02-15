@@ -74,10 +74,16 @@ cdef class CyDummySphere:
         del self.c_sphere
     def debug(self) -> None:
         print("this is a dummy sphere")
+    
+    def get_coord(self):
+        return 0,0,0,0
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere #C++ instance
     def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
         if type(self) is CySimpleSphere:
             self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
+    
+    def get_coord(self):
+        pass
     

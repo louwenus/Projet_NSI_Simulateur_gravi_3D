@@ -7,7 +7,6 @@
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
-from libcpp.string cimport string
 from cpython cimport PyObject
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
