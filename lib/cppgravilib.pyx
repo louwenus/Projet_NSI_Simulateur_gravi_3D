@@ -73,9 +73,20 @@ cdef class CyDummySphere:
     def __dealloc__(self):
         del self.c_sphere
     def debug(self) -> None:
+        """print out debuging info on stdout"""
         print("this is a dummy sphere")
     
     def get_coord(self):
+        """retourn la position et le rayon au format (x,y,z,rayon)
+        
+        Args:
+            self
+        
+        Returns:
+            x (int): composante x de la position
+            y (int): composante y de la position
+            z (int): composante z de la position
+            rayon (int): rayon"""
         return 0,0,0,0
 
 cdef class CySimpleSphere(CyDummySphere):
