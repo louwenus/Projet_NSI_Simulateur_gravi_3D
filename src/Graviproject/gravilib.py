@@ -23,7 +23,7 @@ class PyBaseSphere():
             args (Iterable): arguments pour la construction de la cy_sphere
         """
         self.cy_sphere=cy_sphere_type(self,*args)
-    def render():
+    def render(self):
         pass #todo ...
 
 def collide(sph1:PyBaseSphere,sph2:PyBaseSphere,dim:cppgravilib.CyBaseDimension):
