@@ -18,8 +18,20 @@ typedef uint64_t ulli;
 typedef int64_t lli;
 typedef int32_t li;
 typedef uint32_t uli;
-typedef std::array<lli, 3> llco;
-typedef std::array<li, 3> lco;
-typedef std::array<std::atomic<int32_t>, 3> atlco;
+struct llco {
+    lli x;
+    lli y;
+    lli z;
+};
+struct lco {
+    li x;
+    li y;
+    li z;
+};
+struct atllco{
+    std::atomic<lli> x;
+    std::atomic<lli> y;
+    std::atomic<lli> z;
+};
 
 #endif 

@@ -11,12 +11,24 @@ from cpython cimport PyObject
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
 
+cdef extern from "typedef.hpp":
+    struct llco:
+        int x
+        int y
+        int z
+    struct lco:
+        int x
+        int y
+        int z
 
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
-        pass
+        DummySphere(PyObject* parent) except +
     cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
+        llco pos
+        int rayon
+        
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :

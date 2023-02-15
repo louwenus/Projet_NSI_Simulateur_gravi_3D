@@ -85,5 +85,5 @@ cdef class CySimpleSphere(CyDummySphere):
             self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
     
     def get_coord(self):
-        pass
+        return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z, self.c_simple_sphere.rayon
     

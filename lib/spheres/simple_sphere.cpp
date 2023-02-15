@@ -14,12 +14,12 @@ SimpleSphere::SimpleSphere(PyObject* parent,lli x,lli y,lli z,ulli masse,uli ray
 }
 
 void SimpleSphere::move(float temps){
-    this->pos[0]+=this->speed[0]*temps;
-    this->pos[1]+=this->speed[1]*temps;
-    this->pos[2]+=this->speed[2]*temps;
+    this->pos.x+=this->speed.x*temps;
+    this->pos.y+=this->speed.y*temps;
+    this->pos.z+=this->speed.z*temps;
 
-    this->posmin={this->pos[0]-this->rayon, this->pos[1]-this->rayon, this->pos[2]-this->rayon};
-    this->posmax={this->pos[0]+this->rayon, this->pos[1]+this->rayon, this->pos[2]+this->rayon};
+    this->posmin={this->pos.x-this->rayon, this->pos.y-this->rayon, this->pos.z-this->rayon};
+    this->posmax={this->pos.x+this->rayon, this->pos.y+this->rayon, this->pos.z+this->rayon};
 }
 //gravitation
 ulli SimpleSphere::gravite_stats(float temps,llco &return_pos)const{ //cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
@@ -27,9 +27,9 @@ ulli SimpleSphere::gravite_stats(float temps,llco &return_pos)const{ //cette fun
     return this->masse*temps;
 }
 void SimpleSphere::accel(const lco accel){  //cette fonction aplique un vecteur acceleration a la sphere
-    this->speed[0]+=accel[0];
-    this->speed[1]+=accel[1];
-    this->speed[2]+=accel[2];
+    this->speed.x+=accel.x;
+    this->speed.y+=accel.y;
+    this->speed.z+=accel.z;
 }
 
 //collision
@@ -40,15 +40,15 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance){  //cette fonction te
     return false;
 }
 bool SimpleSphere::t_collision_coord(llco pos,uli rayon)const{  // cette fonction test exactement la présence ou non d'une collision entre 2 spheres
-    if (pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)+pow(pos[0]-this->pos[0],2)
+    if (pow(pos.x-this->pos.x,2)+pow(pos.y-this->pos.y,2)+pow(pos.y-this->pos.y,2)
     <pow(rayon+this->rayon,2)){return true;}
     return false;
 }
 bool SimpleSphere::t_colli_rapide(llco posmin,llco posmax)const{  //cette fonction teste rapidement (faux positifs) si cette sphere en touche une autre
-    return (this->posmin[0]<posmax[0] && this->posmin[1]<posmax[1] && this->posmin[2]<posmax[2] &&
-     this->posmax[0]>posmin[0] && this->posmax[1]>posmin[1] && this->posmax[2]>posmin[2]); //test de collision rectangles
+    return (this->posmin.x<posmax.x && this->posmin.y<posmax.y && this->posmin.z<posmax.z &&
+     this->posmax.x>posmin.x && this->posmax.y>posmin.y && this->posmax.z>posmin.z); //test de collision rectangles
 }
 
 void SimpleSphere::debug() const{
-    std::cout << "Position:" << this->pos[0] << '/' << this->pos[1] << '/' << this->pos[2] << " Vitesse:" << this->speed[0] << '/' << this->speed[1] << '/'  << this->speed[2] <<'\n' ;
+    std::cout << "Position:" << this->pos.x << '/' << this->pos.y << '/' << this->pos.z << " Vitesse:" << this->speed.x << '/' << this->speed.y << '/'  << this->speed.z <<'\n' ;
 }

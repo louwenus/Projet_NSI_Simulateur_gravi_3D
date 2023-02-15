@@ -25,6 +25,7 @@ class PyBaseSphere():
         self.cy_sphere=cy_sphere_type(self,*args)
     def render(self):
         x,y,z,rayon = self.cy_sphere.get_coord()
+        #now, use position and size, plus information embded in the python object (like color) to render the sphere
 
 def collide(sph1:PyBaseSphere,sph2:PyBaseSphere,dim:cppgravilib.CyBaseDimension):
     print("ttest")

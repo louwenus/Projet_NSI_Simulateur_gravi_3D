@@ -37,12 +37,13 @@ public:
     virtual ulli gravite_stats(float temps,llco &return_pos) const; // masse (interval,position out)
     virtual void accel(const lco accel);   //vecteur acceleration
     virtual void debug() const;
+
+    llco pos;  //declared public to be easily accessible from cython (and then python)
+    uli rayon;
 protected:
     llco posmin;  //utilisé pour les tests de collision rapide
     llco posmax;  //utilisé pour les tests de collision rapide
-    llco pos;     //position
     ulli masse;
-    uli rayon;
     lco speed;
 };
 
