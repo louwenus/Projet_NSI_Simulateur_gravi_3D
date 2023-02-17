@@ -14,7 +14,8 @@ except ModuleNotFoundError:
     print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
     exit(1)
 from . import gravilib
-from .affichage import app #temporaire, à raffiner
+from . import affichage3D
+from . import affichage #temporaire, à raffiner
 # on créé une dimension (classe principale de la librairie)
 
 def launch_app():
@@ -29,4 +30,4 @@ def launch_app():
     print(universe.collisions(gravilib.collide))
     
     
-    sys.exit(app.exec_())
+    sys.exit(affichage3D.app.exec_())
