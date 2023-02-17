@@ -129,4 +129,5 @@ controles_graphiques = Controles()
 try:
     Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
 except:
+    print("votre gestionnaire de fenetre est chiant")
     Fenetre_principale.show() #Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
