@@ -76,7 +76,7 @@ cdef class CyDummySphere:
         """print out debuging info on stdout"""
         print("this is a dummy sphere")
     
-    def get_coord(self):
+    def get_coord(self) -> Tuple[int,int,int,int]:
         """retourn la position et le rayon au format (x,y,z,rayon)
         
         Args:

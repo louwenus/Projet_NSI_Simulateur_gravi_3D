@@ -24,6 +24,10 @@ class PyBaseSphere():
         """
         self.cy_sphere: cppgravilib.CyDummySphere=cy_sphere_type(self,*args)
     def render(self) -> None:
+        x:int
+        y:int
+        z:int
+        rayon:int
         x,y,z,rayon= self.cy_sphere.get_coord()
         #now, use position and size, plus information embded in the python object (like color) to render the sphere
 
