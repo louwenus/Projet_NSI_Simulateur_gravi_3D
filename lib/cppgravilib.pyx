@@ -13,7 +13,7 @@ cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport PyObject
 from libcpp.list cimport list as clist
-from typing import Callable
+from typing import Callable, Tuple
 
 ctypedef PyObject* PyObjPtr
 cdef class CyBaseDimension:
@@ -95,6 +95,6 @@ cdef class CySimpleSphere(CyDummySphere):
         if type(self) is CySimpleSphere:
             self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
     
-    def get_coord(self):
+    def get_coord(self) -> Tuple[int,int,int,int]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z, self.c_simple_sphere.rayon
     

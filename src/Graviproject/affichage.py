@@ -6,7 +6,7 @@ print("Importation de affichage.py")
 
 
 try:
-    import PySide6
+    #import PySide6
     from PySide6.QtCore import *
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
@@ -17,23 +17,23 @@ import sys
 import os
 
 class Main_window(QWidget):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        self.affichage_controles = True
+        self.affichage_controles: bool = True
 
         self.setWindowTitle("Affichage")
 
-        self.layout = QHBoxLayout()
+        self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        self.widget_controles = Controles()
+        self.widget_controles: QWidget = Controles()
         
         
         self.creer_actions()
         self.creer_barre_menu()
 
         self.layout.addWidget(self.widget_controles)
-        self.widget_3D=affichage3Dtest.MainWidget()
+        self.widget_3D: QWidget=affichage3Dtest.MainWidget()
         self.layout.addWidget(self.widget_3D)
         
         
@@ -42,31 +42,31 @@ class Main_window(QWidget):
 
 
 
-    def creer_barre_menu(self):
-        self.menuBar = QMenuBar(self)
+    def creer_barre_menu(self) -> None:
+        self.menuBar:QWidget = QMenuBar(self)
         self.layout.addWidget(self.menuBar)
         
-        self.affichageMenu = QMenu("&Affichage", self)
+        self.affichageMenu:QMenu = QMenu("&Affichage", self)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
 
-        self.helpMenu = QMenu("&Help", self)
+        self.helpMenu: QMenu = QMenu("&Help", self)
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
-    def creer_actions(self):
-        self.attach_detachAction = QAction("&Détacher les contrôles", self)
+    def creer_actions(self) -> None:
+        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
 
-        self.licenseAction = QAction("&Lire la license", self)
+        self.licenseAction: QAction = QAction("&Lire la license", self)
 
-    def connecter_actions(self):
+    def connecter_actions(self) -> None:
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
         self.licenseAction.triggered.connect(self.affich_licence)
 
 
 
 
-    def attach_detach_controles(self):
+    def attach_detach_controles(self) -> None:
         if self.affichage_controles :
             controles_graphiques.show()
             self.widget_controles.hide()
@@ -82,17 +82,17 @@ class Main_window(QWidget):
 
 
 
-    def affich_licence(self):
-        self.fenetre_license = QScrollArea()
+    def affich_licence(self) -> None:
+        self.fenetre_license: QWidget = QScrollArea()
         self.fenetre_license.setWindowTitle("LICENSE")
         
         try:
-            path=os.path.abspath(os.path.dirname(__file__))
+            path: str=os.path.abspath(os.path.dirname(__file__))
             path=os.path.join(path, "LICENSE")
             with open(path) as file:
-                self.licenseTextlabel = QLabel(file.read())
+                self.licenseTextlabel:QWidget = QLabel(file.read())
         except:
-            self.licenseTextlabel = QLabel("Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/src/Graviproject/LICENSE")
+            self.licenseTextlabel: QWidget = QLabel("Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/src/Graviproject/LICENSE")
 
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()
@@ -100,35 +100,35 @@ class Main_window(QWidget):
         
         
         
-    def closeEvent(self, event): # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
+    def closeEvent(self, event) -> None: # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
 
         
 
 
 class Controles(QWidget):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Controles")
         
-        layout = QHBoxLayout()
+        layout: QLayout = QHBoxLayout()
         self.setLayout(layout)
         
-        boutton1 = QPushButton("controle1")
+        boutton1: QAbstractButton = QPushButton("controle1")
         layout.addWidget(boutton1)
 
-        boutton2 = QPushButton("controle2")
+        boutton2: QAbstractButton = QPushButton("controle2")
         layout.addWidget(boutton2)
 
-        boutton3 = QPushButton("controle3")
+        boutton3: QAbstractButton = QPushButton("controle3")
         layout.addWidget(boutton3)
 
 
 
-app = QApplication(sys.argv)
+app: QApplication = QApplication(sys.argv)
 
-Fenetre_principale = Main_window()
-controles_graphiques = Controles()
+Fenetre_principale: QWidget = Main_window()
+controles_graphiques: QWidget = Controles()
 
 try:
     Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 

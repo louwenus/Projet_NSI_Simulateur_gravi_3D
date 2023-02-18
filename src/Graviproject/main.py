@@ -6,6 +6,7 @@
 #   Comme il est potentiellement réimporté par certaines dépendances, le code exécuté est inclus dans un if __name__ == "__main__"
 #   Ce fichier importe et gère la librairie c++, gravilib, et délègue l'affichage à un sous script, lib/affichage.py
 import sys
+from typing import NoReturn
 
 # import des différentes librairies avec debug
 try:
@@ -16,7 +17,7 @@ except ModuleNotFoundError:
 from . import gravilib
 from . import affichage
 
-def launch_app():
+def launch_app() -> NoReturn:
     #tests:
     #test = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
     #test2 = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
