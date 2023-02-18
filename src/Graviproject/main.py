@@ -14,20 +14,18 @@ except ModuleNotFoundError:
     print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
     exit(1)
 from . import gravilib
-from . import affichage3D
-from . import affichage #temporaire, à raffiner
-# on créé une dimension (classe principale de la librairie)
+from . import affichage
 
 def launch_app():
     #tests:
-    test = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
-    test2 = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
-    universe = gravilib.cppgravilib.CyBaseDimension()
-    universe.add_sphere(test.cy_sphere)
-    universe.add_sphere(test2.cy_sphere)
-    print(universe.collisions(gravilib.collide))
-    universe.move_all(10)
-    print(universe.collisions(gravilib.collide))
+    #test = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
+    #test2 = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
+    #universe = gravilib.cppgravilib.CyBaseDimension()
+    #universe.add_sphere(test.cy_sphere)
+    #universe.add_sphere(test2.cy_sphere)
+    #print(universe.collisions(gravilib.collide))
+    #universe.move_all(10)
+    #print(universe.collisions(gravilib.collide))
     
     
-    sys.exit(affichage3D.app.exec_())
+    sys.exit(affichage.app.exec_())

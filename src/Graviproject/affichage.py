@@ -12,7 +12,7 @@ try:
     from PySide6.QtGui import *
 except ModuleNotFoundError:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
-
+from . import affichage3Dtest
 import sys
 import os
 
@@ -28,10 +28,14 @@ class Main_window(QWidget):
 
         self.widget_controles = Controles()
         
+        
         self.creer_actions()
         self.creer_barre_menu()
 
         self.layout.addWidget(self.widget_controles)
+        self.widget_3D=affichage3Dtest.MainWidget()
+        self.layout.addWidget(self.widget_3D)
+        
         
         self.connecter_actions()
 
