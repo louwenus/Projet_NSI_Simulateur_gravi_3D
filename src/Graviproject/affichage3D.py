@@ -55,7 +55,7 @@ class MainWidget(QWidget):
 
         for sphere in self.sph:
             item: SphereItem = SphereItem(sphere)
-            item.setPos(sphere.get_coord()[0], sphere.get_coord()[1])
+            item.setPos(sphere.cy_sphere.get_coord()[0], sphere.cy_sphere.get_coord()[1])
             self.scene.addItem(item)
 
         self.view.setSceneRect(self.scene.itemsBoundingRect())

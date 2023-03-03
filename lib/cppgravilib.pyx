@@ -13,7 +13,7 @@ cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport PyObject
 from libcpp.list cimport list as clist
-from typing import Callable, Tuple
+from typing import Generator, Tuple
 
 ctypedef PyObject* PyObjPtr
 cdef class CyBaseDimension:
@@ -35,28 +35,23 @@ cdef class CyBaseDimension:
     def add_sphere(self,CyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_sphere)
     
-    def collisions(self,fonction:Callable) -> list:
-        """Détecte les collisions dans une dimension, puis appelle la fonction passée en argument pour chacune:
-      fonction(sphere1,sphere2,dimension), les retours de cette fonction sont ajoutés dans une liste, qui est renvoyée.
+    def collisions(self) -> Generator:
+        """Détecte les collisions dans une dimension, puis retourne un iterator sur les sphères.
         
         Args:
             self (CyBaseDimension): La CyBaseDimension (ou compatible) sur laquelle on detecte les collisions
-            fonction (function): La fonction de collision, prend 3 arguments, 2 PyBaseSphere (ou compatible) et une CyBaseDimension(ou compatible)
         
         Returns:
-            retours (list): La concatenation sous forme de liste des résultats de la fonction sur chaque collisions
+            retours (iterator): Iterateur sur les paires de sphères
         """
         cdef clist[PyObjPtr] liste 
         liste = self.c_base_dim.detect_collisions()
-        liste2 : list = []
         cdef  clist[PyObjPtr].iterator iterator = liste.begin()
         cdef object obje,obje2
         while iterator!=liste.end():
-        #    liste2.append(<object>dereference(preincrement(iterator)))
             obje = <object>dereference(postincrement(iterator))
             obje2 = <object>dereference(postincrement(iterator))
-            liste2.append(fonction(obje,obje2,self))
-        return liste2
+            yield obje,obje2
 
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:

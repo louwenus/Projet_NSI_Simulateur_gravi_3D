@@ -18,15 +18,4 @@ from . import gravilib
 from . import affichage
 
 def launch_app() -> NoReturn:
-    #tests:
-    #test = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
-    #test2 = gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
-    #universe = gravilib.cppgravilib.CyBaseDimension()
-    #universe.add_sphere(test.cy_sphere)
-    #universe.add_sphere(test2.cy_sphere)
-    #print(universe.collisions(gravilib.collide))
-    #universe.move_all(10)
-    #print(universe.collisions(gravilib.collide))
-    
-    
     sys.exit(affichage.app.exec_())
