@@ -1,28 +1,29 @@
 //  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 
-//  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx 
+//  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx
 //  avec chaque modif des classes publiques de gravilib.cpp
 
 #ifndef DIMENSIONS_GENERAL_HEADER
 #define DIMENSIONS_GENERAL_HEADER
 
-#include "../typedef.hpp"  //typedef and common stuff
-#include "../spheres/sphere.hpp"  //so sphere can be used in dims
+#include "../typedef.hpp"        //typedef and common stuff
+#include "../spheres/sphere.hpp" //so sphere can be used in dims
 
-class BaseDimension{
+class BaseDimension
+{
 public:
-    //constructeurs
+    // constructeurs
     BaseDimension();
     virtual ~BaseDimension();
-    //autres
+    // autres
     virtual void gravite_all(float temps);
     virtual void move_all(float temps);
     virtual void add_sphere(DummySphere *instance);
     virtual void debug();
-    virtual std::list<PyObject*> detect_collisions();
-    
+    virtual std::list<PyObject *> detect_collisions();
+
 protected:
-    //variables
-    std::list<DummySphere*> objets;
+    // variables
+    std::list<DummySphere *> objets;
 };
 #endif

@@ -13,25 +13,28 @@
 #include <iostream>
 #include "Python.h"
 
-//for easier args typing
+// for easier args typing
 typedef uint64_t ulli;
 typedef int64_t lli;
 typedef int32_t li;
 typedef uint32_t uli;
-struct llco {
+struct llco
+{
     lli x;
     lli y;
     lli z;
 };
-struct lco {
+struct lco
+{
     li x;
     li y;
     li z;
 };
-struct atllco{
+struct atllco
+{
     std::atomic<lli> x;
     std::atomic<lli> y;
     std::atomic<lli> z;
 };
 
-#endif 
+#endif

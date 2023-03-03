@@ -2,5 +2,5 @@
 
 #include "sphere.hpp"
 
-DummySphere::DummySphere(PyObject* parent){this->pyparent = parent;}
-DummySphere::~DummySphere(){}
+DummySphere::DummySphere(PyObject *parent) { this->pyparent = parent; }
+DummySphere::~DummySphere() {}
