@@ -8,7 +8,7 @@
 import sys
 from typing import NoReturn
 
-# import des différentes librairies avec debug
+# import des différentes librairies avec debug en cas de librairie manquante
 try:
     import cython
 except ModuleNotFoundError:
