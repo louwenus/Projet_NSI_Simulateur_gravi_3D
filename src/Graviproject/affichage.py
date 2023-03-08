@@ -34,7 +34,7 @@ class Main_window(QWidget):
         self.creer_barre_menu()
 
         self.layout.addWidget(self.widget_controles)
-        self.widget_3D: QWidget=affichage3D.MainWidget()
+        self.widget_3D: affichage3D.MainWidget=affichage3D.MainWidget()
         self.layout.addWidget(self.widget_3D)
         
         
@@ -42,6 +42,18 @@ class Main_window(QWidget):
         
         self.dimension=gravilib.cppgravilib.CyBaseDimension()
         
+        self.sph = []
+        self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20)))
+        self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10)))
+
+        self.dimension.add_sphere(self.sph[0].cy_sphere)
+        self.dimension.add_sphere(self.sph[1].cy_sphere)
+        
+        
+        self.timer: QTimer = QTimer(self)
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.update_simulation)
+        self.timer.start()
 
 
     def creer_barre_menu(self) -> None:
@@ -108,6 +120,15 @@ class Main_window(QWidget):
     
     def ajouter_sphere(self,sph:gravilib.PyBaseSphere) -> None:
         self.dimension.add_sphere(sph.cy_sphere)
+    
+    def update_simulation(self) -> None:
+        self.dimension.gravite_all(0.01)
+        self.dimension.move_all(0.01)
+        self.widget_3D.update_graph()
+        sphere : gravilib.PyBaseSphere
+        for sphere in self.dimension.get_spheres():
+            #print(sphere.cy_sphere.get_coord())
+            print(sphere)
 
 
 class Controles(QWidget):

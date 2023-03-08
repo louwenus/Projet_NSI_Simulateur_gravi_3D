@@ -8,6 +8,7 @@ class SphereItem(QGraphicsItem):
     def __init__(self, sphere) -> None:
         super().__init__()
         self.sphere = sphere
+        print("crashin here?")
         self.radius: int = sphere.cy_sphere.get_coord()[3]
     def update_pos(self) -> None:
         self.setPos(*self.sphere.cy_sphere.get_coord()[0:2]) #(*list) == (list[0],list[1])
@@ -62,7 +63,7 @@ class MainWidget(QWidget):
         #self.base_dimension.move_all(0.1)
 
         for item in self.scene.items():
-            item.update()
+            item.update_pos()
 
         #for sphere in self.sph:
         #    item: SphereItem = SphereItem(sphere)

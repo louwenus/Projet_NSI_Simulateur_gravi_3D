@@ -9,6 +9,7 @@
 # cython: language_level=3
 
 #from libcpp.string cimport string
+from sys import stdout
 cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport PyObject
@@ -68,7 +69,7 @@ cdef class CyBaseDimension:
     #    self.c_dim.hello_text=text
 
 cdef class CyDummySphere:
-    cdef cppgravilib.DummySphere *c_sphere #C++ instance
+    cdef cppgravilib.DummySphere *c_sphere
     def __cinit__(self,*a,**kw):
         if type(self) is CyDummySphere:
             self.c_sphere = NULL
@@ -92,11 +93,11 @@ cdef class CyDummySphere:
         return 0,0,0,0
 
 cdef class CySimpleSphere(CyDummySphere):
-    cdef cppgravilib.SimpleSphere *c_simple_sphere #C++ instance
+    cdef cppgravilib.SimpleSphere *c_simple_sphere
     def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
         if type(self) is CySimpleSphere:
-            self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
+            self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
+            
     
     def get_coord(self) -> Tuple[int,int,int,int]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z, self.c_simple_sphere.rayon
-    
