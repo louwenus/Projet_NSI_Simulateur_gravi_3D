@@ -129,8 +129,7 @@ class Main_window(QWidget):
         self.widget_3D.update_graph()
         sphere : gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
-            #print(sphere.cy_sphere.get_coord())
-            print(sphere.cy_sphere.get_coord())
+            pass
 
 
 class Controles(QWidget):
