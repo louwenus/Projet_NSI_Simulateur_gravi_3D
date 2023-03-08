@@ -16,6 +16,7 @@ from libcpp.list cimport list as clist
 from typing import Generator, Tuple
 
 ctypedef PyObject* PyObjPtr
+ctypedef cppgravilib.DummySphere* DummyPtr
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
@@ -53,11 +54,12 @@ cdef class CyBaseDimension:
             obje2 = <object>dereference(postincrement(iterator))
             yield obje,obje2
     def get_spheres(self) -> Generator:
-        cdef clist[PyObjPtr] liste 
-        liste = self.c_base_dim.detect_collisions()
-        cdef  clist[PyObjPtr].iterator iterator = liste.begin()
+        cdef clist[DummyPtr] liste = self.c_base_dim.get_sph_list()
+        cdef  clist[DummyPtr].iterator iterator = liste.begin()
+        cdef DummyPtr obj
         while iterator!=liste.end():
-            yield <object>dereference(postincrement(iterator))
+            obj = dereference(postincrement(iterator))
+            yield <object>(obj.pyparent)
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text

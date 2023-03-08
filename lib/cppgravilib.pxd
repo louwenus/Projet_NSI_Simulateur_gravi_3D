@@ -24,6 +24,7 @@ cdef extern from "typedef.hpp":
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere(PyObject* parent) except +
+        PyObject* pyparent
     cdef cppclass SimpleSphere(DummySphere):
         SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
         llco pos
@@ -38,3 +39,4 @@ cdef extern from "dimensions/dimension.hpp":
         void move_all(float temps)
         void debug()
         clist[PyObjPtr] detect_collisions()
+        clist[DummySphere*] get_sph_list()

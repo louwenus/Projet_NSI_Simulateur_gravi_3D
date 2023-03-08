@@ -21,7 +21,7 @@ public:
     virtual void add_sphere(DummySphere *instance);
     virtual void debug();
     virtual std::list<PyObject *> detect_collisions();
-    virtual std::list<DummySphere *>::iterator sphere_iterator();
+    virtual const std::list<DummySphere *> get_sph_list();
 
 protected:
     // variables

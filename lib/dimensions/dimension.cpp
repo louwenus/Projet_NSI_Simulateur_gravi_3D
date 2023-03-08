@@ -11,6 +11,10 @@ BaseDimension::BaseDimension()
 }
 BaseDimension::~BaseDimension() {}
 
+const std::list<DummySphere *> BaseDimension::get_sph_list(){
+    return this->objets ;
+}
+
 void BaseDimension::gravite_all(float temps)
 {
     llco pos1 = {0, 0, 0}; // pour eviter de recreer une variable a chaque fois
