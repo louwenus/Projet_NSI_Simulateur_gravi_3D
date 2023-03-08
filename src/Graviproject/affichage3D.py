@@ -8,7 +8,6 @@ class SphereItem(QGraphicsItem):
     def __init__(self, sphere) -> None:
         super().__init__()
         self.sphere = sphere
-        print("crashin here?")
         self.radius: int = sphere.cy_sphere.get_coord()[3]
     def update_pos(self) -> None:
         self.setPos(*self.sphere.cy_sphere.get_coord()[0:2]) #(*list) == (list[0],list[1])

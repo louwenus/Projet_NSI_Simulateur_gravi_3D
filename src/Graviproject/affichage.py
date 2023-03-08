@@ -130,7 +130,7 @@ class Main_window(QWidget):
         sphere : gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
             #print(sphere.cy_sphere.get_coord())
-            print(sphere)
+            print(sphere.cy_sphere.get_coord())
 
 
 class Controles(QWidget):
