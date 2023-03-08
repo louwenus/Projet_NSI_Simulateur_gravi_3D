@@ -44,7 +44,9 @@ class Main_window(QWidget):
         
         self.sph = []
         self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20)))
+        self.widget_3D.add_to_display(self.sph[0].get_render_items()[0])
         self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10)))
+        self.widget_3D.add_to_display(self.sph[1].get_render_items()[0])
 
         self.dimension.add_sphere(self.sph[0].cy_sphere)
         self.dimension.add_sphere(self.sph[1].cy_sphere)
