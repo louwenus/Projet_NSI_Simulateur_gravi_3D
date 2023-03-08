@@ -12,7 +12,7 @@ try:
 except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails",file=sys.stderr)
     raise(e)
-
+from .affichage3D import SphereItem
 
 class PyBaseSphere():
     def __init__(self,cy_sphere_type:cppgravilib.CyDummySphere,args:Iterable) -> None:
@@ -23,10 +23,7 @@ class PyBaseSphere():
             args (Iterable): arguments pour la construction de la cy_sphere
         """
         self.cy_sphere: cppgravilib.CyDummySphere=cy_sphere_type(self,*args)
-    def render(self) -> None:
-        x:int
-        y:int
-        z:int
-        rayon:int
-        x,y,z,rayon= self.cy_sphere.get_coord()
+        self.render_item:SphereItem=SphereItem(self)
+    def get_render_items(self) -> list[SphereItem]:
+        return [self.render_item]
         #now, use position and size, plus information embded in the python object (like color) to render the sphere

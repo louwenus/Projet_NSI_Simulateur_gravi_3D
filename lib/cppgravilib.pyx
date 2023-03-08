@@ -52,7 +52,12 @@ cdef class CyBaseDimension:
             obje = <object>dereference(postincrement(iterator))
             obje2 = <object>dereference(postincrement(iterator))
             yield obje,obje2
-
+    def get_spheres(self) -> Generator:
+        cdef clist[PyObjPtr] liste 
+        liste = self.c_base_dim.detect_collisions()
+        cdef  clist[PyObjPtr].iterator iterator = liste.begin()
+        while iterator!=liste.end():
+            yield <object>dereference(postincrement(iterator))
     #@property  #! pas pour les trucs privés
     #def hello_text(self) -> str:
     #    return self.c_dim.hello_text

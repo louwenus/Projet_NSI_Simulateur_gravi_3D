@@ -12,6 +12,7 @@ try:
     from PySide6.QtGui import *
 except ModuleNotFoundError:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
+from . import gravilib
 from . import affichage3D
 import sys
 import os
@@ -38,8 +39,9 @@ class Main_window(QWidget):
         
         
         self.connecter_actions()
-
-
+        
+        self.dimension=gravilib.cppgravilib.CyBaseDimension()
+        
 
 
     def creer_barre_menu(self) -> None:
@@ -103,7 +105,9 @@ class Main_window(QWidget):
     def closeEvent(self, event) -> None: # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
 
-        
+    
+    def ajouter_sphere(self,sph:gravilib.PyBaseSphere) -> None:
+        self.dimension.add_sphere(sph.cy_sphere)
 
 
 class Controles(QWidget):
