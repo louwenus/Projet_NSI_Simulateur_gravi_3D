@@ -3,11 +3,10 @@ from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 import sys
 import traceback
-from .gravilib import PyBaseSphere
 
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    def __init__(self, sphere:PyBaseSphere) -> None:
+    def __init__(self, sphere:'PyBaseSphere') -> None:
         """initialise l'item de rendu lié a la sphere passé en argument
 
         Args:
@@ -17,7 +16,7 @@ class SphereItem(QGraphicsItem):
         update_pos(self) -> None: met a jour la position de l'item selon la position de la sphère
         """
         super().__init__()
-        self.sphere: PyBaseSphere = sphere
+        self.sphere: 'PyBaseSphere' = sphere
         self.radius: int = sphere.cy_sphere.get_coord()[3]
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
