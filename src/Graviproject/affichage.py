@@ -13,45 +13,44 @@ try:
 except ModuleNotFoundError:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
 from . import gravilib
-from . import affichage3D
+from .affichage3D import SphereItem,Renderer3D
 import sys
 import os
 
 class Main_window(QWidget):
+    """Définit la fenettre principale du programme, a partir d'un QWidget
+    """
     def __init__(self) -> None:
         super().__init__()
-        self.affichage_controles: bool = True
-
         self.setWindowTitle("Affichage")
-
         self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
-
-        self.widget_controles: QWidget = Controles()
-        
-        
         self.creer_actions()
         self.creer_barre_menu()
-
-        self.layout.addWidget(self.widget_controles)
-        self.widget_3D: affichage3D.MainWidget=affichage3D.MainWidget()
-        self.layout.addWidget(self.widget_3D)
-        
-        
         self.connecter_actions()
         
+        #fenettre détacheable de controle
+        self.affichage_controles: bool = True
+        self.widget_controles: QWidget = Controles()
+        self.layout.addWidget(self.widget_controles)
+        
+        #widget de rendu3D
+        self.widget_3D: Renderer3D=Renderer3D()
+        self.layout.addWidget(self.widget_3D)
+        
+        #dimension affiché par la fennettre de rendu
         self.dimension=gravilib.cppgravilib.CyBaseDimension()
         
-        self.sph = []
-        self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20)))
-        self.widget_3D.add_to_display(self.sph[0].get_render_items()[0])
-        self.sph.append(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10)))
-        self.widget_3D.add_to_display(self.sph[1].get_render_items()[0])
-
-        self.dimension.add_sphere(self.sph[0].cy_sphere)
-        self.dimension.add_sphere(self.sph[1].cy_sphere)
+        #crude testing using two spheres
+        self.dimension.add_sphere(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20)).cy_sphere)
+        self.dimension.add_sphere(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10)).cy_sphere)
+        sphere:gravilib.gravilib.PyBaseSphere
+        for sphere in self.dimension.get_spheres():
+            for rendu in sphere.get_render_items():
+                self.widget_3D.add_to_display(rendu)
+        del sphere
         
-        
+        #a raffiner, mais est utilisé pour update la simulation toute les 10ms
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(10)
         self.timer.timeout.connect(self.update_simulation)
@@ -122,6 +121,8 @@ class Main_window(QWidget):
     
     def ajouter_sphere(self,sph:gravilib.PyBaseSphere) -> None:
         self.dimension.add_sphere(sph.cy_sphere)
+        for rendu in sph.get_render_items():
+            self.widget_3D.add_to_display(rendu)
     
     def update_simulation(self) -> None:
         self.dimension.gravite_all(0.01)
