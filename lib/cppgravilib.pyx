@@ -100,7 +100,6 @@ cdef class CySimpleSphere(CyDummySphere):
     def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
         if type(self) is CySimpleSphere:
             self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
-            
     
     def get_coord(self) -> Tuple[int,int,int]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z

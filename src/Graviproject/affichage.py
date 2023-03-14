@@ -42,20 +42,21 @@ class Main_window(QWidget):
         self.dimension=gravilib.cppgravilib.CyBaseDimension()
         
         #crude testing using two spheres
-        self.dimension.add_sphere(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20)).cy_sphere)
-        self.dimension.add_sphere(gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10)).cy_sphere)
+        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
+        self.dimension.add_sphere(var.cy_sphere)
+        print("hey,breackpoint here")
+        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
+        self.dimension.add_sphere(var.cy_sphere)
         sphere:gravilib.gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
             for rendu in sphere.get_render_items():
                 self.widget_3D.add_to_display(rendu)
-        del sphere
         
         #a raffiner, mais est utilisé pour update la simulation toute les 10ms
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(10)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
-
 
     def creer_barre_menu(self) -> None:
         self.menuBar:QWidget = QMenuBar(self)
@@ -71,14 +72,15 @@ class Main_window(QWidget):
 
     def creer_actions(self) -> None:
         self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
-
         self.licenseAction: QAction = QAction("&Lire la license", self)
 
     def connecter_actions(self) -> None:
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
         self.licenseAction.triggered.connect(self.affich_licence)
 
-
+    def closeEvent(self, event) -> None: 
+        # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
+        app.exit(0)
 
 
     def attach_detach_controles(self) -> None:
@@ -95,8 +97,6 @@ class Main_window(QWidget):
             self.affichage_controles = True
 
 
-
-
     def affich_licence(self) -> None:
         self.fenetre_license: QWidget = QScrollArea()
         self.fenetre_license.setWindowTitle("LICENSE")
@@ -111,12 +111,6 @@ class Main_window(QWidget):
 
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()
-
-        
-        
-        
-    def closeEvent(self, event) -> None: # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
-        app.exit(0)
 
     
     def ajouter_sphere(self,sph:gravilib.PyBaseSphere) -> None:

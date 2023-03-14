@@ -51,6 +51,7 @@ void BaseDimension::gravite_all(float temps)
 }
 void BaseDimension::add_sphere(DummySphere *instance)
 {
+    Py_INCREF(instance->pyparent);
     this->objets.push_back(instance);
 }
 void BaseDimension::move_all(float temps)
@@ -71,7 +72,9 @@ std::list<PyObject *> BaseDimension::detect_collisions()
             {
                 std::cout << "colision detected\n";
                 liste.push_back((*iterator)->pyparent);
+                Py_DECREF((*iterator)->pyparent);
                 liste.push_back((*iterator2)->pyparent);
+                Py_DECREF((*iterator2)->pyparent);
                 this->objets.erase(iterator2);
                 iterator = this->objets.erase(iterator);
                 goto detect_collsion_endloop;
