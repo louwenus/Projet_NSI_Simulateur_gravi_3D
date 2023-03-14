@@ -79,8 +79,8 @@ cdef class CyDummySphere:
         """print out debuging info on stdout"""
         print("this is a dummy sphere")
     
-    def get_coord(self) -> Tuple[int,int,int,int]:
-        """retourn la position et le rayon au format (x,y,z,rayon)
+    def get_coord(self) -> Tuple[int,int,int]:
+        """retourn la position et le rayon au format (x,y,z)
         
         Args:
             self
@@ -89,8 +89,11 @@ cdef class CyDummySphere:
             x (int): composante x de la position
             y (int): composante y de la position
             z (int): composante z de la position
-            rayon (int): rayon"""
-        return 0,0,0,0
+        """
+        return 0,0,0
+    def get_rayon(self) -> int:
+        """retourne le rayon de la sphère"""
+        return 0
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
@@ -99,5 +102,7 @@ cdef class CySimpleSphere(CyDummySphere):
             self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
             
     
-    def get_coord(self) -> Tuple[int,int,int,int]:
-        return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z, self.c_simple_sphere.rayon
+    def get_coord(self) -> Tuple[int,int,int]:
+        return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z
+    def get_rayon(self) -> int:
+        return self.c_simple_sphere.rayon

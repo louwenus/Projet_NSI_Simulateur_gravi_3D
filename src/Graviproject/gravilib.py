@@ -23,7 +23,7 @@ class PyBaseSphere():
             args (Iterable): arguments pour la construction de la cy_sphere
         """
         self.cy_sphere: cppgravilib.CyDummySphere=cy_sphere_type(self,*args)
-        self.render_item:SphereItem=SphereItem(self)
+        self.render_item:SphereItem=SphereItem(self.cy_sphere.get_rayon(),self.cy_sphere.get_coord)
     def get_render_items(self) -> list[SphereItem]:
         return [self.render_item]
         #now, use position and size, plus information embded in the python object (like color) to render the sphere

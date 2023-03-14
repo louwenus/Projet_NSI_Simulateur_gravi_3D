@@ -1,3 +1,4 @@
+from typing import Callable
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
@@ -6,21 +7,22 @@ import traceback
 
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    def __init__(self, sphere:'PyBaseSphere') -> None:
-        """initialise l'item de rendu lié a la sphere passé en argument
+    def __init__(self, rayon:int, getcoords:Callable[[],tuple[int,int,int]]) -> None:
+        """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
 
         Args:
-            sphere (gravilib.PyBaseSphere): une sphere de type PyBaseSphere (ou dérivée)
+            rayon (int): le rayon de la sphère
+            getcoord (function): une fonction renvoyant un tuple de coordonées entières x,y,z
         
         Methode Custom:
         update_pos(self) -> None: met a jour la position de l'item selon la position de la sphère
         """
         super().__init__()
-        self.sphere: 'PyBaseSphere' = sphere
-        self.radius: int = sphere.cy_sphere.get_coord()[3]
+        self.getcoords: Callable[[],tuple[int,int,int]] = getcoords
+        self.radius: int = rayon
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
-        self.setPos(*self.sphere.cy_sphere.get_coord()[0:2]) #(*list) == (list[0],list[1])
+        self.setPos(*self.getcoords()[0:2]) #(*list) == (list[0],list[1])
     
     def boundingRect(self) -> QRectF:
         return QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius)
