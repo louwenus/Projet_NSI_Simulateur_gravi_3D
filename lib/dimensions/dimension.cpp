@@ -77,12 +77,12 @@ std::list<PyObject *> BaseDimension::detect_collisions()
                 Py_DECREF((*iterator2)->pyparent);
                 this->objets.erase(iterator2);
                 iterator = this->objets.erase(iterator);
-                goto detect_collsion_endloop;
+                goto detect_collision_endloop;
             }
             iterator2++;
         }
         iterator++;
-    detect_collsion_endloop:;
+    detect_collision_endloop:;
     }
     return liste;
 }
