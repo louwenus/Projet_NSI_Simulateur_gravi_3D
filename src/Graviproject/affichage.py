@@ -44,7 +44,6 @@ class Main_window(QWidget):
         #crude testing using two spheres
         var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
         self.dimension.add_sphere(var.cy_sphere)
-        print("hey,breackpoint here")
         var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
         self.dimension.add_sphere(var.cy_sphere)
         sphere:gravilib.gravilib.PyBaseSphere
