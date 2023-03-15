@@ -22,9 +22,16 @@ class Main_window(QWidget):
     """
     def __init__(self) -> None:
         super().__init__()
+        self.affichage_controles: bool = True
+
         self.setWindowTitle("Affichage")
+
         self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
+
+        self.widget_controles: QWidget = Controles()
+        
+        
         self.creer_actions()
         self.creer_barre_menu()
         self.connecter_actions()
@@ -57,6 +64,7 @@ class Main_window(QWidget):
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
 
+
     def creer_barre_menu(self) -> None:
         self.menuBar:QWidget = QMenuBar(self)
         self.layout.addWidget(self.menuBar)
@@ -71,6 +79,7 @@ class Main_window(QWidget):
 
     def creer_actions(self) -> None:
         self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
+
         self.licenseAction: QAction = QAction("&Lire la license", self)
 
     def connecter_actions(self) -> None:
@@ -94,6 +103,8 @@ class Main_window(QWidget):
             self.widget_controles.show()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
+
+
 
 
     def affich_licence(self) -> None:
