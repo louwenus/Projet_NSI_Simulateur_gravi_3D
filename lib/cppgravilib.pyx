@@ -12,7 +12,7 @@
 from sys import stdout
 cimport cppgravilib
 from cython.operator import postincrement,dereference
-from cpython cimport PyObject
+from cpython cimport Py_DECREF, Py_INCREF, PyObject
 from libcpp.list cimport list as clist
 from typing import Generator, Tuple
 
@@ -21,9 +21,10 @@ ctypedef cppgravilib.DummySphere* DummyPtr
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
-    def __cinit__(self,*a,**kw):                       #cinit & dealoc pour heritage corect
-        if type(self) is CyBaseDimension:
-            self.c_base_dim = new cppgravilib.BaseDimension()
+    def init_c_container(self):                             
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        self.c_base_dim = new cppgravilib.BaseDimension()
+
     def __dealloc__(self):
         if type(self) is CyBaseDimension:
             del self.c_base_dim
@@ -70,9 +71,9 @@ cdef class CyBaseDimension:
 
 cdef class CyDummySphere:
     cdef cppgravilib.DummySphere *c_sphere
-    def __cinit__(self,*a,**kw):
-        if type(self) is CyDummySphere:
-            self.c_sphere = NULL
+    def init_c_container(self):                             
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        self.c_sphere = NULL
     def __dealloc__(self):
         del self.c_sphere
     def debug(self) -> None:
@@ -97,9 +98,9 @@ cdef class CyDummySphere:
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
-    def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
-        if type(self) is CySimpleSphere:
-            self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
+    def init_c_container(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
     
     def get_coord(self) -> Tuple[int,int,int]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z

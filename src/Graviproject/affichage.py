@@ -39,13 +39,13 @@ class Main_window(QWidget):
         self.layout.addWidget(self.widget_3D)
         
         #dimension affiché par la fennettre de rendu
-        self.dimension=gravilib.cppgravilib.CyBaseDimension()
+        self.dimension=gravilib.PyBaseDimension()
         
         #crude testing using two spheres
-        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
-        self.dimension.add_sphere(var.cy_sphere)
-        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
-        self.dimension.add_sphere(var.cy_sphere)
+        var=gravilib.PyBaseSphere(1,1,1,0,10,10,20,20)
+        self.dimension.add_sphere(var)
+        var=gravilib.PyBaseSphere(0,0,0,0,10,-10,-10,-10)
+        self.dimension.add_sphere(var)
         sphere:gravilib.gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
             for rendu in sphere.get_render_items():
@@ -120,6 +120,7 @@ class Main_window(QWidget):
     def update_simulation(self) -> None:
         self.dimension.gravite_all(0.01)
         self.dimension.move_all(0.01)
+        self.dimension.gerer_colision()
         self.widget_3D.update_graph()
         sphere : gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
