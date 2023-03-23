@@ -22,7 +22,8 @@ cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
     def init_c_container(self):                             
-        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass
+        (aka, should be called once by final python derived class)"""
         self.c_base_dim = new cppgravilib.BaseDimension()
 
     def __dealloc__(self):

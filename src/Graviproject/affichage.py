@@ -25,10 +25,26 @@ class Main_window(QWidget):
         self.setWindowTitle("Affichage")
         self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
-        self.creer_actions()
-        self.creer_barre_menu()
-        self.connecter_actions()
+
+        #creation des actions utiliseables dans les menus
+        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
+        self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+
+        self.licenseAction: QAction = QAction("&Lire la license", self)
+        self.licenseAction.triggered.connect(self.affich_licence)
+
+        #création des menus
+        self.menuBar:QWidget = QMenuBar(self)
+        self.layout.addWidget(self.menuBar)
         
+        self.affichageMenu:QMenu = QMenu("&Affichage", self)
+        self.menuBar.addMenu(self.affichageMenu)
+        self.affichageMenu.addAction(self.attach_detachAction)
+
+        self.helpMenu: QMenu = QMenu("&Help", self)
+        self.menuBar.addMenu(self.helpMenu)
+        self.helpMenu.addAction(self.licenseAction)
+
         #fenettre détacheable de controle
         self.affichage_controles: bool = True
         self.widget_controles: QWidget = Controles()
@@ -57,25 +73,6 @@ class Main_window(QWidget):
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
 
-    def creer_barre_menu(self) -> None:
-        self.menuBar:QWidget = QMenuBar(self)
-        self.layout.addWidget(self.menuBar)
-        
-        self.affichageMenu:QMenu = QMenu("&Affichage", self)
-        self.menuBar.addMenu(self.affichageMenu)
-        self.affichageMenu.addAction(self.attach_detachAction)
-
-        self.helpMenu: QMenu = QMenu("&Help", self)
-        self.menuBar.addMenu(self.helpMenu)
-        self.helpMenu.addAction(self.licenseAction)
-
-    def creer_actions(self) -> None:
-        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
-        self.licenseAction: QAction = QAction("&Lire la license", self)
-
-    def connecter_actions(self) -> None:
-        self.attach_detachAction.triggered.connect(self.attach_detach_controles)
-        self.licenseAction.triggered.connect(self.affich_licence)
 
     def closeEvent(self, event) -> None: 
         # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
