@@ -1,3 +1,6 @@
 {
-    "fps":10
+    "simulation": {
+      "fps": 10
+    },
+    "logging": 3
 }
