@@ -5,3 +5,4 @@
 /src/Graviproject.egg-info/
 __pycache__/
 /.vscode/
+/src/Graviproject/settings.json
