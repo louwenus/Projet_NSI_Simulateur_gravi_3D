@@ -22,7 +22,10 @@ class Main_window(QWidget):
     """
     def __init__(self) -> None:
         super().__init__()
+        self.affichage_controles: bool = True
+
         self.setWindowTitle("Affichage")
+
         self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
 
@@ -91,6 +94,8 @@ class Main_window(QWidget):
             self.widget_controles.show()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
+
+
 
 
     def affich_licence(self) -> None:
