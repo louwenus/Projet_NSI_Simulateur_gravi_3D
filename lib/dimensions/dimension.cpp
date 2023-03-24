@@ -18,23 +18,33 @@ const std::list<DummySphere *> BaseDimension::get_sph_list(){
 void BaseDimension::gravite_all(float temps)
 {
     llco pos1 = {0, 0, 0}; // pour eviter de recreer une variable a chaque fois
+    uli sanitize1;
+    atllco accel;
 
     for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
     {
-        atllco accel = {0, 0, 0};                             // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
-        uli masse1 = (*iterator)->gravite_stats(temps, pos1); // on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
+        accel.x = 0;                            // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
+        accel.y = 0;
+        accel.z = 0;
+        uli masse1 = (*iterator)->gravite_stats(temps, pos1, sanitize1); // on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
 
         std::for_each(std::execution::par, this->objets.begin(), iterator, // pour chaque objets précédents dans la liste, on execule la fonction lambda de manierre parallèle
-                      [temps, pos1, masse1, &accel](DummySphere *sphere) { // fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
+                      [temps, pos1, masse1, sanitize1, &accel](DummySphere *sphere) { // fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
                           llco temp_co;
-                          uli masse2 = sphere->gravite_stats(temps, temp_co);                     // on stock la pos dans temp_co
+                          uli sanitize2;
+                          uli masse2 = sphere->gravite_stats(temps, temp_co, sanitize2);          // on stock la pos dans temp_co
                           temp_co = {temp_co.x - pos1.x, temp_co.y - pos1.y, temp_co.z - pos1.z}; // puis on y mets le vecteur distance
-                          // divide = distance ^ 2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
-                          lli divide = (abs(temp_co.x) + temp_co.x * temp_co.x + abs(temp_co.y) + temp_co.y * temp_co.y + abs(temp_co.z) + temp_co.z * temp_co.z);
+                          // divide = distance^2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction
+                          lli divide = temp_co.x*temp_co.x + temp_co.y*temp_co.y + temp_co.z*temp_co.z;
+                          //l'étape de "sanitisation" permet de mettre une borne inf a dist^2 égale a sum(rayon)^2 (pour éviter une grav trop forte)
+                          sanitize2+=sanitize1;sanitize2=sanitize2*sanitize2;
+                          if (divide < sanitize2) [[unlikely]] 
+                          {divide=sanitize2;}
+                          divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
                           // on augmente l'accel sur l'element exterieur
                           if (divide != 0)
                           {
-                              //std::cout << "masse1:" << masse1 << "masse2:" << masse2 << "divide:" << divide;
+                              std::cout << "\nmasse1:" << masse1 << "masse2:" << masse2 << "divide:" << divide;
                               accel.x += ((temp_co.x * masse2) / divide);
                               accel.y += ((temp_co.y * masse2) / divide);
                               accel.z += ((temp_co.z * masse2) / divide);
