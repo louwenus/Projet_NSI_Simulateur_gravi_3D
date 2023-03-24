@@ -17,7 +17,7 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
 
     - Pour linux :<br/>
       Installez python3.10 et pip :<br/>
-      *NB : Au moment d'écrire ce README, python 3.10 et le standard sous linux, donc le python3 par default. Modifiez au besoin*.
+      *NB : Au moment d'écrire ce README, python 3.10 et le standard sous linux, donc le python3 par default. Modifiez au besoin.*
       - Pour apt (Ubuntu, Debian...) :<br/>
         `sudo apt-get install python3 python3-pip`
       - Pour yum (CentOS, RHEL...) :<br/>
