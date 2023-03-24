@@ -28,46 +28,6 @@ class Main_window(QWidget):
 
         self.layout: QLayout = QHBoxLayout()
         self.setLayout(self.layout)
-<<<<<<< HEAD
-
-        self.widget_controles: QWidget = Controles()
-        
-        
-        self.creer_actions()
-        self.creer_barre_menu()
-        self.connecter_actions()
-        
-        #fenettre détacheable de controle
-        self.affichage_controles: bool = True
-        self.widget_controles: QWidget = Controles()
-        self.layout.addWidget(self.widget_controles)
-        
-        #widget de rendu3D
-        self.widget_3D: Renderer3D=Renderer3D()
-        self.layout.addWidget(self.widget_3D)
-        
-        #dimension affiché par la fennettre de rendu
-        self.dimension=gravilib.cppgravilib.CyBaseDimension()
-        
-        #crude testing using two spheres
-        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(1,1,1,0,10,10,20,20))
-        self.dimension.add_sphere(var.cy_sphere)
-        var=gravilib.PyBaseSphere(gravilib.cppgravilib.CySimpleSphere,(0,0,0,0,10,-10,-10,-10))
-        self.dimension.add_sphere(var.cy_sphere)
-        sphere:gravilib.gravilib.PyBaseSphere
-        for sphere in self.dimension.get_spheres():
-            for rendu in sphere.get_render_items():
-                self.widget_3D.add_to_display(rendu)
-        
-        #a raffiner, mais est utilisé pour update la simulation toute les 10ms
-        self.timer: QTimer = QTimer(self)
-        self.timer.setInterval(10)
-        self.timer.timeout.connect(self.update_simulation)
-        self.timer.start()
-
-
-    def creer_barre_menu(self) -> None:
-=======
 
         #creation des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
@@ -77,7 +37,6 @@ class Main_window(QWidget):
         self.licenseAction.triggered.connect(self.affich_licence)
 
         #création des menus
->>>>>>> 10b791c883793c47ca12d6b1446f75a175cf0ca3
         self.menuBar:QWidget = QMenuBar(self)
         self.layout.addWidget(self.menuBar)
         
@@ -89,12 +48,6 @@ class Main_window(QWidget):
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
-<<<<<<< HEAD
-    def creer_actions(self) -> None:
-        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
-
-        self.licenseAction: QAction = QAction("&Lire la license", self)
-=======
         #fenettre détacheable de controle
         self.affichage_controles: bool = True
         self.widget_controles: QWidget = Controles()
@@ -122,7 +75,6 @@ class Main_window(QWidget):
         self.timer.setInterval(10)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
->>>>>>> 10b791c883793c47ca12d6b1446f75a175cf0ca3
 
 
     def closeEvent(self, event) -> None: 
