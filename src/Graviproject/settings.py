@@ -3,19 +3,18 @@ from typing import Iterable
 
 settings={}
 defaults={}
-def __init__():
-    print("initializing settings")
-    try:
-        with open('default_settings.json','r') as setfile:
-            settings=json.load(setfile)
-    except Exception as e:
-        print("no default_settings.json file, aborting")
-        raise
-    try:
-        with open('settings.json','r') as setfile:
-            settings=json.load(setfile)
-    except:
-        print("inexistant or ill-formated settings.json file, using defaults settings")
+print("initializing settings")
+try:
+    with open('default_settings.json','r') as setfile:
+        defaults=json.load(setfile)
+except Exception as e:
+    print("no default_settings.json file, aborting")
+    raise
+try:
+    with open('settings.json','r') as setfile:
+        settings=json.load(setfile)
+except:
+    print("inexistant or ill-formated settings.json file, using defaults settings")
 
 def access(setloc : Iterable[str]):
     try:
@@ -53,6 +52,8 @@ def set_setting(setloc : Iterable[str],value) -> bool:
         temp=temp[key]
     temp[setloc[-1]]=value
     return True
+
+
 
 def save_settings()->bool:
     """save settings to settings.json
