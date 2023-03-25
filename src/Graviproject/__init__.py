@@ -1,7 +1,7 @@
 #  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 
 # encoding=utf8
-from . import settings
+#from . import settings
 print("importing pygravilib")
 import sys
 if {"--license","-license","/license","--show","-show","/show"}.intersection(sys.argv):  # Disclaimer & parsing des options passées à l'appel
