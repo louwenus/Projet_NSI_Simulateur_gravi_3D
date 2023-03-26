@@ -1,5 +1,6 @@
 import json
 from typing import Iterable
+from sys import stderr
 
 settings: dict={}
 defaults: dict={}
@@ -7,7 +8,7 @@ try:
     with open('default_settings.json','r') as setfile:
         defaults=json.load(setfile)
 except Exception as e:
-    print("no default_settings.json file, package should be réinstalled or permission checked, aborting")
+    print("no default_settings.json file, package should be réinstalled or permission checked, aborting",file=stderr)
     raise FileNotFoundError('default_settings.json')
 try:
     with open('settings.json','r') as setfile:
@@ -35,16 +36,17 @@ def set(setloc : str,value) -> bool:
     """set settings 'setloc' at value
 
     Args:
-        setloc (str): setting to update, a . permit to separate per group, ..is not permited
-        value (any): the new value of the setting
+        setloc (str): setting to update, a . permit to separate per group (eg "group.sub.setting")
+        value (any): the new value of the setting, must be representable in json
 
     Returns:
-        bool: _description_
+        bool: if the update was sucessful
     """
     temp=settings
     for key in setloc.split('.')[:-1]:
         if type(temp) is not dict:
-            print("setting path to non dict, abborting")
+            if get("logging") >= 1:
+                print("setting path to non dict, abborting")
             return False
         if key not in temp:
             temp[key]={}
@@ -65,7 +67,8 @@ def save()->bool:
             json.dump(settings, setfile, indent = 2)
             return True
     except Exception as e:
-        print("Illegal setting for json representation or no write acess:",e)
+        if get("logging") >= 1:
+            print("Illegal setting for json representation or no write acess:",e,file=stderr)
         return False
 
 
