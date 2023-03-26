@@ -44,7 +44,7 @@ void BaseDimension::gravite_all(float temps)
                           // on augmente l'accel sur l'element exterieur
                           if (divide != 0)
                           {
-                              std::cout << "\nmasse1:" << masse1 << "masse2:" << masse2 << "divide:" << divide;
+                              std::cout << "\nmasse1:" << masse1 << "\nmasse2:" << masse2 << "\ndivide:" << divide;
                               accel.x += ((temp_co.x * masse2) / divide);
                               accel.y += ((temp_co.y * masse2) / divide);
                               accel.z += ((temp_co.z * masse2) / divide);

@@ -3,7 +3,7 @@
 # encoding=utf8
 
 print("Importation de affichage.py")
-from . import settings
+#from . import settings
 
 try:
     #import PySide6
