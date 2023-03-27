@@ -1,16 +1,21 @@
 import json
+import os
 from typing import Iterable
 
 settings: dict={}
 defaults: dict={}
 try:
-    with open('default_settings.json','r') as setfile:
+    path: str=os.path.abspath(os.path.dirname(__file__))
+    path=os.path.join(path, "default_settings.json")
+    with open(path,'r') as setfile:
         defaults=json.load(setfile)
 except Exception as e:
     print("no default_settings.json file, package should be réinstalled or permission checked, aborting")
     raise FileNotFoundError('default_settings.json')
+path: str=os.path.abspath(os.path.dirname(__file__))
+path=os.path.join(path, "settings.json")
 try:
-    with open('settings.json','r') as setfile:
+    with open(path,'r') as setfile:
         settings=json.load(setfile)
 except:
     print("inexistant or ill-formated settings.json file, using defaults settings only")
@@ -24,7 +29,7 @@ def get(setloc : str):
     except KeyError:
         try:
             temp=defaults
-            for key in setloc:
+            for key in setloc.split('.'):
                 temp=temp[key]
             return temp
         except:
@@ -61,7 +66,7 @@ def save()->bool:
         bool: if save was sucessful 
     """
     try:
-        with open('settings.json','w') as setfile:
+        with open(path,'w') as setfile:
             json.dump(settings, setfile, indent = 2)
             return True
     except Exception as e:

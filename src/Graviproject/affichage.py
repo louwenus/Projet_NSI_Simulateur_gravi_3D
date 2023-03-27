@@ -3,7 +3,7 @@
 # encoding=utf8
 
 print("Importation de affichage.py")
-#from . import settings
+from . import settings
 
 try:
     #import PySide6
@@ -60,6 +60,7 @@ class Main_window(QWidget):
         #dimension affiché par la fennettre de rendu
         self.dimension=gravilib.PyBaseDimension()
         
+
         #crude testing using two spheres
         var=gravilib.PyBaseSphere(10000,0,0,1000000,150,0,0,0)
         self.dimension.add_sphere(var)
@@ -127,6 +128,12 @@ class Main_window(QWidget):
         sphere : gravilib.PyBaseSphere
         for sphere in self.dimension.get_spheres():
             pass
+    def ajouter_sphère(self):
+        # création d'une nouvelle sphère
+        var=gravilib.PyBaseSphere(10000,0,0,1000000,150,0,0,0)
+        self.dimension.add_sphere(var)
+        self.boutton2.clicked.connect(self.ajouter_sphère)
+
 
 
 class Controles(QWidget):
