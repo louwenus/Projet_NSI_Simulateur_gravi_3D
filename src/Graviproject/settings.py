@@ -1,7 +1,7 @@
 import json
 import os
 from typing import Iterable
-from sys import stderr
+from sys import stderr,argv
 
 settings: dict={}
 defaults: dict={}
@@ -13,13 +13,17 @@ try:
 except Exception as e:
     print("no default_settings.json file, package should be réinstalled or permission checked, aborting",file=stderr)
     raise FileNotFoundError('default_settings.json')
-path: str=os.path.abspath(os.path.dirname(__file__))
-path=os.path.join(path, "settings.json")
-try:
-    with open(path,'r') as setfile:
-        settings=json.load(setfile)
-except:
-    print("inexistant or ill-formated settings.json file, using defaults settings only")
+if "--no-settings" in argv:
+    print("Using only default settings")
+else:
+    path: str=os.path.abspath(os.path.dirname(__file__))
+    path=os.path.join(path, "settings.json")
+    try:
+        with open(path,'r') as setfile:
+            settings=json.load(setfile)
+    except:
+        print("inexistant or ill-formated settings.json file, using defaults settings only")
+
 
 def get(setloc : str):
     try:

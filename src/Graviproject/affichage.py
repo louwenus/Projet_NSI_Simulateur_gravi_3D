@@ -111,13 +111,13 @@ class Main_window(QWidget):
         
         try:
             path: str=os.path.abspath(os.path.dirname(__file__))
-            path=os.path.join(path, "LICENSE_FR")
+            path=os.path.join(path, "LICENSCE_FR")
             with open(path) as file:
                 self.licenseTextlabel:QWidget = QLabel(file.read())
         except:
             if settings.get("logging")>=1:
                 print("The french licence file was not found at",path,file=stderr)
-            self.licenseTextlabel: QWidget = QLabel("Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/src/Graviproject/LICENSE")
+            self.licenseTextlabel: QWidget = QLabel("Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENSCE_FR")
 
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()

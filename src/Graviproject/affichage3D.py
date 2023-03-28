@@ -5,7 +5,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 
-import settings
+from . import settings
 
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
@@ -47,7 +47,7 @@ class Renderer3D(QWidget):
     def __init__(self) -> None:
         """initialise le widget de rendu"""
         super().__init__()
-        self.setGeometry(100, 100, 800, 600)
+        #self.setGeometry(100, 100, 800, 600)
         self.mainlayout: QLayout=QVBoxLayout()
         self.setLayout(self.mainlayout)
         
