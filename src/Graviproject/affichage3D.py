@@ -1,9 +1,11 @@
 from typing import Callable
+import sys
+import traceback
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
-import sys
-import traceback
+
+import settings
 
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
@@ -60,12 +62,19 @@ class Renderer3D(QWidget):
         try:
             self.scene.removeItem(item)
         except:
-            print("attempting to remove a graphic item who don't exist, please check the code")
-            traceback.print_exc()
+            if settings.get("logging")==1:
+                print("attempting to remove a graphic item who don't exist. Augment verbosity for more details.",file=sys.stderr)
+            if settings.get("logging")>=2:
+                print("attempting to remove a object that do not exist, see traceback")
+                traceback.print_exc(file=sys.stderr)
     
     def update_graph(self) -> None:
         """update le rendu de toute les sphères"""
+        if settings.get("logging")>=3:
+            print("begining to updating visual")
         for item in self.scene.items():
             item.update_pos()
 
         self.view.setSceneRect(self.scene.itemsBoundingRect())
+        if settings.get("logging")>=3:
+            print("done updating visual")

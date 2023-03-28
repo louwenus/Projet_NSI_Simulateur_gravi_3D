@@ -44,7 +44,6 @@ void BaseDimension::gravite_all(float temps)
                           // on augmente l'accel sur l'element exterieur
                           if (divide != 0)
                           {
-                              std::cout << "\nmasse1:" << masse1 << "\nmasse2:" << masse2 << "\ndivide:" << divide;
                               accel.x += ((temp_co.x * masse2) / divide);
                               accel.y += ((temp_co.y * masse2) / divide);
                               accel.z += ((temp_co.z * masse2) / divide);
@@ -80,7 +79,6 @@ std::list<PyObject *> BaseDimension::detect_collisions()
         {
             if ((*iterator)->t_collision_avec(*iterator2))
             {
-                std::cout << "colision detected\n";
                 liste.push_back((*iterator)->pyparent);
                 //Py_DECREF((*iterator)->pyparent);
                 liste.push_back((*iterator2)->pyparent);

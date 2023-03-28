@@ -34,7 +34,8 @@ def get(setloc : str):
                 temp=temp[key]
             return temp
         except:
-            print("No setting found for ",setloc)
+            if get("logging")>=1:
+                print("No setting found for ",setloc,file=stderr)
             return None
 
 def set(setloc : str,value) -> bool:
@@ -51,7 +52,7 @@ def set(setloc : str,value) -> bool:
     for key in setloc.split('.')[:-1]:
         if type(temp) is not dict:
             if get("logging") >= 1:
-                print("setting path to non dict, abborting")
+                print("setting path to non dict, abborting",file=stderr)
             return False
         if key not in temp:
             temp[key]={}
@@ -78,4 +79,4 @@ def save()->bool:
 
 
 if get("logging") >=2:
-    print("INFO: settings initialized")
+    print("settings initialized")

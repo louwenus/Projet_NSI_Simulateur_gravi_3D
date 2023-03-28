@@ -32,7 +32,6 @@ ulli SimpleSphere::gravite_stats(float temps, llco &return_pos, uli &sane_min_r)
 }
 void SimpleSphere::accel(const lco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
-    std::cout << "\naccel:" << accel.x << " " << accel.y << " " << accel.z ;
     this->speed.x += accel.x;
     this->speed.y += accel.y;
     this->speed.z += accel.z;
