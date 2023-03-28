@@ -2,19 +2,20 @@
 
 # encoding=utf8
 
-print("Importation de affichage.py")
 from . import settings
-
+import sys
+from sys import stderr
 try:
     #import PySide6
     from PySide6.QtCore import *
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
-except ModuleNotFoundError:
-    print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
+except ModuleNotFoundError as e:
+    print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails",file=stderr)
+    raise e
 from . import gravilib
 from .affichage3D import SphereItem,Renderer3D
-import sys
+
 import os
 
 class Main_window(QWidget):
@@ -76,6 +77,8 @@ class Main_window(QWidget):
         self.timer.setInterval(100)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
+        if settings.get("logging")>=2:
+            print("main windows initialized")
 
 
     def closeEvent(self, event) -> None: 
@@ -89,12 +92,15 @@ class Main_window(QWidget):
             self.widget_controles.hide()
             self.attach_detachAction.setText("&Attacher les contrôles")
             self.affichage_controles = False
-
+            if settings.get("logging")>=2:
+                print("controles déttachés")
         else :
             controles_graphiques.hide()
             self.widget_controles.show()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
+            if settings.get("logging")>=2:
+                print("controles attachés")
 
 
 
@@ -105,7 +111,7 @@ class Main_window(QWidget):
         
         try:
             path: str=os.path.abspath(os.path.dirname(__file__))
-            path=os.path.join(path, "LICENSE")
+            path=os.path.join(path, "LICENSE_FR")
             with open(path) as file:
                 self.licenseTextlabel:QWidget = QLabel(file.read())
         except:
