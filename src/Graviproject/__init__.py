@@ -2,10 +2,9 @@
 
 # encoding=utf8
 #from . import settings
-print("importing pygravilib")
 import sys
 if {"--license","-license","/license","--show","-show","/show"}.intersection(sys.argv):  # Disclaimer & parsing des options passées à l'appel
-    with open("LICENSE") as license:
+    with open("LICENSE_FR") as license:
         print(license.read())
         exit(0)
 print("program_name  Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled",
