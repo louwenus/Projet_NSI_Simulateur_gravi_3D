@@ -48,12 +48,14 @@ class Renderer3D(QWidget):
         """initialise le widget de rendu"""
         super().__init__()
         #self.setGeometry(100, 100, 800, 600)
-        self.mainlayout: QLayout=QVBoxLayout()
+        self.mainlayout:QLayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
         
-        self.scene: QGraphicsScene = QGraphicsScene(self)
-        self.view: QGraphicsView = QGraphicsView(self.scene)
+        self.scene:QGraphicsScene = QGraphicsScene(self)
+        self.view:QGraphicsView = QGraphicsView(self.scene)
         self.mainlayout.addWidget(self.view)
+        
+        
     
     def add_to_display(self,item:SphereItem) -> None:
         self.scene.addItem(item)
