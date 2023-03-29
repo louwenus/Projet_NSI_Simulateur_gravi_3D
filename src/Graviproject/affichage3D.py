@@ -71,10 +71,10 @@ class Renderer3D(QWidget):
     def update_graph(self) -> None:
         """update le rendu de toute les sphères"""
         if settings.get("logging")>=3:
-            print("begining to updating visual")
+            print("updating visual ...",end="")
         for item in self.scene.items():
             item.update_pos()
 
         self.view.setSceneRect(self.scene.itemsBoundingRect())
         if settings.get("logging")>=3:
-            print("done updating visual")
+            print("visual done!")
