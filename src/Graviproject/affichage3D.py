@@ -33,6 +33,7 @@ class SphereItem(QGraphicsItem):
     def paint(self, painter, option, widget) -> None:
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(QColor(255, 0, 0, 128)))
+        
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
 
 
@@ -75,6 +76,9 @@ class Renderer3D(QWidget):
     
     def update_graph(self) -> None:
         """update le rendu de toute les sphères"""
+        
+        print(self.view.size())
+        
         if settings.get("logging")>=3:
             print("updating visual ...",end="")
         for item in self.scene.items():
