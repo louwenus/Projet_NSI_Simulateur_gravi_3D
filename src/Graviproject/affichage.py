@@ -27,7 +27,7 @@ class Main_window(QWidget):
 
         self.setWindowTitle("Affichage")
 
-        self.layout: QLayout = QHBoxLayout()
+        self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
 
         #creation des actions utiliseables dans les menus
