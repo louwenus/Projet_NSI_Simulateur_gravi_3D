@@ -1,6 +1,7 @@
 {
     "simulation": {
-      "fps": 10
+      "fps": 10,
+      "defaultzoom": 0.025
     },
     "logging": 3
 }

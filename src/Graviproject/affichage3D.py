@@ -7,15 +7,6 @@ from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 
 from . import settings
 
-
-zoomforward:bool=False
-zoomval=4
-def zoom(x:int) -> int:
-    if zoomforward:
-        return x<<zoomval
-    return x>>zoomval
-
-
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
     def __init__(self, rayon:int, getcoords:Callable[[],tuple[int,int,int]]) -> None:
@@ -34,16 +25,15 @@ class SphereItem(QGraphicsItem):
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
-        coord=[zoom(i) for i in coord]
         self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
     
     def boundingRect(self) -> QRectF:
-        return QRectF(-1*zoom(self.radius), -1*zoom(self.radius), 2 * zoom(self.radius), 2 * zoom(self.radius))
+        return QRectF(-1*self.radius, -1*self.radius, 2 * self.radius, 2 * self.radius)
 
     def paint(self, painter, option, widget) -> None:
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(QColor(255, 0, 0, 128)))
-        painter.drawEllipse(QPointF(0, 0), zoom(self.radius), zoom(self.radius))
+        painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
 
 
 
@@ -64,6 +54,8 @@ class Renderer3D(QWidget):
         
         self.scene:QGraphicsScene = QGraphicsScene(self)
         self.view:QGraphicsView = QGraphicsView(self.scene)
+        zoom:float=settings.get("simulation.defaultzoom")
+        self.view.scale(zoom,zoom)
         self.mainlayout.addWidget(self.view)
         
         
@@ -78,7 +70,7 @@ class Renderer3D(QWidget):
             if settings.get("logging")==1:
                 print("attempting to remove a graphic item who don't exist. Augment verbosity for more details.",file=sys.stderr)
             if settings.get("logging")>=2:
-                print("attempting to remove a object that do not exist, see traceback")
+                print("attempting to remove a object that do not exist, see traceback",file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
     
     def update_graph(self) -> None:
@@ -91,3 +83,9 @@ class Renderer3D(QWidget):
         self.view.setSceneRect(self.scene.itemsBoundingRect())
         if settings.get("logging")>=3:
             print("visual done!")
+    
+    def wheelEvent(self, event):
+        if event.angleDelta().y()>0:
+            self.view.scale(1.25,1.25)
+        else:
+            self.view.scale(0.75,0.75)
