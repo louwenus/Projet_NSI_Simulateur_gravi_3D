@@ -30,7 +30,7 @@ class SphereItem(QGraphicsItem):
         """
         super().__init__()
         self.getcoords: Callable[[],tuple[int,int,int]] = getcoords
-        self.radius: int = zoom(rayon)
+        self.radius: int = rayon
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
@@ -38,12 +38,12 @@ class SphereItem(QGraphicsItem):
         self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
     
     def boundingRect(self) -> QRectF:
-        return QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius)
+        return QRectF(-1*zoom(self.radius), -1*zoom(self.radius), 2 * zoom(self.radius), 2 * zoom(self.radius))
 
     def paint(self, painter, option, widget) -> None:
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(QColor(255, 0, 0, 128)))
-        painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
+        painter.drawEllipse(QPointF(0, 0), zoom(self.radius), zoom(self.radius))
 
 
 
@@ -61,7 +61,6 @@ class Renderer3D(QWidget):
         #self.setGeometry(100, 100, 800, 600)
         self.mainlayout:QLayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
-        self.zoom:int=-3
         
         self.scene:QGraphicsScene = QGraphicsScene(self)
         self.view:QGraphicsView = QGraphicsView(self.scene)
