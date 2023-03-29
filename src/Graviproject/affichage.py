@@ -29,6 +29,7 @@ class Main_window(QWidget):
 
         self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.layout.addSpacing(10)
 
         #creation des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
@@ -39,20 +40,23 @@ class Main_window(QWidget):
 
         #création des menus
         self.menuBar:QWidget = QMenuBar(self)
-        self.layout.addWidget(self.menuBar)
         
-        self.affichageMenu:QMenu = QMenu("&Affichage", self)
+        self.affichageMenu:QMenu= QMenu("&Affichage",self.menuBar)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
 
-        self.helpMenu: QMenu = QMenu("&Help", self)
+        self.helpMenu:QMenu= QMenu("&Help",self.menuBar)
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
         #fenettre détacheable de controle
         self.affichage_controles: bool = True
-        self.widget_controles: QWidget = Controles()
-        self.layout.addWidget(self.widget_controles)
+        self.controles=QWidget()
+        self.contr_L=QVBoxLayout()
+        self.contr_L.addWidget(controles_graphiques)
+        self.controles.setLayout(self.contr_L)
+        self.layout.addWidget(controles_graphiques)
+        
         
         #widget de rendu3D
         self.widget_3D: Renderer3D=Renderer3D()
@@ -77,15 +81,15 @@ class Main_window(QWidget):
 
     def attach_detach_controles(self) -> None:
         if self.affichage_controles :
-            controles_graphiques.show()
-            self.widget_controles.hide()
+            self.controles.hide()
+            maincontroles.show()
             self.attach_detachAction.setText("&Attacher les contrôles")
             self.affichage_controles = False
             if settings.get("logging")>=2:
                 print("controles déttachés")
         else :
-            controles_graphiques.hide()
-            self.widget_controles.show()
+            self.controles.show()
+            maincontroles.hide()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
             if settings.get("logging")>=2:
@@ -132,40 +136,43 @@ class Controles(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Controles")
-        
-        layout: QLayout = QHBoxLayout()
-        self.setLayout(layout)
+        #layout of controles widget
+        self.layout: QLayout = QHBoxLayout()
+        self.setLayout(self.layout)
         self.dimension=gravilib.PyBaseDimension()
         
         boutton1: QAbstractButton = QPushButton("controle1")
-        layout.addWidget(boutton1)
-
-        self.boutton2: QPushButton = QPushButton("Ajouter sphère")
-        self.boutton2.clicked.connect(self.fenetre_ajoute_s)
-        layout.addWidget(self.boutton2)
+        self.layout.addWidget(boutton1)
 
         
-        self.boutton3: QPushButton = QPushButton("Ajouter sphère tempo")
-        self.boutton3.clicked.connect(self.ajouter_spheres)
-        layout.addWidget(self.boutton3)
+        self.fenetre_ajoute: QWidget = QScrollArea()
+        self.fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
+        self.layout_aj_sph:QLayout=QVBoxLayout()
+        self.fenetre_ajoute.setLayout(self.layout_aj_sph)
+        
+        self.boutt_show_aj_sph: QPushButton = QPushButton("Ajouter une sphère")
+        self.layout.addWidget(self.boutt_show_aj_sph)
+        self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
+        
+        self.boutton4: QPushButton = QPushButton("Ajouter la sphère")
+        self.boutton4.clicked.connect(self.ajouter_spheres)
+        self.layout_aj_sph.addWidget(self.boutton4)
 
     def ajouter_spheres(self) -> None:
         var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
         Fenetre_principale.ajouter_sphere(var)
 
-    def fenetre_ajoute_s(self):
-        self.fenetre_ajoute: QWidget = QScrollArea()
-        self.fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
-        self.boutton4: QPushButton = QPushButton("Ajouter sphère")
-        self.boutton4.clicked.connect(self.ajouter_spheres)
-        self.fenetre_ajoute.show()
 
 
 
 app: QApplication = QApplication(sys.argv)
-
-Fenetre_principale: QWidget = Main_window()
 controles_graphiques: QWidget = Controles()
+maincontroles=QWidget()
+main_con_L=QVBoxLayout()
+main_con_L.addWidget(controles_graphiques)
+maincontroles.setLayout(main_con_L)
+Fenetre_principale: QWidget = Main_window()
+
 
 try:
     Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
