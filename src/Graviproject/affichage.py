@@ -152,8 +152,7 @@ class Controles(QWidget):
         var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
         Fenetre_principale.ajouter_sphere(var)
 
-    def fenetre_ajoute_s(self,s):
-        print(s)
+    def fenetre_ajoute_s(self,):
         dlg = QDialog(self)
         dlg.setWindowTitle("Ajoutez des sphères !")
         dlg.exec_()
