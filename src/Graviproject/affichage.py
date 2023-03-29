@@ -2,8 +2,6 @@
 
 # encoding=utf8
 
-# Bjctrhtg alias le créateur de bouton
-# Merci, merci, je sais que je suis le meilleur
 
 from . import settings
 import sys
@@ -146,7 +144,7 @@ class Controles(QWidget):
         self.setLayout(self.layout)
         self.dimension=gravilib.PyBaseDimension()
         
-        boutton1: QAbstractButton = QPushButton("ajout direct")
+        boutton1: QAbstractButton = QPushButton("Ajout direct")
         boutton1.clicked.connect(self.ajouter_spheres)
         self.layout.addWidget(boutton1)
 
@@ -183,5 +181,5 @@ Fenetre_principale: QWidget = Main_window()
 try:
     Fenetre_principale.showMaximized() #Pour faire en sorte que la fenêtre prenne tout l'écran 
 except:
-    print("votre gestionnaire de fenetre est chiant")
+    print("votre gestionnaire de fenetre est peu flexible")
     Fenetre_principale.show() #Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
