@@ -61,13 +61,6 @@ class Main_window(QWidget):
         #dimension affiché par la fennettre de rendu
         self.dimension=gravilib.PyBaseDimension()
         
-
-        #crude testing using two spheres
-        var=gravilib.PyBaseSphere(10000,0,0,1000000,150,0,0,0)
-        self.ajouter_sphere(var)
-        var=gravilib.PyBaseSphere(-10000,0,0,1000000,250,0,0,0)
-        self.ajouter_sphere(var)
-        
         #a raffiner, mais est utilisé pour update la simulation toute les 10ms
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(100)
@@ -156,7 +149,7 @@ class Controles(QWidget):
         layout.addWidget(boutton3)
 
     def ajouter_spheres(self) -> None:
-        var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 0, 0, 0)
+        var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
         Fenetre_principale.ajouter_sphere(var)
 
 
