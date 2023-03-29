@@ -66,7 +66,7 @@ class Renderer3D(QWidget):
         self.view:QGraphicsView = QGraphicsView(self.scene)
         self.mainlayout.addWidget(self.view)
         
-        
+        self.camera:tuple[int,int,int,int,int,int] = (0,0,0,0,0,0)
     
     def add_to_display(self,item:SphereItem) -> None:
         self.scene.addItem(item)
