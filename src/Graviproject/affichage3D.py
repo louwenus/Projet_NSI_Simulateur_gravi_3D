@@ -7,6 +7,15 @@ from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 
 from . import settings
 
+
+zoomforward:bool=False
+zoomval=4
+def zoom(x:int) -> int:
+    if zoomforward:
+        return x<<zoomval
+    return x>>zoomval
+
+
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
     def __init__(self, rayon:int, getcoords:Callable[[],tuple[int,int,int]]) -> None:
@@ -21,10 +30,12 @@ class SphereItem(QGraphicsItem):
         """
         super().__init__()
         self.getcoords: Callable[[],tuple[int,int,int]] = getcoords
-        self.radius: int = rayon
+        self.radius: int = zoom(rayon)
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
-        self.setPos(*self.getcoords()[0:2]) #(*list) == (list[0],list[1])
+        coord: tuple[int, int, int]=self.getcoords()
+        coord=[zoom(i) for i in coord]
+        self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
     
     def boundingRect(self) -> QRectF:
         return QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius)
@@ -50,6 +61,7 @@ class Renderer3D(QWidget):
         #self.setGeometry(100, 100, 800, 600)
         self.mainlayout: QLayout=QVBoxLayout()
         self.setLayout(self.mainlayout)
+        self.zoom:int=-3
         
         self.scene: QGraphicsScene = QGraphicsScene(self)
         self.view: QGraphicsView = QGraphicsView(self.scene)
@@ -73,7 +85,7 @@ class Renderer3D(QWidget):
         if settings.get("logging")>=3:
             print("updating visual ...",end="")
         for item in self.scene.items():
-            item.update_pos()
+            item.update_pos(self.zoom)
 
         self.view.setSceneRect(self.scene.itemsBoundingRect())
         if settings.get("logging")>=3:
