@@ -83,15 +83,17 @@ class Main_window(QWidget):
 
     def attach_detach_controles(self) -> None:
         if self.affichage_controles :
-            self.controles.hide()
-            maincontroles.show()
+            #self.controles.hide()
+            #maincontroles.show()
+            controles_graphiques.setParent(None)
             self.attach_detachAction.setText("&Attacher les contrôles")
             self.affichage_controles = False
             if settings.get("logging")>=2:
                 print("controles déttachés")
         else :
-            self.controles.show()
-            maincontroles.hide()
+            #self.controles.show()
+            #maincontroles.hide()
+            controles_graphiques.setParent(self)
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
             if settings.get("logging")>=2:
