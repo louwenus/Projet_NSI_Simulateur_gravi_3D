@@ -2,6 +2,8 @@
 
 # encoding=utf8
 
+# Bjctrhtg alias le créateur de bouton
+
 from . import settings
 import sys
 from sys import stderr
