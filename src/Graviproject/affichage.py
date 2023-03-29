@@ -140,8 +140,8 @@ class Controles(QWidget):
         boutton1: QAbstractButton = QPushButton("controle1")
         layout.addWidget(boutton1)
 
-        self.boutton2: QPushButton = QPushButton("ajouter sphère")
-        self.boutton2.clicked.connect(self.ajouter_spheres)
+        self.boutton2: QPushButton = QPushButton("Ajouter sphère")
+        self.boutton2.clicked.connect(self.fenetre_ajoute_s)
         layout.addWidget(self.boutton2)
 
         
@@ -151,6 +151,12 @@ class Controles(QWidget):
     def ajouter_spheres(self) -> None:
         var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
         Fenetre_principale.ajouter_sphere(var)
+
+    def fenetre_ajoute_s(self,s):
+        print(s)
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Ajoutez des sphères !")
+        dlg.exec_()
 
 
 
