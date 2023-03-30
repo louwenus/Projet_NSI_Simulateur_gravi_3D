@@ -23,7 +23,7 @@ import os
 app: QApplication = QApplication(sys.argv)
 
 class Main_window(QWidget):
-    """Définit la fenettre principale du programme, a partir d'un QWidget
+    """Définit la fenètre principale du programme, à partir d'un QWidget.
     """
     def __init__(self) -> None:
         super().__init__()
@@ -145,9 +145,11 @@ class Controles(QWidget):
     layout_aj_sph.addRow(result_label)
 
 
-    def ajouter_spheres(self) -> None:
-        var = gravilib.PyBaseSphere(randint(0,1000), randint(0,1000), randint(0,1000), 1000000, 150, 100, 0, 0)
-        Fenetre_principale.ajouter_sphere(var)
+
+    def ajouter_spheres(boo:bool) -> None:
+        for i in range(Controles.amount.value()):
+            var = gravilib.PyBaseSphere(randint(0,30000), randint(0,30000), randint(0,30000), randint(10000,100000), randint(100,500), randint(0,500), randint(0,500), 0)
+            Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter cette sphère")
     layout_aj_sph.addWidget(bouton_val_aj)
@@ -166,7 +168,7 @@ class Controles(QWidget):
         boutton1.clicked.connect(Controles.ajouter_spheres)
         self.layout.addWidget(boutton1)
         
-        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter une sphère")
+        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter des sphère")
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
 
