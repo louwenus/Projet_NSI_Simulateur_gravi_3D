@@ -145,6 +145,8 @@ class Controles(QWidget):
     layout_aj_sph.addWidget(bouton_val_aj)
     bouton_val_aj.clicked.connect(ajouter_spheres)
 
+    
+
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Controles")
@@ -159,6 +161,14 @@ class Controles(QWidget):
         self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter une sphère")
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
+
+        layout = QFormLayout()
+        self.setLayout(layout)
+        amount = QSpinBox(minimum=1, maximum=100, value=20, prefix='$')
+        amount.valueChanged.connect(self.update)
+        self.result_label = QLabel('', self)
+        layout.addRow('Amount:', amount)
+        layout.addRow(self.result_label)
 
 
 
