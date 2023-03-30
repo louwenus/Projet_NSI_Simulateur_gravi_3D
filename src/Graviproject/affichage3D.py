@@ -39,12 +39,12 @@ class SphereItem(QGraphicsItem):
         painter.setBrush(QBrush(self.couleur[self.compteur]))
         
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
-        
-    def change_couleur (self, painter):
+
+    def change_couleur (self):
         self.compteur += 1
-        if self.compteur == 5:
+        if self.compteur == 4:
             self.compteur = 0
-        painter.setBrush(QBrush(self.couleur[self.compteur]))
+    
         
 
 
