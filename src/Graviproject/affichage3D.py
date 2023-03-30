@@ -77,7 +77,7 @@ class Renderer3D(QWidget):
     def update_graph(self) -> None:
         """update le rendu de toute les sphères"""
         
-        print(self.view.size())
+        #print(self.view.size())
         
         if settings.get("logging")>=3:
             print("updating visual ...",end="")
