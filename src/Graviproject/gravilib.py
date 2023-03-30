@@ -35,7 +35,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
     def gerer_colision(self) -> None:
         for sphere,sphere2 in self.collisions():
             print("two sphere collided but we ignore that for now")
-            for render in sphere.get_render_items():# + sphere2.render_item():
+            for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
 
 
