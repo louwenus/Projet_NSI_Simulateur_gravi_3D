@@ -11,6 +11,7 @@ try:
     from PySide6.QtCore import *
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
+    from random import *
 except ModuleNotFoundError as e:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails",file=stderr)
     raise e
@@ -145,8 +146,9 @@ class Controles(QWidget):
 
 
     def ajouter_spheres(self) -> None:
-        var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
+        var = gravilib.PyBaseSphere(randint(0,1000), randint(0,1000), randint(0,1000), 1000000, 150, 100, 0, 0)
         Fenetre_principale.ajouter_sphere(var)
+    
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter cette sphère")
     layout_aj_sph.addWidget(bouton_val_aj)
     bouton_val_aj.clicked.connect(ajouter_spheres)
