@@ -1,4 +1,5 @@
 from typing import Callable
+from random import random
 import sys
 import traceback
 from PySide6.QtWidgets import *
@@ -22,6 +23,8 @@ class SphereItem(QGraphicsItem):
         super().__init__()
         self.getcoords: Callable[[],tuple[int,int,int]] = getcoords
         self.radius: int = rayon
+        self.compteur = 0
+        self.couleur = ["red", "green", "purple", "blu"]
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
@@ -31,10 +34,16 @@ class SphereItem(QGraphicsItem):
         return QRectF(-1*self.radius, -1*self.radius, 2 * self.radius, 2 * self.radius)
 
     def paint(self, painter, option, widget) -> None:
+        
         painter.setPen(QPen(Qt.black, 0.5))
-        painter.setBrush(QBrush(QColor(255, 0, 0, 128)))
+        painter.setBrush(QBrush(self.couleur[self.compteur]))
         
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
+        if random() > 0.95:
+            self.compteur += 1
+            if self.compteur == 4:
+                self.compteur = 0
+        
 
 
 
