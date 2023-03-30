@@ -144,11 +144,26 @@ class Controles(QWidget):
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
 
+    #pas intégré
+    x = QSpinBox(minimum=1, maximum=30000, value=-30000)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées x:', x)
+    layout_aj_sph.addRow(result_label)
+    #pas intégré
+    y = QSpinBox(minimum=1, maximum=30000, value=-30000)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées y:', y)
+    layout_aj_sph.addRow(result_label)
+    #pas intégré
+    z = QSpinBox(minimum=1, maximum=30000, value=-30000)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées z:', z)
+    layout_aj_sph.addRow(result_label)
 
 
     def ajouter_spheres(boo:bool) -> None:
         for i in range(Controles.amount.value()):
-            var = gravilib.PyBaseSphere(randint(0,30000), randint(0,30000), randint(0,30000), randint(10000,100000), randint(100,500), randint(0,500), randint(0,500), 0)
+            var = gravilib.PyBaseSphere(randint(0,30000), randint(0,30000), randint(0,10000), randint(10000,100000), randint(100,500), randint(0,500), randint(0,500), 0)
             Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter cette sphère")
