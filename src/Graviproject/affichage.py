@@ -135,8 +135,14 @@ class Main_window(QWidget):
 class Controles(QWidget):
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
-    layout_aj_sph:QLayout=QVBoxLayout()
+    layout_aj_sph:QLayout=QFormLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
+
+    amount = QSpinBox(minimum=1, maximum=100, value=0)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('nb sphères:', amount)
+    layout_aj_sph.addRow(result_label)
+
 
     def ajouter_spheres(self) -> None:
         var = gravilib.PyBaseSphere(0, 0, 0, 1000000, 150, 100, 0, 0)
@@ -162,13 +168,7 @@ class Controles(QWidget):
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
 
-        layout = QFormLayout()
-        self.setLayout(layout)
-        amount = QSpinBox(minimum=1, maximum=100, value=20, prefix='$')
-        amount.valueChanged.connect(self.update)
-        self.result_label = QLabel('', self)
-        layout.addRow('Amount:', amount)
-        layout.addRow(self.result_label)
+    
 
 
 
