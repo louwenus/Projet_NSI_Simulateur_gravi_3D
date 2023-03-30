@@ -19,6 +19,8 @@ from .affichage3D import SphereItem,Renderer3D
 
 import os
 
+app: QApplication = QApplication(sys.argv)
+
 class Main_window(QWidget):
     """Définit la fenettre principale du programme, a partir d'un QWidget
     """
@@ -162,7 +164,7 @@ class Controles(QWidget):
 
 
 
-app: QApplication = QApplication(sys.argv)
+
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
 
