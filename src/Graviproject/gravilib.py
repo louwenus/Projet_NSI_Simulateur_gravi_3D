@@ -38,5 +38,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
             for render in sphere.get_render_items():# + sphere2.render_item():
                 render.change_couleur()
 
+
             self.add_sphere(sphere)
             self.add_sphere(sphere2)
