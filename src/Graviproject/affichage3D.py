@@ -24,7 +24,7 @@ class SphereItem(QGraphicsItem):
         self.getcoords: Callable[[],tuple[int,int,int]] = getcoords
         self.radius: int = rayon
         self.compteur = 0
-        self.couleur = ["red", "green", "purple", "blu"]
+        self.couleur = ["red", "green", "purple", "blu", "black"]
     def update_pos(self) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
@@ -39,10 +39,12 @@ class SphereItem(QGraphicsItem):
         painter.setBrush(QBrush(self.couleur[self.compteur]))
         
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
-        if random() > 0.95:
-            self.compteur += 1
-            if self.compteur == 4:
-                self.compteur = 0
+        
+    def change_couleur (self, painter):
+        self.compteur += 1
+        if self.compteur == 5:
+            self.compteur = 0
+        painter.setBrush(QBrush(self.couleur[self.compteur]))
         
 
 
