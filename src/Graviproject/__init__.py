@@ -15,7 +15,7 @@ if "--help" in sys.argv or "-h" in sys.argv:
         --license     Print the (french) license
         --no-settings Use only default settings
     """)
-print("program_name  Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, g-aled",
+print("program_name  Copyright (C) 2022 louwenus, Artefact42, kalyklos, Bjctrhtg, GargantuaArgell",
 "This program comes with ABSOLUTELY NO WARRANTY;",
 "This is free software, and you are welcome to redistribute it under certain conditions;",
 "type `"+sys.argv[0]+" --license' for details.",sep="\n")
