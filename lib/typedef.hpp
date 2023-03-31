@@ -34,6 +34,8 @@ struct atlco
     std::atomic<li> x;
     std::atomic<li> y;
     std::atomic<li> z;
+
+    operator lco() {return {(li)this->x,(li)this->y,(li)this->z};}
 };
 
 #endif
