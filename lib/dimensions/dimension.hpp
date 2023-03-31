@@ -8,12 +8,14 @@
 
 #include "../typedef.hpp"        //typedef and common stuff
 #include "../spheres/sphere.hpp" //so sphere can be used in dims
+#include "../external/BS_thread_pool.hpp"  //using the amazing thread pool from https://github.com/bshoshany/thread-pool
 
 struct grav_const{
     float temps;
     llco pos;
     uli masse;
     uli sanitize;
+    atlco accel;
 };
 
 class BaseDimension
@@ -33,5 +35,6 @@ public:
 protected:
     // variables
     std::list<DummySphere *> objets;
+    static BS::thread_pool tpool;
 };
 #endif
