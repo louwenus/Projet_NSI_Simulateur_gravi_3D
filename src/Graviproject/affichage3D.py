@@ -46,7 +46,7 @@ class SphereItem(QGraphicsItem):
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
 
     def change_couleur (self):
-        self.compteur = randint(0,4)
+        self.compteur = randint(1,4)
     
         
 
@@ -75,7 +75,6 @@ class Renderer3D(QWidget):
         def wheel_ignore(object,event):
             event.ignore()
         self.view.wheelEvent=types.MethodType(wheel_ignore,QGraphicsView)
-        self.scene.wheelEvent=types.MethodType(wheel_ignore,QGraphicsScene)
         self.mainlayout.addWidget(self.view)
         
         self.camera:tuple[int,int,int,int,int,int] = (0,0,0,1,0,0) # (vecteur_pos,vecteur_rot)
