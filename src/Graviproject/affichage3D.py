@@ -2,6 +2,7 @@ from typing import Callable
 from random import *
 import sys
 import traceback
+import types
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
@@ -29,8 +30,8 @@ class SphereItem(QGraphicsItem):
     def update_pos(self,camera) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
-        coord=(coord[0]-camera[0],coord[1]-camera[1],coord[2]-camera)
-        compo_cam:tuple[int,int,int]=(coord[0]*camera[3],coord[1]*camera[4],coord[2]*camera[5])
+        coord=(coord[0]-camera[0],coord[1]-camera[1],coord[2]-camera[2])
+        #compo_cam:tuple[int,int,int]=(coord[0]*camera[3],coord[1]*camera[4],coord[2]*camera[5])
         
         self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
     
@@ -68,8 +69,13 @@ class Renderer3D(QWidget):
         
         self.scene:QGraphicsScene = QGraphicsScene(self)
         self.view:QGraphicsView = QGraphicsView(self.scene)
+        #self.view.setUpdatesEnabled(False)
         zoom:float=settings.get("simulation.defaultzoom")
         self.view.scale(zoom,zoom)
+        def wheel_ignore(object,event):
+            event.ignore()
+        self.view.wheelEvent=types.MethodType(wheel_ignore,QGraphicsView)
+        self.scene.wheelEvent=types.MethodType(wheel_ignore,QGraphicsScene)
         self.mainlayout.addWidget(self.view)
         
         self.camera:tuple[int,int,int,int,int,int] = (0,0,0,1,0,0) # (vecteur_pos,vecteur_rot)
@@ -96,11 +102,13 @@ class Renderer3D(QWidget):
             print("updating visual ...",end="")
         for item in self.scene.items():
             item.update_pos(self.camera)
-
+        self.view.update()
         self.view.setSceneRect(self.scene.itemsBoundingRect())
         if settings.get("logging")>=3:
             print("visual done!")
     
+        self.view.wheelEvent
+
     def wheelEvent(self, event):
         if event.angleDelta().y()>0:
             self.view.scale(1.25,1.25)
