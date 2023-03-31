@@ -5,6 +5,8 @@
 
 #include "dimension.hpp"
 
+BS::thread_pool BaseDimension::tpool=BS::thread_pool();
+
 BaseDimension::BaseDimension()
 {
     this->objets = {};
@@ -30,12 +32,13 @@ void grav(DummySphere *sphere, grav_const &constants){
     // on calcule l'accel sur l'element de la boucle interne et  on l'applique
     sphere->accel({(li)(-1*(temp_co.x*constants.masse) / divide), (li)(-1*(temp_co.y*constants.masse) / divide), (li)(-1*(temp_co.z*constants.masse) / divide)});
     //et on renvoie celle sur l'element externe
-    return {(li)((temp_co.x*masse) / divide), (li)((temp_co.y*masse) / divide), (li)((temp_co.z*masse) / divide)};
+    constants.accel.x+=(li)((temp_co.x*masse) / divide);
+    constants.accel.y+=(li)((temp_co.y*masse) / divide);
+    constants.accel.z+=(li)((temp_co.z*masse) / divide);
 }
 
 void BaseDimension::gravite_all(float temps)
 {
-    lco accel;
     grav_const constant;
     constant.temps = temps;
     std::list<std::future<lco>> results;
@@ -49,18 +52,10 @@ void BaseDimension::gravite_all(float temps)
 
         for (std::list<DummySphere *>::iterator iterator2 = this->objets.begin(); iterator2!=iterator; ++iterator2)
         {
-            results.push_back(
-                std::async(std::launch::async, grav, *iterator2,std::ref(constant))
-            );
+            this->tpool.push_task(grav, *iterator2,std::ref(constant));
         }
-        accel = {0,0,0};                            // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
-        for (std::list<std::future<lco>>::iterator iterator2 = results.begin(); iterator2!=results.end(); ++iterator2){
-            lco temp=iterator2->get();
-            accel.x+=temp.x;
-            accel.y+=temp.y;
-            accel.z+=temp.z;
-        }
-        (*iterator)->accel(accel);
+        this->tpool.wait_for_tasks();
+        (*iterator)->accel((lco)constant.accel);
     }
 }
 void BaseDimension::add_sphere(DummySphere *instance)
