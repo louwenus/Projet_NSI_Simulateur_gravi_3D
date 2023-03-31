@@ -30,7 +30,7 @@ void BaseDimension::gravite_all(float temps)
         accel.z = 0;
         uli masse1 = (*iterator)->gravite_stats(temps, pos1, sanitize1); // on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
 
-        std::for_each(std::execution::par, this->objets.begin(), iterator, // pour chaque objets précédents dans la liste, on execule la fonction lambda de manierre parallèle
+        std::for_each(std::execution::par_unseq, this->objets.begin(), iterator, // pour chaque objets précédents dans la liste, on execule la fonction lambda de manierre parallèle
                       [temps, pos1, masse1, sanitize1, &accel](DummySphere *sphere) { // fonction lambda: [groupe de capture(aka var externe acessible)](args){code}
                           llco temp_co;
                           uli sanitize2;

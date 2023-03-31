@@ -46,7 +46,8 @@ class Main_window(QWidget):
 
         #création des menus
         self.menuBar:QWidget = QMenuBar(self)
-        
+        self.menuBar.setFixedWidth(self.size().width())
+                
         self.affichageMenu:QMenu= QMenu("&Affichage",self.menuBar)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
@@ -144,6 +145,9 @@ class Main_window(QWidget):
         #for sphere in self.dimension.get_spheres():
         #    pass
 
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        self.menuBar.setFixedWidth(self.size().width())
+        return super().resizeEvent(event)
     
 
 class Controles(QWidget):
