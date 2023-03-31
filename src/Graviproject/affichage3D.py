@@ -136,15 +136,20 @@ class Camera():
         self.pitch=pitch
         self.roll=roll
         
+        self.matrix_rotation()
+        
+    def matrix_rotation(self) -> None:
+        """Updates the rotation matrix of the camera.
+        """
         matrix3_3=tuple[tuple[float,float,float],tuple[float,float,float],tuple[float,float,float]]
         
         self.matrix:matrix3_3=((  cos(self.yaw) * cos(self.pitch)  ,  cos(self.yaw) * sin(self.pitch) * sin(self.roll) - sin(self.yaw) * cos(self.roll)  ,  cos(self.yaw) * sin(self.pitch) * cos(self.roll) + sin(self.yaw) * sin(self.roll)  ),
                                (  sin(self.yaw) * cos(self.pitch)  ,  sin(self.yaw) * sin(self.pitch) * sin(self.roll) + cos(self.yaw) * cos(self.roll)  ,  sin(self.yaw) * sin(self.pitch) * cos(self.roll) - cos(self.yaw) * sin(self.roll)  ),
                                (          -sin(self.pitch)         ,                           cos(self.pitch) * sin(self.roll)                          ,                           cos(self.pitch) * cos(self.roll)                          ))
         
+    
     def bidul(self, item:SphereItem):
         coord:tuple[int, int, int] = item.getcoords()
         coord=(coord[0]-self.x , coord[1]-self.y , coord[2]-self.z) # vecteur origine_camera/sphere
         coord=(coord[2] * self.matrix[0][2] + coord[1] * self.matrix[0][1] + coord[0] * self.matrix[0][0]  ,  coord[2] * self.matrix[1][2] + coord[1] * self.matrix[1][1] + coord[0] * self.matrix[1][0]  ,  coord[2] * self.matrix[2][2] + coord[1] * self.matrix[2][1] + coord[0] * self.matrix[2][0])
-        
         
