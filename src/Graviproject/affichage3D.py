@@ -6,6 +6,7 @@ import types
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
+from math import cos, sin
 
 from . import settings
 
@@ -30,7 +31,7 @@ class SphereItem(QGraphicsItem):
     def update_pos(self,camera) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
-        coord=(coord[0]-camera[0],coord[1]-camera[1],coord[2]-camera[2])
+        coord=(coord[0]-camera[0],coord[1]-camera[1],coord[2]-camera[2]) # vecteur origine_camera/sphere
         #compo_cam:tuple[int,int,int]=(coord[0]*camera[3],coord[1]*camera[4],coord[2]*camera[5])
         
         self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
@@ -113,3 +114,37 @@ class Renderer3D(QWidget):
             self.view.scale(1.25,1.25)
         else:
             self.view.scale(0.75,0.75)
+            
+            
+class Camera():
+    def __init__(self, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
+        """Camera attributes.
+
+        Args:
+            x (int, optional): x coordinate of the camera. Defaults to 0.
+            y (int, optional): y coordinate of the camera. Defaults to 0.
+            z (int, optional): z coordinate of the camera. Defaults to 0.
+            yaw (float, optional): Rotation of the camera on the x axis. Defaults to 0.
+            pitch (float, optional): Rotation of the camera on the y axis. Defaults to 0.
+            roll (float, optional): Rotation of the camera on the z axis. Defaults to 0.
+        """
+        self.x=x
+        self.y=y
+        self.z=z
+        
+        self.yaw=yaw
+        self.pitch=pitch
+        self.roll=roll
+        
+        matrix3_3=tuple[tuple[float,float,float],tuple[float,float,float],tuple[float,float,float]]
+        
+        self.matrix:matrix3_3=((  cos(self.yaw) * cos(self.pitch)  ,  cos(self.yaw) * sin(self.pitch) * sin(self.roll) - sin(self.yaw) * cos(self.roll)  ,  cos(self.yaw) * sin(self.pitch) * cos(self.roll) + sin(self.yaw) * sin(self.roll)  ),
+                               (  sin(self.yaw) * cos(self.pitch)  ,  sin(self.yaw) * sin(self.pitch) * sin(self.roll) + cos(self.yaw) * cos(self.roll)  ,  sin(self.yaw) * sin(self.pitch) * cos(self.roll) - cos(self.yaw) * sin(self.roll)  ),
+                               (          -sin(self.pitch)         ,                           cos(self.pitch) * sin(self.roll)                          ,                           cos(self.pitch) * cos(self.roll)                          ))
+        
+    def bidul(self, item:SphereItem):
+        coord:tuple[int, int, int] = item.getcoords()
+        coord=(coord[0]-self.x , coord[1]-self.y , coord[2]-self.z) # vecteur origine_camera/sphere
+        coord=(coord[2] * self.matrix[0][2] + coord[1] * self.matrix[0][1] + coord[0] * self.matrix[0][0]  ,  coord[2] * self.matrix[1][2] + coord[1] * self.matrix[1][1] + coord[0] * self.matrix[1][0]  ,  coord[2] * self.matrix[2][2] + coord[1] * self.matrix[2][1] + coord[0] * self.matrix[2][0])
+        
+        
