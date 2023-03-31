@@ -180,7 +180,7 @@ class Controles(QWidget):
 
     def ajouter_spheres(boo:bool) -> None:
         for i in range(Controles.amount.value()):
-            var = gravilib.PyBaseSphere(randint(-10000,10000)*10, randint(-10000,10000)*10, randint(-10000,10000), randint(10000,1000000), randint(100,500), randint(0,500), randint(0,500), 0)
+            var = gravilib.PyBaseSphere(randint(-50000,50000)*10, randint(-50000,50000)*10, randint(-20000,20000), randint(100000,10000000), randint(500,2000), randint(0,500), randint(0,500), 0)
             Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter les sphères")
