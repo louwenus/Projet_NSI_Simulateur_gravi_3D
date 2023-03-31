@@ -15,7 +15,7 @@ const std::list<DummySphere *> BaseDimension::get_sph_list(){
     return this->objets ;
 }
 
-lco grav(DummySphere *sphere, grav_const &constants){
+void grav(DummySphere *sphere, grav_const &constants){
     llco temp_co;
     uli sanitize;
     uli masse = sphere->gravite_stats(constants.temps,temp_co,sanitize); // on stock la pos dans temp_co
@@ -42,8 +42,10 @@ void BaseDimension::gravite_all(float temps)
 
     for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
     {   
+        constant.accel.x=0;constant.accel.y=0;constant.accel.z=0;
         constant.masse=(*iterator)->gravite_stats(temps,constant.pos,constant.sanitize);// on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
         results.clear();
+
 
         for (std::list<DummySphere *>::iterator iterator2 = this->objets.begin(); iterator2!=iterator; ++iterator2)
         {
