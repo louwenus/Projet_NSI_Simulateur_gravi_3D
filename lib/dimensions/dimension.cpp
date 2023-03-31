@@ -4,6 +4,7 @@
 //  avec chaque modif des classes publiques de gravilib.cpp
 
 #include "dimension.hpp"
+#include <chrono>
 
 BaseDimension::BaseDimension()
 {
@@ -17,12 +18,13 @@ const std::list<DummySphere *> BaseDimension::get_sph_list(){
 
 void BaseDimension::gravite_all(float temps)
 {
+    const auto start = std::chrono::steady_clock::now();
     llco pos1 = {0, 0, 0}; // pour eviter de recreer une variable a chaque fois
     uli sanitize1;
     atllco accel;
 
     for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
-    {
+    {   
         accel.x = 0;                            // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
         accel.y = 0;
         accel.z = 0;
@@ -57,6 +59,10 @@ void BaseDimension::gravite_all(float temps)
                       });
         (*iterator)->accel({(li)accel.x, (li)accel.y, (li)accel.z}); // ugly array reconstruction needed because of atomic type
     }
+    const auto finish = std::chrono::steady_clock::now();
+    std::cout << "internal cpp time"
+            << std::chrono::duration_cast<std::chrono::milliseconds>(finish - start)
+            << '\n';
 }
 void BaseDimension::add_sphere(DummySphere *instance)
 {
