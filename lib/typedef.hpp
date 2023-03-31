@@ -7,9 +7,7 @@
 #include <string>
 #include <array>
 #include <list>
-#include <algorithm>
-#include <execution>
-#include <atomic>
+#include <future>
 #include <iostream>
 #include "Python.h"
 
@@ -30,11 +28,11 @@ struct lco
     li y;
     li z;
 };
-struct atllco
+/*struct atllco
 {
     std::atomic<lli> x;
     std::atomic<lli> y;
     std::atomic<lli> z;
-};
+};*/
 
 #endif

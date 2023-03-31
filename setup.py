@@ -9,7 +9,7 @@ import os
 
 Options.language_level=3
 copt: dict[str, list[str]] =  {#'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math','-lttb']  ,
-        'unix': ['-std=c++20','-O3','-pthread','-ffast-math','-ftree-parallelize-loops=10','-lttb']  ,
+        'unix': ['-std=c++20','-O3','-pthread','-ffast-math']  ,
         'mingw32' : ['-std=c++20','-O3','-pthread','-ffast-math']  ,
         'msvc'  : ['/O2','/std:c++20','/cgthreads8']  , 
         #'cygiwin' : []

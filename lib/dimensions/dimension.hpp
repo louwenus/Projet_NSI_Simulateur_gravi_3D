@@ -9,6 +9,13 @@
 #include "../typedef.hpp"        //typedef and common stuff
 #include "../spheres/sphere.hpp" //so sphere can be used in dims
 
+struct grav_const{
+    float temps;
+    llco pos;
+    uli masse;
+    uli sanitize;
+};
+
 class BaseDimension
 {
 public:
