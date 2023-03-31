@@ -161,17 +161,17 @@ class Controles(QWidget):
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
 
-    #pas intégré
-    x = QSpinBox(minimum=-30000, maximum=30000, value=0)
+    
+    x = QSpinBox(minimum=-50000, maximum=50000, value=0)
     result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées x:', x)
     layout_aj_sph.addRow(result_label)
-    #pas intégré
-    y = QSpinBox(minimum=-30000, maximum=30000, value=0)
+    
+    y = QSpinBox(minimum=-50000, maximum=50000, value=0)
     result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées y:', y)
     layout_aj_sph.addRow(result_label)
-    #pas intégré
+    
     z = QSpinBox(minimum=-30000, maximum=30000, value=0)
     result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées z:', z)
@@ -180,7 +180,11 @@ class Controles(QWidget):
 
     def ajouter_spheres(boo:bool) -> None:
         for i in range(Controles.amount.value()):
-            var = gravilib.PyBaseSphere(randint(-50000,50000)*10, randint(-50000,50000)*10, randint(-20000,20000), randint(100000,10000000), randint(500,2000), randint(0,500), randint(0,500), 0)
+            xmin=(Controles.x.value()*10-2000)*10
+            xmax=(Controles.x.value()*10+2000)*10
+            ymin=(Controles.y.value()*10-2000)*10
+            ymax=(Controles.y.value()*10+2000)*10
+            var = gravilib.PyBaseSphere (randint(xmin,xmax)*10, randint(ymin,ymax)*10, randint(-20000,20000), randint(100000,10000000), randint(200,5000), randint(0,1000), randint(0,1000), 0)
             Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter les sphères")
