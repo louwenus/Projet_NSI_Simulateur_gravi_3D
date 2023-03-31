@@ -15,7 +15,7 @@ const std::list<DummySphere *> BaseDimension::get_sph_list(){
     return this->objets ;
 }
 
-lco grav(DummySphere *sphere,grav_const &constants){
+lco grav(DummySphere *sphere, grav_const &constants){
     llco temp_co;
     uli sanitize;
     uli masse = sphere->gravite_stats(constants.temps,temp_co,sanitize); // on stock la pos dans temp_co
@@ -35,25 +35,30 @@ lco grav(DummySphere *sphere,grav_const &constants){
 
 void BaseDimension::gravite_all(float temps)
 {
-    llco pos1; // pour eviter de recreer une variable a chaque fois
-    uli sanitize1;
     lco accel;
     grav_const constant;
     constant.temps = temps;
-    std::list<llco> results;
+    std::list<std::future<lco>> results;
 
     for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
     {   
-        constant.masse=(*iterator)->gravite_stats(temps,constant.pos,constant.sanitize);
-        results={};
-        accel = {0,0,0};                            // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
-        uli masse1 = (*iterator)->gravite_stats(temps, pos1, sanitize1); // on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
+        constant.masse=(*iterator)->gravite_stats(temps,constant.pos,constant.sanitize);// on prend les stats de la sphere pointé par l'iterator, et on les passe a chaque thread
+        results.clear();
 
         for (std::list<DummySphere *>::iterator iterator2 = this->objets.begin(); iterator2!=iterator; ++iterator2)
         {
-            results.emplace_back(std::async(std::launch::async, grav, (*iterator2),constant));
+            results.push_back(
+                std::async(std::launch::async, grav, *iterator2,std::ref(constant))
+            );
         }
-        (*iterator)->accel({(li)accel.x, (li)accel.y, (li)accel.z}); // ugly array reconstruction needed because of atomic type
+        accel = {0,0,0};                            // accel calculé par partie dans chaques thread, a appliqué a la spère pointé par l'iterateur
+        for (std::list<std::future<lco>>::iterator iterator2 = results.begin(); iterator2!=results.end(); ++iterator2){
+            lco temp=iterator2->get();
+            accel.x+=temp.x;
+            accel.y+=temp.y;
+            accel.z+=temp.z;
+        }
+        (*iterator)->accel(accel);
     }
 }
 void BaseDimension::add_sphere(DummySphere *instance)
@@ -63,8 +68,8 @@ void BaseDimension::add_sphere(DummySphere *instance)
 }
 void BaseDimension::move_all(float temps)
 {
-    std::for_each(std::execution::par, this->objets.begin(), this->objets.end(), [temps](DummySphere *sphere)
-                  { sphere->move(temps); });
+    for(auto iter=this->objets.begin(); iter!=this->objets.end(); ++iter)
+        { (*iter)->move(temps); }
 }
 std::list<PyObject *> BaseDimension::detect_collisions()
 {
@@ -95,6 +100,6 @@ std::list<PyObject *> BaseDimension::detect_collisions()
 void BaseDimension::debug()
 {
     std::cout << "Debuging BaseDimension\n";
-    std::for_each(std::execution::seq, this->objets.begin(), this->objets.end(), [](DummySphere *sphere)
-                  { sphere->debug(); });
+    for(auto iter=this->objets.begin(); iter!=this->objets.end(); ++iter)
+        {(*iter)->debug();}
 }

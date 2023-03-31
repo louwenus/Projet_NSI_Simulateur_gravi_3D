@@ -15,7 +15,7 @@ except ModuleNotFoundError as e:
 from .affichage3D import SphereItem
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
-    def __init__(self,x: int,y :int,z :int,masse :int,rayon :int,vx :int,vy :int,vz :int) -> None:
+    def __init__(self,x: int,y :int,z :int,masse :int,rayon :int,vx :int,vy :int,vz :int,d :int) -> None:
         """crée une PyBaseSphere sur la base d'une cySimpleSphere
 
         Args:
