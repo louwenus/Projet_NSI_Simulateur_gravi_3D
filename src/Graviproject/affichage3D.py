@@ -1,5 +1,5 @@
 from typing import Callable
-from random import random
+from random import *
 import sys
 import traceback
 from PySide6.QtWidgets import *
@@ -45,9 +45,7 @@ class SphereItem(QGraphicsItem):
         painter.drawEllipse(QPointF(0, 0), self.radius, self.radius)
 
     def change_couleur (self):
-        self.compteur += 1
-        if self.compteur == 4:
-            self.compteur = 0
+        self.compteur = randint(0,4)
     
         
 
