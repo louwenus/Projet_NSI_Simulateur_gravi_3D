@@ -8,6 +8,7 @@ from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 
 from . import settings
 
+
 class SphereItem(QGraphicsItem):
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
     def __init__(self, rayon:int, getcoords:Callable[[],tuple[int,int,int]]) -> None:
@@ -25,9 +26,12 @@ class SphereItem(QGraphicsItem):
         self.radius: int = rayon
         self.compteur = 0
         self.couleur = ["red", "green", "purple", "blu", "black"]
-    def update_pos(self) -> None:
+    def update_pos(self,camera) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
         coord: tuple[int, int, int]=self.getcoords()
+        coord=(coord[0]-camera[0],coord[1]-camera[1],coord[2]-camera)
+        compo_cam:tuple[int,int,int]=(coord[0]*camera[3],coord[1]*camera[4],coord[2]*camera[5])
+        
         self.setPos(*coord[0:2]) #(*list) == (list[0],list[1])
     
     def boundingRect(self) -> QRectF:
@@ -70,7 +74,7 @@ class Renderer3D(QWidget):
         self.view.scale(zoom,zoom)
         self.mainlayout.addWidget(self.view)
         
-        self.camera:tuple[int,int,int,int,int,int] = (0,0,0,0,0,0)
+        self.camera:tuple[int,int,int,int,int,int] = (0,0,0,1,0,0) # (vecteur_pos,vecteur_rot)
     
     def add_to_display(self,item:SphereItem) -> None:
         self.scene.addItem(item)
@@ -93,7 +97,7 @@ class Renderer3D(QWidget):
         if settings.get("logging")>=3:
             print("updating visual ...",end="")
         for item in self.scene.items():
-            item.update_pos()
+            item.update_pos(self.camera)
 
         self.view.setSceneRect(self.scene.itemsBoundingRect())
         if settings.get("logging")>=3:
