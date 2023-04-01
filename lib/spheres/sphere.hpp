@@ -42,12 +42,12 @@ public:
 
     llco pos; // declared public to be easily accessible from cython (and then python)
     uli rayon;
-
+    lco speed;
 protected:
     llco posmin; // utilisé pour les tests de collision rapide
     llco posmax; // utilisé pour les tests de collision rapide
     ulli masse;
-    lco speed;
+    
 };
 
 #endif
