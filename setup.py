@@ -6,7 +6,6 @@ import os
 #import distutils.cygwinccompiler
 #distutils.cygwinccompiler.get_msvrc = lambda: []
 
-
 Options.language_level=3
 copt: dict[str, list[str]] =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffast-math']  ,
         #'unix': ['-std=c++20','-O3','-pthread','-ffast-math']  ,
@@ -17,7 +16,7 @@ copt: dict[str, list[str]] =  {'unix': ['-std=c++20','-g','-Og','-pthread','-ffa
 sourcesfiles: list[str]=[]
 for folder,folders,files in os.walk("lib"):
     for file in files:
-        if file.split(".")[-1] in ("pxd","pyx","cpp"):
+        if file.split(".")[-1] in ("pyx","cpp"): #,"pxd"
             if file not in ("cppgravilib.cpp"):
                 sourcesfiles.append(folder + "/" + file)
 

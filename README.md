@@ -70,7 +70,10 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
       Vous avez besoin de python3, pip, d'un compilateur C++20 et peut-être des headers python3 (`Python.h`).
   
   - Installez le système de build python et les dépendances :<br/>
-  `python3 -m pip install --upgrade build cython setuptools pyside6`<br/>
+  `python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython" setuptools pyside6`<br/>
+
+  *NB : La version git de cython et réquise jusqu'a ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2)*
+
   - Copiez le repo git :<br/>
   `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
   `cd Projet_NSI_Simulateur_gravi_3D`<br/>

@@ -9,6 +9,7 @@
 # cython: language_level=3
 
 #from libcpp.string cimport string
+from os import lchown
 from sys import stdout
 cimport cppgravilib
 from cython.operator import postincrement,dereference
@@ -112,6 +113,7 @@ cdef class CySimpleSphere(CyDummySphere):
     def set_rayon(self,rayon:int) -> None:
         self.c_simple_sphere.rayon=rayon
     def get_speed(self) -> Tuple[int,int,int]:
-        return self.c_simple_sphere.speed.x,self.c_simple_sphere.speed.y,self.c_simple_sphere.speed.z
+        speed = <cppgravilib.lco>self.c_simple_sphere.speed
+        return speed.x,speed.y,speed.z
     def set_speed(self,speed:Tuple[int,int,int]) -> None:
-        self.c_simple_sphere.speed=speed
+        self.c_simple_sphere.set_speed(<cppgravilib.lco>speed)

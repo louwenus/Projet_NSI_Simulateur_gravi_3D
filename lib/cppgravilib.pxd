@@ -7,6 +7,7 @@
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
+from cython import operator
 from cpython cimport PyObject
 from libcpp.atomic cimport atomic
 from libcpp.list cimport list as clist
@@ -26,6 +27,7 @@ cdef extern from "typedef.hpp":
         atomic[int] x
         atomic[int] y
         atomic[int] z
+        atlco(lco)
 
 
 cdef extern from "spheres/sphere.hpp":
@@ -37,6 +39,7 @@ cdef extern from "spheres/sphere.hpp":
         llco pos
         int rayon
         atlco speed
+        void set_speed(lco speed)
         
 
 cdef extern from "dimensions/dimension.hpp":

@@ -39,6 +39,7 @@ public:
     virtual ulli gravite_stats(float temps, llco &return_pos, uli &sane_min_r) const; // masse (interval,position out)
     virtual void accel(const lco accel);                             // vecteur acceleration
     virtual void debug() const;
+    virtual void set_speed(lco speed);
 
     llco pos; // declared public to be easily accessible from cython (and then python)
     uli rayon;
