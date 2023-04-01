@@ -25,13 +25,13 @@ class Camera():
             pitch (float, optional): Rotation of the camera on the y axis. Defaults to 0.
             roll (float, optional): Rotation of the camera on the z axis. Defaults to 0.
         """
-        self.x=x
-        self.y=y
-        self.z=z
+        self.x: int=x
+        self.y: int=y
+        self.z: int=z
         
-        self.yaw=yaw
-        self.pitch=pitch
-        self.roll=roll
+        self.yaw: float=yaw
+        self.pitch: float=pitch
+        self.roll: float=roll
         
         self.matrix_rotation()
         
