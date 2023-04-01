@@ -89,7 +89,7 @@ class SphereItem(QGraphicsItem):
         self.radius: int = rayon
         self.radius2D:float = 0
         self.compteur = 0
-        self.couleur = ["red", "green", "purple", "blu", "black"]
+        self.couleur = ["red", "green", "purple", "blu", "yellow"]
         
         
     def update_pos(self,camera:Camera) -> None:
