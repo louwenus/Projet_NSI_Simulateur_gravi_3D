@@ -64,8 +64,8 @@ class Camera():
             coord_plan=(coord[0]/coord[2],coord[1]/coord[2])
             radius_plan=radius/coord[2]
         else:
-            coord_plan:tuple[float,float] = (0,0)
-            radius_plan:float = 0
+            coord_plan = (0,0)
+            radius_plan = 0
         
         return (coord_plan, radius_plan)
 
