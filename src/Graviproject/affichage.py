@@ -156,7 +156,7 @@ class Controles(QWidget):
     layout_aj_sph:QLayout=QFormLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
-    amount = QSpinBox(minimum=0, maximum=1000, value=1)
+    amount = QSpinBox(minimum=0, maximum=1000, value=100)
     result_label = QLabel('')
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
@@ -184,7 +184,7 @@ class Controles(QWidget):
             xmax=(Controles.x.value()*10+2000)*10
             ymin=(Controles.y.value()*10-2000)*10
             ymax=(Controles.y.value()*10+2000)*10
-            var = gravilib.PyBaseSphere (randint(xmin,xmax)*10, randint(ymin,ymax)*10, 10, randint(1,100000000), randint(3000,10000), randint(100,400), randint(100,400), randint(50,100),10)
+            var = gravilib.PyBaseSphere (randint(xmin,xmax)*10, randint(ymin,ymax)*10, 10, randint(1,100000000), randint(3000,10000), randint(-400,400), randint(-400,400), randint(-3,3),10)
             Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter les sphères")
