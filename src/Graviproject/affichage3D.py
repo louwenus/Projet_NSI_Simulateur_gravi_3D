@@ -57,15 +57,15 @@ class Camera():
             tuple[tuple[float,float],float]: A tuple of the coordinates of the projection and its size.
         """
         coord=(coord[0]-self.x , coord[1]-self.y , coord[2]-self.z) # vecteur origine_camera/sphere
-        coord=(coord[2] * self.matrix[0][2] + coord[1] * self.matrix[0][1] + coord[0] * self.matrix[0][0] ,# rotation du vecteur en fonction de l'orientation de la caméra
-               coord[2] * self.matrix[1][2] + coord[1] * self.matrix[1][1] + coord[0] * self.matrix[1][0] ,
-               coord[2] * self.matrix[2][2] + coord[1] * self.matrix[2][1] + coord[0] * self.matrix[2][0]) 
+        coord=(coord[2] * self.matrix[0][2] + coord[1] * self.matrix[0][1] + coord[0] * self.matrix[0][0]  ,
+               coord[2] * self.matrix[1][2] + coord[1] * self.matrix[1][1] + coord[0] * self.matrix[1][0]  ,
+               coord[2] * self.matrix[2][2] + coord[1] * self.matrix[2][1] + coord[0] * self.matrix[2][0]) # rotation du vecteur en fonction de l'orientation de la caméra
         if coord[2]>0:
-            coord_plan:tuple[float,float] = (coord[0]/coord[2],coord[1]/coord[2])
-            radius_plan:float = radius/coord[2]
+            coord_plan=(coord[0]/coord[2],coord[1]/coord[2])
+            radius_plan=radius/coord[2]
         else:
-            coord_plan:tuple[float,float] = (0,0)
-            radius_plan:float = 0
+            coord_plan = (0,0)
+            radius_plan = 0
         
         return (coord_plan, radius_plan)
 
