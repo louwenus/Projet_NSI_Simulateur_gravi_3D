@@ -184,7 +184,7 @@ class Controles(QWidget):
             xmax=(Controles.x.value()*10+2000)*10
             ymin=(Controles.y.value()*10-2000)*10
             ymax=(Controles.y.value()*10+2000)*10
-            var = gravilib.PyBaseSphere (randint(xmin,xmax)*10, randint(ymin,ymax)*10, randint(-20000,20000), randint(1000,100000), randint(1000,5000), randint(0,100), randint(0,100), 0,10)
+            var = gravilib.PyBaseSphere (randint(xmin,xmax)*10, randint(ymin,ymax)*10, randint(-2000,2000), randint(10000,100000), randint(5000,10000), randint(0,100), randint(0,100), 0,10)
             Fenetre_principale.ajouter_sphere(var)
     
     bouton_val_aj:QAbstractButton = QPushButton("Ajouter les sphères")
