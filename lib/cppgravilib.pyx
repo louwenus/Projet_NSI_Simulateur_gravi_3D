@@ -105,5 +105,13 @@ cdef class CySimpleSphere(CyDummySphere):
     
     def get_coord(self) -> Tuple[int,int,int]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z
+    def set_coord(self,coord:Tuple[int,int,int]) -> None:
+        self.c_simple_sphere.pos=coord
     def get_rayon(self) -> int:
         return self.c_simple_sphere.rayon
+    def set_rayon(self,rayon:int) -> None:
+        self.c_simple_sphere.rayon=rayon
+    def get_speed(self) -> Tuple[int,int,int]:
+        return self.c_simple_sphere.speed.x,self.c_simple_sphere.speed.y,self.c_simple_sphere.speed.z
+    def set_speed(self,speed:Tuple[int,int,int]) -> None:
+        self.c_simple_sphere.speed=speed

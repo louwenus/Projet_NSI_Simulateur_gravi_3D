@@ -29,6 +29,7 @@ cdef extern from "spheres/sphere.hpp":
         SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
         llco pos
         int rayon
+        lco speed
         
 
 cdef extern from "dimensions/dimension.hpp":
