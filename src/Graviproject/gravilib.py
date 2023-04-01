@@ -29,6 +29,8 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         return [self.render_item]
         #now, use position and size, plus information embded in the python object (like color) to render the sphere
 
+    
+
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
         self.init_c_container()
