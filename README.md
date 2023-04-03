@@ -76,7 +76,7 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
   - Si vous voulez compiler pour une utilisation dans ce repertoire:
     - compilez avec: `python3 setup.py build_ext --force`<br/>
     - lancez le programme avec la commande `python3 src/launch.py`
-  - si vous voulez installer le paquets pip pour avoir une commande accessible partout et pouvoir retirer tout le repertoire git
+  - si vous voulez installer le paquet pip pour avoir une commande accessible partout et pouvoir retirer tout le repertoire git
     - compilez avec: `python3 -m build -w`
     - installez la wheel: `python3 -m pip install dist/nom_du_fichier.whl`
     - Vous pouvez maintenant lancer `Graviproject`
