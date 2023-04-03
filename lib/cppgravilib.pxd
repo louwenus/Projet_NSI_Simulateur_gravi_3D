@@ -7,9 +7,12 @@
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
+from cython import operator
 from cpython cimport PyObject
+from libcpp.atomic cimport atomic
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
+
 
 cdef extern from "typedef.hpp":
     struct llco:
@@ -20,6 +23,12 @@ cdef extern from "typedef.hpp":
         int x
         int y
         int z
+    struct atlco:
+        atomic[int] x
+        atomic[int] y
+        atomic[int] z
+        atlco(lco)
+
 
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
@@ -29,6 +38,8 @@ cdef extern from "spheres/sphere.hpp":
         SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
         llco pos
         int rayon
+        atlco speed
+        void set_speed(lco speed)
         
 
 cdef extern from "dimensions/dimension.hpp":

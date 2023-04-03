@@ -7,8 +7,7 @@
 #include <string>
 #include <array>
 #include <list>
-#include <algorithm>
-#include <execution>
+#include <future>
 #include <atomic>
 #include <iostream>
 #include "Python.h"
@@ -30,11 +29,13 @@ struct lco
     li y;
     li z;
 };
-struct atllco
+struct atlco
 {
-    std::atomic<lli> x;
-    std::atomic<lli> y;
-    std::atomic<lli> z;
+    std::atomic<li> x;
+    std::atomic<li> y;
+    std::atomic<li> z;
+
+    operator lco() {return {(li)this->x,(li)this->y,(li)this->z};}
 };
 
 #endif

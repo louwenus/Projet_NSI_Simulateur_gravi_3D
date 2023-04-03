@@ -11,7 +11,9 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
 
     this->masse = masse;
     this->rayon = rayon;
-    this->speed = {vx, vy, vz};
+    this->speed.x=vx;
+    this->speed.y=vy;
+    this->speed.z=vz;;
 }
 
 void SimpleSphere::move(float temps)
@@ -24,9 +26,10 @@ void SimpleSphere::move(float temps)
     this->posmax = {this->pos.x + this->rayon, this->pos.y + this->rayon, this->pos.z + this->rayon};
 }
 // gravitation
-ulli SimpleSphere::gravite_stats(float temps, llco &return_pos) const
+ulli SimpleSphere::gravite_stats(float temps, llco &return_pos, uli &sane_min_r) const
 { // cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos = this->pos;
+    sane_min_r = this->rayon;
     return this->masse * temps;
 }
 void SimpleSphere::accel(const lco accel)
@@ -65,4 +68,9 @@ bool SimpleSphere::t_colli_rapide(llco posmin, llco posmax) const
 void SimpleSphere::debug() const
 {
     std::cout << "Position:" << this->pos.x << '/' << this->pos.y << '/' << this->pos.z << " Vitesse:" << this->speed.x << '/' << this->speed.y << '/' << this->speed.z << '\n';
+}
+void SimpleSphere::set_speed(lco speed){
+    this->speed.x=speed.x;
+    this->speed.y=speed.y;
+    this->speed.z=speed.z;
 }

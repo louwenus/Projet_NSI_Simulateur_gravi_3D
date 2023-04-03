@@ -14,16 +14,38 @@ except ModuleNotFoundError as e:
     raise(e)
 from .affichage3D import SphereItem
 
-class PyBaseSphere():
-    def __init__(self,cy_sphere_type:cppgravilib.CyDummySphere,args:Iterable) -> None:
-        """crée une PyBaseSphere sur la base d'une cy_sphere passé en argument
+class PyBaseSphere(cppgravilib.CySimpleSphere):
+    def __init__(self,x: int,y :int,z :int,masse :int,rayon :int,vx :int,vy :int,vz :int,d :int) -> None:
+        """crée une PyBaseSphere sur la base d'une cySimpleSphere
 
         Args:
-            cy_sphere_type (cppgravilib.CyDummySphere): Le type de cy_sphere sur lequel baser la PyBaseSphere
-            args (Iterable): arguments pour la construction de la cy_sphere
+            x,y,z (int): position de départ de la sphere
+            masse,rayon (int): self-explicit
+            vx,vy,vz (int): vitesse de départ de la sphère
         """
-        self.cy_sphere: cppgravilib.CyDummySphere=cy_sphere_type(self,*args)
-        self.render_item:SphereItem=SphereItem(self)
+        self.init_c_container(x,y,z,masse,rayon,vx,vy,vz)
+        self.render_item:SphereItem=SphereItem(self.get_rayon(),self.get_coord)
     def get_render_items(self) -> list[SphereItem]:
         return [self.render_item]
         #now, use position and size, plus information embded in the python object (like color) to render the sphere
+
+    def rebond (self):
+        vx,vy,vz = self.get_speed()
+        vx=vx*(-1)
+        vy=vy*(-1)
+        vz=vz*(-1)
+        self.get_speed = vx,vy,vz
+    
+
+class PyBaseDimension(cppgravilib.CyBaseDimension):
+    def __init__(self) -> None:
+        self.init_c_container()
+    def gerer_colision(self) -> None:
+        for sphere,sphere2 in self.collisions():
+            sphere.rebond()
+            sphere2.rebond()
+            for render in sphere.get_render_items() + sphere2.get_render_items():
+                render.change_couleur()
+                
+            self.add_sphere(sphere)
+            self.add_sphere(sphere2)

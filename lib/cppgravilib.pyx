@@ -9,10 +9,11 @@
 # cython: language_level=3
 
 #from libcpp.string cimport string
+from os import lchown
 from sys import stdout
 cimport cppgravilib
 from cython.operator import postincrement,dereference
-from cpython cimport PyObject
+from cpython cimport Py_DECREF, Py_INCREF, PyObject
 from libcpp.list cimport list as clist
 from typing import Generator, Tuple
 
@@ -21,9 +22,11 @@ ctypedef cppgravilib.DummySphere* DummyPtr
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
-    def __cinit__(self,*a,**kw):                       #cinit & dealoc pour heritage corect
-        if type(self) is CyBaseDimension:
-            self.c_base_dim = new cppgravilib.BaseDimension()
+    def init_c_container(self):                             
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass
+        (aka, should be called once by final python derived class)"""
+        self.c_base_dim = new cppgravilib.BaseDimension()
+
     def __dealloc__(self):
         if type(self) is CyBaseDimension:
             del self.c_base_dim
@@ -70,17 +73,17 @@ cdef class CyBaseDimension:
 
 cdef class CyDummySphere:
     cdef cppgravilib.DummySphere *c_sphere
-    def __cinit__(self,*a,**kw):
-        if type(self) is CyDummySphere:
-            self.c_sphere = NULL
+    def init_c_container(self):                             
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        self.c_sphere = NULL
     def __dealloc__(self):
         del self.c_sphere
     def debug(self) -> None:
         """print out debuging info on stdout"""
         print("this is a dummy sphere")
     
-    def get_coord(self) -> Tuple[int,int,int,int]:
-        """retourn la position et le rayon au format (x,y,z,rayon)
+    def get_coord(self) -> Tuple[int,int,int]:
+        """retourn la position et le rayon au format (x,y,z)
         
         Args:
             self
@@ -89,15 +92,28 @@ cdef class CyDummySphere:
             x (int): composante x de la position
             y (int): composante y de la position
             z (int): composante z de la position
-            rayon (int): rayon"""
-        return 0,0,0,0
+        """
+        return 0,0,0
+    def get_rayon(self) -> int:
+        """retourne le rayon de la sphère"""
+        return 0
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
-    def __cinit__(self,object parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz,*a,**kw):
-        if type(self) is CySimpleSphere:
-            self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>parent,x,y,z,masse,rayon,vx,vy,vz)
-            
+    def init_c_container(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
+        self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
     
-    def get_coord(self) -> Tuple[int,int,int,int]:
-        return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z, self.c_simple_sphere.rayon
+    def get_coord(self) -> Tuple[int,int,int]:
+        return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z
+    def set_coord(self,coord:Tuple[int,int,int]) -> None:
+        self.c_simple_sphere.pos=coord
+    def get_rayon(self) -> int:
+        return self.c_simple_sphere.rayon
+    def set_rayon(self,rayon:int) -> None:
+        self.c_simple_sphere.rayon=rayon
+    def get_speed(self) -> Tuple[int,int,int]:
+        speed = <cppgravilib.lco>self.c_simple_sphere.speed
+        return speed.x,speed.y,speed.z
+    def set_speed(self,speed:Tuple[int,int,int]) -> None:
+        self.c_simple_sphere.set_speed(<cppgravilib.lco>speed)
