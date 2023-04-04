@@ -69,9 +69,9 @@ void SimpleSphere::debug() const
 {
     std::cout << "Position:" << this->pos.x << '/' << this->pos.y << '/' << this->pos.z << " Vitesse:" << this->speed.x << '/' << this->speed.y << '/' << this->speed.z << '\n';
 }
-void SimpleSphere::set_speed(lco speed)
+void SimpleSphere::set_speed(li x,li y,li z)
 {
-    this->speed.x = speed.x;
-    this->speed.y = speed.y;
-    this->speed.z = speed.z;
+    this->speed.x = x;
+    this->speed.y = y;
+    this->speed.z = z;
 }

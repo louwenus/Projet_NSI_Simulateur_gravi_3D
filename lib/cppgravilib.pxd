@@ -13,7 +13,6 @@ from libcpp.atomic cimport atomic
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
 
-
 cdef extern from "typedef.hpp":
     struct llco:
         int x
@@ -29,7 +28,6 @@ cdef extern from "typedef.hpp":
         atomic[int] z
         atlco(lco)
 
-
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass DummySphere:
         DummySphere(PyObject* parent) except +
@@ -39,8 +37,8 @@ cdef extern from "spheres/sphere.hpp":
         llco pos
         int rayon
         atlco speed
-        void set_speed(lco speed)
-        
+        void set_speed(int x,int y,int z)
+ctypedef DummySphere* DummySpherePtr        
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
@@ -50,4 +48,4 @@ cdef extern from "dimensions/dimension.hpp":
         void move_all(float temps)
         void debug()
         clist[PyObjPtr] detect_collisions()
-        clist[DummySphere*] get_sph_list()
+        clist[DummySpherePtr] get_sph_list()

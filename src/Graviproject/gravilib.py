@@ -37,7 +37,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         vx = vx*(-1)
         vy = vy*(-1)
         vz = vz*(-1)
-        self.get_speed = vx, vy, vz
+        self.set_speed((vx, vy, vz))
 
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):

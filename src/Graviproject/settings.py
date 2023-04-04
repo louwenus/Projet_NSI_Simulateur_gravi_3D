@@ -31,7 +31,7 @@ def get(setloc: str):
         for key in setloc.split('.'):
             temp = temp[key]
         return temp
-    except KeyError | TypeError:
+    except (KeyError, TypeError):
         try:
             temp = defaults
             for key in setloc.split('.'):

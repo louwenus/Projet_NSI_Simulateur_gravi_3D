@@ -116,4 +116,4 @@ cdef class CySimpleSphere(CyDummySphere):
         speed = <cppgravilib.lco>self.c_simple_sphere.speed
         return speed.x,speed.y,speed.z
     def set_speed(self,speed:Tuple[int,int,int]) -> None:
-        self.c_simple_sphere.set_speed(<cppgravilib.lco>speed)
+        self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
