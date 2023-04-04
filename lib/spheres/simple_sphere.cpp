@@ -2,9 +2,16 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, uli rayon, li vx, li vy, li vz) : DummySphere(parent) // crée une simple sphere, avec les stats indiqué
+SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, uli rayon, li vx, li vy, li vz) :
+    DummySphere(parent),
+    pos{x,y,z},
+    rayon(rayon),
+    speed{vx,vy,vz},
+    posmin{x-rayon, y-rayon, z-rayon},
+    posmax{x+rayon,y+rayon,z+rayon},
+    masse(masse)
 {
-    this->pos = {x, y, z};
+    /*this->pos = {x, y, z};
 
     this->posmin = {x - rayon, y - rayon, z - rayon};
     this->posmax = {x + rayon, y + rayon, z + rayon};
@@ -13,7 +20,7 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
     this->rayon = rayon;
     this->speed.x = vx;
     this->speed.y = vy;
-    this->speed.z = vz;
+    this->speed.z = vz;*/
 }
 
 void SimpleSphere::move(float temps)

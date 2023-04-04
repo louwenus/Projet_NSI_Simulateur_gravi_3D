@@ -59,7 +59,7 @@ cdef class CyBaseDimension:
             yield obje,obje2
     def get_spheres(self) -> Generator:
         cdef clist[DummyPtr] liste = self.c_base_dim.get_sph_list()
-        cdef  clist[DummyPtr].iterator iterator = liste.begin()
+        cdef clist[DummyPtr].iterator iterator = liste.begin()
         cdef DummyPtr obj
         while iterator!=liste.end():
             obj = dereference(postincrement(iterator))
