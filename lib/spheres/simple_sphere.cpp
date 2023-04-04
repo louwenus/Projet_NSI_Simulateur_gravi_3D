@@ -10,18 +10,7 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
     posmin{x-rayon, y-rayon, z-rayon},
     posmax{x+rayon,y+rayon,z+rayon},
     masse(masse)
-{
-    /*this->pos = {x, y, z};
-
-    this->posmin = {x - rayon, y - rayon, z - rayon};
-    this->posmax = {x + rayon, y + rayon, z + rayon};
-
-    this->masse = masse;
-    this->rayon = rayon;
-    this->speed.x = vx;
-    this->speed.y = vy;
-    this->speed.z = vz;*/
-}
+{}
 
 void SimpleSphere::move(float temps)
 {

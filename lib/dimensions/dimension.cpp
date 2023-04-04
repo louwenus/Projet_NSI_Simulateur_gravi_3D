@@ -7,10 +7,7 @@
 
 BS::thread_pool BaseDimension::tpool = BS::thread_pool();
 
-BaseDimension::BaseDimension()
-{
-    this->objets = {};
-}
+BaseDimension::BaseDimension(): objets() {}
 BaseDimension::~BaseDimension() {}
 
 const std::list<DummySphere *> BaseDimension::get_sph_list()
