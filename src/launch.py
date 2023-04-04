@@ -3,9 +3,8 @@
 
 # encoding=utf8
 
-#Fichier utilisé pour lancer le code depuis une compilation du code source
+# Fichier utilisé pour lancer le code depuis une compilation du code source
 import Graviproject.main
 import os
 
 Graviproject.main.launch_app()
-

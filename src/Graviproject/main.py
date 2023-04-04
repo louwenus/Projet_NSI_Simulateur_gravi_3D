@@ -17,5 +17,6 @@ except ModuleNotFoundError:
 from . import gravilib
 from . import affichage
 
+
 def launch_app() -> NoReturn:
     sys.exit(affichage.app.exec_())

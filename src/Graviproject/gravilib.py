@@ -10,12 +10,13 @@ except ModuleNotFoundError:
 try:
     from . import cppgravilib
 except ModuleNotFoundError as e:
-    print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails",file=sys.stderr)
-    raise(e)
+    print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails", file=sys.stderr)
+    raise (e)
 from .affichage3D import SphereItem
 
+
 class PyBaseSphere(cppgravilib.CySimpleSphere):
-    def __init__(self,x: int,y :int,z :int,masse :int,rayon :int,vx :int,vy :int,vz :int,d :int) -> None:
+    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int) -> None:
         """crée une PyBaseSphere sur la base d'une cySimpleSphere
 
         Args:
@@ -23,29 +24,32 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             masse,rayon (int): self-explicit
             vx,vy,vz (int): vitesse de départ de la sphère
         """
-        self.init_c_container(x,y,z,masse,rayon,vx,vy,vz)
-        self.render_item:SphereItem=SphereItem(self.get_rayon(),self.get_coord)
+        self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
+        self.render_item: SphereItem = SphereItem(
+            self.get_rayon(), self.get_coord)
+
     def get_render_items(self) -> list[SphereItem]:
         return [self.render_item]
-        #now, use position and size, plus information embded in the python object (like color) to render the sphere
+        # now, use position and size, plus information embded in the python object (like color) to render the sphere
 
-    def rebond (self):
-        vx,vy,vz = self.get_speed()
-        vx=vx*(-1)
-        vy=vy*(-1)
-        vz=vz*(-1)
-        self.get_speed = vx,vy,vz
-    
+    def rebond(self):
+        vx, vy, vz = self.get_speed()
+        vx = vx*(-1)
+        vy = vy*(-1)
+        vz = vz*(-1)
+        self.get_speed = vx, vy, vz
+
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
         self.init_c_container()
+
     def gerer_colision(self) -> None:
-        for sphere,sphere2 in self.collisions():
+        for sphere, sphere2 in self.collisions():
             sphere.rebond()
             sphere2.rebond()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
-                
+
             self.add_sphere(sphere)
             self.add_sphere(sphere2)

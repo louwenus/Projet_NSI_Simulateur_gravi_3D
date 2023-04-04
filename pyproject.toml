@@ -20,7 +20,5 @@ where = ["src"]
 include = ["Graviproject"]
 namespaces = false
 
-
-
 [project.scripts]
 Graviproject = "Graviproject.main:launch_app"
