@@ -33,10 +33,10 @@ class Camera():
         self.pitch: float=pitch
         self.roll: float=roll
         
-        self.matrix_rotation()
+        self.update_matrix()
         
         
-    def matrix_rotation(self) -> None:
+    def update_matrix(self) -> None:
         """Updates the rotation matrix of the camera.
         """
         matrix3_3=tuple[tuple[float,float,float],tuple[float,float,float],tuple[float,float,float]]
@@ -96,9 +96,9 @@ class SphereItem(QGraphicsItem):
         """met a jour la position de l'item selon la position de la sphère"""
         coord:tuple[int, int, int] = self.getcoords()
         
-        parameter2D=camera.projection_sphere(coord,self.radius)
+        parameter2D: tuple[tuple[float, float], float]=camera.projection_sphere(coord,self.radius)
         self.radius2D=parameter2D[1]
-        coord2D=parameter2D[0]
+        coord2D: tuple[float, float]=parameter2D[0]
         
         self.setPos(*coord2D)
     
@@ -115,7 +115,7 @@ class SphereItem(QGraphicsItem):
         painter.drawEllipse(QPointF(0, 0), self.radius2D, self.radius2D)
 
 
-    def change_couleur (self):
+    def change_couleur (self) -> None:
         self.compteur = randint(1,4)
         
 
