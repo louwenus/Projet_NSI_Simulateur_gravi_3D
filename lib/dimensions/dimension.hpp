@@ -6,17 +6,9 @@
 #ifndef DIMENSIONS_GENERAL_HEADER
 #define DIMENSIONS_GENERAL_HEADER
 
-#include "../typedef.hpp"        //typedef and common stuff
-#include "../spheres/sphere.hpp" //so sphere can be used in dims
-#include "../external/BS_thread_pool.hpp"  //using the amazing thread pool from https://github.com/bshoshany/thread-pool
-
-/*struct grav_const{
-    float temps;
-    llco pos;
-    uli masse;
-    uli sanitize;
-    atlco accel;
-};*/
+#include "../typedef.hpp"                 //typedef and common stuff
+#include "../spheres/sphere.hpp"          //so sphere can be used in dims
+#include "../external/BS_thread_pool.hpp" //using the amazing thread pool from https://github.com/bshoshany/thread-pool
 
 class BaseDimension
 {

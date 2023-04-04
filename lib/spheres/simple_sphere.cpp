@@ -11,9 +11,9 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
 
     this->masse = masse;
     this->rayon = rayon;
-    this->speed.x=vx;
-    this->speed.y=vy;
-    this->speed.z=vz;;
+    this->speed.x = vx;
+    this->speed.y = vy;
+    this->speed.z = vz;
 }
 
 void SimpleSphere::move(float temps)
@@ -69,8 +69,9 @@ void SimpleSphere::debug() const
 {
     std::cout << "Position:" << this->pos.x << '/' << this->pos.y << '/' << this->pos.z << " Vitesse:" << this->speed.x << '/' << this->speed.y << '/' << this->speed.z << '\n';
 }
-void SimpleSphere::set_speed(lco speed){
-    this->speed.x=speed.x;
-    this->speed.y=speed.y;
-    this->speed.z=speed.z;
+void SimpleSphere::set_speed(lco speed)
+{
+    this->speed.x = speed.x;
+    this->speed.y = speed.y;
+    this->speed.z = speed.z;
 }
