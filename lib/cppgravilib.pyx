@@ -9,8 +9,6 @@
 # cython: language_level=3
 
 #from libcpp.string cimport string
-from os import lchown
-from sys import stdout
 cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport Py_DECREF, Py_INCREF, PyObject
