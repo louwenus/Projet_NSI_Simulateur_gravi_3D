@@ -171,11 +171,11 @@ class Renderer3D(QWidget):
             
     def mvCam(self, key):
         #à commenter
-        if key=="l":
-            self.cam.x+=10000
         if key=="r":
+            self.cam.x+=10000
+        if key=="l":
             self.cam.x-=10000
-        if key=="d":
-            self.cam.y-=10000
         if key=="u":
+            self.cam.y-=10000
+        if key=="d":
             self.cam.y+=10000
