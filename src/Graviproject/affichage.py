@@ -84,9 +84,19 @@ class Main_window(QWidget):
         app.exit(0)
         
     def keyPressEvent(self, event):
+        #à commenter
         if event.key() == Qt.Key_Escape:
             app.exit(0)
-
+        
+        if event.key() == Qt.Key_Z:
+           self.widget_3D.mvCam("u")
+        if event.key() == Qt.Key_S:
+            self.widget_3D.mvCam("d")
+        if event.key() == Qt.Key_Q:
+            self.widget_3D.mvCam("l")
+        if event.key() == Qt.Key_D:
+            self.widget_3D.mvCam("r")
+            
     def attach_detach_controles(self) -> None:
         if self.affichage_controles:
             self.controles.hide()
