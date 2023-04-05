@@ -31,7 +31,9 @@ class Camera():
         self.yaw: float = yaw
         self.pitch: float = pitch
         self.roll: float = roll
-        self.zoom:float=zoom
+        
+        self.zoom:float = zoom
+        
         self.update_matrix()
 
     def update_matrix(self) -> None:
@@ -61,8 +63,8 @@ class Camera():
                  coord[2]*self.matrix[2][2] + coord[1]*self.matrix[2][1] + coord[0]*self.matrix[2][0])
         if coord[2] > 1:
             coord_plan: tuple[float, float] = (
-                coord[0]/coord[2], coord[1]/coord[2])
-            radius_plan: float = radius/coord[2]
+                coord[0]/coord[2]*self.zoom, coord[1]/coord[2]*self.zoom)
+            radius_plan: float = radius/coord[2]*self.zoom
         else:
             coord_plan: tuple[float, float] = (0, 0)
             radius_plan: float = 0
@@ -165,5 +167,4 @@ class Renderer3D(QWidget):
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
         else:
-            self.view.scale(0.75, 0.75)
             self.cam.zoom*=0.75
