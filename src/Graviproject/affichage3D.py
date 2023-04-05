@@ -109,7 +109,7 @@ class SphereItem():
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self) -> None:
-        self.compteur = randint(1, len(self.couleur))
+        self.compteur = randint(1, len(self.couleur)-1)
     def volume_sphere(self):
         return (4*pi*self.radius**3)/3
     def grossir(self, volume):
