@@ -11,6 +11,7 @@ from math import cos, sin
 from . import settings
 
 
+
 class Camera():
     def __init__(self, x: int = 0, y: int = 0, z: int = 0, yaw: float = 0, pitch: float = 0, roll: float = 0) -> None:
         """Camera attributes.
