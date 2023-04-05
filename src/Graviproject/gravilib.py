@@ -53,3 +53,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
 
             self.add_sphere(sphere)
             self.add_sphere(sphere2)
+        #for sphere, sphere2 in self.collisions():
+            #if sphere.radius > sphere2.radius:
+                #sphere.grossir(sphere2.volume_sphere()/(2/3))

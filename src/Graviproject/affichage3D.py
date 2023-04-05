@@ -6,9 +6,10 @@ import types
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
-from math import cos, sin
+from math import cos, sin, pi
 
 from . import settings
+
 
 
 class Camera():
@@ -112,6 +113,11 @@ class SphereItem(QGraphicsItem):
 
     def change_couleur(self) -> None:
         self.compteur = randint(1, 4)
+    def volume_sphere(self):
+        return (4*pi*self.radius**3)/3
+    def grossir(self, volume):
+        volume_final = self.volume_sphere() + volume
+        self.radius = (3*volume_final/4*pi)**(1/3)
 
 
 class Renderer3D(QWidget):
