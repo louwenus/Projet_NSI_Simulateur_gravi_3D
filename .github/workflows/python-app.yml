@@ -65,8 +65,7 @@ jobs:
         python3 -m pip install --upgrade build
         git clone https://github.com/cython/cython
         cd cython
-        python3 -m build --wheel
-        python3 -m pip install dist/Cython*.whl
+        python3 setup.py install
     - name: Build
       run: |
         python -m build -w
