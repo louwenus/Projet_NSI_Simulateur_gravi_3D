@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build cython
+        python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython"
     - name: Build
       run: |
         python -m build
@@ -62,7 +62,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build cython
+        python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython"
     - name: Build
       run: |
         python -m build -w
