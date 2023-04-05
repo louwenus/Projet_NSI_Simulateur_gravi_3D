@@ -13,6 +13,7 @@ public:
     virtual bool t_collision_avec(DummySphere *instance) = 0;        // teste la collsion avec une autre sphere
     virtual bool t_collision_coord(llco pos, uli rayon) const = 0;   // teste rapidement (faux positifs) la collsion
     virtual bool t_colli_rapide(llco posmin, llco posmax) const = 0; // teste mieux la collision
+    virtual bool t_colli_nextf(llco pos,uli rayon) const = 0;
 
     virtual ulli gravite_stats(float temps, llco &return_pos, uli &sane_min_r) const = 0; // masse (interval,position out)     obtention des stats de gravitation.  la masse est divisé par le temps
     virtual void accel(lco accel) = 0;                                                    // application d'un vecteur acceleration
@@ -34,6 +35,7 @@ public:
     virtual bool t_collision_avec(DummySphere *instance); // test de collision avec une autre sphere
     virtual bool t_collision_coord(llco pos, uli rayon) const;
     virtual bool t_colli_rapide(llco posmin, llco posmax) const;
+    virtual bool t_colli_nextf(llco pos,uli rayon) const;
 
     virtual void move(float temps);                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual ulli gravite_stats(float temps, llco &return_pos, uli &sane_min_r) const; // masse (interval,position out)

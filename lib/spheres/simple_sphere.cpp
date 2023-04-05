@@ -43,14 +43,27 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
         return false;
     }
     if (instance->t_collision_coord(this->pos, this->rayon))
+    {   
+        llco postemp=this->pos;
+        postemp.x+=this->speed.x;
+        postemp.y+=this->speed.y;
+        postemp.z+=this->speed.z;
+        if (instance->t_colli_nextf(postemp,this->rayon)){
+            return true;
+        }
+    }
+    return false;
+}
+bool SimpleSphere::t_colli_nextf(llco pos,uli rayon) const {
+    if (pow(pos.x - this->pos.x - this->speed.x, 2) + pow(pos.y - this->pos.y - this->speed.y, 2) + pow(pos.z - this->pos.z - this->speed.z, 2) < pow(rayon + this->rayon, 2))
     {
         return true;
     }
     return false;
-}
+} 
 bool SimpleSphere::t_collision_coord(llco pos, uli rayon) const
 { // cette fonction test exactement la présence ou non d'une collision entre 2 spheres
-    if (pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2) + pow(pos.y - this->pos.y, 2) < pow(rayon + this->rayon, 2))
+    if (pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2) + pow(pos.z - this->pos.z, 2) < pow(rayon + this->rayon, 2))
     {
         return true;
     }
