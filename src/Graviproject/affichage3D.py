@@ -169,7 +169,7 @@ class Renderer3D(QWidget):
         else:
             self.cam.zoom*=0.75
             
-    def keyEvent(self, event):
+    def keyPressEvent(self, event):
         """
         if ↑:
             cam.x+=1
