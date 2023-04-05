@@ -33,7 +33,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         # now, use position and size, plus information embded in the python object (like color) to render the sphere
 
     def rebond(self):
-        vx, vy, vz = self.get_speed()
+        vx,vy,vz=self.get_speed()
         vx = vx*(-1)
         vy = vy*(-1)
         vz = vz*(-1)
@@ -46,13 +46,10 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
 
     def gerer_colision(self) -> None:
         for sphere, sphere2 in self.collisions():
-            #sphere.rebond()
-            #sphere2.rebond()
+            sphere.rebond()
+            sphere2.rebond()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
 
             self.add_sphere(sphere)
             self.add_sphere(sphere2)
-        #for sphere, sphere2 in self.collisions():
-            #if sphere.radius > sphere2.radius:
-                #sphere.grossir(sphere2.volume_sphere()/(2/3))
