@@ -159,32 +159,26 @@ class Controles(QWidget):
     layout_aj_sph.addRow(result_label)
 
     xmax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées xmax:', xmax)
     layout_aj_sph.addRow(result_label)
 
     xmin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées xmin:', xmin)
     layout_aj_sph.addRow(result_label)
 
     ymax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées ymax:', ymax)
     layout_aj_sph.addRow(result_label)
 
     ymin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées ymin:', ymin)
     layout_aj_sph.addRow(result_label)
 
     zmax = QSpinBox(minimum=10, maximum=50000, value=10)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées zmax:', zmax)
     layout_aj_sph.addRow(result_label)
 
     zmin = QSpinBox(minimum=10, maximum=50000, value=10)
-    result_label = QLabel('')
     layout_aj_sph.addRow('coordonnées zmin:', zmin)
     layout_aj_sph.addRow(result_label)
 
