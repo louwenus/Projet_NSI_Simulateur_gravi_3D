@@ -31,7 +31,9 @@ class Camera():
         self.yaw: float = yaw
         self.pitch: float = pitch
         self.roll: float = roll
-        self.zoom:float=zoom
+        
+        self.zoom:float = zoom
+        
         self.update_matrix()
 
     def update_matrix(self) -> None:
@@ -61,8 +63,8 @@ class Camera():
                  coord[2]*self.matrix[2][2] + coord[1]*self.matrix[2][1] + coord[0]*self.matrix[2][0])
         if coord[2] > 1:
             coord_plan: tuple[float, float] = (
-                coord[0]/coord[2], coord[1]/coord[2])
-            radius_plan: float = radius/coord[2]
+                coord[0]/coord[2]*self.zoom, coord[1]/coord[2]*self.zoom)
+            radius_plan: float = radius/coord[2]*self.zoom
         else:
             coord_plan: tuple[float, float] = (0, 0)
             radius_plan: float = 0
@@ -72,7 +74,7 @@ class Camera():
 
 class SphereItem():
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    couleur = ["red", "green", "purple", "blue", "yellow"]
+    couleur = ["red", "chartreuse2", "blueviolet", "blue", "darkgoldenrod1", "aqua", "darkorange2", "darkslategray2", "deeppink2", "mint", "wheat1"]
     def __init__(self, rayon: int, getcoords: Callable[[], tuple[int, int, int]]) -> None:
         """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
 
@@ -109,12 +111,14 @@ class SphereItem():
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self) -> None:
-        self.compteur = randint(1, 4)
+        self.compteur = randint(1, len(self.couleur)-1)
     def volume_sphere(self):
         return (4*pi*self.radius**3)/3
     def grossir(self, volume):
         volume_final = self.volume_sphere() + volume
         self.radius = (3*volume_final/4*pi)**(1/3)
+    def detruire (self):
+        self.destroy()
 
 
 class Renderer3D(QWidget):
