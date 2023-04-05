@@ -167,60 +167,59 @@ class Controles(QWidget):
     layout_aj_sph: QLayout = QFormLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
-    amount = QSpinBox(minimum=0, maximum=1000, value=100)
+    amount = QSpinBox(minimum=0, maximum=10000, value=100)
     result_label = QLabel('')
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
 
-    xmax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
+    xmax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
     layout_aj_sph.addRow('coordonnées xmax:', xmax)
     layout_aj_sph.addRow(result_label)
 
-    xmin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
+    xmin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
     layout_aj_sph.addRow('coordonnées xmin:', xmin)
     layout_aj_sph.addRow(result_label)
 
-    ymax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
+    ymax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
     layout_aj_sph.addRow('coordonnées ymax:', ymax)
     layout_aj_sph.addRow(result_label)
 
-    ymin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
+    ymin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
     layout_aj_sph.addRow('coordonnées ymin:', ymin)
     layout_aj_sph.addRow(result_label)
 
-    zmax = QSpinBox(minimum=10, maximum=50000, value=10)
+    zmax = QSpinBox(minimum=0, maximum=500000, value=1)
     layout_aj_sph.addRow('coordonnées zmax:', zmax)
     layout_aj_sph.addRow(result_label)
 
-    zmin = QSpinBox(minimum=10, maximum=50000, value=10)
+    zmin = QSpinBox(minimum=0, maximum=500000, value=1)
     layout_aj_sph.addRow('coordonnées zmin:', zmin)
     layout_aj_sph.addRow(result_label)
-
-
-    xmin=xmin.value()
-    xmax=xmax.value()
-    ymin=ymin.value()
-    ymax=ymax.value()
-    zmin=zmin.value()
-    zmax=zmax.value()
-    if xmin>xmax:
-        tmp=xmin
-        xmin=xmax
-        xmax=tmp
-    if ymin>ymax:
-        tmp=ymin
-        ymin=ymax
-        ymax=tmp
-    if zmin>zmax:
-        tmp=zmin
-        zmin=zmax
-        zmax=tmp
     
+    #valeurs multipliées par le nb de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
+        xmin=Controles.xmin.value()
+        xmax=Controles.xmax.value()
+        ymin=Controles.ymin.value()
+        ymax=Controles.ymax.value()
+        zmin=Controles.zmin.value()
+        zmax=Controles.zmax.value()
+        if xmin>xmax:
+            tmp=xmin
+            xmin=xmax
+            xmax=tmp
+        if ymin>ymax:
+            tmp=ymin
+            ymin=ymax
+            ymax=tmp
+        if zmin>zmax:
+            tmp=zmin
+            zmin=zmax
+            zmax=tmp
         for i in range(Controles.amount.value()):
-            x=randint(Controles.xmin,Controles.xmax)
-            y=randint(Controles.ymin,Controles.ymax)
-            z=randint(Controles.zmin,Controles.zmax)
+            x=randint(xmin,xmax)*Controles.amount.value()
+            y=randint(ymin,ymax)*Controles.amount.value()
+            z=randint(zmin,zmax)*Controles.amount.value()
             var = gravilib.PyBaseSphere(x, y, z, randint(
                 1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
             Fenetre_principale.ajouter_sphere(var)
