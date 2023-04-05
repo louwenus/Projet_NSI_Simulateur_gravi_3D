@@ -135,7 +135,7 @@ class Main_window(QWidget):
         self.dimension.gerer_colision()
         print("coli time", time()-start)
         start = time()
-        self.widget_3D.update_graph()
+        self.widget_3D.repaint()
         print("graph time:", time()-start)
         print("total:", time()-totalstart)
         # sphere : gravilib.PyBaseSphere
