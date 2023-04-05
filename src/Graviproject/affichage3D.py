@@ -113,10 +113,10 @@ class SphereItem(QGraphicsItem):
 
     def change_couleur(self) -> None:
         self.compteur = randint(1, 4)
-    
+    def volume_sphere(self):
+        return (4*pi*self.radius**3)/3
     def grossir(self, volume):
-        volume_actuel = (4*pi*self.radius**3)/3
-        volume_final = volume_actuel + volume
+        volume_final = self.volume_sphere() + volume
         self.radius = (3*volume_final/4*pi)**(1/3)
 
 
