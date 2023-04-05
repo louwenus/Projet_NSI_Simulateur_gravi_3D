@@ -159,22 +159,6 @@ class Renderer3D(QWidget):
                     "attempting to remove a object that do not exist, see traceback", file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
 
-    #def update_graph(self) -> None:
-    #    """update le rendu de toute les sphères"""
-    #
-    #    # print(self.view.size())
-    #
-    #    if settings.get("logging") >= 3:
-    #        print("updating visual ...", end="")
-    #    for item in self.scene.items():
-    #        item.update_pos(self.cam)
-    #    self.view.update()
-    #    self.view.setSceneRect(self.scene.itemsBoundingRect())
-    #    if settings.get("logging") >= 3:
-    #        print("visual done!")
-    #
-    #    self.view.wheelEvent
-
     def wheelEvent(self, event):
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
