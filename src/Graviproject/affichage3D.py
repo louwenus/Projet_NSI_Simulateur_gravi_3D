@@ -4,7 +4,7 @@ import sys
 import traceback
 import types
 from PySide6.QtWidgets import *
-from PySide6.QtGui import QColor, QPen, QBrush
+from PySide6.QtGui import QColor, QPen, QBrush,QPainter
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 from math import cos, sin, pi
 
@@ -13,7 +13,7 @@ from . import settings
 
 
 class Camera():
-    def __init__(self, x: int = 0, y: int = 0, z: int = 0, yaw: float = 0, pitch: float = 0, roll: float = 0) -> None:
+    def __init__(self,zoom: float = 0, x: int = 0, y: int = 0, z: int = 0, yaw: float = 0, pitch: float = 0, roll: float = 0) -> None:
         """Camera attributes.
 
         Args:
@@ -31,7 +31,7 @@ class Camera():
         self.yaw: float = yaw
         self.pitch: float = pitch
         self.roll: float = roll
-
+        self.zoom:float=zoom
         self.update_matrix()
 
     def update_matrix(self) -> None:
@@ -70,9 +70,9 @@ class Camera():
         return (coord_plan, radius_plan)
 
 
-class SphereItem(QGraphicsItem):
+class SphereItem():
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-
+    couleur = ["red", "chartreuse2", "blueviolet", "blue", "darkgoldenrod1", "aqua", "darkorange2", "darkslategray2", "deeppink2", "mint", "wheat1"]
     def __init__(self, rayon: int, getcoords: Callable[[], tuple[int, int, int]]) -> None:
         """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
 
@@ -88,7 +88,7 @@ class SphereItem(QGraphicsItem):
         self.radius: int = rayon
         self.radius2D: float = 0
         self.compteur = 0
-        self.couleur = ["red", "green", "purple", "blue", "yellow"]
+        self.pos = QPointF(0,0)
 
     def update_pos(self, camera: Camera) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
@@ -99,20 +99,17 @@ class SphereItem(QGraphicsItem):
         self.radius2D = parameter2D[1]
         coord2D: tuple[float, float] = parameter2D[0]
 
-        self.setPos(*coord2D)
+        self.pos=QPointF(*coord2D)
 
-    def boundingRect(self) -> QRectF:
-        return QRectF(-1*self.radius2D, -1*self.radius2D, 2 * self.radius2D, 2 * self.radius2D)
-
-    def paint(self, painter, option, widget) -> None:
+    def paint(self, painter) -> None:
 
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(self.couleur[self.compteur]))
 
-        painter.drawEllipse(QPointF(0, 0), self.radius2D, self.radius2D)
+        painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self) -> None:
-        self.compteur = randint(1, 4)
+        self.compteur = randint(1, len(self.couleur))
     def volume_sphere(self):
         return (4*pi*self.radius**3)/3
     def grossir(self, volume):
@@ -134,30 +131,27 @@ class Renderer3D(QWidget):
     def __init__(self) -> None:
         """initialise le widget de rendu"""
         super().__init__()
-        # self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(0,0,1000,800)
         self.mainlayout: QLayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
+        self.sphlist: list[SphereItem]=[]
 
-        self.scene: QGraphicsScene = QGraphicsScene(self)
-        self.view: QGraphicsView = QGraphicsView(self.scene)
-        # self.view.setUpdatesEnabled(False)
         zoom: float = settings.get("simulation.defaultzoom")
-        self.view.scale(zoom, zoom)
-
-        def wheel_ignore(object, event):
-            event.ignore()
-        self.view.wheelEvent = types.MethodType(wheel_ignore, QGraphicsView)
-        self.mainlayout.addWidget(self.view)
-
-        self.cam: Camera = Camera()
+        
+        self.cam: Camera = Camera(zoom=zoom)
+    def paintEvent(self, paintEvent) -> None:
+        painter = QPainter(self)
+        for item in self.sphlist:
+            item.update_pos(self.cam)
+            item.paint(painter)
+        painter.end()
 
     def add_to_display(self, item: SphereItem) -> None:
-        self.scene.addItem(item)
-        self.view.setSceneRect(self.scene.itemsBoundingRect())
+        self.sphlist.append(item)
 
     def remove_from_display(self, item: SphereItem) -> None:
         try:
-            self.scene.removeItem(item)
+            self.sphlist.remove(item)
         except:
             if settings.get("logging") == 1:
                 print(
@@ -167,24 +161,9 @@ class Renderer3D(QWidget):
                     "attempting to remove a object that do not exist, see traceback", file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
 
-    def update_graph(self) -> None:
-        """update le rendu de toute les sphères"""
-
-        # print(self.view.size())
-
-        if settings.get("logging") >= 3:
-            print("updating visual ...", end="")
-        for item in self.scene.items():
-            item.update_pos(self.cam)
-        self.view.update()
-        self.view.setSceneRect(self.scene.itemsBoundingRect())
-        if settings.get("logging") >= 3:
-            print("visual done!")
-
-        self.view.wheelEvent
-
     def wheelEvent(self, event):
         if event.angleDelta().y() > 0:
-            self.view.scale(1.25, 1.25)
+            self.cam.zoom*=1.25
         else:
             self.view.scale(0.75, 0.75)
+            self.cam.zoom*=0.75

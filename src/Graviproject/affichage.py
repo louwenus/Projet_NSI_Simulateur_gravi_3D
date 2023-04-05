@@ -70,7 +70,6 @@ class Main_window(QWidget):
 
         # dimension affiché par la fennettre de rendu
         self.dimension = gravilib.PyBaseDimension()
-
         # a raffiner, mais est utilisé pour update la simulation toute les 10ms
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(100)
@@ -78,6 +77,7 @@ class Main_window(QWidget):
         self.timer.start()
         if settings.get("logging") >= 2:
             print("main windows initialized")
+
 
     def closeEvent(self, event) -> None:
         # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
@@ -135,7 +135,7 @@ class Main_window(QWidget):
         self.dimension.gerer_colision()
         print("coli time", time()-start)
         start = time()
-        self.widget_3D.update_graph()
+        self.widget_3D.repaint()
         print("graph time:", time()-start)
         print("total:", time()-totalstart)
         # sphere : gravilib.PyBaseSphere
@@ -158,22 +158,66 @@ class Controles(QWidget):
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
 
-    x = QSpinBox(minimum=-50000, maximum=50000, value=0)
+    xmax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
     result_label = QLabel('')
-    layout_aj_sph.addRow('coordonnées x:', x)
+    layout_aj_sph.addRow('coordonnées xmax:', xmax)
     layout_aj_sph.addRow(result_label)
 
-    y = QSpinBox(minimum=-50000, maximum=50000, value=0)
+    xmin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
     result_label = QLabel('')
-    layout_aj_sph.addRow('coordonnées y:', y)
+    layout_aj_sph.addRow('coordonnées xmin:', xmin)
     layout_aj_sph.addRow(result_label)
 
-    z = QSpinBox(minimum=-30000, maximum=30000, value=0)
+    ymax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
     result_label = QLabel('')
-    layout_aj_sph.addRow('coordonnées z:', z)
+    layout_aj_sph.addRow('coordonnées ymax:', ymax)
     layout_aj_sph.addRow(result_label)
 
+    ymin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées ymin:', ymin)
+    layout_aj_sph.addRow(result_label)
+
+    zmax = QSpinBox(minimum=10, maximum=50000, value=10)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées zmax:', zmax)
+    layout_aj_sph.addRow(result_label)
+
+    zmin = QSpinBox(minimum=10, maximum=50000, value=10)
+    result_label = QLabel('')
+    layout_aj_sph.addRow('coordonnées zmin:', zmin)
+    layout_aj_sph.addRow(result_label)
+
+
+    xmin=xmin.value()
+    xmax=xmax.value()
+    ymin=ymin.value()
+    ymax=ymax.value()
+    zmin=zmin.value()
+    zmax=zmax.value()
+    if xmin>xmax:
+        tmp=xmin
+        xmin=xmax
+        xmax=tmp
+    if ymin>ymax:
+        tmp=ymin
+        ymin=ymax
+        ymax=tmp
+    if zmin>zmax:
+        tmp=zmin
+        zmin=zmax
+        zmax=tmp
+    
     def ajouter_spheres(boo: bool) -> None:
+        for i in range(Controles.amount.value()):
+            x=randint(Controles.xmin,Controles.xmax)
+            y=randint(Controles.ymin,Controles.ymax)
+            z=randint(Controles.zmin,Controles.zmax)
+            var = gravilib.PyBaseSphere(x, y, z, randint(
+                1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
+            Fenetre_principale.ajouter_sphere(var)
+    
+    """def ajouter_spheres(boo: bool) -> None:
         for i in range(Controles.amount.value()):
             xmin = (Controles.x.value()*10-2000)*10
             xmax = (Controles.x.value()*10+2000)*10
@@ -181,7 +225,7 @@ class Controles(QWidget):
             ymax = (Controles.y.value()*10+2000)*10
             var = gravilib.PyBaseSphere(randint(xmin, xmax)*10, randint(ymin, ymax)*10, 10, randint(
                 1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
-            Fenetre_principale.ajouter_sphere(var)
+            Fenetre_principale.ajouter_sphere(var)"""
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
     layout_aj_sph.addWidget(bouton_val_aj)
