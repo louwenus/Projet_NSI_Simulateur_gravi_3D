@@ -44,7 +44,7 @@ jobs:
       with:
         name: 'build_archive'
         path: dist/*.tar.gz
-  build-on-winbdows:
+  build-on-windows:
 
     runs-on: windows-latest
 
@@ -62,7 +62,11 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython"
+        python3 -m pip install --upgrade build
+        git clone https://github.com/cython/cython
+        cd cython
+        python3 -m build --wheel
+        python3 -m pip install dist/Cython*.whl
     - name: Build
       run: |
         python -m build -w
