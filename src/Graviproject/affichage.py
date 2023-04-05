@@ -84,7 +84,7 @@ class Main_window(QWidget):
         app.exit(0)
         
     def keyPressEvent(self, event):
-        if e.key() == Qt.Key_Escape:
+        if event.key() == Qt.Key_Escape:
             self.close()
 
     def attach_detach_controles(self) -> None:
