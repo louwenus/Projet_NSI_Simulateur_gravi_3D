@@ -96,6 +96,13 @@ class Main_window(QWidget):
             self.widget_3D.mvCam("l")
         if event.key() == Qt.Key_D:
             self.widget_3D.mvCam("r")
+        if event.key() == Qt.Key_F:
+            self.widget_3D.mvCam("f")
+        if event.key() == Qt.Key_B:
+            self.widget_3D.mvCam("b")
+        if event.key() == Qt.Key_H:
+            self.widget_3D.mvCam("h")
+        
             
     def attach_detach_controles(self) -> None:
         if self.affichage_controles:

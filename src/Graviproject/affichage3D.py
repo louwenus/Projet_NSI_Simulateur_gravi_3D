@@ -179,3 +179,9 @@ class Renderer3D(QWidget):
             self.cam.y-=10000
         if key=="d":
             self.cam.y+=10000
+        if key=="b":
+            self.cam.z-=10000
+        if key=="f":
+            self.cam.z+=10000
+        if key=="h":
+            self.cam.x,self.cam.y,self.cam.z=0,0,0
