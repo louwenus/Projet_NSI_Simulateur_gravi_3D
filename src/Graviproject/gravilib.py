@@ -38,6 +38,22 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         vy = vy*(-1)
         vz = vz*(-1)
         self.set_speed((vx, vy, vz))
+    
+def absorbtion (sphere1, sphere2):
+    for render in sphere1.get_render_items():
+        vol_1 = render.volume_sphere()
+    for render in sphere2.get_render_items():
+        vol_2 = render.volume_sphere()
+    if vol_1 > vol_2:
+        for render in sphere1.get_render_items():
+            render.grossir(vol_2/3)
+        for render in sphere2.get_render_items():
+            render.disparaitre()
+    else:
+        for render in sphere2.get_render_items():
+            render.grossir(vol_1/3)
+        for render in sphere1.get_render_items():
+            render.disparaitre()
 
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
@@ -48,8 +64,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             sphere.rebond()
             sphere2.rebond()
+            # absorbtion(sphere, sphere2)
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
-
             self.add_sphere(sphere)
             self.add_sphere(sphere2)

@@ -120,6 +120,9 @@ class SphereItem():
     def grossir(self, volume):
         volume_final = self.volume_sphere() + volume
         self.radius = (3*volume_final/4*pi)**(1/3)
+    def disparaitre (self):
+        # comme pas possible de kill un python object...
+        self.radius = 0
 
 
 class Renderer3D(QWidget):
