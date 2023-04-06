@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENSE_FR ou LICENCE
 
 # encoding=utf8
 
