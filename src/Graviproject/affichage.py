@@ -82,7 +82,28 @@ class Main_window(QWidget):
     def closeEvent(self, event) -> None:
         # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
-
+        
+    def keyPressEvent(self, event):
+        #à commenter
+        if event.key() == Qt.Key_Escape:
+            app.exit(0)
+        
+        if event.key() == Qt.Key_Z:
+           self.widget_3D.mvCam("u")
+        if event.key() == Qt.Key_S:
+            self.widget_3D.mvCam("d")
+        if event.key() == Qt.Key_Q:
+            self.widget_3D.mvCam("l")
+        if event.key() == Qt.Key_D:
+            self.widget_3D.mvCam("r")
+        if event.key() == Qt.Key_F:
+            self.widget_3D.mvCam("f")
+        if event.key() == Qt.Key_B:
+            self.widget_3D.mvCam("b")
+        if event.key() == Qt.Key_H:
+            self.widget_3D.mvCam("h")
+        
+            
     def attach_detach_controles(self) -> None:
         if self.affichage_controles:
             self.controles.hide()
@@ -123,21 +144,22 @@ class Main_window(QWidget):
             self.widget_3D.add_to_display(rendu)
 
     def update_simulation(self) -> None:
-        totalstart = time()
-        start = time()
-        print("starting update")
+        # totalstart = time()
+        # start = time()
+        # print("starting update")
         self.dimension.gravite_all(0.1)
-        print("grav time:", time()-start)
-        start = time()
+        # print("grav time:", time()-start)
+        # start = time()
         self.dimension.move_all(0.1)
-        print("move time:", time()-start)
-        start = time()
+        # print("move time:", time()-start)
+        # start = time()
         self.dimension.gerer_colision()
-        print("coli time", time()-start)
-        start = time()
+        # print("coli time", time()-start)
+        # start = time()
         self.widget_3D.repaint()
-        print("graph time:", time()-start)
-        print("total:", time()-totalstart)
+        # print("graph time:", time()-start)
+        # print("total:", time()-totalstart)
+        
         # sphere : gravilib.PyBaseSphere
         # for sphere in self.dimension.get_spheres():
         #    pass
@@ -153,60 +175,59 @@ class Controles(QWidget):
     layout_aj_sph: QLayout = QFormLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
-    amount = QSpinBox(minimum=0, maximum=1000, value=100)
+    amount = QSpinBox(minimum=0, maximum=10000, value=100)
     result_label = QLabel('')
     layout_aj_sph.addRow('nb sphères:', amount)
     layout_aj_sph.addRow(result_label)
 
-    xmax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
+    xmax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
     layout_aj_sph.addRow('coordonnées xmax:', xmax)
     layout_aj_sph.addRow(result_label)
 
-    xmin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
+    xmin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
     layout_aj_sph.addRow('coordonnées xmin:', xmin)
     layout_aj_sph.addRow(result_label)
 
-    ymax = QSpinBox(minimum=-50000, maximum=50000, value=5000)
+    ymax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
     layout_aj_sph.addRow('coordonnées ymax:', ymax)
     layout_aj_sph.addRow(result_label)
 
-    ymin = QSpinBox(minimum=-50000, maximum=50000, value=-5000)
+    ymin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
     layout_aj_sph.addRow('coordonnées ymin:', ymin)
     layout_aj_sph.addRow(result_label)
 
-    zmax = QSpinBox(minimum=10, maximum=50000, value=10)
+    zmax = QSpinBox(minimum=0, maximum=500000, value=1)
     layout_aj_sph.addRow('coordonnées zmax:', zmax)
     layout_aj_sph.addRow(result_label)
 
-    zmin = QSpinBox(minimum=10, maximum=50000, value=10)
+    zmin = QSpinBox(minimum=0, maximum=500000, value=1)
     layout_aj_sph.addRow('coordonnées zmin:', zmin)
     layout_aj_sph.addRow(result_label)
-
-
-    xmin=xmin.value()
-    xmax=xmax.value()
-    ymin=ymin.value()
-    ymax=ymax.value()
-    zmin=zmin.value()
-    zmax=zmax.value()
-    if xmin>xmax:
-        tmp=xmin
-        xmin=xmax
-        xmax=tmp
-    if ymin>ymax:
-        tmp=ymin
-        ymin=ymax
-        ymax=tmp
-    if zmin>zmax:
-        tmp=zmin
-        zmin=zmax
-        zmax=tmp
     
+    #valeurs multipliées par le nb de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
+        xmin=Controles.xmin.value()
+        xmax=Controles.xmax.value()
+        ymin=Controles.ymin.value()
+        ymax=Controles.ymax.value()
+        zmin=Controles.zmin.value()
+        zmax=Controles.zmax.value()
+        if xmin>xmax:
+            tmp=xmin
+            xmin=xmax
+            xmax=tmp
+        if ymin>ymax:
+            tmp=ymin
+            ymin=ymax
+            ymax=tmp
+        if zmin>zmax:
+            tmp=zmin
+            zmin=zmax
+            zmax=tmp
         for i in range(Controles.amount.value()):
-            x=randint(Controles.xmin,Controles.xmax)
-            y=randint(Controles.ymin,Controles.ymax)
-            z=randint(Controles.zmin,Controles.zmax)
+            x=randint(xmin,xmax)*Controles.amount.value()
+            y=randint(ymin,ymax)*Controles.amount.value()
+            z=randint(zmin,zmax)*Controles.amount.value()
             var = gravilib.PyBaseSphere(x, y, z, randint(
                 1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
             Fenetre_principale.ajouter_sphere(var)
