@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython"
+        python3 -m pip install --upgrade build
     - name: Build
       run: |
         python -m build
@@ -63,9 +63,6 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install --upgrade build
-        git clone https://github.com/cython/cython
-        cd cython
-        python3 setup.py install
     - name: Build
       run: |
         python -m build -w
