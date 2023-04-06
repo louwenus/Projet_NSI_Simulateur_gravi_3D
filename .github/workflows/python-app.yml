@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython"
+        python3 -m pip install --upgrade build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
     - name: Build
       run: |
         python -m build
@@ -62,10 +62,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build
-        git clone https://github.com/cython/cython
-        cd cython
-        python3 setup.py install
+        python3 -m pip install --upgrade build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-win_amd64.whl"
     - name: Build
       run: |
         python -m build -w
