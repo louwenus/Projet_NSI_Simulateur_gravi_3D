@@ -13,7 +13,7 @@ from . import settings
 
 
 class Camera():
-    def __init__(self,zoom:float=0, offsetX:float=0, offsetY:float=0, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
+    def __init__(self, zoom:float=1, offsetX:float=0, offsetY:float=0, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
         """Camera attributes.
 
         Args:
@@ -69,6 +69,7 @@ class Camera():
                 coord[0]/coord[2]*self.zoom+self.offsetX, coord[1]/coord[2]*self.zoom+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom
         else:
+            #améliorable ?
             coord_plan: tuple[float, float] = (0, 0)
             radius_plan: float = 0
 
@@ -189,7 +190,7 @@ class Renderer3D(QWidget):
         if key=="f":
             self.cam.z+=10000
         if key=="h":
-            self.cam.x,self.cam.y,self.cam.z=0,0,0
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
     
     def resizeEvent(self, event: QResizeEvent) -> None:
         self.cam.offsetX=self.size().width()/2
