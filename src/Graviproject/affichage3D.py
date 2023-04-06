@@ -4,7 +4,7 @@ import sys
 import traceback
 import types
 from PySide6.QtWidgets import *
-from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent
+from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent, QKeySequence
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 from math import cos, sin, pi
 
@@ -138,6 +138,7 @@ class Renderer3D(QWidget):
     def __init__(self) -> None:
         """initialise le widget de rendu"""
         super().__init__()
+        self.setFocusPolicy(Qt.ClickFocus)
         self.setGeometry(0,0,1000,800)
         self.mainlayout: QLayout = QHBoxLayout()
         self.setLayout(self.mainlayout)
@@ -174,23 +175,24 @@ class Renderer3D(QWidget):
             self.cam.zoom*=1.25
         else:
             self.cam.zoom*=0.75
-            
-    def mvCam(self, key):
+    
+    def keyPressEvent(self, event):
         #à commenter
-        if key=="r":
-            self.cam.x+=10000
-        if key=="l":
-            self.cam.x-=10000
-        if key=="u":
-            self.cam.y-=10000
-        if key=="d":
-            self.cam.y+=10000
-        if key=="b":
-            self.cam.z-=10000
-        if key=="f":
-            self.cam.z+=10000
-        if key=="h":
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
+         
+        if event.key() == QKeySequence('Z'):
+           self.cam.y-=1000
+        if event.key() == QKeySequence('S'):
+            self.cam.y+=1000
+        if event.key() == QKeySequence('Q'):
+            self.cam.x-=1000
+        if event.key() == QKeySequence('D'):
+            self.cam.x+=1000
+        if event.key() == QKeySequence('F'):
+            self.cam.z+=1000
+        if event.key() == QKeySequence('B'):
+            self.cam.z-=1000
+        if event.key() == QKeySequence('H'):
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom") 
     
     def resizeEvent(self, event: QResizeEvent) -> None:
         self.cam.offsetX=self.size().width()/2

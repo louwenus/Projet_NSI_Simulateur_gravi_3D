@@ -30,6 +30,7 @@ class Main_window(QWidget):
 
     def __init__(self) -> None:
         super().__init__()
+        self.setFocusPolicy(Qt.ClickFocus)
         self.affichage_controles: bool = True
 
         self.setWindowTitle("Affichage")
@@ -82,28 +83,10 @@ class Main_window(QWidget):
     def closeEvent(self, event) -> None:
         # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         app.exit(0)
-        
     def keyPressEvent(self, event):
-        #à commenter
         if event.key() == Qt.Key_Escape:
             app.exit(0)
-        
-        if event.key() == Qt.Key_Z:
-           self.widget_3D.mvCam("u")
-        if event.key() == Qt.Key_S:
-            self.widget_3D.mvCam("d")
-        if event.key() == Qt.Key_Q:
-            self.widget_3D.mvCam("l")
-        if event.key() == Qt.Key_D:
-            self.widget_3D.mvCam("r")
-        if event.key() == Qt.Key_F:
-            self.widget_3D.mvCam("f")
-        if event.key() == Qt.Key_B:
-            self.widget_3D.mvCam("b")
-        if event.key() == Qt.Key_H:
-            self.widget_3D.mvCam("h")
-        
-            
+    
     def attach_detach_controles(self) -> None:
         if self.affichage_controles:
             self.controles.hide()
