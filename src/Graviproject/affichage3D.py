@@ -4,7 +4,7 @@ import sys
 import traceback
 import types
 from PySide6.QtWidgets import *
-from PySide6.QtGui import QColor, QPen, QBrush,QPainter
+from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 from math import cos, sin, pi
 
@@ -13,7 +13,7 @@ from . import settings
 
 
 class Camera():
-    def __init__(self,zoom: float = 0, x: int = 0, y: int = 0, z: int = 0, yaw: float = 0, pitch: float = 0, roll: float = 0) -> None:
+    def __init__(self,zoom:float=0, offsetX:float=0, offsetY:float=0, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
         """Camera attributes.
 
         Args:
@@ -33,6 +33,9 @@ class Camera():
         self.roll: float = roll
         
         self.zoom:float = zoom
+        
+        self.offsetX:float = offsetX
+        self.offsetY:float = offsetY
         
         self.update_matrix()
 
@@ -63,7 +66,7 @@ class Camera():
                  coord[2]*self.matrix[2][2] + coord[1]*self.matrix[2][1] + coord[0]*self.matrix[2][0])
         if coord[2] > 1:
             coord_plan: tuple[float, float] = (
-                coord[0]/coord[2]*self.zoom, coord[1]/coord[2]*self.zoom)
+                coord[0]/coord[2]*self.zoom+self.offsetX, coord[1]/coord[2]*self.zoom+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom
         else:
             coord_plan: tuple[float, float] = (0, 0)
@@ -134,13 +137,14 @@ class Renderer3D(QWidget):
         """initialise le widget de rendu"""
         super().__init__()
         self.setGeometry(0,0,1000,800)
-        self.mainlayout: QLayout = QVBoxLayout()
+        self.mainlayout: QLayout = QHBoxLayout()
         self.setLayout(self.mainlayout)
         self.sphlist: list[SphereItem]=[]
 
         zoom: float = settings.get("simulation.defaultzoom")
         
-        self.cam: Camera = Camera(zoom=zoom)
+        self.cam: Camera = Camera(zoom=zoom, offsetX=self.size().width()/2, offsetY=self.size().height()/2)
+        
     def paintEvent(self, paintEvent) -> None:
         painter = QPainter(self)
         for item in self.sphlist:
@@ -185,3 +189,8 @@ class Renderer3D(QWidget):
             self.cam.z+=10000
         if key=="h":
             self.cam.x,self.cam.y,self.cam.z=0,0,0
+    
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        self.cam.offsetX=self.size().width()/2
+        self.cam.offsetY=self.size().height()/2
+        return super().resizeEvent(event)
