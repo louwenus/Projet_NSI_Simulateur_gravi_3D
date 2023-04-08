@@ -124,6 +124,8 @@ class SphereItem():
     def disparaitre (self):
         # comme pas possible de kill un python object...
         self.radius = 0
+        self.getcoords: Callable[[], tuple[100000, 100000, 100000]]
+
 
 
 class Renderer3D(QWidget):

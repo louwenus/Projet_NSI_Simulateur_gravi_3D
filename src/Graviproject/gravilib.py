@@ -24,6 +24,8 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             masse,rayon (int): self-explicit
             vx,vy,vz (int): vitesse de départ de la sphère
         """
+        self.durete = d
+        self.rayon = rayon
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon(), self.get_coord)
@@ -46,26 +48,43 @@ def absorbtion (sphere1, sphere2):
         vol_2 = render.volume_sphere()
     if vol_1 > vol_2:
         for render in sphere1.get_render_items():
-            render.grossir(vol_2/3)
+            render.grossir(vol_2/5)
         for render in sphere2.get_render_items():
             render.disparaitre()
     else:
         for render in sphere2.get_render_items():
-            render.grossir(vol_1/3)
+            render.grossir(vol_1/5)
         for render in sphere1.get_render_items():
             render.disparaitre()
 
+def choix_collision (sphere1, sphere2):
+    for render in sphere1.get_render_items():
+        rayon_1 = render.radius
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
         self.init_c_container()
 
     def gerer_colision(self) -> None:
+        ajouter_sphere_1 = True
+        ajouter_sphere_2 = True
         for sphere, sphere2 in self.collisions():
-            sphere.rebond()
-            sphere2.rebond()
-            # absorbtion(sphere, sphere2)
+            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
+                if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
+                    absorbtion(sphere, sphere2)
+                    ajouter_sphere_2 = False
+                elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
+                    absorbtion(sphere, sphere2)
+                    ajouter_sphere_1 = False
+                else:
+                    sphere.rebond()
+                    sphere2.rebond()
+            else:
+                sphere.rebond()
+                sphere2.rebond()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
-            self.add_sphere(sphere)
-            self.add_sphere(sphere2)
+            if ajouter_sphere_1:
+                self.add_sphere(sphere)
+            if ajouter_sphere_2:
+                self.add_sphere(sphere2)

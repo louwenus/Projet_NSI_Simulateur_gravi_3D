@@ -212,7 +212,7 @@ class Controles(QWidget):
             y=randint(ymin,ymax)*Controles.amount.value()
             z=randint(zmin,zmax)*Controles.amount.value()
             var = gravilib.PyBaseSphere(x, y, z, randint(
-                1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
+                1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
     
     """def ajouter_spheres(boo: bool) -> None:
