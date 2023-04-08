@@ -115,14 +115,27 @@ class SphereItem():
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self) -> None:
+        """ Modifie la couleur de la sphere en une couleur aléatoire de la liste couleur.
+        """
         self.compteur = randint(0, len(self.couleur)-1)
-    def volume_sphere(self):
+    def volume_sphere(self) -> None:
+        """Calcul et renvoie le volume de la sphere.
+
+        Returns:
+            float: volume d'une sphere selon son rayon
+        """
         return (4*pi*self.radius**3)/3
     def grossir(self, volume):
+        """Change le rayon de la sphere afin de la faire gagner de volume.
+
+        Args:
+            volume (float): le volume dont on veut faire grossir la sphere.
+        """
         volume_final = self.volume_sphere() + volume
         self.radius = (3*volume_final/4*pi)**(1/3)
-    def disparaitre (self):
-        # comme pas possible de kill un python object...
+    def disparaitre (self) -> None:
+        """Fais disparaitre la sphere.
+        """
         self.radius = 0
         self.getcoords: Callable[[], tuple[100000, 100000, 100000]]
 
@@ -179,21 +192,32 @@ class Renderer3D(QWidget):
             self.cam.zoom*=0.75
     
     def keyPressEvent(self, event):
-        #à commenter
+        """Modifie l'emplacement de la camera.
+
+        Args:
+            event (_type_): Touche du clavier appuyée.
+        """
          
         if event.key() == QKeySequence('Z'):
+           """ Fais avancer la camera de 1000 px"""
            self.cam.y-=1000
         if event.key() == QKeySequence('S'):
+            """ Fais reculer la camera de 1000 px"""
             self.cam.y+=1000
         if event.key() == QKeySequence('Q'):
+            """ Fais se décaler à droite la camera de 1000 px"""
             self.cam.x-=1000
         if event.key() == QKeySequence('D'):
+            """ Fais se décaler à gauche la camera de 1000 px"""
             self.cam.x+=1000
         if event.key() == QKeySequence('F'):
+            """ Fais élever la camera de 1000 px"""
             self.cam.z+=1000
         if event.key() == QKeySequence('B'):
+            """ Fais baisser la camera de 1000 px"""
             self.cam.z-=1000
         if event.key() == QKeySequence('H'):
+            """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom") 
     
     def resizeEvent(self, event: QResizeEvent) -> None:

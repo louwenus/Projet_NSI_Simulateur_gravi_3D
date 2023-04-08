@@ -23,6 +23,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             x,y,z (int): position de départ de la sphere
             masse,rayon (int): self-explicit
             vx,vy,vz (int): vitesse de départ de la sphère
+            d (int) : dureté de la balle
         """
         self.durete = d
         self.rayon = rayon
@@ -34,14 +35,20 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         return [self.render_item]
         # now, use position and size, plus information embded in the python object (like color) to render the sphere
 
-    def rebond(self):
+    def rebond(self) -> None:
+        """Inverse la trajectoire d'une sphere
+        """
         vx,vy,vz=self.get_speed()
         vx = vx*(-1)
         vy = vy*(-1)
         vz = vz*(-1)
         self.set_speed((vx, vy, vz))
     
-def absorbtion (sphere1, sphere2):
+def absorption (sphere1, sphere2):
+    """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
+    Args:
+        sphere1, sphere2 : objet de la class PyBaseSphere
+    """
     for render in sphere1.get_render_items():
         vol_1 = render.volume_sphere()
     for render in sphere2.get_render_items():
@@ -56,25 +63,24 @@ def absorbtion (sphere1, sphere2):
             render.grossir(vol_1/5)
         for render in sphere1.get_render_items():
             render.disparaitre()
-
-def choix_collision (sphere1, sphere2):
-    for render in sphere1.get_render_items():
-        rayon_1 = render.radius
+    
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
         self.init_c_container()
 
     def gerer_colision(self) -> None:
+        """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
+        """
         ajouter_sphere_1 = True
         ajouter_sphere_2 = True
         for sphere, sphere2 in self.collisions():
             if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
-                    absorbtion(sphere, sphere2)
+                    absorption(sphere, sphere2)
                     ajouter_sphere_2 = False
                 elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
-                    absorbtion(sphere, sphere2)
+                    absorption(sphere, sphere2)
                     ajouter_sphere_1 = False
                 else:
                     sphere.rebond()
