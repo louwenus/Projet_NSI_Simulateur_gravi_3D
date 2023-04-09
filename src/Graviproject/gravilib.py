@@ -63,7 +63,11 @@ def absorption (sphere1, sphere2):
             render.grossir(vol_1/5)
         for render in sphere1.get_render_items():
             render.disparaitre()
+def trans(m1,v1,m2,v2):
+    vf1=(2*m2*v2+v1*(m1-m2))/(m1+m2)
+    vf2=(2*m1*v1+v2*(m2-m1))/(m1+m2)
     
+    return vf1,vf2    
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
