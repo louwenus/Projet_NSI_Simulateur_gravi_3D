@@ -192,35 +192,39 @@ class Renderer3D(QWidget):
             self.cam.zoom*=0.75
     
     def keyPressEvent(self, event):
-        """Modifie l'emplacement de la camera.
+        """ Modifie l'emplacement de la camera.
 
         Args:
-            event (_type_): Touche du clavier appuyée.
+            event (class 'PySide6.QtGui.QKeyEvent'): Touche du clavier appuyée.
         """
          
         if event.key() == QKeySequence('Z'):
-           """ Fais avancer la camera de 1000 px"""
-           self.cam.y-=1000
+            """ Fait s'élever la camera de 1000 px"""
+            self.cam.y-=1000
         if event.key() == QKeySequence('S'):
-            """ Fais reculer la camera de 1000 px"""
+            """ Fait descendre la camera de 1000 px"""
             self.cam.y+=1000
         if event.key() == QKeySequence('Q'):
-            """ Fais se décaler à droite la camera de 1000 px"""
+            """ Fait se décaler à droite la camera de 1000 px"""
             self.cam.x-=1000
         if event.key() == QKeySequence('D'):
-            """ Fais se décaler à gauche la camera de 1000 px"""
+            """ Fait se décaler à gauche la camera de 1000 px"""
             self.cam.x+=1000
         if event.key() == QKeySequence('F'):
-            """ Fais élever la camera de 1000 px"""
+            """ Fait avancer la camera de 1000 px"""
             self.cam.z+=1000
         if event.key() == QKeySequence('B'):
-            """ Fais baisser la camera de 1000 px"""
+            """ Fait reculer la camera de 1000 px"""
             self.cam.z-=1000
         if event.key() == QKeySequence('H'):
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom") 
     
     def resizeEvent(self, event: QResizeEvent) -> None:
+        """Décale la caméra par rapport au milieu de la fenêtre.
+
+        Args:
+            event (QResizeEvent): évenement de resize dans le widget.
+        """
         self.cam.offsetX=self.size().width()/2
         self.cam.offsetY=self.size().height()/2
-        return super().resizeEvent(event)

@@ -45,7 +45,7 @@ class Main_window(QWidget):
         self.attach_detachAction.triggered.connect(
             self.attach_detach_controles)
 
-        self.licenseAction: QAction = QAction("&Lire la license", self)
+        self.licenseAction: QAction = QAction("&Lire la licence", self)
         self.licenseAction.triggered.connect(self.affich_licence)
 
         # création des menus
@@ -148,8 +148,12 @@ class Main_window(QWidget):
         #    pass
 
     def resizeEvent(self, event: QResizeEvent) -> None:
+        """Décale la caméra par rapport au milieu de la fenêtre.
+
+        Args:
+            event (QResizeEvent): évenement de resize dans le widget.
+        """
         self.menuBar.setFixedWidth(self.size().width())
-        return super().resizeEvent(event)
 
 
 class Controles(QWidget):
@@ -207,7 +211,7 @@ class Controles(QWidget):
             tmp=zmin
             zmin=zmax
             zmax=tmp
-        for i in range(Controles.amount.value()):
+        for _ in range(Controles.amount.value()):
             x=randint(xmin,xmax)*Controles.amount.value()
             y=randint(ymin,ymax)*Controles.amount.value()
             z=randint(zmin,zmax)*Controles.amount.value()
@@ -248,6 +252,7 @@ class Controles(QWidget):
 
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
+
 
 
 try:
