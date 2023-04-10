@@ -80,7 +80,8 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vfz1=(m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2)
     vfz2=(m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2)
     
-    return vfx1,vfx2,vfy1,vfy2,vfz1,vfz2
+    sphere1.set_speed((vfx1, vfy1, vfz1))
+    sphere2.set_speed((vfx2, vfy2, vfz2))
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
@@ -92,6 +93,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         ajouter_sphere_1 = True
         ajouter_sphere_2 = True
         for sphere, sphere2 in self.collisions():
+            transfert_v(sphere,sphere2)
+            """
             if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
                     absorption(sphere, sphere2)
@@ -100,14 +103,14 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     absorption(sphere, sphere2)
                     ajouter_sphere_1 = False
                 else:
-                    sphere.transfert_v()
-                    sphere2.transfert_v()
+                    sphere.rebond()
+                    sphere2.rebond()
             else:
-                sphere.transfert_v()
-                sphere2.transfert_v()
+                sphere.rebond()
+                sphere2.rebond()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
             if ajouter_sphere_1:
                 self.add_sphere(sphere)
             if ajouter_sphere_2:
-                self.add_sphere(sphere2)
+                self.add_sphere(sphere2)"""
