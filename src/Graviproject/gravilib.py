@@ -55,24 +55,29 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
         """
         for sphere, sphere2 in self.collisions():
+            ajouter_sphere1 = True
+            ajouter_sphere2 = True
             transfert_v(sphere,sphere2)
             
             if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
                     absorption(sphere, sphere2)
+                    ajouter_sphere1 = False
                 elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
                     absorption(sphere, sphere2)
-                else:
-                    sphere.rebond()
-                    sphere2.rebond()
-            else:
-                sphere.rebond()
-                sphere2.rebond()
+                    ajouter_sphere2 = False
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
-                self.render.remove_from_display(render)
-            #self.add_sphere(sphere)
-            #self.add_sphere(sphere2)
+            if ajouter_sphere1 == True:
+                self.add_sphere(sphere)
+            else:
+                for render in sphere.get_render_items():
+                    self.render.remove_from_display(render)
+            if ajouter_sphere2 == True:
+                self.add_sphere(sphere2)
+            else:
+                for render in sphere2.get_render_items():
+                    self.render.remove_from_display(render)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
@@ -84,13 +89,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     if vol_1 > vol_2:
         for render in sphere1.get_render_items():
             render.grossir(vol_2/5)
-        #for render in sphere2.get_render_items():
-        #    render.disparaitre()
     else:
         for render in sphere2.get_render_items():
             render.grossir(vol_1/5)
-        #for render in sphere1.get_render_items():
-        #    render.disparaitre()
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete*1000
