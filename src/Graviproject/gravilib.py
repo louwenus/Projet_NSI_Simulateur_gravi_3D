@@ -13,6 +13,7 @@ except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails", file=sys.stderr)
     raise (e)
 from .affichage3D import Renderer3D, SphereItem
+import random
 
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
@@ -59,25 +60,23 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
             ajouter_sphere2 = True
             transfert_v(sphere,sphere2)
             
-            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
+            """if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
                     absorption(sphere, sphere2)
                     ajouter_sphere1 = False
                 elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
                     absorption(sphere, sphere2)
-                    ajouter_sphere2 = False
+                else:
+                    sphere.rebond()
+                    sphere2.rebond()
+            else:
+                sphere.rebond()
+                sphere2.rebond()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
-            if ajouter_sphere1 == True:
-                self.add_sphere(sphere)
-            else:
-                for render in sphere.get_render_items():
-                    self.render.remove_from_display(render)
-            if ajouter_sphere2 == True:
-                self.add_sphere(sphere2)
-            else:
-                for render in sphere2.get_render_items():
-                    self.render.remove_from_display(render)
+                self.render.remove_from_display(render)
+            #self.add_sphere(sphere)
+            #self.add_sphere(sphere2)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
