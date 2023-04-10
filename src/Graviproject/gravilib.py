@@ -13,6 +13,7 @@ except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails", file=sys.stderr)
     raise (e)
 from .affichage3D import Renderer3D, SphereItem
+import random
 
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
@@ -70,11 +71,13 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
             else:
                 sphere.rebond()
                 sphere2.rebond()"""
-            for render in sphere.get_render_items() + sphere2.get_render_items():
-                render.change_couleur()
-                self.render.remove_from_display(render)
-            self.add_sphere(sphere)
-            self.add_sphere(sphere2)
+            if random.random()>0.5:
+                for render in sphere.get_render_items() + sphere2.get_render_items():
+                    render.change_couleur()
+                    self.render.remove_from_display(render)
+            else:
+                self.add_sphere(sphere)
+                self.add_sphere(sphere2)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
