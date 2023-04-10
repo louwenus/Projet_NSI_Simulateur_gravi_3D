@@ -36,6 +36,7 @@ cdef extern from "spheres/sphere.hpp":
         SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
         llco pos
         int rayon
+        int masse
         atlco speed
         void set_speed(int x,int y,int z)
 ctypedef DummySphere* DummySpherePtr        
