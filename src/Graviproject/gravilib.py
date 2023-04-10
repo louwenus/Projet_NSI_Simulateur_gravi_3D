@@ -1,6 +1,6 @@
 import sys
 from collections.abc import Iterable
-
+from math import sqrt
 try:
     import cython
 except ModuleNotFoundError:
@@ -63,11 +63,13 @@ def absorption (sphere1, sphere2):
             render.grossir(vol_1/5)
         for render in sphere1.get_render_items():
             render.disparaitre()
-def trans(m1,v1,m2,v2):
-    vf1=(2*m2*v2+v1*(m1-m2))/(m1+m2)
-    vf2=(2*m1*v1+v2*(m2-m1))/(m1+m2)
+def transfert_v(m1,v1,m2,v2,d1,d2):
+    """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
+    e=(2*sqrt(d1*d2))/(d1+d2)
+    vf1=(m1*v1+m2*v2+e*m2*(v2-v1))/(m1+m2)
+    vf2=(m1*v1+m2*v2+e*m1*(v1-v2))/(m1+m2)
     
-    return vf1,vf2    
+    return vf1,vf2
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
