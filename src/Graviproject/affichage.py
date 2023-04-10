@@ -70,7 +70,7 @@ class Main_window(QWidget):
         self.layout.addWidget(self.widget_3D)
 
         # dimension affiché par la fennettre de rendu
-        self.dimension = gravilib.PyBaseDimension()
+        self.dimension = gravilib.PyBaseDimension(self.widget_3D)
         # a raffiner, mais est utilisé pour update la simulation a intervalles réguliers
         self.ticktime:float=1/settings.get("simulation.fps")
         self.timer: QTimer = QTimer(self)

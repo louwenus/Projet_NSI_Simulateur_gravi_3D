@@ -12,7 +12,7 @@ try:
 except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails", file=sys.stderr)
     raise (e)
-from .affichage3D import SphereItem
+from .affichage3D import Renderer3D, SphereItem
 
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
@@ -44,6 +44,37 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         vy = vy*(-1)
         vz = vz*(-1)
         self.set_speed((vx, vy, vz))
+
+class PyBaseDimension(cppgravilib.CyBaseDimension):
+    def __init__(self,render:Renderer3D) -> None:
+        self.init_c_container()
+        self.render: Renderer3D=render #so we can use self.render.remove_from_display(self, item: SphereItem)
+
+    def gerer_colision(self) -> None:
+        """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
+        """
+        ajouter_sphere_1 = True
+        ajouter_sphere_2 = True
+        for sphere, sphere2 in self.collisions():
+            transfert_v(sphere,sphere2)
+            """
+            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
+                if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
+                    absorption(sphere, sphere2)
+                    ajouter_sphere_2 = False
+                elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
+                    absorption(sphere, sphere2)
+                    ajouter_sphere_1 = False
+                else:
+                    sphere.rebond()
+                    sphere2.rebond()
+            else:
+                sphere.rebond()
+                sphere2.rebond()
+            for render in sphere.get_render_items() + sphere2.get_render_items():
+                render.change_couleur()"""
+            self.add_sphere(sphere)
+            self.add_sphere(sphere2)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
@@ -82,33 +113,3 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     
     sphere1.set_speed((vfx1, vfy1, vfz1))
     sphere2.set_speed((vfx2, vfy2, vfz2))
-
-class PyBaseDimension(cppgravilib.CyBaseDimension):
-    def __init__(self) -> None:
-        self.init_c_container()
-
-    def gerer_colision(self) -> None:
-        """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
-        """
-        ajouter_sphere_1 = True
-        ajouter_sphere_2 = True
-        for sphere, sphere2 in self.collisions():
-            transfert_v(sphere,sphere2)
-            """
-            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
-                if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
-                    absorption(sphere, sphere2)
-                    ajouter_sphere_2 = False
-                elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
-                    absorption(sphere, sphere2)
-                    ajouter_sphere_1 = False
-                else:
-                    sphere.rebond()
-                    sphere2.rebond()
-            else:
-                sphere.rebond()
-                sphere2.rebond()
-            for render in sphere.get_render_items() + sphere2.get_render_items():
-                render.change_couleur()"""
-            self.add_sphere(sphere)
-            self.add_sphere(sphere2)

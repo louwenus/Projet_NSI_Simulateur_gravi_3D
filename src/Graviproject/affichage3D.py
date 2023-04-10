@@ -161,8 +161,11 @@ class Renderer3D(QWidget):
     def paintEvent(self, paintEvent) -> None:
         painter = QPainter(self)
         for item in self.sphlist:
-            item.update_pos(self.cam)
-            item.paint(painter)
+            try:
+                item.update_pos(self.cam)
+                item.paint(painter)
+            except:
+                self.remove_from_display(item)
         painter.end()
 
     def add_to_display(self, item: SphereItem) -> None:
