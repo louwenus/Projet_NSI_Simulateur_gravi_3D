@@ -148,7 +148,7 @@ class Renderer3D(QWidget):
     def __init__(self,controlles) -> None:
         """initialise le widget de rendu"""
         super().__init__()
-        self.controlles=controlles
+        self.wid_con=controlles
         self.setFocusPolicy(Qt.ClickFocus)
         self.setGeometry(0,0,1000,800)
         self.mainlayout: QLayout = QHBoxLayout()
@@ -158,6 +158,7 @@ class Renderer3D(QWidget):
         zoom: float = settings.get("simulation.defaultzoom")
         
         self.cam: Camera = Camera(zoom=zoom, offsetX=self.size().width()/2, offsetY=self.size().height()/2)
+        self.reload_controlles()
         
     def paintEvent(self, paintEvent) -> None:
         painter = QPainter(self)
@@ -227,7 +228,10 @@ class Renderer3D(QWidget):
             self.cam.z-=1000
         if event.key() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom") 
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
+        if event.key() == self.controles["ajouter"]:
+            "ajoute des sph"
+            self.wid_con.ajouter_spheres(False)
     
     def resizeEvent(self, event: QResizeEvent) -> None:
         """Décale la caméra par rapport au milieu de la fenêtre.
