@@ -1,7 +1,17 @@
 {
   "simulation": {
     "fps": 10,
-    "defaultzoom": 0.025
+    "defaultzoom": 0.025,
+    "controles": {
+      "avancer": "F",
+      "reculer": "B",
+      "droite": "D",
+      "gauche": "Q",
+      "monter": "Z",
+      "descendre": "S",
+      "home": "H",
+      "ajouter": "A"
+    }
   },
   "logging": 3
 }

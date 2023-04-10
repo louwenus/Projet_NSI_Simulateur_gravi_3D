@@ -66,7 +66,7 @@ class Main_window(QWidget):
         self.layout.addWidget(self.controles)
 
         # widget de rendu3D
-        self.widget_3D: Renderer3D = Renderer3D()
+        self.widget_3D: Renderer3D = Renderer3D(self.controles)
         self.layout.addWidget(self.widget_3D)
 
         # dimension affiché par la fennettre de rendu
@@ -225,16 +225,6 @@ class Controles(QWidget):
             var = gravilib.PyBaseSphere(x, y, z, randint(
                 1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
-    
-    """def ajouter_spheres(boo: bool) -> None:
-        for i in range(Controles.amount.value()):
-            xmin = (Controles.x.value()*10-2000)*10
-            xmax = (Controles.x.value()*10+2000)*10
-            ymin = (Controles.y.value()*10-2000)*10
-            ymax = (Controles.y.value()*10+2000)*10
-            var = gravilib.PyBaseSphere(randint(xmin, xmax)*10, randint(ymin, ymax)*10, 10, randint(
-                1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), 10)
-            Fenetre_principale.ajouter_sphere(var)"""
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
     layout_aj_sph.addWidget(bouton_val_aj)
@@ -251,8 +241,7 @@ class Controles(QWidget):
         boutton1.clicked.connect(Controles.ajouter_spheres)
         self.layout.addWidget(boutton1)
 
-        self.boutt_show_aj_sph: QAbstractButton = QPushButton(
-            "Ajouter des sphère")
+        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter des sphère")
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
 
