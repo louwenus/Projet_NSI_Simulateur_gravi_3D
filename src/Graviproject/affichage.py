@@ -200,12 +200,12 @@ class Controles(QWidget):
     
     #valeurs multipliées par le nb de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
-        xmin=Controles.xmin.value()
-        xmax=Controles.xmax.value()
-        ymin=Controles.ymin.value()
-        ymax=Controles.ymax.value()
-        zmin=Controles.zmin.value()
-        zmax=Controles.zmax.value()
+        xmin=Controles.xmin.value()*100
+        xmax=Controles.xmax.value()*100
+        ymin=Controles.ymin.value()*100
+        ymax=Controles.ymax.value()*100
+        zmin=Controles.zmin.value()*20
+        zmax=Controles.zmax.value()*20
         if xmin>xmax:
             tmp=xmin
             xmin=xmax
@@ -223,7 +223,7 @@ class Controles(QWidget):
             y=randint(ymin,ymax)*Controles.amount.value()
             z=randint(zmin,zmax)*Controles.amount.value()
             var = gravilib.PyBaseSphere(x, y, z, randint(
-                1, 100000000), randint(3000, 10000), randint(-400, 400), randint(-400, 400), randint(-3, 3), randint(1,15))
+                1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
     
     """def ajouter_spheres(boo: bool) -> None:

@@ -64,12 +64,12 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             render.disparaitre()
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
-    d1=sphere1.durete
-    d2=sphere2.durete
-    m1=sphere1.masse
-    m2=sphere2.masse
-    vx1,vy1,vz1=sphere1.vx,sphere1.vy,sphere1.vz
-    vx2,vy2,vz2=sphere2.vx,sphere2.vy,sphere2.vz
+    d1=sphere1.durete*1000
+    d2=sphere2.durete*1000
+    m1=sphere1.masse*1000
+    m2=sphere2.masse*1000
+    vx1,vy1,vz1=sphere1.vx*1000,sphere1.vy*1000,sphere1.vz*1000
+    vx2,vy2,vz2=sphere2.vx*1000,sphere2.vy*1000,sphere2.vz*1000
     e=(2*sqrt(d1*d2))/(d1+d2)
     vfx1=(m1*vx1+m2*vx2+e*m2*(vx2-vx1))//(m1+m2)
     vfx2=(m1*vx1+m2*vx2+e*m1*(vx1-vx2))//(m1+m2)
