@@ -66,8 +66,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
                     absorption(sphere, sphere2)
                     ajouter_sphere2 = False
-            for render in sphere.get_render_items() + sphere2.get_render_items():
-                render.change_couleur()
+            #for render in sphere.get_render_items() + sphere2.get_render_items():
+                #render.change_couleur()
             if ajouter_sphere1 == True:
                 self.add_sphere(sphere)
             else:
@@ -94,21 +94,21 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             render.grossir(vol_1/5)
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
-    d1=sphere1.durete*1000
-    d2=sphere2.durete*1000
-    m1=sphere1.masse*1000
-    m2=sphere2.masse*1000
-    vx1,vy1,vz1=sphere1.vx*1000,sphere1.vy*1000,sphere1.vz*1000
-    vx2,vy2,vz2=sphere2.vx*1000,sphere2.vy*1000,sphere2.vz*1000
+    d1=sphere1.durete
+    d2=sphere2.durete
+    m1=sphere1.masse
+    m2=sphere2.masse
+    vx1,vy1,vz1=sphere1.vx,sphere1.vy,sphere1.vz
+    vx2,vy2,vz2=sphere2.vx,sphere2.vy,sphere2.vz
     e=(2*sqrt(d1*d2))/(d1+d2)
-    vfx1=(m1*vx1+m2*vx2+e*m2*(vx2-vx1))//(m1+m2)
-    vfx2=(m1*vx1+m2*vx2+e*m1*(vx1-vx2))//(m1+m2)
+    vfx1=round((m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2)*1000)
+    vfx2=round((m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2)*1000)
 
-    vfy1=(m1*vy1+m2*vy2+e*m2*(vy2-vy1))//(m1+m2)
-    vfy2=(m1*vy1+m2*vy2+e*m1*(vy1-vy2))//(m1+m2)
+    vfy1=round((m1*vy1+m2*vy2+e*m2*(vy2-vy1))/(m1+m2)*1000)
+    vfy2=round((m1*vy1+m2*vy2+e*m1*(vy1-vy2))/(m1+m2)*1000)
 
-    vfz1=(m1*vz1+m2*vz2+e*m2*(vz2-vz1))//(m1+m2)
-    vfz2=(m1*vz1+m2*vz2+e*m1*(vz1-vz2))//(m1+m2)
+    vfz1=round((m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2)*1000)
+    vfz2=round((m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2)*1000)
     
     sphere1.set_speed((vfx1, vfy1, vfz1))
     sphere2.set_speed((vfx2, vfy2, vfz2))
