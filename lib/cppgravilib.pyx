@@ -81,20 +81,17 @@ cdef class CyDummySphere:
         print("this is a dummy sphere")
     
     def get_coord(self) -> Tuple[int,int,int]:
-        """retourn la position et le rayon au format (x,y,z)
-        
-        Args:
-            self
-        
-        Returns:
-            x (int): composante x de la position
-            y (int): composante y de la position
-            z (int): composante z de la position
-        """
         return 0,0,0
+    def set_coord(self,coord:Tuple[int,int,int]) -> None:
+        pass
     def get_rayon(self) -> int:
-        """retourne le rayon de la sphère"""
         return 0
+    def set_rayon(self,rayon:int) -> None:
+        pass
+    def get_speed(self) -> Tuple[int,int,int]:
+        return 0,0,0
+    def set_speed(self,speed:Tuple[int,int,int]) -> None:
+        pass
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere

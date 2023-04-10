@@ -124,7 +124,7 @@ class SphereItem():
         Returns:
             float: volume d'une sphere selon son rayon
         """
-        return (4*pi*self.radius**3)/3
+        return self.radius**3
     def grossir(self, volume):
         """Change le rayon de la sphere afin de la faire gagner de volume.
 
@@ -132,12 +132,7 @@ class SphereItem():
             volume (float): le volume dont on veut faire grossir la sphere.
         """
         volume_final = self.volume_sphere() + volume
-        self.radius = (3*volume_final/4*pi)**(1/3)
-    def disparaitre (self) -> None:
-        """Fais disparaitre la sphere.
-        """
-        self.radius = 0
-        self.getcoords: Callable[[], tuple[100000, 100000, 100000]]
+        self.radius = volume_final**(1/3)
 
 
 

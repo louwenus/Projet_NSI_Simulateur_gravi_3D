@@ -71,9 +71,10 @@ class Main_window(QWidget):
 
         # dimension affiché par la fennettre de rendu
         self.dimension = gravilib.PyBaseDimension()
-        # a raffiner, mais est utilisé pour update la simulation toute les 10ms
+        # a raffiner, mais est utilisé pour update la simulation a intervalles réguliers
+        self.ticktime:float=1/settings.get("simulation.fps")
         self.timer: QTimer = QTimer(self)
-        self.timer.setInterval(100)
+        self.timer.setInterval(self.ticktime*1000)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
         if settings.get("logging") >= 2:
@@ -127,21 +128,27 @@ class Main_window(QWidget):
             self.widget_3D.add_to_display(rendu)
 
     def update_simulation(self) -> None:
-        # totalstart = time()
-        # start = time()
-        # print("starting update")
-        self.dimension.gravite_all(0.1)
-        # print("grav time:", time()-start)
-        # start = time()
-        self.dimension.move_all(0.1)
-        # print("move time:", time()-start)
-        # start = time()
-        self.dimension.gerer_colision()
-        # print("coli time", time()-start)
-        # start = time()
-        self.widget_3D.repaint()
-        # print("graph time:", time()-start)
-        # print("total:", time()-totalstart)
+        if settings.get("logging")>=3:
+            totalstart = time()
+            start = time()
+            print("starting update")
+            self.dimension.gravite_all(self.ticktime)
+            print("grav time:", time()-start)
+            start = time()
+            self.dimension.move_all(self.ticktime)
+            print("move time:", time()-start)
+            start = time()
+            self.dimension.gerer_colision()
+            print("coli time", time()-start)
+            start = time()
+            self.widget_3D.repaint()
+            print("graph time:", time()-start)
+            print("total:", time()-totalstart,"on",self.ticktime,"normaly")
+        else:
+            self.dimension.gravite_all(self.ticktime)
+            self.dimension.move_all(self.ticktime)
+            self.dimension.gerer_colision()
+            self.widget_3D.repaint()
         
         # sphere : gravilib.PyBaseSphere
         # for sphere in self.dimension.get_spheres():

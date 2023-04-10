@@ -44,15 +44,13 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         vz = vz*(-1)
         self.set_speed((vx, vy, vz))
     
-def absorption (sphere1, sphere2):
+def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
     Args:
         sphere1, sphere2 : objet de la class PyBaseSphere
     """
-    for render in sphere1.get_render_items():
-        vol_1 = render.volume_sphere()
-    for render in sphere2.get_render_items():
-        vol_2 = render.volume_sphere()
+    vol_1 = sphere1.get_rayon()
+    vol_2 = sphere2.get_rayon()
     if vol_1 > vol_2:
         for render in sphere1.get_render_items():
             render.grossir(vol_2/5)
