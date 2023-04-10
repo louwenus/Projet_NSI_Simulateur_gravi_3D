@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Iterable
+from typing import Any, Iterable
 from sys import stderr, argv
 
 settings: dict = {}
@@ -25,16 +25,17 @@ else:
         print("inexistant or ill-formated settings.json file, using defaults settings only")
 
 
-def get(setloc: str):
+def get(setloc: str) -> Any:
+    path: list[str]=setloc.split('.')
     try:
         temp = settings
-        for key in setloc.split('.'):
+        for key in path:
             temp = temp[key]
         return temp
     except (KeyError, TypeError):
         try:
             temp = defaults
-            for key in setloc.split('.'):
+            for key in path:
                 temp = temp[key]
             return temp
         except:
@@ -54,7 +55,8 @@ def set(setloc: str, value) -> bool:
         bool: if the update was sucessful
     """
     temp = settings
-    for key in setloc.split('.')[:-1]:
+    path: list[str]=setloc.split('.')
+    for key in path[:-1]:
         if type(temp) is not dict:
             if get("logging") >= 1:
                 print("setting path to non dict, abborting", file=stderr)
@@ -62,7 +64,7 @@ def set(setloc: str, value) -> bool:
         if key not in temp:
             temp[key] = {}
         temp = temp[key]
-    temp[setloc.split('.')[-1]] = value
+    temp[path[-1]] = value
     return True
 
 

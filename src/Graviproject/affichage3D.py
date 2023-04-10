@@ -145,9 +145,10 @@ class Renderer3D(QWidget):
     def update_graph(self) -> None: appelle update_pos() sur tous les items du graph
     """
 
-    def __init__(self) -> None:
+    def __init__(self,controlles) -> None:
         """initialise le widget de rendu"""
         super().__init__()
+        self.controlles=controlles
         self.setFocusPolicy(Qt.ClickFocus)
         self.setGeometry(0,0,1000,800)
         self.mainlayout: QLayout = QHBoxLayout()
@@ -188,7 +189,17 @@ class Renderer3D(QWidget):
             self.cam.zoom*=1.25
         else:
             self.cam.zoom*=0.75
-    
+    def reload_controlles(self,*any) -> None:
+        self.controles: dict[str, QKeySequence]={
+            "avancer":  QKeySequence(settings.get("simulation.controles.avancer")),
+            "reculer":  QKeySequence(settings.get("simulation.controles.reculer")),
+            "droite":   QKeySequence(settings.get("simulation.controles.droite")),
+            "gauche":   QKeySequence(settings.get("simulation.controles.gauche")),
+            "monter":   QKeySequence(settings.get("simulation.controles.monter")),
+            "descendre":QKeySequence(settings.get("simulation.controles.descendre")),
+            "home":     QKeySequence(settings.get("simulation.controles.home")),
+            "ajouter":  QKeySequence(settings.get("simulation.controles.ajouter"))
+        }
     def keyPressEvent(self, event):
         """ Modifie l'emplacement de la camera.
 
@@ -196,25 +207,25 @@ class Renderer3D(QWidget):
             event (class 'PySide6.QtGui.QKeyEvent'): Touche du clavier appuyée.
         """
          
-        if event.key() == QKeySequence('Z'):
+        if event.key() == self.controles["monter"]:
             """ Fait s'élever la camera de 100000 px"""
             self.cam.y-=100000
-        if event.key() == QKeySequence('S'):
+        if event.key() == self.controles["descendre"]:
             """ Fait descendre la camera de 100000 px"""
             self.cam.y+=100000
-        if event.key() == QKeySequence('Q'):
+        if event.key() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 100000 px"""
-            self.cam.x-=100000
-        if event.key() == QKeySequence('D'):
-            """ Fait se décaler à gauche la camera de 100000 px"""
             self.cam.x+=100000
-        if event.key() == QKeySequence('F'):
+        if event.key() == self.controles["gauche"]:
+            """ Fait se décaler à gauche la camera de 100000 px"""
+            self.cam.x-=100000
+        if event.key() == self.controles["avancer"]:
             """ Fait avancer la camera de 1000 px"""
             self.cam.z+=1000
-        if event.key() == QKeySequence('B'):
+        if event.key() == self.controles["reculer"]:
             """ Fait reculer la camera de 1000 px"""
             self.cam.z-=1000
-        if event.key() == QKeySequence('H'):
+        if event.key() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom") 
     
