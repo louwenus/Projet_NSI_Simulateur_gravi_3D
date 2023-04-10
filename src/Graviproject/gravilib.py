@@ -25,6 +25,8 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             vx,vy,vz (int): vitesse de départ de la sphère
             d (int) : dureté de la balle
         """
+        self.vx,self.vy,self.vz=vx,vy,vz
+        self.masse=masse
         self.durete = d
         self.rayon = rayon
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
@@ -61,13 +63,25 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             render.grossir(vol_1/5)
         for render in sphere1.get_render_items():
             render.disparaitre()
-def transfert_v(m1,v1,m2,v2,d1,d2):
+def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
+    d1=sphere1.durete
+    d2=sphere2.durete
+    m1=sphere1.masse
+    m2=sphere2.masse
+    vx1,vy1,vz1=sphere1.vx,sphere1.vy,sphere1.vz
+    vx2,vy2,vz2=sphere2.vx,sphere2.vy,sphere2.vz
     e=(2*sqrt(d1*d2))/(d1+d2)
-    vf1=(m1*v1+m2*v2+e*m2*(v2-v1))/(m1+m2)
-    vf2=(m1*v1+m2*v2+e*m1*(v1-v2))/(m1+m2)
+    vfx1=(m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2)
+    vfx2=(m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2)
+
+    vfy1=(m1*vy1+m2*vy2+e*m2*(vy2-vy1))/(m1+m2)
+    vfy2=(m1*vy1+m2*vy2+e*m1*(vy1-vy2))/(m1+m2)
+
+    vfz1=(m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2)
+    vfz2=(m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2)
     
-    return vf1,vf2
+    return vfx1,vfx2,vfy1,vfy2,vfz1,vfz2
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self) -> None:
@@ -87,11 +101,11 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     absorption(sphere, sphere2)
                     ajouter_sphere_1 = False
                 else:
-                    sphere.rebond()
-                    sphere2.rebond()
+                    sphere.transfert_v()
+                    sphere2.transfert_v()
             else:
-                sphere.rebond()
-                sphere2.rebond()
+                sphere.transfert_v()
+                sphere2.transfert_v()
             for render in sphere.get_render_items() + sphere2.get_render_items():
                 render.change_couleur()
             if ajouter_sphere_1:
