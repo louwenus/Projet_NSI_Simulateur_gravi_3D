@@ -133,11 +133,6 @@ class SphereItem():
         """
         volume_final = self.volume_sphere() + volume
         self.radius = volume_final**(1/3)
-    def disparaitre (self) -> None:
-        """Fais disparaitre la sphere.
-        """
-        self.radius = 0
-        self.getcoords: Callable[[], tuple[100000, 100000, 100000]]
 
 
 
