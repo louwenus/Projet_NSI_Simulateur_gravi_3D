@@ -45,6 +45,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         vz = vz*(-1)
         self.set_speed((vx, vy, vz))
 
+
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self,render:Renderer3D) -> None:
         self.init_c_container()
@@ -53,12 +54,10 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
     def gerer_colision(self) -> None:
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
         """
-        ajouter_sphere_1 = True
-        ajouter_sphere_2 = True
         for sphere, sphere2 in self.collisions():
             transfert_v(sphere,sphere2)
-            """
-            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
+            
+            """ if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
                     absorption(sphere, sphere2)
                     ajouter_sphere_2 = False
@@ -70,9 +69,10 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     sphere2.rebond()
             else:
                 sphere.rebond()
-                sphere2.rebond()
+                sphere2.rebond()"""
             for render in sphere.get_render_items() + sphere2.get_render_items():
-                render.change_couleur()"""
+                render.change_couleur()
+                self.render.remove_from_display(render)
             self.add_sphere(sphere)
             self.add_sphere(sphere2)
     
