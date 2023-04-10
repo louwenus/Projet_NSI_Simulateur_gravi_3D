@@ -7,9 +7,9 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
     pos{x,y,z},
     rayon(rayon),
     speed{vx,vy,vz},
+    masse(masse),
     posmin{x-rayon, y-rayon, z-rayon},
-    posmax{x+rayon,y+rayon,z+rayon},
-    masse(masse)
+    posmax{x+rayon,y+rayon,z+rayon}
 {}
 
 void SimpleSphere::move(float temps)
