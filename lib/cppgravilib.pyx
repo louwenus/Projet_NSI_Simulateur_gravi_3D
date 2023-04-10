@@ -114,5 +114,5 @@ cdef class CySimpleSphere(CyDummySphere):
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
     def get_masse(self) -> int:
         return self.c_simple_sphere.masse
-    def set_masse(self,masse,int) -> None:
+    def set_masse(self,masse:int) -> None:
         self.c_simple_sphere.masse = masse
