@@ -33,7 +33,6 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
 
     def get_render_items(self) -> list[SphereItem]:
         return [self.render_item]
-        # now, use position and size, plus information embded in the python object (like color) to render the sphere
 
     def rebond(self) -> None:
         """Inverse la trajectoire d'une sphere
