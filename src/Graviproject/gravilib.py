@@ -28,7 +28,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         """
         self.vx,self.vy,self.vz=vx,vy,vz
         self.masse=masse
-        self.durete = d
+        self.durte = d
         self.rayon = rayon
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
@@ -58,13 +58,11 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             transfert_v(sphere,sphere2)
             
-            """ if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
+            """if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
                 if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
                     absorption(sphere, sphere2)
-                    ajouter_sphere_2 = False
                 elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
                     absorption(sphere, sphere2)
-                    ajouter_sphere_1 = False
                 else:
                     sphere.rebond()
                     sphere2.rebond()
@@ -89,17 +87,17 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     if vol_1 > vol_2:
         for render in sphere1.get_render_items():
             render.grossir(vol_2/5)
-        for render in sphere2.get_render_items():
-            render.disparaitre()
+        #for render in sphere2.get_render_items():
+        #    render.disparaitre()
     else:
         for render in sphere2.get_render_items():
             render.grossir(vol_1/5)
-        for render in sphere1.get_render_items():
-            render.disparaitre()
+        #for render in sphere1.get_render_items():
+        #    render.disparaitre()
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
-    d1=sphere1.durete*1000
-    d2=sphere2.durete*1000
+    d1=sphere1.durte*1000
+    d2=sphere2.durte*1000
     m1=sphere1.masse*1000
     m2=sphere2.masse*1000
     vx1,vy1,vz1=sphere1.vx*1000,sphere1.vy*1000,sphere1.vz*1000
