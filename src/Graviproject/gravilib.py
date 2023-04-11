@@ -81,8 +81,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             sphere1 (PyBaseSphere): sphere absorbante
             sphere2 (PyBaseSphere): sphere absorbé
     """
+    ratio_ajout = 1
     volume: int=(sphere1.get_rayon()**3)*pi*(4/3)
-    volume    +=(sphere2.get_rayon()**3)*pi*(4/3)
+    volume    +=((sphere2.get_rayon()**3)*pi*(4/3))/ratio_ajout
     rayon =int((volume *3)/(4*pi))**(1/3)
     sphere1.set_rayon(rayon)
     
