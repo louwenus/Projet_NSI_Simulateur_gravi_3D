@@ -25,14 +25,21 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             vx,vy,vz (int): vitesse de départ de la sphère
             d (int) : dureté de la balle
         """
-        self.masse = masse
+        #IL *NE* FAUT *PAS* FAIRE CA, ARRETEZ DE LE REMETTRE DANS LE CODE
+        #et ne supprimez pas ce commentaire, il est la pour une raison
+        #UTILISEZ self.get_speed() et self.set_speed((vx,vy,vz))
+        #et de meme pour la masse, le rayon et la position, merci
+        #self.vx,self.vy,self.vz=vx,vy,vz
+        #self.masse=masse
+        #self.rayon = rayon
+        
         self.durete = d
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
-        if self.masse < 333000000:
+        if masse < 333000000:
             self.render_item.change_couleur(0)
-        elif self.masse < 666000000:
+        elif masse < 666000000:
             self.render_item.change_couleur(1)
         else:
             self.render_item.change_couleur(2)
@@ -87,9 +94,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             sphere2 (PyBaseSphere): sphere absorbé
     """
     ratio_ajout = 1
-    volume: int=(sphere1.get_rayon()**3)*pi*(4/3)
-    volume    +=((sphere2.get_rayon()**3)*pi*(4/3))/ratio_ajout
-    rayon =int((volume *3)/(4*pi))**(1/3)
+    volume: int=sphere1.get_rayon()**3   #FUCK LES CONSTANTES
+    volume    +=(sphere2.get_rayon()**3)/ratio_ajout
+    rayon =int(volume**(1/3))
     sphere1.set_rayon(rayon)
     
     masse: int=sphere1.get_masse()
