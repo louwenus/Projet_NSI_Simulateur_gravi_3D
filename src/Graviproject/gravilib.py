@@ -108,19 +108,28 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete
     d2=sphere2.durete
-    m1=sphere1.masse
-    m2=sphere2.masse
+    m1=sphere1.get_masse()
+    m2=sphere2.get_masse()
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     e=(2*sqrt(d1*d2))/(d1+d2)
-    vfx1=int((m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2))
-    vfx2=int((m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2))
+    somme_m=m1+m2
+    mvx1=m1*vx1
+    mvx2=m2*vx2
+    mvy1=m1*vy1
+    mvy2=m2*vy2
+    mvz1=m1*vz1
+    mvz2=m2*vz2
+    em1=e*m1
+    em2=e*m2    #sert à faire moins de calculs pour optimiser
+    vfx1=int((mvx1+mvx2+em2*(vx2-vx1))/(somme_m))
+    vfx2=int((mvx1+mvx2+em1*(vx1-vx2))/(somme_m))
 
-    vfy1=int((m1*vy1+m2*vy2+e*m2*(vy2-vy1))/(m1+m2))
-    vfy2=int((m1*vy1+m2*vy2+e*m1*(vy1-vy2))/(m1+m2))
+    vfy1=int((mvy1+mvy2+em2*(vy2-vy1))/(somme_m))
+    vfy2=int((mvy1+mvy2+em1*(vy1-vy2))/(somme_m))
 
-    vfz1=int((m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2))
-    vfz2=int((m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2))
+    vfz1=int((mvz1+mvz2+em2*(vz2-vz1))/(somme_m))
+    vfz2=int((mvz1+mvz2+em1*(vz1-vz2))/(somme_m))
     
     sphere1.set_speed((vfx1, vfy1, vfz1))
     sphere2.set_speed((vfx2, vfy2, vfz2))
