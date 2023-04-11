@@ -128,7 +128,9 @@ class Main_window(QWidget):
             self.widget_3D.add_to_display(rendu)
 
     def update_simulation(self) -> None:
-        if settings.get("logging")>=3:
+        if  False: 
+            #mis en commentaire pour faire des tests.
+            """ settings.get("logging")>=3:
             totalstart = time()
             start = time()
             print("starting update")
@@ -143,7 +145,7 @@ class Main_window(QWidget):
             start = time()
             self.widget_3D.repaint()
             print("graph time:", time()-start)
-            print("total:", time()-totalstart,"on",self.ticktime,"normaly")
+            print("total:", time()-totalstart,"on",self.ticktime,"normaly") """
         else:
             self.dimension.gravite_all(self.ticktime)
             self.dimension.move_all(self.ticktime)

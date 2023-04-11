@@ -25,25 +25,24 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             vx,vy,vz (int): vitesse de départ de la sphère
             d (int) : dureté de la balle
         """
-        #IL *NE* FAUT *PAS* FAIRE CA, ARRETEZ DE LE REMETTRE DANS LE CODE
-        #UTILISEZ self.get_speed() et self.set_speed((vx,vy,vz))
-        #et de meme pour la masse, le rayon et la position, merci
-        #self.vx,self.vy,self.vz=vx,vy,vz
-        #self.masse=masse
-        #self.rayon = rayon
-        
+        self.masse = masse
         self.durete = d
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
-        if masse < 333000000:
+        if self.masse < 333000000:
             self.render_item.change_couleur(0)
-        elif masse < 666000000:
+        elif self.masse < 666000000:
             self.render_item.change_couleur(1)
         else:
             self.render_item.change_couleur(2)
 
     def get_render_items(self) -> list[SphereItem]:
+        """renvoie les items de SphereItem d'affichage3D
+
+        Returns:
+            list[SphereItem]: les items SphereItem pour pouvoir les manipuler par la suite.
+        """
         return [self.render_item]
 
     def rebond(self) -> None:
@@ -102,8 +101,8 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete
     d2=sphere2.durete
-    m1=sphere1.get_masse()
-    m2=sphere2.get_masse()
+    m1=sphere1.masse
+    m2=sphere2.masse
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     e=(2*sqrt(d1*d2))/(d1+d2)

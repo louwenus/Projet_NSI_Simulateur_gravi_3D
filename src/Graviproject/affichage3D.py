@@ -104,7 +104,11 @@ class SphereItem():
         self.pos=QPointF(*coord2D)
 
     def paint(self, painter) -> None:
+        """Permet de gérer le rendu graphique
 
+        Args:
+            painter (class 'PySide6.QtGui.QPainter'): permettant de modifier le rendu graphique.
+        """
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(self.couleur[self.compteur]))
 
