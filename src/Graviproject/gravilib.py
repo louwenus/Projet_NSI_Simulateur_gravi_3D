@@ -25,10 +25,14 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             vx,vy,vz (int): vitesse de départ de la sphère
             d (int) : dureté de la balle
         """
-        self.vx,self.vy,self.vz=vx,vy,vz
-        self.masse=masse
+        #IL *NE* FAUT *PAS* FAIRE CA, ARRETEZ DE LE REMETTRE DANS LE CODE
+        #UTILISEZ self.get_speed() et self.set_speed((vx,vy,vz))
+        #et de meme pour la masse, le rayon et la position, merci
+        #self.vx,self.vy,self.vz=vx,vy,vz
+        #self.masse=masse
+        #self.rayon = rayon
+        
         self.durete = d
-        self.rayon = rayon
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon(), self.get_coord)
@@ -96,10 +100,10 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete
     d2=sphere2.durete
-    m1=sphere1.masse
-    m2=sphere2.masse
-    vx1,vy1,vz1=sphere1.vx,sphere1.vy,sphere1.vz
-    vx2,vy2,vz2=sphere2.vx,sphere2.vy,sphere2.vz
+    m1=sphere1.get_masse()
+    m2=sphere2.get_masse()
+    vx1,vy1,vz1=sphere1.get_speed()
+    vx2,vy2,vz2=sphere2.get_speed()
     e=(2*sqrt(d1*d2))/(d1+d2)
     vfx1=round((m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2)*1000)
     vfx2=round((m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2)*1000)
