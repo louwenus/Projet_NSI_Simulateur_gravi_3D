@@ -12,20 +12,22 @@ from cpython cimport PyObject
 from libcpp.atomic cimport atomic
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
+ctypedef long int li
+ctypedef long long int lli
 
 cdef extern from "typedef.hpp":
     struct llco:
-        int x
-        int y
-        int z
+        lli x
+        lli y
+        lli z
     struct lco:
-        int x
-        int y
-        int z
+        li x
+        li y
+        li z
     struct atlco:
-        atomic[int] x
-        atomic[int] y
-        atomic[int] z
+        atomic[li] x
+        atomic[li] y
+        atomic[li] z
         atlco(lco)
 
 cdef extern from "spheres/sphere.hpp":
@@ -33,12 +35,12 @@ cdef extern from "spheres/sphere.hpp":
         DummySphere(PyObject* parent) except +
         PyObject* pyparent
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(PyObject* parent,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz) except +
+        SimpleSphere(PyObject* parent,lli x,lli y,lli z,li masse,li rayon,li vx,li vy,li vz) except +
         llco pos
-        int rayon
-        int masse
+        li rayon
+        li masse
         atlco speed
-        void set_speed(int x,int y,int z)
+        void set_speed(li x,li y,li z)
 ctypedef DummySphere* DummySpherePtr        
 
 cdef extern from "dimensions/dimension.hpp":

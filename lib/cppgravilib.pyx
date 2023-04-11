@@ -17,6 +17,9 @@ from typing import Generator, Tuple
 
 ctypedef PyObject* PyObjPtr
 ctypedef cppgravilib.DummySphere* DummyPtr
+ctypedef long int li
+ctypedef long long int lli
+
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
@@ -80,39 +83,41 @@ cdef class CyDummySphere:
         """print out debuging info on stdout"""
         print("this is a dummy sphere")
     
-    def get_coord(self) -> Tuple[int,int,int]:
+    def get_coord(self) -> Tuple[lli,lli,lli]:
         return 0,0,0
-    def set_coord(self,coord:Tuple[int,int,int]) -> None:
+    def set_coord(self,coord:Tuple[lli,lli,lli]) -> None:
         pass
-    def get_rayon(self) -> int:
+    def get_rayon(self) -> li:
         return 0
-    def set_rayon(self,rayon:int) -> None:
+    def set_rayon(self,rayon:li) -> None:
         pass
-    def get_speed(self) -> Tuple[int,int,int]:
+    def get_speed(self) -> Tuple[li,li,li]:
         return 0,0,0
-    def set_speed(self,speed:Tuple[int,int,int]) -> None:
+    def set_speed(self,speed:Tuple[li,li,li]) -> None:
         pass
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
-    def init_c_container(self,int x,int y,int z,int masse,int rayon,int vx,int vy,int vz):
+    def init_c_container(self,lli x,lli y,lli z,li masse,li rayon,li vx,li vy,li vz):
         """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
         self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
     
-    def get_coord(self) -> Tuple[int,int,int]:
+    def get_coord(self) -> Tuple[lli,lli,lli]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z
-    def set_coord(self,coord:Tuple[int,int,int]) -> None:
-        self.c_simple_sphere.pos=coord
-    def get_rayon(self) -> int:
+    def set_coord(self,coord:Tuple[lli,lli,lli]) -> None:
+        cdef cppgravilib.llco co
+        co.x=coord[0];  co.y=coord[1];  co.z=coord[2]
+        self.c_simple_sphere.pos=co
+    def get_rayon(self) -> li:
         return self.c_simple_sphere.rayon
-    def set_rayon(self,rayon:int) -> None:
+    def set_rayon(self,rayon:li) -> None:
         self.c_simple_sphere.rayon=rayon
-    def get_speed(self) -> Tuple[int,int,int]:
+    def get_speed(self) -> Tuple[li,li,li]:
         speed = <cppgravilib.lco>self.c_simple_sphere.speed
         return speed.x,speed.y,speed.z
-    def set_speed(self,speed:Tuple[int,int,int]) -> None:
+    def set_speed(self,speed:Tuple[li,li,li]) -> None:
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
-    def get_masse(self) -> int:
+    def get_masse(self) -> li:
         return self.c_simple_sphere.masse
-    def set_masse(self,masse:int) -> None:
+    def set_masse(self,masse:li) -> None:
         self.c_simple_sphere.masse = masse

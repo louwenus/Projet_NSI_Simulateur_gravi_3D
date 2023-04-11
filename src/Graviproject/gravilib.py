@@ -35,7 +35,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.durete = d
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
-            self.get_rayon(), self.get_coord)
+            self.get_rayon, self.get_coord)
 
     def get_render_items(self) -> list[SphereItem]:
         return [self.render_item]
@@ -59,43 +59,40 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
         """
         for sphere, sphere2 in self.collisions():
-            ajouter_sphere1 = True
-            ajouter_sphere2 = True
-            transfert_v(sphere,sphere2)
             
-            if (sphere.rayon > sphere2.rayon * 3) or (sphere2.rayon > sphere.rayon * 3):
-                if (sphere.durete < 6) and (sphere.rayon > sphere2.rayon):
-                    absorption(sphere, sphere2)
-                    ajouter_sphere1 = False
-                elif (sphere2.durete < 6) and (sphere2.rayon > sphere.rayon):
-                    absorption(sphere, sphere2)
-                    ajouter_sphere2 = False
-            #for render in sphere.get_render_items() + sphere2.get_render_items():
-                #render.change_couleur()
-            if ajouter_sphere1 == True:
+            if (sphere.durete < 6) and (sphere.get_rayon() > sphere2.get_rayon() * 3):
+                absorption(sphere, sphere2)
                 self.add_sphere(sphere)
-            else:
-                for render in sphere.get_render_items():
-                    self.render.remove_from_display(render)
-            if ajouter_sphere2 == True:
-                self.add_sphere(sphere2)
-            else:
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
+            elif (sphere2.durete < 6) and (sphere2.get_rayon() > sphere.get_rayon() * 3):
+                absorption(sphere2, sphere)
+                self.add_sphere(sphere2)
+                for render in sphere.get_render_items():
+                    self.render.remove_from_display(render)
+            #for render in sphere.get_render_items() + sphere2.get_render_items():
+                #render.change_couleur()
+            else:
+                transfert_v(sphere,sphere2)
+                self.add_sphere(sphere)
+                self.add_sphere(sphere2)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
-    """ Fonction prenant en paramètre 2 sphères, renvoyant l'absorption de la plus petite par la plus grosse.
-    Args:
-        sphere1, sphere2 : objet de la class PyBaseSphere
+    """ Fonction prenant en paramètre 2 sphères, et réalise l'absorption de la deuxiemme par la première
+        Args:
+            sphere1 (PyBaseSphere): sphere absorbante
+            sphere2 (PyBaseSphere): sphere absorbé
     """
-    vol_1 = sphere1.get_rayon()
-    vol_2 = sphere2.get_rayon()
-    if vol_1 > vol_2:
-        for render in sphere1.get_render_items():
-            render.grossir(vol_2/5)
-    else:
-        for render in sphere2.get_render_items():
-            render.grossir(vol_1/5)
+    volume: int=sphere1.get_rayon() ** 3
+    volume    +=sphere2.get_rayon() ** 3
+    rayon =int(volume ** (1/3))
+    sphere1.set_rayon(rayon)
+    
+    masse: int=sphere1.get_masse()
+    masse    +=sphere2.get_masse()
+    sphere1.set_masse(masse)
+
+
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete
@@ -105,14 +102,14 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     e=(2*sqrt(d1*d2))/(d1+d2)
-    vfx1=round((m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2)*1000)
-    vfx2=round((m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2)*1000)
+    vfx1=int((m1*vx1+m2*vx2+e*m2*(vx2-vx1))/(m1+m2))
+    vfx2=int((m1*vx1+m2*vx2+e*m1*(vx1-vx2))/(m1+m2))
 
-    vfy1=round((m1*vy1+m2*vy2+e*m2*(vy2-vy1))/(m1+m2)*1000)
-    vfy2=round((m1*vy1+m2*vy2+e*m1*(vy1-vy2))/(m1+m2)*1000)
+    vfy1=int((m1*vy1+m2*vy2+e*m2*(vy2-vy1))/(m1+m2))
+    vfy2=int((m1*vy1+m2*vy2+e*m1*(vy1-vy2))/(m1+m2))
 
-    vfz1=round((m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2)*1000)
-    vfz2=round((m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2)*1000)
+    vfz1=int((m1*vz1+m2*vz2+e*m2*(vz2-vz1))/(m1+m2))
+    vfz2=int((m1*vz1+m2*vz2+e*m1*(vz1-vz2))/(m1+m2))
     
     sphere1.set_speed((vfx1, vfy1, vfz1))
     sphere2.set_speed((vfx2, vfy2, vfz2))

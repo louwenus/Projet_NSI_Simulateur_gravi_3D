@@ -79,7 +79,7 @@ class Camera():
 class SphereItem():
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
     couleur = ["red", "blue", "MediumVioletRed", "Crimson", "DarkOrange", "Gold", "Magenta", "Indigo", "LimeGreen", "Cyan", "MediumBlue", "Chocolate"]
-    def __init__(self, rayon: int, getcoords: Callable[[], tuple[int, int, int]]) -> None:
+    def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]]) -> None:
         """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
 
         Args:
@@ -91,19 +91,15 @@ class SphereItem():
         """
         super().__init__()
         self.getcoords: Callable[[], tuple[int, int, int]] = getcoords
-        self.radius: int = rayon
+        self.radius: Callable[[], int] = rayon
         self.radius2D: float = 0
-        self.compteur = 0
+        self.compteur: int = 0
         self.pos = QPointF(0,0)
 
     def update_pos(self, camera: Camera) -> None:
         """met a jour la position de l'item selon la position de la sphère"""
-        coord: tuple[int, int, int] = self.getcoords()
 
-        parameter2D: tuple[tuple[float, float],
-                           float] = camera.projection_sphere(coord, self.radius)
-        self.radius2D = parameter2D[1]
-        coord2D: tuple[float, float] = parameter2D[0]
+        coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
 
         self.pos=QPointF(*coord2D)
 
@@ -118,21 +114,6 @@ class SphereItem():
         """ Modifie la couleur de la sphere en une couleur aléatoire de la liste couleur.
         """
         self.compteur = randint(0, len(self.couleur)-1)
-    def volume_sphere(self) -> None:
-        """Calcul et renvoie le volume de la sphere.
-
-        Returns:
-            float: volume d'une sphere selon son rayon
-        """
-        return self.radius**3
-    def grossir(self, volume):
-        """Change le rayon de la sphere afin de la faire gagner de volume.
-
-        Args:
-            volume (float): le volume dont on veut faire grossir la sphere.
-        """
-        volume_final = self.volume_sphere() + volume
-        self.radius = volume_final**(1/3)
 
 
 
