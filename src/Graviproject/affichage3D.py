@@ -78,7 +78,7 @@ class Camera():
 
 class SphereItem():
     """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    couleur = ["red", "blue", "MediumVioletRed", "Crimson", "DarkOrange", "Gold", "Magenta", "Indigo", "LimeGreen", "Cyan", "MediumBlue", "Chocolate"]
+    couleur = ["darkorange", "cyan", "lime"]
     def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]]) -> None:
         """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
 
@@ -110,10 +110,10 @@ class SphereItem():
 
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
-    def change_couleur(self) -> None:
+    def change_couleur(self, indice):
         """ Modifie la couleur de la sphere en une couleur aléatoire de la liste couleur.
         """
-        self.compteur = randint(0, len(self.couleur)-1)
+        self.compteur = indice
 
 
 
