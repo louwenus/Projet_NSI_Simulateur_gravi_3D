@@ -72,12 +72,12 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """
         for sphere, sphere2 in self.collisions():
             
-            if (sphere.durete < 6) and (sphere.get_rayon() > sphere2.get_rayon() * 3):
+            if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                 absorption(sphere, sphere2)
                 self.add_sphere(sphere)
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
-            elif (sphere2.durete < 6) and (sphere2.get_rayon() > sphere.get_rayon() * 3):
+            elif (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 absorption(sphere2, sphere)
                 self.add_sphere(sphere2)
                 for render in sphere.get_render_items():
