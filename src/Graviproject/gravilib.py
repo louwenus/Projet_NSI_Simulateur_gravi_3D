@@ -1,6 +1,6 @@
 import sys
 from collections.abc import Iterable
-from math import sqrt
+from math import sqrt, pi
 try:
     import cython
 except ModuleNotFoundError:
@@ -70,8 +70,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 self.add_sphere(sphere2)
                 for render in sphere.get_render_items():
                     self.render.remove_from_display(render)
-            #for render in sphere.get_render_items() + sphere2.get_render_items():
-                #render.change_couleur()
             else:
                 transfert_v(sphere,sphere2)
                 self.add_sphere(sphere)
@@ -83,9 +81,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             sphere1 (PyBaseSphere): sphere absorbante
             sphere2 (PyBaseSphere): sphere absorbé
     """
-    volume: int=sphere1.get_rayon() ** 3
-    volume    +=sphere2.get_rayon() ** 3
-    rayon =int(volume ** (1/3))
+    volume: int=(sphere1.get_rayon()**3)*pi*(4/3)
+    volume    +=(sphere2.get_rayon()**3)*pi*(4/3)
+    rayon =int((volume *3)/(4*pi))**(1/3)
     sphere1.set_rayon(rayon)
     
     masse: int=sphere1.get_masse()
