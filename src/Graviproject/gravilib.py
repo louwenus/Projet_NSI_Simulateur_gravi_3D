@@ -1,6 +1,6 @@
 import sys
 from collections.abc import Iterable
-from math import sqrt, pi
+from math import sqrt
 try:
     import cython
 except ModuleNotFoundError:
@@ -93,22 +93,21 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             sphere1 (PyBaseSphere): sphere absorbante
             sphere2 (PyBaseSphere): sphere absorbé
     """
-    ratio_ajout = 1
-    volume: int=sphere1.get_rayon()**3   #FUCK LES CONSTANTES
-    volume    +=(sphere2.get_rayon()**3)/ratio_ajout
+    volume: int=sphere1.get_rayon()**3
+    volume    +=(sphere2.get_rayon()**3)
     rayon =int(volume**(1/3))
     sphere1.set_rayon(rayon)
     
-    masse: int=sphere1.get_masse()
-    masse    +=sphere2.get_masse()
-    sphere1.set_masse(masse)
-
+    masse: int=sphere1.get_masse() #genre là ça marche pas parce que absorption et transfert ne sont pas des fonctions de
+    masse    +=sphere2.get_masse() #la class, mais des fonctions à part dans le code. du coup vous appelez une fonction qui
+    sphere1.set_masse(masse)       #existe pas. Et après ça crash et ça écrit ça : AttributeError: 'PyBaseSphere' object has no attribute 'set_masse'
+                                   # ou ça : AttributeError: 'PyBaseSphere' object has no attribute 'get_masse'.
 
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
     d1=sphere1.durete
     d2=sphere2.durete
-    m1=sphere1.get_masse()
+    m1=sphere1.get_masse()         # voir plus haut.
     m2=sphere2.get_masse()
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
