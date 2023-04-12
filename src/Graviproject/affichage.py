@@ -4,6 +4,8 @@
 
 
 from . import settings
+#as logging is used realy often, put it in a var to decrease acess time
+logging:int = settings.get("logging")
 import sys
 from sys import stderr
 try:
@@ -77,7 +79,7 @@ class Main_window(QWidget):
         self.timer.setInterval(self.ticktime*1000)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
-        if settings.get("logging") >= 2:
+        if logging >= 2:
             print("main windows initialized")
 
 
@@ -99,14 +101,14 @@ class Main_window(QWidget):
             controles_graphiques.show()
             self.attach_detachAction.setText("&Attacher les contrôles")
             self.affichage_controles = False
-            if settings.get("logging") >= 2:
+            if logging >= 2:
                 print("controles déttachés")
         else:
             self.controles.show()
             controles_graphiques.hide()
             self.attach_detachAction.setText("&Détacher les contrôles")
             self.affichage_controles = True
-            if settings.get("logging") >= 2:
+            if logging >= 2:
                 print("controles attachés")
 
     def affich_licence(self) -> None:
@@ -121,7 +123,7 @@ class Main_window(QWidget):
             with open(path) as file:
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
-            if settings.get("logging") >= 1:
+            if logging >= 1:
                 print("The french licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
                 "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENSCE_FR")
@@ -138,11 +140,8 @@ class Main_window(QWidget):
         self.dimension.add_sphere(sph)
         for rendu in sph.get_render_items():
             self.widget_3D.add_to_display(rendu)
-
-    def update_simulation(self) -> None:
-        if  False: 
-            #mis en commentaire pour faire des tests.
-            """ settings.get("logging")>=3:
+    if  logging>=3:
+        def update_simulation(self) -> None:
             totalstart = time()
             start = time()
             print("starting update")
@@ -157,8 +156,9 @@ class Main_window(QWidget):
             start = time()
             self.widget_3D.repaint()
             print("graph time:", time()-start)
-            print("total:", time()-totalstart,"on",self.ticktime,"normaly") """
-        else:
+            print("total:", time()-totalstart,"on",self.ticktime,"normaly")
+    else:
+        def update_simulation(self) -> None:
             self.dimension.gravite_all(self.ticktime)
             self.dimension.move_all(self.ticktime)
             self.dimension.gerer_colision()
