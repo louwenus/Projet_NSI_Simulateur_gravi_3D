@@ -6,7 +6,7 @@ import types
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent, QKeySequence
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
-from math import cos, sin, pi
+from math import cos, sin
 
 from . import settings
 
@@ -115,7 +115,7 @@ class SphereItem():
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self, indice):
-        """ Modifie la couleur de la sphere en une couleur aléatoire de la liste couleur.
+        """ Modifie la couleur de la sphere en une couleur prédéfinie de la liste couleur.
         """
         self.compteur = indice
 
