@@ -1,8 +1,9 @@
 #  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 
 # encoding=utf8
-# from . import settings
-import sys
+
+import sys #Importation de la librairie sys
+
 if "--license" in sys.argv:  # Disclaimer & parsing des options passées à l'appel
     with open("LICENSCE_FR") as license:
         print(license.read())

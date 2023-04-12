@@ -1,3 +1,4 @@
+#Importation des librairies et modules
 from typing import Callable
 from random import *
 import sys
@@ -18,12 +19,12 @@ class Camera():
         """Camera attributes.
 
         Args:
-            x (int, optional): x coordinate of the camera. Defaults to 0.
-            y (int, optional): y coordinate of the camera. Defaults to 0.
-            z (int, optional): z coordinate of the camera. Defaults to 0.
-            yaw (float, optional): Rotation of the camera on the x axis. Defaults to 0.
-            pitch (float, optional): Rotation of the camera on the y axis. Defaults to 0.
-            roll (float, optional): Rotation of the camera on the z axis. Defaults to 0.
+            x (int, optional): x abscisse de la caméra. 0 par défault.
+            y (int, optional): y ordonnée de la caméra. 0 par défault.
+            z (int, optional): z profondeur de la caméra. 0 par défault.
+            yaw (float, optional): Rotation de la caméra sur les abscisse. 0 par défault.
+            pitch (float, optional): Rotation de la caméra sur les ordonnées. 0 par défault.
+            roll (float, optional): Rotation de la caméra sur la profondeur. 0 par défault.
         """
         self.x: int = x
         self.y: int = y
@@ -41,8 +42,7 @@ class Camera():
         self.update_matrix()
 
     def update_matrix(self) -> None:
-        """Updates the rotation matrix of the camera.
-        """
+        """Met à jour la matrice de rotation de la caméra."""
         matrix3_3 = tuple[tuple[float, float, float],
                           tuple[float, float, float],
                           tuple[float, float, float]]
@@ -52,25 +52,27 @@ class Camera():
                                   (-sin(self.pitch),               cos(self.pitch)*sin(self.roll),                                               cos(self.pitch)*cos(self.roll)))
 
     def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
-        """Projects the 3D sphere onto the 2D camera screen.
+        """Projette la sphère 3D sur l'écran de la caméra 2D.
 
         Args:
-            coord (tuple[int,int,int]): Coordinates of the sphere.
-            radius (int): Radius of the sphere.
+            coord (tuple[int,int,int]): Coordonnée de la sphère.
+            radius (int): Radian de la sphère.
 
         Returns:
-            tuple[tuple[float,float],float]: A tuple of the coordinates of the projection and its size.
+            tuple[tuple[float,float],float]: Un tuple des coordonnées de la projection et sa taille.
         """
         coord = (coord[0]-self.x, coord[1]-self.y, coord[2]-self.z)  # vecteur origine_camera/sphere
         coord = (coord[2]*self.matrix[0][2] + coord[1]*self.matrix[0][1] + coord[0]*self.matrix[0][0],  # rotation du vecteur en fonction de l'orientation de la caméra
                  coord[2]*self.matrix[1][2] + coord[1]*self.matrix[1][1] + coord[0]*self.matrix[1][0],
                  coord[2]*self.matrix[2][2] + coord[1]*self.matrix[2][1] + coord[0]*self.matrix[2][0])
+        
         if coord[2] > 1:
             coord_plan: tuple[float, float] = (
                 coord[0]/coord[2]*self.zoom+self.offsetX, coord[1]/coord[2]*self.zoom+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom
+            
         else:
-            #améliorable ?
+            #Améliorable ?
             coord_plan: tuple[float, float] = (0, 0)
             radius_plan: float = 0
 
@@ -78,17 +80,18 @@ class Camera():
 
 
 class SphereItem():
-    """classe chargé de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
+    """Cette classe est chargée de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
     couleur = ["darkorange", "cyan", "lime"]
+    
     def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]]) -> None:
-        """initialise un item de rendu sphérique de rayon fixe et faisant appel a la fonction getcoord pour update ses coordonées
+        """Initialise un item de rendu sphérique de rayon fixe et faisant appel à la fonction getcoord pour update ses coordonées.
 
         Args:
             rayon (int): le rayon de la sphère
-            getcoord (function): une fonction renvoyant un tuple de coordonées entières x,y,z
+            getcoord (function): Une fonction renvoyant un tuple de coordonées entières x,y,z
 
         Methode Custom:
-        update_pos(self) -> None: met a jour la position de l'item selon la position de la sphère
+        update_pos(self) -> None: Met à jour la position de l'item selon la position de la sphère
         """
         super().__init__()
         self.getcoords: Callable[[], tuple[int, int, int]] = getcoords
@@ -98,17 +101,17 @@ class SphereItem():
         self.pos = QPointF(0,0)
 
     def update_pos(self, camera: Camera) -> None:
-        """met a jour la position de l'item selon la position de la sphère"""
+        """Met à jour la position de l'item selon la position de la sphère"""
 
         coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
 
         self.pos=QPointF(*coord2D)
 
     def paint(self, painter) -> None:
-        """Permet de gérer le rendu graphique
+        """Permet de gérer le rendu graphique.
 
         Args:
-            painter (class 'PySide6.QtGui.QPainter'): permettant de modifier le rendu graphique.
+            painter (class 'PySide6.QtGui.QPainter'): Permettant de modifier le rendu graphique.
         """
         painter.setPen(QPen(Qt.black, 0.5))
         painter.setBrush(QBrush(self.couleur[self.compteur]))
@@ -116,23 +119,22 @@ class SphereItem():
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
     def change_couleur(self, indice):
-        """ Modifie la couleur de la sphere en une couleur prédéfinie de la liste couleur.
-        """
+        """ Modifie la couleur de la sphere en une couleur prédéfinie de la liste couleur."""
         self.compteur = indice
 
 
 
 class Renderer3D(QWidget):
-    """ Widget chargée de l'affichage d'une dimmension (plusieurs sphères)
+    """ Widget chargée de l'affichage d'une dimmension ou plusieurs sphères.
 
-    Methode Custom:
+    Méthode Custom:
     def add_to_display(self,item:SphereItem) -> None: ajoute l'item au graph
     def remove_from_display(self,item:SphereItem) -> None: retire l'item du graph
     def update_graph(self) -> None: appelle update_pos() sur tous les items du graph
     """
 
     def __init__(self,controlles) -> None:
-        """initialise le widget de rendu"""
+        """Initialise le widget de rendu"""
         super().__init__()
         self.wid_con=controlles
         self.setFocusPolicy(Qt.ClickFocus)
@@ -153,12 +155,16 @@ class Renderer3D(QWidget):
             paintEvent (class 'PySide6.QtGui.QPaintEvent'): évenement d'affichage des sphères.
         """
         painter = QPainter(self)
+        
         for item in self.sphlist:
+            
             try:
                 item.update_pos(self.cam)
                 item.paint(painter)
+                
             except:
                 self.remove_from_display(item)
+                
         painter.end()
 
     def add_to_display(self, item: SphereItem) -> None:
@@ -172,20 +178,25 @@ class Renderer3D(QWidget):
         """
         try:
             self.sphlist.remove(item)
+            
         except:
             if settings.get("logging") == 1:
                 print(
-                    "attempting to remove a graphic item who don't exist. Augment verbosity for more details.", file=sys.stderr)
+                    "Tentative de suppression d'un élément graphique qui n'existe pas. Augmentez la verbosité pour plus de détails.", file=sys.stderr)
+                
             if settings.get("logging") >= 2:
                 print(
-                    "attempting to remove a object that do not exist, see traceback", file=sys.stderr)
+                    "Tentative de suppression d'un objet qui n'existe pas, voir traceback", file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
 
     def wheelEvent(self, event):
+        
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
+            
         else:
             self.cam.zoom*=0.75
+            
     def reload_controlles(self,*any) -> None:
         self.controles: dict[str, QKeySequence]={
             "avancer":  QKeySequence(settings.get("simulation.controles.avancer")),
@@ -198,7 +209,7 @@ class Renderer3D(QWidget):
             "ajouter":  QKeySequence(settings.get("simulation.controles.ajouter"))
         }
     def keyPressEvent(self, event):
-        """ Modifie l'emplacement de la camera.
+        """ Modifie l'emplacement de la caméra.
 
         Args:
             event (class 'PySide6.QtGui.QKeyEvent'): Touche du clavier appuyée.

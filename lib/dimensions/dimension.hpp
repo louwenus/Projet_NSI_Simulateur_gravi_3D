@@ -1,22 +1,23 @@
 //  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 
-//  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx
-//  avec chaque modif des classes publiques de gravilib.cpp
+/*  Note: Il faut penser à éditer gravilib.h,gravilib.h & gravilb.pyx
+    avec chaque modification des classes publiques de gravilib.cpp */ 
 
 #ifndef DIMENSIONS_GENERAL_HEADER
 #define DIMENSIONS_GENERAL_HEADER
 
 #include "../typedef.hpp"                 //typedef and common stuff
-#include "../spheres/sphere.hpp"          //so sphere can be used in dims
-#include "../external/BS_thread_pool.hpp" //using the amazing thread pool from https://github.com/bshoshany/thread-pool
+#include "../spheres/sphere.hpp"          //Pour que les sphères puissent etre utiliser dans les dims
+#include "../external/BS_thread_pool.hpp" //utilisation des thread pool de https://github.com/bshoshany/thread-pool
 
 class BaseDimension
+
 {
 public:
-    // constructeurs
+    // Méthode constructeurs
     BaseDimension();
     virtual ~BaseDimension();
-    // autres
+    // Autre méthodes
     virtual void gravite_all(float temps);
     virtual void move_all(float temps);
     virtual void add_sphere(DummySphere *instance);
@@ -25,7 +26,7 @@ public:
     virtual const std::list<DummySphere *> get_sph_list();
 
 protected:
-    // variables
+    // Variables
     std::list<DummySphere *> objets;
     static BS::thread_pool tpool;
 };

@@ -1,34 +1,36 @@
 #  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 
-# encoding=utf8
+# encoding = utf8
 
 
-from . import settings
+from . import settings #Importation du module settings du répertoire courant
 #as logging is used realy often, put it in a var to decrease acess time
 logging:int = settings.get("logging")
-import sys
-from sys import stderr
+import sys #Importation de la librairie sys
+from sys import stderr #Importation du module stderr de la librairie sys
 try:
-    # import PySide6
+    # importation de PySide6
     from PySide6.QtCore import *
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
     from random import *
+    
 except ModuleNotFoundError as e:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails", file=stderr)
     raise e
-from . import gravilib
-from .affichage3D import SphereItem, Renderer3D
 
-import os
+from . import gravilib #Importation du module gravilib du répertoire courant
+from .affichage3D import SphereItem, Renderer3D #Importation des class SphereItem, Renderer3D du module affichage3D dans le répertoire courant
 
-from time import time
+import os #Importation de la librairie os
+
+from time import time #importation de la libraire time
 
 app: QApplication = QApplication(sys.argv)
 
 
 class Main_window(QWidget):
-    """Définit la fenètre principale du programme, à partir d'un QWidget."""
+    """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
 
     def __init__(self) -> None:
         super().__init__()
@@ -41,7 +43,7 @@ class Main_window(QWidget):
         self.setLayout(self.layout)
         self.layout.addSpacing(10)
 
-        # creation des actions utiliseables dans les menus
+        # Création des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction(
             "&Détacher les contrôles", self)
         self.attach_detachAction.triggered.connect(
@@ -50,7 +52,7 @@ class Main_window(QWidget):
         self.licenseAction: QAction = QAction("&Lire la licence", self)
         self.licenseAction.triggered.connect(self.affich_licence)
 
-        # création des menus
+        # Création des menus
         self.menuBar: QWidget = QMenuBar(self)
         self.menuBar.setFixedWidth(self.size().width())
 
@@ -62,18 +64,19 @@ class Main_window(QWidget):
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
-        # fenettre détacheable de controle
+        # Fenètre détacheable de controle
         self.affichage_controles: bool = True
         self.controles = Controles()
         self.layout.addWidget(self.controles)
 
-        # widget de rendu3D
+        # Widget de rendu3D
         self.widget_3D: Renderer3D = Renderer3D(self.controles)
         self.layout.addWidget(self.widget_3D)
 
-        # dimension affiché par la fennettre de rendu
+        # Dimension affichée par la fenètre de rendu
         self.dimension = gravilib.PyBaseDimension(self.widget_3D)
-        # a raffiner, mais est utilisé pour update la simulation a intervalles réguliers
+        
+        # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
         self.ticktime:float=1/settings.get("simulation.fps")
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(self.ticktime*1000)
@@ -87,15 +90,14 @@ class Main_window(QWidget):
         """Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         """
         app.exit(0)
+        
     def keyPressEvent(self, event):
-        """ Je sais pas c'est quoi ce truc... #to do
-        """
+        # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme grace aux touches
         if event.key() == Qt.Key_Escape:
             app.exit(0)
     
-    def attach_detach_controles(self) -> None:
-        """Permet de détacher et rattacher les contrôles d'ajout de sphères.
-        """
+    def attach_detach_controles(self) -> None: 
+        """Permet d'afficher les controles dans une fenètre séparée de la principale."""
         if self.affichage_controles:
             self.controles.hide()
             controles_graphiques.show()
@@ -112,11 +114,9 @@ class Main_window(QWidget):
                 print("controles attachés")
 
     def affich_licence(self) -> None:
-        """Affiche le widget qui mène à la licence.
-        """
+        """Cette fonction permet d'afficher la licence du projet"""
         self.fenetre_license: QWidget = QScrollArea()
         self.fenetre_license.setWindowTitle("LICENSE")
-
         try:
             path: str = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(path, "LICENSCE_FR")
@@ -127,7 +127,6 @@ class Main_window(QWidget):
                 print("The french licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
                 "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENSCE_FR")
-
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()
 
@@ -179,6 +178,7 @@ class Controles(QWidget):
     Args:
         QWidget (class 'Shiboken.ObjectType'): permet l'utilisation de Widgets.
     """
+    """Ce QWidget permet de gérer les différents contrôles."""
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
     layout_aj_sph: QLayout = QFormLayout()
@@ -213,7 +213,7 @@ class Controles(QWidget):
     layout_aj_sph.addRow('coordonnées zmin:', zmin)
     layout_aj_sph.addRow(result_label)
     
-    #valeurs multipliées par le nb de balles à changer pour le projet final
+    #Valeurs multipliées par le nombre de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
         """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
 
@@ -242,8 +242,7 @@ class Controles(QWidget):
             x=randint(xmin,xmax)*Controles.amount.value()
             y=randint(ymin,ymax)*Controles.amount.value()
             z=randint(zmin,zmax)*Controles.amount.value()
-            var = gravilib.PyBaseSphere(x, y, z, randint(
-                1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
+            var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
@@ -255,7 +254,7 @@ class Controles(QWidget):
         """
         super().__init__()
         self.setWindowTitle("Controles")
-        # layout of controles widget
+        # layout des controles widget
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
@@ -274,8 +273,9 @@ Fenetre_principale: QWidget = Main_window()
 
 
 try:
-    # Pour faire en sorte que la fenêtre prenne tout l'écran
+    # Afin de la fenètre prenne tout l'écran
     Fenetre_principale.showMaximized()
+    
 except:
     print("Votre gestionnaire de fenetre est peu flexible")
     # Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même

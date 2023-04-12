@@ -4,5 +4,8 @@
 # encoding=utf8
 
 # Fichier utilisé pour lancer le code depuis une compilation du code source
+
 import Graviproject.main
+
+#Lancement du code :
 Graviproject.main.launch_app()

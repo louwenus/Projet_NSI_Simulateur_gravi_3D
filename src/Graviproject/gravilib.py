@@ -1,32 +1,38 @@
 import sys
 from math import sqrt
+
+
 try:
     import cython
+    
 except ModuleNotFoundError:
-    print("le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails")
+    print("Le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails.")
     exit(1)
 
 try:
     from . import cppgravilib
+    
 except ModuleNotFoundError as e:
-    print("cppravilib doit etre compilé pour que ce programme fonctionne, lisez README.md pour plus de détails", file=sys.stderr)
+    print("cppravilib doit etre compilé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails.", file=sys.stderr)
     raise (e)
+
 from .affichage3D import Renderer3D, SphereItem
 
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int) -> None:
-        """crée une PyBaseSphere sur la base d'une cySimpleSphere
+        """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
-            x,y,z (int): position de départ de la sphere
-            masse,rayon (int): self-explicit
-            vx,vy,vz (int): vitesse de départ de la sphère
-            d (int) : dureté de la balle
+            x,y,z (int): Position de départ de la sphère
+            masse,rayon (int): Variable de la masse et du rayon de la sphère
+            vx,vy,vz (int): Vitesse de départ de la sphère
+            d (int) : Dureté de la sphère
         """
-        #IL *NE* FAUT *PAS* FAIRE CA, ARRETEZ DE LE REMETTRE DANS LE CODE
-        #et ne supprimez pas ce commentaire, il est la pour une raison
-        #UTILISEZ self.get_speed() et self.set_speed((vx,vy,vz))
+        #Il ne faut pas faire ça, arrété de le remettre dans le code
+        #Et ne supprimez pas ce commentaire, il est là pour une raison
+        #Utiliser
+        #self.get_speed() et self.set_speed((vx,vy,vz))
         #et de meme pour la masse, le rayon et la position, merci
         #self.vx,self.vy,self.vz=vx,vy,vz
         #self.masse=masse
@@ -36,15 +42,18 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
+        
         if masse < 333000000:
             self.render_item.change_couleur(0)
+            
         elif masse < 666000000:
             self.render_item.change_couleur(1)
+            
         else:
             self.render_item.change_couleur(2)
 
     def get_render_items(self) -> list[SphereItem]:
-        """renvoie les items de SphereItem d'affichage3D
+        """Renvoie les items de SphereItem d'affichage3D
 
         Returns:
             list[SphereItem]: les items SphereItem pour pouvoir les manipuler par la suite.
@@ -52,8 +61,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         return [self.render_item]
 
     def rebond(self) -> None:
-        """Inverse la trajectoire d'une sphere
-        """
+        """Inverse la trajectoire d'une sphère."""
         vx,vy,vz=self.get_speed()
         vx = vx*(-1)
         vy = vy*(-1)
@@ -64,11 +72,11 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self,render:Renderer3D) -> None:
         self.init_c_container()
-        self.render: Renderer3D=render #so we can use self.render.remove_from_display(self, item: SphereItem)
+        self.render: Renderer3D=render #D'une façon à ce que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
 
     def gerer_colision(self) -> None:
-        """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphere de la class PyBaseSphere
-        """
+        """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
+        
         for sphere, sphere2 in self.collisions():
             
             if (sphere.get_rayon() > sphere2.get_rayon() * 3):
@@ -76,11 +84,13 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 self.add_sphere(sphere)
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
+                    
             elif (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 absorption(sphere2, sphere)
                 self.add_sphere(sphere2)
                 for render in sphere.get_render_items():
                     self.render.remove_from_display(render)
+                    
             else:
                 transfert_v(sphere,sphere2)
                 self.add_sphere(sphere)
@@ -92,6 +102,7 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
             sphere1 (PyBaseSphere): sphere absorbante
             sphere2 (PyBaseSphere): sphere absorbé
     """
+    
     volume: int=sphere1.get_rayon()**3
     volume    +=(sphere2.get_rayon()**3)
     rayon =int(volume**(1/3))
@@ -102,23 +113,30 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     sphere1.set_masse(masse)
 
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
-    """prend en paramètre 2 sphères et calcule le transfert de vitesse après impact"""
+    """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
+    
     d1=sphere1.durete
     d2=sphere2.durete
     m1=sphere1.get_masse()
     m2=sphere2.get_masse()
+    
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
+    
     e=(2*sqrt(d1*d2))/(d1+d2)
+    
     somme_m=m1+m2
+    
     mvx1=m1*vx1
     mvx2=m2*vx2
     mvy1=m1*vy1
     mvy2=m2*vy2
     mvz1=m1*vz1
     mvz2=m2*vz2
+    
     em1=e*m1
     em2=e*m2    #sert à faire moins de calculs pour optimiser
+    
     vfx1=int((mvx1+mvx2+em2*(vx2-vx1))/(somme_m))
     vfx2=int((mvx1+mvx2+em1*(vx1-vx2))/(somme_m))
 
