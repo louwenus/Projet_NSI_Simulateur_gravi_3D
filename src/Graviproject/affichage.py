@@ -217,7 +217,7 @@ class Controles(QWidget):
         zmean=Controles.zmean.value()*100
         zrand=Controles.zrand.value()*100
         for _ in range(Controles.amount.value()):
-            dist:float=random()**3
+            dist:float=random()**(1/3)
             x: float=-1+2*random()
             y: float=-1+2*random()
             z: float=-1+2*random()
