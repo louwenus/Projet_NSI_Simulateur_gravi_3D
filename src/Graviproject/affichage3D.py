@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
 from math import cos, sin
 
 from . import settings
+""" Import des fonctions, attributs... utilisez dans le projet."""
 
 
 
@@ -148,7 +149,11 @@ class Renderer3D(QWidget):
         self.reload_controlles()
         
     def paintEvent(self, paintEvent) -> None:
-    
+        """Met à jour et affiche la position des sphères.
+
+        Args:
+            paintEvent (class 'PySide6.QtGui.QPaintEvent'): évenement d'affichage des sphères.
+        """
         painter = QPainter(self)
         
         for item in self.sphlist:
@@ -166,7 +171,11 @@ class Renderer3D(QWidget):
         self.sphlist.append(item)
 
     def remove_from_display(self, item: SphereItem) -> None:
-        
+        """Supprime la sphere.
+
+        Args:
+            item (SphereItem): SphereItem d'affichage3D
+        """
         try:
             self.sphlist.remove(item)
             

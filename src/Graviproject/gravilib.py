@@ -1,5 +1,5 @@
 import sys
-from collections.abc import Iterable
+from collections.abc import Iterable #ça sert à quoi ?
 from math import sqrt
 
 

@@ -85,7 +85,8 @@ class Main_window(QWidget):
 
 
     def closeEvent(self, event) -> None:
-        # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
+        """Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
+        """
         app.exit(0)
         
     def keyPressEvent(self, event):
@@ -128,7 +129,11 @@ class Main_window(QWidget):
         self.fenetre_license.show()
 
     def ajouter_sphere(self, sph: gravilib.PyBaseSphere) -> None:
-        """Cette méthode permet d'ajouter des sphères grace au module importer de gravilib."""
+        """Permet d'ajouter une sphère.
+
+        Args:
+            sph (gravilib.PyBaseSphere): Sphère venant de gravilib.py
+        """
         self.dimension.add_sphere(sph)
         for rendu in sph.get_render_items():
             self.widget_3D.add_to_display(rendu)
@@ -157,10 +162,6 @@ class Main_window(QWidget):
             self.dimension.move_all(self.ticktime)
             self.dimension.gerer_colision()
             self.widget_3D.repaint()
-        
-        # sphere : gravilib.PyBaseSphere
-        # for sphere in self.dimension.get_spheres():
-        #    pass
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         """Décale la caméra par rapport au milieu de la fenêtre.
@@ -172,6 +173,11 @@ class Main_window(QWidget):
 
 
 class Controles(QWidget):
+    """Classe permettant de gérer et afficher les contrôles des sphères ainsi que leurs effets.
+
+    Args:
+        QWidget (class 'Shiboken.ObjectType'): permet l'utilisation de Widgets.
+    """
     """Ce QWidget permet de gérer les différents contrôles."""
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
@@ -209,6 +215,11 @@ class Controles(QWidget):
     
     #Valeurs multipliées par le nombre de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
+        """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
+
+        Args:
+            boo (int): le nombre de sphères à ajouter.
+        """
         xmin=Controles.xmin.value()*100
         xmax=Controles.xmax.value()*100
         ymin=Controles.ymin.value()*100
@@ -239,6 +250,8 @@ class Controles(QWidget):
     bouton_val_aj.clicked.connect(ajouter_spheres)
 
     def __init__(self) -> None:
+        """Méthode constructeur, permet de créer les boutons cliquables d'ajout de sphères.
+        """
         super().__init__()
         self.setWindowTitle("Controles")
         # layout des controles widget
@@ -249,7 +262,7 @@ class Controles(QWidget):
         boutton1.clicked.connect(Controles.ajouter_spheres)
         self.layout.addWidget(boutton1)
 
-        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter des sphère")
+        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter des sphères")
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
 
@@ -264,6 +277,6 @@ try:
     Fenetre_principale.showMaximized()
     
 except:
-    print("votre gestionnaire de fenetre est peu flexible")
-    # Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle-même
+    print("Votre gestionnaire de fenetre est peu flexible")
+    # Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
     Fenetre_principale.show()
