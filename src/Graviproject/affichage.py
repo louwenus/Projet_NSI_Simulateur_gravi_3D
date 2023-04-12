@@ -272,11 +272,4 @@ Fenetre_principale: QWidget = Main_window()
 
 
 
-try:
-    # Afin de la fenètre prenne tout l'écran
-    Fenetre_principale.showMaximized()
-    
-except:
-    print("Votre gestionnaire de fenetre est peu flexible")
-    # Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
-    Fenetre_principale.show()
+Fenetre_principale.showMaximized() # en fait les gestionnaire chaint prennet ca juste pour un show mais ne plantent pas
