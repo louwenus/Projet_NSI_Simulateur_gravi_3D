@@ -23,8 +23,8 @@ from . import gravilib #Importation du module gravilib du répertoire courant
 from .affichage3D import SphereItem, Renderer3D #Importation des class SphereItem, Renderer3D du module affichage3D dans le répertoire courant
 
 import os #Importation de la librairie os
-
-from time import time #importation de la libraire time
+if logging >= 3:
+    from time import time #importation de la libraire time
 
 app: QApplication = QApplication(sys.argv)
 
