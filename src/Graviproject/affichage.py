@@ -23,8 +23,8 @@ from . import gravilib #Importation du module gravilib du répertoire courant
 from .affichage3D import SphereItem, Renderer3D #Importation des class SphereItem, Renderer3D du module affichage3D dans le répertoire courant
 
 import os #Importation de la librairie os
-
-from time import time #importation de la libraire time
+if logging >= 3:
+    from time import time #importation de la libraire time
 
 app: QApplication = QApplication(sys.argv)
 
@@ -272,11 +272,4 @@ Fenetre_principale: QWidget = Main_window()
 
 
 
-try:
-    # Afin de la fenètre prenne tout l'écran
-    Fenetre_principale.showMaximized()
-    
-except:
-    print("Votre gestionnaire de fenetre est peu flexible")
-    # Si votre gestionnaire de fenêtre ne conçoit pas qu'une fenêtre puisse se définir elle même
-    Fenetre_principale.show()
+Fenetre_principale.showMaximized() # en fait les gestionnaire chaint prennet ca juste pour un show mais ne plantent pas
