@@ -181,37 +181,27 @@ class Controles(QWidget):
     """Ce QWidget permet de gérer les différents contrôles."""
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
-    layout_aj_sph: QLayout = QFormLayout()
+    layout_aj_sph: QLayout = QGridLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
     amount = QSpinBox(minimum=0, maximum=10000, value=100)
-    result_label = QLabel('')
-    layout_aj_sph.addRow('nb sphères:', amount)
-    layout_aj_sph.addRow(result_label)
+    layout_aj_sph.addWidget(QLabel('nb sphères:'), 0,0)
+    layout_aj_sph.addWidget(amount,0,1)
 
-    xmax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
-    layout_aj_sph.addRow('coordonnées xmax:', xmax)
-    layout_aj_sph.addRow(result_label)
+    xmean = QSpinBox(minimum=-500000, maximum=500000, value=0)
+    xrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
+    for i,widget in enumerate((QLabel('coordonnées X:'), xmean, QLabel('+-'),xrand)):
+        layout_aj_sph.addWidget(widget,1,i)
 
-    xmin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
-    layout_aj_sph.addRow('coordonnées xmin:', xmin)
-    layout_aj_sph.addRow(result_label)
-
-    ymax = QSpinBox(minimum=-500000, maximum=500000, value=2000)
-    layout_aj_sph.addRow('coordonnées ymax:', ymax)
-    layout_aj_sph.addRow(result_label)
-
-    ymin = QSpinBox(minimum=-500000, maximum=500000, value=-2000)
-    layout_aj_sph.addRow('coordonnées ymin:', ymin)
-    layout_aj_sph.addRow(result_label)
-
-    zmax = QSpinBox(minimum=0, maximum=500000, value=1)
-    layout_aj_sph.addRow('coordonnées zmax:', zmax)
-    layout_aj_sph.addRow(result_label)
-
-    zmin = QSpinBox(minimum=0, maximum=500000, value=1)
-    layout_aj_sph.addRow('coordonnées zmin:', zmin)
-    layout_aj_sph.addRow(result_label)
+    ymean = QSpinBox(minimum=-500000, maximum=500000, value=0)
+    yrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
+    for i,widget in enumerate((QLabel('coordonnées Y:'), ymean, QLabel('+-'),yrand)):
+        layout_aj_sph.addWidget(widget,2,i)
+    
+    zmean = QSpinBox(minimum=-500000, maximum=500000, value=50)
+    zrand = QSpinBox(minimum=-500000, maximum=500000, value=100)
+    for i,widget in enumerate((QLabel('coordonnées Z:'), zmean, QLabel('+-'),zrand)):
+        layout_aj_sph.addWidget(widget,3,i)
     
     #Valeurs multipliées par le nombre de balles à changer pour le projet final
     def ajouter_spheres(boo: bool) -> None:
@@ -220,28 +210,21 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmin=Controles.xmin.value()*100
-        xmax=Controles.xmax.value()*100
-        ymin=Controles.ymin.value()*100
-        ymax=Controles.ymax.value()*100
-        zmin=Controles.zmin.value()*20
-        zmax=Controles.zmax.value()*20
-        if xmin>xmax:
-            tmp=xmin
-            xmin=xmax
-            xmax=tmp
-        if ymin>ymax:
-            tmp=ymin
-            ymin=ymax
-            ymax=tmp
-        if zmin>zmax:
-            tmp=zmin
-            zmin=zmax
-            zmax=tmp
+        xmean=Controles.xmean.value()*100
+        xrand=Controles.xrand.value()*100
+        ymean=Controles.ymean.value()*100
+        yrand=Controles.yrand.value()*100
+        zmean=Controles.zmean.value()*100
+        zrand=Controles.zrand.value()*100
         for _ in range(Controles.amount.value()):
-            x=randint(xmin,xmax)*Controles.amount.value()
-            y=randint(ymin,ymax)*Controles.amount.value()
-            z=randint(zmin,zmax)*Controles.amount.value()
+            dist:float=random()**3
+            x: float=-1+2*random()
+            y: float=-1+2*random()
+            z: float=-1+2*random()
+            dist:float=dist/(abs(x)+abs(y)+abs(z))
+            x=xmean+x*dist*xrand
+            y=ymean+y*dist*yrand
+            z=zmean+z*dist*zrand
             var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
