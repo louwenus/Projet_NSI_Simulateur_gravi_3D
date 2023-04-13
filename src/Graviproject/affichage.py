@@ -226,7 +226,7 @@ class Controles(QWidget):
             x=xmean+x*dist*xrand
             y=ymean+y*dist*yrand
             z=zmean+z*dist*zrand
-            var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
+            var = gravilib.PyBaseSphere(x, y, z, randint(1000, 100000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
