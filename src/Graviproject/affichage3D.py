@@ -1,4 +1,5 @@
 #Importation des librairies et modules
+#Ceci est une ligne inutile pour que mes camarades null puissent faire fonctionner ce ptn de programme de ces morts
 from typing import Callable
 from random import *
 import sys
