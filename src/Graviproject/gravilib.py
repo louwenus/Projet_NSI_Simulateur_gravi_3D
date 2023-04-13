@@ -24,14 +24,14 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         #CySimpleSphere Functions
         def init_c_container(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int) -> None:
             """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by final derivative)"""
-        def get_coord(self) -> tuple[int,int,int]: pass
-        def set_coord(self,coord:tuple[int,int,int]) -> None: pass
-        def get_rayon(self) -> int:pass
-        def set_rayon(self,rayon:int) -> None:pass
-        def get_speed(self) -> tuple[int,int,int]:pass
-        def set_speed(self,speed:tuple[int,int,int]) -> None:pass
-        def get_masse(self) -> int:pass
-        def set_masse(self,masse:int) -> None:pass
+        def get_coord(self)                          -> tuple[int,int,int]:  pass
+        def get_speed(self)                          -> tuple[int,int,int]:  pass
+        def get_masse(self)                          -> int:                 pass
+        def get_rayon(self)                          -> int:                 pass
+        def set_coord(self,coord:tuple[int,int,int]) -> None:                pass
+        def set_speed(self,speed:tuple[int,int,int]) -> None:                pass
+        def set_rayon(self,rayon:int)                -> None:                pass
+        def set_masse(self,masse:int)                -> None:                pass
 
     def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
