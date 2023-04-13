@@ -204,7 +204,7 @@ class Controles(QWidget):
         layout_aj_sph.addWidget(widget,3,i)
     
     #Valeurs multipliées par le nombre de balles à changer pour le projet final
-    def ajouter_spheres(boo: bool) -> None:
+    def ajouter_spheres(*_) -> None:
         """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
 
         Args:
