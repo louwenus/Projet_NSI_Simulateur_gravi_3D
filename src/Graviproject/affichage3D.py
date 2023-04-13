@@ -168,6 +168,11 @@ class Renderer3D(QWidget):
         painter.end()
 
     def add_to_display(self, item: SphereItem) -> None:
+        """Ajoute une sphère item à la liste des sphères présente.
+
+        Args:
+            item (SphereItem): SphereTem d'affichage3D.
+        """
         self.sphlist.append(item)
 
     def remove_from_display(self, item: SphereItem) -> None:
@@ -190,7 +195,11 @@ class Renderer3D(QWidget):
                 traceback.print_exc(file=sys.stderr)
 
     def wheelEvent(self, event):
-        
+        """Servznt à redéfinir l'angle de la caméra après un zoom / dézoom.
+
+        Args:
+            event (class 'PySide6.QtGui.QWheelEvent'): Evenement, ici molette de la souris.
+        """
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
             
@@ -198,6 +207,8 @@ class Renderer3D(QWidget):
             self.cam.zoom*=0.75
             
     def reload_controlles(self,*any) -> None:
+        """Sert à recharger les contrôles, claviers ou boutton ajouter.
+        """
         self.controles: dict[str, QKeySequence]={
             "avancer":  QKeySequence(settings.get("simulation.controles.avancer")),
             "reculer":  QKeySequence(settings.get("simulation.controles.reculer")),
