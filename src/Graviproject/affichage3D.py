@@ -232,14 +232,20 @@ class Renderer3D(QWidget):
         """Sert à recharger les contrôles, claviers ou boutton ajouter.
         """
         self.controles: dict[str, QKeySequence]={
-            "avancer":  QKeySequence(settings.get("simulation.controles.avancer")),
-            "reculer":  QKeySequence(settings.get("simulation.controles.reculer")),
-            "droite":   QKeySequence(settings.get("simulation.controles.droite")),
-            "gauche":   QKeySequence(settings.get("simulation.controles.gauche")),
-            "monter":   QKeySequence(settings.get("simulation.controles.monter")),
-            "descendre":QKeySequence(settings.get("simulation.controles.descendre")),
-            "home":     QKeySequence(settings.get("simulation.controles.home")),
-            "ajouter":  QKeySequence(settings.get("simulation.controles.ajouter"))
+            "avancer":    QKeySequence(settings.get("simulation.controles.avancer")),
+            "reculer":    QKeySequence(settings.get("simulation.controles.reculer")),
+            "droite":     QKeySequence(settings.get("simulation.controles.droite")),
+            "gauche":     QKeySequence(settings.get("simulation.controles.gauche")),
+            "monter":     QKeySequence(settings.get("simulation.controles.monter")),
+            "descendre":  QKeySequence(settings.get("simulation.controles.descendre")),
+            "home":       QKeySequence(settings.get("simulation.controles.home")),
+            "ajouter":    QKeySequence(settings.get("simulation.controles.ajouter")),
+            "rot_haut":   QKeySequence(settings.get("simulation.controles.rot_haut")),
+            "rot_bas":    QKeySequence(settings.get("simulation.controles.rot_bas")),
+            "rot_gauche": QKeySequence(settings.get("simulation.controles.rot_gauche")),
+            "rot_droite": QKeySequence(settings.get("simulation.controles.rot_droite")),
+            "roul_gauche":QKeySequence(settings.get("simulation.controles.roul_gauche")),
+            "roul_droite":QKeySequence(settings.get("simulation.controles.roul_droite"))
         }
         
         
@@ -281,6 +287,24 @@ class Renderer3D(QWidget):
         if event.key() == self.controles["ajouter"]:
             "ajoute des sph"
             self.wid_con.ajouter_spheres(False)
+        
+        if event.key() == self.controles["rot_haut"]:
+            pass
+        
+        if event.key() == self.controles["rot_bas"]:
+            pass
+        
+        if event.key() == self.controles["rot_gauche"]:
+            pass
+        
+        if event.key() == self.controles["rot_droite"]:
+            pass
+        
+        if event.key() == self.controles["roul_gauche"]:
+            pass
+        
+        if event.key() == self.controles["roul_droite"]:
+            pass
     
     
     def resizeEvent(self, event: QResizeEvent) -> None:
