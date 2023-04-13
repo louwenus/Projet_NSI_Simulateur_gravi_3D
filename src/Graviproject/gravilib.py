@@ -62,10 +62,10 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
         
-        if masse < 333000000:
+        if masse < 33300000:
             self.render_item.change_couleur(0)
             
-        elif masse < 666000000:
+        elif masse < 66600000:
             self.render_item.change_couleur(1)
             
         else:
@@ -132,14 +132,14 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     sphere1.set_masse(masse_final)
-
+"""
     #A completer
     vitessex = int(sqrt((sphere1.get_masse() * vx1) + (sphere2.get_masse() * vx2) / masse_final))
     vitessey = int(sqrt((sphere1.get_masse() * vy1) + (sphere2.get_masse() * vy2) / masse_final))
     vitessez = int(sqrt((sphere1.get_masse() * vz1) + (sphere2.get_masse() * vz2) / masse_final))
     
     sphere1.set_speed((vitessex, vitessey, vitessez))
-
+"""
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
     
