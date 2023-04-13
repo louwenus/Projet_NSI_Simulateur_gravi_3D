@@ -14,6 +14,8 @@ from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
 ctypedef long int li
 ctypedef long long int lli
+ctypedef unsigned long int uli
+ctypedef unsigned long long int ulli
 
 cdef extern from "typedef.hpp":
     struct llco:
@@ -35,10 +37,10 @@ cdef extern from "spheres/sphere.hpp":
         DummySphere(PyObject* parent) except +
         PyObject* pyparent
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(PyObject* parent,lli x,lli y,lli z,li masse,li rayon,li vx,li vy,li vz) except +
+        SimpleSphere(PyObject* parent,lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz) except +
         llco pos
-        li rayon
-        li masse
+        uli rayon
+        ulli masse
         atlco speed
         void set_speed(li x,li y,li z)
 ctypedef DummySphere* DummySpherePtr        
