@@ -28,6 +28,7 @@ if logging >= 3:
 
 app: QApplication = QApplication(sys.argv)
 
+""" Import des fonctions, attributs... utilisez dans le projet."""
 
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""

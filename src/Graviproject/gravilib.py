@@ -18,8 +18,14 @@ except ModuleNotFoundError as e:
 
 from .affichage3D import Renderer3D, SphereItem
 
+""" Import des fonctions, attributs... utilisez dans le projet."""
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
+    """class utilisé pour gérer et collisioner les sphères.
+
+    Args:
+        cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
+    """
     if TYPE_CHECKING:
         #CySimpleSphere Functions
         def init_c_container(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int) -> None:
