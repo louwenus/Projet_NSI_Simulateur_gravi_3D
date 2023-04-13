@@ -77,6 +77,14 @@ class Camera():
             radius_plan: float = 0
 
         return (coord_plan, radius_plan)
+    
+    def move(self, elev:int=0, cote:int=0, profondeur:int=0):
+
+        self.x += profondeur*self.matrix[0][2] + cote*self.matrix[0][1] + elev*self.matrix[0][0]
+        self.y += profondeur*self.matrix[1][2] + cote*self.matrix[1][1] + elev*self.matrix[1][0]
+        self.z += profondeur*self.matrix[2][2] + cote*self.matrix[2][1] + elev*self.matrix[2][0]
+        
+        
 
 
 class SphereItem():
@@ -228,6 +236,7 @@ class Renderer3D(QWidget):
          
         if event.key() == self.controles["monter"]:
             """ Fait s'élever la camera de 100000 px"""
+            #self.cam.move(elev=100000)
             self.cam.y-=100000
         if event.key() == self.controles["descendre"]:
             """ Fait descendre la camera de 100000 px"""
