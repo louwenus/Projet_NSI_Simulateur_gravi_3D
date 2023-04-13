@@ -123,15 +123,17 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     
     masse_final: int=sphere1.get_masse()
     masse_final +=sphere2.get_masse()
-    
+    vx1,vy1,vz1=sphere1.get_speed()
+    vx2,vy2,vz2=sphere2.get_speed()
+    sphere1.set_masse(masse_final)
+"""
     #A completer
-    vitessex = sqrt((sphere1.get_masse() * sphere1.get_vitesse[0])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[0])** 2 / masse_final)
-    vitessey = sqrt((sphere1.get_masse() * sphere1.get_vitesse[1])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[1])** 2 / masse_final)
-    vitessez = sqrt((sphere1.get_masse() * sphere1.get_vitesse[2])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[2])** 2 / masse_final)
+    vitessex = sqrt((sphere1.get_masse() * vx1)** 2 + (sphere2.get_masse() * vx2)** 2 / masse_final)
+    vitessey = sqrt((sphere1.get_masse() * vy1)** 2 + (sphere2.get_masse() * vy2)** 2 / masse_final)
+    vitessez = sqrt((sphere1.get_masse() * vz1)** 2 + (sphere2.get_masse() * vz2)** 2 / masse_final)
     
     sphere1.set_speed((vitessex, vitessey, vitessez))
-    
-    sphere1.set_masse(masse_final)
+   """ 
 
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
