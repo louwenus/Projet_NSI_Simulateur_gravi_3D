@@ -112,9 +112,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     masse_final +=sphere2.get_masse()
     
     #A completer
-    vitessex = sqrt((sphere1.get_masse() * sphere1.get_vitesse[0])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[0])** 2 / masse_final)
-    vitessey = sqrt((sphere1.get_masse() * sphere1.get_vitesse[1])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[1])** 2 / masse_final)
-    vitessez = sqrt((sphere1.get_masse() * sphere1.get_vitesse[2])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[2])** 2 / masse_final)
+    vitessex = sqrt((sphere1.get_masse() * sphere1.get_speed[0])** 2 + (sphere2.get_masse() * sphere2.get_speed[0])** 2 / masse_final)
+    vitessey = sqrt((sphere1.get_masse() * sphere1.get_speed[1])** 2 + (sphere2.get_masse() * sphere2.get_speed[1])** 2 / masse_final)
+    vitessez = sqrt((sphere1.get_masse() * sphere1.get_speed[2])** 2 + (sphere2.get_masse() * sphere2.get_speed[2])** 2 / masse_final)
     
     sphere1.set_speed((vitessex, vitessey, vitessez))
     
