@@ -160,7 +160,7 @@ class Main_window(QWidget):
             print("total:", time()-totalstart,"on",self.ticktime,"normaly")
     else:
         def update_simulation(self) -> None:
-            self.dimension.gravite_all(self.ticktime)
+            #self.dimension.gravite_all(self.ticktime)
             self.dimension.move_all(self.ticktime)
             self.dimension.gerer_colision()
             self.widget_3D.repaint()
@@ -227,7 +227,7 @@ class Controles(QWidget):
             x=xmean+sqrt(x*dist)*xrand*1000*(int(randint(0,1))*2-1)
             y=ymean+sqrt(y*dist)*yrand*1000*(int(randint(0,1))*2-1)
             z=zmean+sqrt(z*dist)*zrand*1000*(int(randint(0,1))*2-1)
-            var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000), randint(30000000, 40000000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
+            var = gravilib.PyBaseSphere(randint(-1000000,1000000), randint(-1000000,1000000), randint(100,1000), randint(1000, 1000000), randint(50000, 70000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,10000))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
