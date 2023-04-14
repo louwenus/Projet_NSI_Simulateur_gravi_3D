@@ -6,8 +6,9 @@
 from . import settings #Importation du module settings du répertoire courant
 #as logging is used realy often, put it in a var to decrease acess time
 logging:int = settings.get("logging")
-import sys #Importation de la librairie sys
-from sys import stderr #Importation du module stderr de la librairie sys
+import sys 
+from sys import stderr
+from math import sqrt
 try:
     # importation de PySide6
     from PySide6.QtCore import *
@@ -223,9 +224,9 @@ class Controles(QWidget):
             y: float=-1+2*random()
             z: float=-1+2*random()
             dist:float=dist/(abs(x)+abs(y)+abs(z))
-            x=xmean+x*dist*xrand
-            y=ymean+y*dist*yrand
-            z=zmean+z*dist*zrand
+            x=xmean+sqrt(x*dist)*xrand
+            y=ymean+sqrt(y*dist)*yrand
+            z=zmean+sqrt(z*dist)*zrand
             var = gravilib.PyBaseSphere(x, y, z, randint(1000, 100000000), randint(30000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
