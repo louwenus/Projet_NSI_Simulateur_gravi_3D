@@ -137,6 +137,20 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     sphere1.set_masse(masse_final)
     sphere1.set_speed(vitessex, vitessey, vitessez)
     
+def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
+    vx1,vy1,vz1=sphere1.get_speed()
+    vx2,vy2,vz2=sphere2.get_speed()
+    v_comx = sphere1.get_masse() * vx1 + sphere2.get_masse() * vx2 / (sphere1.get_masse() + sphere2.get_masse())
+    v_comy = sphere1.get_masse() * vy1 + sphere2.get_masse() * vy2 / (sphere1._get_masse() + sphere2.get_masse())
+    v_comz = sphere1.get_masse() * vz1 + sphere2.get_masse() * vz2  / (sphere1.get_masse() + sphere2.get_masse())
+
+    sphere1.get_speed[0] = (2 * sphere2.get_masse() * v_comx - 2 * sphere1.get_masse() * v_comx) / (sphere1.get_masse() + sphere2.get_masse())
+    sphere1.get_speed[1] = (2 * sphere2.get_masse() * v_comy - 2 * sphere1.get_masse() * v_comy) / (sphere1.get_masse() + sphere2.get_masse())
+    sphere1.get_speed[2] = (2 * sphere2.get_masse() * v_comz - 2 * sphere1.get_masse() * v_comz) / (sphere1.get_masse() + sphere2.get_masse())
+    sphere2.get_speed[0] = (2 * sphere1.get_masse() * v_comx - 2 * sphere2.get_masse() * v_comx) / (sphere1.get_masse() + sphere2.get_masse())
+    sphere2.get_speed[1] = (2 * sphere1.get_masse() * v_comy - 2 * sphere2.get_masse() * v_comy) / (sphere1.get_masse() + sphere2.get_masse())
+    sphere2.get_speed[2] = (2 * sphere1.get_masse() * v_comz - 2 * sphere2.get_masse() * v_comz) / (sphere1.get_masse() + sphere2.get_masse())
+    
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
     
