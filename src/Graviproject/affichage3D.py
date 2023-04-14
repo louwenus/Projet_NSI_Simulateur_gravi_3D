@@ -312,12 +312,12 @@ class Renderer3D(QWidget):
         
         if event.key() == self.controles["roul_gauche"]:
             "fait rouler vers la gauche de 0.1 radian"
-            self.cam.yaw-=0.1
+            self.cam.yaw+=0.1
             self.cam.update_matrix()
         
         if event.key() == self.controles["roul_droite"]:
             "fait rouler vers la droite de 0.1 radian"
-            self.cam.yaw+=0.1
+            self.cam.yaw-=0.1
             self.cam.update_matrix()
     
     
