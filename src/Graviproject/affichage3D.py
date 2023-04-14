@@ -283,28 +283,42 @@ class Renderer3D(QWidget):
         if event.key() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
+            self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
+            self.cam.update_matrix()
             
         if event.key() == self.controles["ajouter"]:
             "Ajoute des sphères"
             self.wid_con.ajouter_spheres(False)
         
         if event.key() == self.controles["rot_haut"]:
-            pass
-        
+            "fait tourner vers le haut de 0.1 radian"
+            self.cam.roll-=0.1
+            self.cam.update_matrix()
+
         if event.key() == self.controles["rot_bas"]:
-            pass
+            "fait tourner vers le bas de 0.1 radian"
+            self.cam.roll+=0.1
+            self.cam.update_matrix()
         
         if event.key() == self.controles["rot_gauche"]:
-            pass
+            "fait tourner vers la gauche de 0.1 radian"
+            self.cam.pitch+=0.1
+            self.cam.update_matrix()
         
         if event.key() == self.controles["rot_droite"]:
-            pass
+            "fait tourner vers la droite de 0.1 radian"
+            self.cam.pitch-=0.1
+            self.cam.update_matrix()
         
         if event.key() == self.controles["roul_gauche"]:
-            pass
+            "fait rouler vers la gauche de 0.1 radian"
+            self.cam.yaw-=0.1
+            self.cam.update_matrix()
         
         if event.key() == self.controles["roul_droite"]:
-            pass
+            "fait rouler vers la droite de 0.1 radian"
+            self.cam.yaw+=0.1
+            self.cam.update_matrix()
     
     
     def resizeEvent(self, event: QResizeEvent) -> None:
