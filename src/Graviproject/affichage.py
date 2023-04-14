@@ -224,9 +224,9 @@ class Controles(QWidget):
             y: float=random()
             z: float=random()
             dist:float=dist/(abs(x)+abs(y)+abs(z))
-            x=xmean+sqrt(x*dist)*xrand
-            y=ymean+sqrt(y*dist)*yrand
-            z=zmean+sqrt(z*dist)*zrand
+            x=xmean+sqrt(x*dist)*xrand*1000
+            y=ymean+sqrt(y*dist)*yrand*1000
+            z=zmean+sqrt(z*dist)*zrand*1000
             var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000), randint(30000000, 40000000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
