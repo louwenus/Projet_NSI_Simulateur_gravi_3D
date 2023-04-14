@@ -83,7 +83,7 @@ class Camera():
         return (coord_plan, radius_plan)
     
     
-    def move(self, elev:int=0, cote:int=0, profondeur:int=0):
+    def move(self, cote:int=0, elev:int=0, profondeur:int=0):
 
         self.x += profondeur*self.matrix[0][2] + elev*self.matrix[0][1] + cote*self.matrix[0][0]
         self.y += profondeur*self.matrix[1][2] + elev*self.matrix[1][1] + cote*self.matrix[1][0]
