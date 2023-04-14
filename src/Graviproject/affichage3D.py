@@ -257,28 +257,28 @@ class Renderer3D(QWidget):
         """
          
         if event.key() == self.controles["monter"]:
-            """ Fait s'élever la camera de 10000 px"""
-            self.cam.move(elev=-10000)
+            """ Fait s'élever la camera de 1000000 px"""
+            self.cam.move(elev=-1000000)
             
         if event.key() == self.controles["descendre"]:
-            """ Fait descendre la camera de 10000 px"""
-            self.cam.move(elev=10000)
+            """ Fait descendre la camera de 1000000 px"""
+            self.cam.move(elev=1000000)
             
         if event.key() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 10000 px"""
-            self.cam.move(cote=10000)
+            """ Fait se décaler à droite la camera de 1000000 px"""
+            self.cam.move(cote=1000000)
             
         if event.key() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 10000 px"""
-            self.cam.move(cote=-10000)
+            """ Fait se décaler à gauche la camera de 1000000 px"""
+            self.cam.move(cote=-1000000)
             
         if event.key() == self.controles["avancer"]:
-            """ Fait avancer la camera de 100 px"""
-            self.cam.move(profondeur=100)
+            """ Fait avancer la camera de 1000000 px"""
+            self.cam.move(profondeur=1000000)
             
         if event.key() == self.controles["reculer"]:
-            """ Fait reculer la camera de 100 px"""
-            self.cam.move(profondeur=-100)
+            """ Fait reculer la camera de 1000000 px"""
+            self.cam.move(profondeur=-1000000)
             
         if event.key() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""

@@ -62,10 +62,10 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
         
-        if masse < 333000:
+        if masse < 33300000:
             self.render_item.change_couleur(0)
             
-        elif masse < 666000:
+        elif masse < 66600000:
             self.render_item.change_couleur(1)
             
         else:
