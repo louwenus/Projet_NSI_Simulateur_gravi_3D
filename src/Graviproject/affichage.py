@@ -200,8 +200,8 @@ class Controles(QWidget):
     for i,widget in enumerate((QLabel('coordonnées Y:'), ymean, QLabel('+-'),yrand)):
         layout_aj_sph.addWidget(widget,2,i)
     
-    zmean = QSpinBox(minimum=-500000, maximum=500000, value=50)
-    zrand = QSpinBox(minimum=-500000, maximum=500000, value=100)
+    zmean = QSpinBox(minimum=-500000, maximum=500000, value=0)
+    zrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
     for i,widget in enumerate((QLabel('coordonnées Z:'), zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
     
@@ -224,9 +224,9 @@ class Controles(QWidget):
             y: float=random()
             z: float=random()
             dist:float=dist/(abs(x)+abs(y)+abs(z))
-            x=xmean+sqrt(x*dist)*xrand*1000
-            y=ymean+sqrt(y*dist)*yrand*1000
-            z=zmean+sqrt(z*dist)*zrand*1000
+            x=xmean+sqrt(x*dist)*xrand*1000*(int(randint(0,1))*2-1)
+            y=ymean+sqrt(y*dist)*yrand*1000*(int(randint(0,1))*2-1)
+            z=zmean+sqrt(z*dist)*zrand*1000*(int(randint(0,1))*2-1)
             var = gravilib.PyBaseSphere(x, y, z, randint(1000, 1000000), randint(30000000, 40000000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
