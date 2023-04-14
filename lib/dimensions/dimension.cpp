@@ -21,15 +21,15 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     end doit évidement être un itérateur sur le meme objet que iterator, et situé après lui. temps et la constante de temps passé aux gravite_stats. */
 
     llco coo;
-    DummySphere *sphere = (*iterator);
-    uli sanitize;
+    DummySphere *sphere = (*iterator++);
+    ulli sanitize;
     uli masse = sphere->gravite_stats(temps, coo, sanitize);
     lco accel = {0, 0, 0};
 
     llco temp_co;
-    uli sanitize2;
+    ulli sanitize2;
     uli masse2;
-    lli divide;
+    ulli divide;
     for (; iterator != end; ++iterator)
     {
         masse2 = (*iterator)->gravite_stats(temps, temp_co, sanitize2);      // on stock la pos dans temp_co
@@ -94,9 +94,9 @@ std::list<PyObject *> BaseDimension::detect_collisions()
                 iterator = this->objets.erase(iterator);
                 goto detect_collision_endloop;
             }
-            iterator2++;
+            ++iterator2;
         }
-        iterator++;
+        ++iterator;
     detect_collision_endloop:;
     }
     return liste;

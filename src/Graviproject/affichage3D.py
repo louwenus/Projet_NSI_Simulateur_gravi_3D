@@ -1,4 +1,5 @@
 #Importation des librairies et modules
+#Ceci est une ligne inutile pour que mes camarades null puissent faire fonctionner ce ptn de programme de ces morts
 from typing import Callable
 from random import *
 import sys
@@ -14,6 +15,7 @@ from . import settings
 
 
 
+
 class Camera():
     def __init__(self, zoom:float=1, offsetX:float=0, offsetY:float=0, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
         """Camera attributes.
@@ -26,9 +28,9 @@ class Camera():
             pitch (float, optional): Rotation de la caméra sur les ordonnées. 0 par défault.
             roll (float, optional): Rotation de la caméra sur la profondeur. 0 par défault.
         """
-        self.x: int = x
-        self.y: int = y
-        self.z: int = z
+        self.x: float = x
+        self.y: float = y
+        self.z: float = z
 
         self.yaw: float = yaw
         self.pitch: float = pitch
@@ -41,6 +43,7 @@ class Camera():
         
         self.update_matrix()
 
+
     def update_matrix(self) -> None:
         """Met à jour la matrice de rotation de la caméra."""
         matrix3_3 = tuple[tuple[float, float, float],
@@ -50,6 +53,7 @@ class Camera():
         self.matrix: matrix3_3 = ((cos(self.yaw)*cos(self.pitch),  cos(self.yaw)*sin(self.pitch)*sin(self.roll) - sin(self.yaw)*cos(self.roll),  cos(self.yaw)*sin(self.pitch)*cos(self.roll) + sin(self.yaw)*sin(self.roll)),
                                   (sin(self.yaw)*cos(self.pitch),  sin(self.yaw)*sin(self.pitch)*sin(self.roll) + cos(self.yaw)*cos(self.roll),  sin(self.yaw)*sin(self.pitch)*cos(self.roll) - cos(self.yaw)*sin(self.roll)),
                                   (-sin(self.pitch),               cos(self.pitch)*sin(self.roll),                                               cos(self.pitch)*cos(self.roll)))
+
 
     def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
         """Projette la sphère 3D sur l'écran de la caméra 2D.
@@ -77,6 +81,15 @@ class Camera():
             radius_plan: float = 0
 
         return (coord_plan, radius_plan)
+    
+    
+    def move(self, elev:int=0, cote:int=0, profondeur:int=0):
+
+        self.x += profondeur*self.matrix[0][2] + elev*self.matrix[0][1] + cote*self.matrix[0][0]
+        self.y += profondeur*self.matrix[1][2] + elev*self.matrix[1][1] + cote*self.matrix[1][0]
+        self.z += profondeur*self.matrix[2][2] + elev*self.matrix[2][1] + cote*self.matrix[2][0]
+        
+        
 
 
 class SphereItem():
@@ -100,12 +113,14 @@ class SphereItem():
         self.compteur: int = 0
         self.pos = QPointF(0,0)
 
+
     def update_pos(self, camera: Camera) -> None:
         """Met à jour la position de l'item selon la position de la sphère"""
 
         coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
 
         self.pos=QPointF(*coord2D)
+
 
     def paint(self, painter) -> None:
         """Permet de gérer le rendu graphique.
@@ -118,9 +133,11 @@ class SphereItem():
 
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
+
     def change_couleur(self, indice):
         """ Modifie la couleur de la sphere en une couleur prédéfinie de la liste couleur."""
         self.compteur = indice
+
 
 
 
@@ -148,6 +165,7 @@ class Renderer3D(QWidget):
         self.cam: Camera = Camera(zoom=zoom, offsetX=self.size().width()/2, offsetY=self.size().height()/2)
         self.reload_controlles()
         
+        
     def paintEvent(self, paintEvent) -> None:
         """Met à jour et affiche la position des sphères.
 
@@ -167,8 +185,15 @@ class Renderer3D(QWidget):
                 
         painter.end()
 
+
     def add_to_display(self, item: SphereItem) -> None:
+        """Ajoute une sphère item à la liste des sphères présente.
+
+        Args:
+            item (SphereItem): SphereTem d'affichage3D.
+        """
         self.sphlist.append(item)
+
 
     def remove_from_display(self, item: SphereItem) -> None:
         """Supprime la sphere.
@@ -189,25 +214,41 @@ class Renderer3D(QWidget):
                     "Tentative de suppression d'un objet qui n'existe pas, voir traceback", file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
 
+
     def wheelEvent(self, event):
-        
+        """Servznt à redéfinir l'angle de la caméra après un zoom / dézoom.
+
+        Args:
+            event (class 'PySide6.QtGui.QWheelEvent'): Evenement, ici molette de la souris.
+        """
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
             
         else:
             self.cam.zoom*=0.75
             
+            
     def reload_controlles(self,*any) -> None:
+        """Sert à recharger les contrôles, claviers ou boutton ajouter.
+        """
         self.controles: dict[str, QKeySequence]={
-            "avancer":  QKeySequence(settings.get("simulation.controles.avancer")),
-            "reculer":  QKeySequence(settings.get("simulation.controles.reculer")),
-            "droite":   QKeySequence(settings.get("simulation.controles.droite")),
-            "gauche":   QKeySequence(settings.get("simulation.controles.gauche")),
-            "monter":   QKeySequence(settings.get("simulation.controles.monter")),
-            "descendre":QKeySequence(settings.get("simulation.controles.descendre")),
-            "home":     QKeySequence(settings.get("simulation.controles.home")),
-            "ajouter":  QKeySequence(settings.get("simulation.controles.ajouter"))
+            "avancer":    QKeySequence(settings.get("simulation.controles.avancer")),
+            "reculer":    QKeySequence(settings.get("simulation.controles.reculer")),
+            "droite":     QKeySequence(settings.get("simulation.controles.droite")),
+            "gauche":     QKeySequence(settings.get("simulation.controles.gauche")),
+            "monter":     QKeySequence(settings.get("simulation.controles.monter")),
+            "descendre":  QKeySequence(settings.get("simulation.controles.descendre")),
+            "home":       QKeySequence(settings.get("simulation.controles.home")),
+            "ajouter":    QKeySequence(settings.get("simulation.controles.ajouter")),
+            "rot_haut":   QKeySequence(settings.get("simulation.controles.rot_haut")),
+            "rot_bas":    QKeySequence(settings.get("simulation.controles.rot_bas")),
+            "rot_gauche": QKeySequence(settings.get("simulation.controles.rot_gauche")),
+            "rot_droite": QKeySequence(settings.get("simulation.controles.rot_droite")),
+            "roul_gauche":QKeySequence(settings.get("simulation.controles.roul_gauche")),
+            "roul_droite":QKeySequence(settings.get("simulation.controles.roul_droite"))
         }
+        
+        
     def keyPressEvent(self, event):
         """ Modifie l'emplacement de la caméra.
 
@@ -216,29 +257,55 @@ class Renderer3D(QWidget):
         """
          
         if event.key() == self.controles["monter"]:
-            """ Fait s'élever la camera de 100000 px"""
-            self.cam.y-=100000
+            """ Fait s'élever la camera de 100000000 px"""
+            self.cam.move(elev=-100000000)
+            
         if event.key() == self.controles["descendre"]:
-            """ Fait descendre la camera de 100000 px"""
-            self.cam.y+=100000
+            """ Fait descendre la camera de 100000000 px"""
+            self.cam.move(elev=100000000)
+            
         if event.key() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 100000 px"""
-            self.cam.x+=100000
+            """ Fait se décaler à droite la camera de 100000000 px"""
+            self.cam.move(cote=100000000)
+            
         if event.key() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 100000 px"""
-            self.cam.x-=100000
+            """ Fait se décaler à gauche la camera de 100000000 px"""
+            self.cam.move(cote=-100000000)
+            
         if event.key() == self.controles["avancer"]:
-            """ Fait avancer la camera de 1000 px"""
-            self.cam.z+=1000
+            """ Fait avancer la camera de 100000000 px"""
+            self.cam.move(profondeur=100000000)
+            
         if event.key() == self.controles["reculer"]:
-            """ Fait reculer la camera de 1000 px"""
-            self.cam.z-=1000
+            """ Fait reculer la camera de 100000000 px"""
+            self.cam.move(profondeur=-100000000)
+            
         if event.key() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
+            
         if event.key() == self.controles["ajouter"]:
             "ajoute des sph"
             self.wid_con.ajouter_spheres(False)
+        
+        if event.key() == self.controles["rot_haut"]:
+            pass
+        
+        if event.key() == self.controles["rot_bas"]:
+            pass
+        
+        if event.key() == self.controles["rot_gauche"]:
+            pass
+        
+        if event.key() == self.controles["rot_droite"]:
+            pass
+        
+        if event.key() == self.controles["roul_gauche"]:
+            pass
+        
+        if event.key() == self.controles["roul_droite"]:
+            pass
+    
     
     def resizeEvent(self, event: QResizeEvent) -> None:
         """Décale la caméra par rapport au milieu de la fenêtre.

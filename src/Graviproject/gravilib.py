@@ -1,6 +1,6 @@
 import sys
 from math import sqrt
-
+from typing import TYPE_CHECKING
 
 try:
     import cython
@@ -18,8 +18,27 @@ except ModuleNotFoundError as e:
 
 from .affichage3D import Renderer3D, SphereItem
 
+""" Import des fonctions, attributs... utilisez dans le projet."""
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
+    """class utilisé pour gérer et collisioner les sphères.
+
+    Args:
+        cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
+    """
+    if TYPE_CHECKING:
+        #CySimpleSphere Functions
+        def init_c_container(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int) -> None:
+            """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by final derivative)"""
+        def get_coord(self)                          -> tuple[int,int,int]:  pass
+        def get_speed(self)                          -> tuple[int,int,int]:  pass
+        def get_masse(self)                          -> int:                 pass
+        def get_rayon(self)                          -> int:                 pass
+        def set_coord(self,coord:tuple[int,int,int]) -> None:                pass
+        def set_speed(self,speed:tuple[int,int,int]) -> None:                pass
+        def set_rayon(self,rayon:int)                -> None:                pass
+        def set_masse(self,masse:int)                -> None:                pass
+
     def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
@@ -43,10 +62,10 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
         
-        if masse < 333000000:
+        if masse < 33300000:
             self.render_item.change_couleur(0)
             
-        elif masse < 666000000:
+        elif masse < 66600000:
             self.render_item.change_couleur(1)
             
         else:
@@ -110,16 +129,17 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     
     masse_final: int=sphere1.get_masse()
     masse_final +=sphere2.get_masse()
-    
+    vx1,vy1,vz1=sphere1.get_speed()
+    vx2,vy2,vz2=sphere2.get_speed()
+    sphere1.set_masse(masse_final)
+"""
     #A completer
-    vitessex = sqrt((sphere1.get_masse() * sphere1.get_speed[0])** 2 + (sphere2.get_masse() * sphere2.get_speed[0])** 2 / masse_final)
-    vitessey = sqrt((sphere1.get_masse() * sphere1.get_speed[1])** 2 + (sphere2.get_masse() * sphere2.get_speed[1])** 2 / masse_final)
-    vitessez = sqrt((sphere1.get_masse() * sphere1.get_speed[2])** 2 + (sphere2.get_masse() * sphere2.get_speed[2])** 2 / masse_final)
+    vitessex = sqrt((sphere1.get_masse() * sphere1.get_vitesse[0])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[0])** 2 / masse_final)
+    vitessey = sqrt((sphere1.get_masse() * sphere1.get_vitesse[1])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[1])** 2 / masse_final)
+    vitessez = sqrt((sphere1.get_masse() * sphere1.get_vitesse[2])** 2 + (sphere2.get_masse() * sphere2.get_vitesse[2])** 2 / masse_final)
     
     sphere1.set_speed((vitessex, vitessey, vitessez))
-    
-    sphere1.set_masse(masse_final)
-
+"""
 def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
     
