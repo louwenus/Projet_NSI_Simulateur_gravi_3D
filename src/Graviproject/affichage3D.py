@@ -285,7 +285,7 @@ class Renderer3D(QWidget):
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
             
         if event.key() == self.controles["ajouter"]:
-            "ajoute des sph"
+            "Ajoute des sphères"
             self.wid_con.ajouter_spheres(False)
         
         if event.key() == self.controles["rot_haut"]:
