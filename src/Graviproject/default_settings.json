@@ -1,7 +1,7 @@
 {
   "simulation": {
     "fps": 10,
-    "defaultzoom": 150,
+    "defaultzoom": 100,
     "controles": {
       "avancer":    "F",
       "reculer":    "B",

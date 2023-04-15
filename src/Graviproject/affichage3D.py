@@ -66,17 +66,17 @@ class Camera():
             tuple[tuple[float,float],float]: Un tuple des coordonnées de la projection et sa taille.
         """
         coord = (coord[0]-self.x, coord[1]-self.y, coord[2]-self.z)  # vecteur origine_camera/sphere
-        coord = (coord[2]*self.matrix[0][2] + coord[1]*self.matrix[0][1] + coord[0]*self.matrix[0][0],  # rotation du vecteur en fonction de l'orientation de la caméra
-                 coord[2]*self.matrix[1][2] + coord[1]*self.matrix[1][1] + coord[0]*self.matrix[1][0],
-                 coord[2]*self.matrix[2][2] + coord[1]*self.matrix[2][1] + coord[0]*self.matrix[2][0])
+        coord = (coord[0]*self.matrix[0][0] + coord[1]*self.matrix[0][1] + coord[2]*self.matrix[0][2],  # rotation du vecteur en fonction de l'orientation de la caméra
+                 coord[0]*self.matrix[1][0] + coord[1]*self.matrix[1][1] + coord[2]*self.matrix[1][2],
+                 coord[0]*self.matrix[2][0] + coord[1]*self.matrix[2][1] + coord[2]*self.matrix[2][2])
         
         if coord[2] > 1:
             coord_plan: tuple[float, float] = (
                 coord[0]/coord[2]*self.zoom+self.offsetX, coord[1]/coord[2]*self.zoom+self.offsetY)
-            radius_plan: float = radius/coord[2]*self.zoom
+            radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)
             
         else:
-            #Améliorable ?
+            #Améliorable ? Oui, TODO: faire une valeur de retour None/False qui evite complétement le draw.
             coord_plan: tuple[float, float] = (0, 0)
             radius_plan: float = 0
 
@@ -85,9 +85,9 @@ class Camera():
     
     def move(self, cote:int=0, elev:int=0, profondeur:int=0):
 
-        self.x += profondeur*self.matrix[0][2] + elev*self.matrix[0][1] + cote*self.matrix[0][0]
-        self.y += profondeur*self.matrix[1][2] + elev*self.matrix[1][1] + cote*self.matrix[1][0]
-        self.z += profondeur*self.matrix[2][2] + elev*self.matrix[2][1] + cote*self.matrix[2][0]
+        self.x += cote*self.matrix[0][0] + elev*self.matrix[1][0] + profondeur*self.matrix[2][0] 
+        self.y += cote*self.matrix[0][1] + elev*self.matrix[1][1] + profondeur*self.matrix[2][1] 
+        self.z += cote*self.matrix[0][2] + elev*self.matrix[1][2] + profondeur*self.matrix[2][2] 
         
         
 
