@@ -257,20 +257,20 @@ class Renderer3D(QWidget):
         """
          
         if event.key() == self.controles["monter"]:
-            """ Fait s'élever la camera de 1000000 px"""
-            self.cam.move(elev=-1000000)
+            """ Fait s'élever la camera de 30000000 px"""
+            self.cam.move(elev=-30000000)
             
         if event.key() == self.controles["descendre"]:
-            """ Fait descendre la camera de 1000000 px"""
-            self.cam.move(elev=1000000)
+            """ Fait descendre la camera de 30000000 px"""
+            self.cam.move(elev=30000000)
             
         if event.key() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 1000000 px"""
-            self.cam.move(cote=1000000)
+            """ Fait se décaler à droite la camera de 30000000 px"""
+            self.cam.move(cote=30000000)
             
         if event.key() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 1000000 px"""
-            self.cam.move(cote=-1000000)
+            """ Fait se décaler à gauche la camera de 30000000 px"""
+            self.cam.move(cote=-30000000)
             
         if event.key() == self.controles["avancer"]:
             """ Fait avancer la camera de 1000000 px"""

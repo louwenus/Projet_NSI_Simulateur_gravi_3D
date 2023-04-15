@@ -160,7 +160,7 @@ class Main_window(QWidget):
             print("total:", time()-totalstart,"on",self.ticktime,"normaly")
     else:
         def update_simulation(self) -> None:
-            #self.dimension.gravite_all(self.ticktime)
+            self.dimension.gravite_all(self.ticktime)
             self.dimension.move_all(self.ticktime)
             self.dimension.gerer_colision()
             self.widget_3D.repaint()
@@ -212,12 +212,12 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmean=Controles.xmean.value()*100
-        xrand=Controles.xrand.value()*100
-        ymean=Controles.ymean.value()*100
-        yrand=Controles.yrand.value()*100
-        zmean=Controles.zmean.value()*100
-        zrand=Controles.zrand.value()*100
+        xmean=Controles.xmean.value()*2000
+        xrand=Controles.xrand.value()*2000
+        ymean=Controles.ymean.value()*2000
+        yrand=Controles.yrand.value()*2000
+        zmean=Controles.zmean.value()*20
+        zrand=Controles.zrand.value()*20
         for _ in range(Controles.amount.value()):
             dist:float=random()**(2/3)
             x: float=random()
@@ -227,7 +227,7 @@ class Controles(QWidget):
             x=xmean+sqrt(x*dist)*xrand*1000*(int(randint(0,1))*2-1)
             y=ymean+sqrt(y*dist)*yrand*1000*(int(randint(0,1))*2-1)
             z=zmean+sqrt(z*dist)*zrand*1000*(int(randint(0,1))*2-1)
-            var = gravilib.PyBaseSphere(x, y, z, randint(1000, 100000000), randint(300000, 400000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
+            var = gravilib.PyBaseSphere(x, y, z, randint(10000, 100000000), randint(30000, 40000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
