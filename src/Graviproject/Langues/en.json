@@ -1,0 +1,17 @@
+{
+    "T":"Display",
+
+    "M1":"Dis&play",
+    "M1_1":"&Detach controls",
+    "M1_2":"&Attach controls",
+    "M2":"&Settings",
+    "M4":"&Help",
+    "M4_1":"&Read the license",
+    
+    "C1":"Direct add",
+    "C2":"Adding spheres",
+    "C2_1":"Number of spheres :",
+    "C2_2":"X coordinate :",
+    "C2_3":"Y coordinate :",
+    "C2_4":"Z coordinate :"
+}
