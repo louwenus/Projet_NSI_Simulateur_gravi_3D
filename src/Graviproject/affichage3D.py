@@ -256,66 +256,66 @@ class Renderer3D(QWidget):
             event (class 'PySide6.QtGui.QKeyEvent'): Touche du clavier appuyée.
         """
          
-        if event.key() == self.controles["monter"]:
+        if event.keyCombination().toCombined() == self.controles["monter"]:
             """ Fait s'élever la camera de 30000000 px"""
             self.cam.move(elev=-30000000)
             
-        if event.key() == self.controles["descendre"]:
+        if event.keyCombination().toCombined() == self.controles["descendre"]:
             """ Fait descendre la camera de 30000000 px"""
             self.cam.move(elev=30000000)
             
-        if event.key() == self.controles["droite"]:
+        if event.keyCombination().toCombined() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 30000000 px"""
             self.cam.move(cote=30000000)
             
-        if event.key() == self.controles["gauche"]:
+        if event.keyCombination().toCombined() == self.controles["gauche"]:
             """ Fait se décaler à gauche la camera de 30000000 px"""
             self.cam.move(cote=-30000000)
             
-        if event.key() == self.controles["avancer"]:
+        if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 1000000 px"""
             self.cam.move(profondeur=1000000)
             
-        if event.key() == self.controles["reculer"]:
+        if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 1000000 px"""
             self.cam.move(profondeur=-1000000)
             
-        if event.key() == self.controles["home"]:
+        if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
             
-        if event.key() == self.controles["ajouter"]:
+        if event.keyCombination().toCombined() == self.controles["ajouter"]:
             "Ajoute des sphères"
             self.wid_con.ajouter_spheres(False)
         
-        if event.key() == self.controles["rot_haut"]:
+        if event.keyCombination().toCombined() == self.controles["rot_haut"]:
             "fait tourner vers le haut de 0.1 radian"
             self.cam.roll-=0.1
             self.cam.update_matrix()
 
-        if event.key() == self.controles["rot_bas"]:
+        if event.keyCombination().toCombined() == self.controles["rot_bas"]:
             "fait tourner vers le bas de 0.1 radian"
             self.cam.roll+=0.1
             self.cam.update_matrix()
         
-        if event.key() == self.controles["rot_gauche"]:
+        if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
             "fait tourner vers la gauche de 0.1 radian"
             self.cam.pitch+=0.1
             self.cam.update_matrix()
         
-        if event.key() == self.controles["rot_droite"]:
+        if event.keyCombination().toCombined() == self.controles["rot_droite"]:
             "fait tourner vers la droite de 0.1 radian"
             self.cam.pitch-=0.1
             self.cam.update_matrix()
         
-        if event.key() == self.controles["roul_gauche"]:
+        if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
             "fait rouler vers la gauche de 0.1 radian"
             self.cam.yaw+=0.1
             self.cam.update_matrix()
         
-        if event.key() == self.controles["roul_droite"]:
+        if event.keyCombination().toCombined() == self.controles["roul_droite"]:
             "fait rouler vers la droite de 0.1 radian"
             self.cam.yaw-=0.1
             self.cam.update_matrix()

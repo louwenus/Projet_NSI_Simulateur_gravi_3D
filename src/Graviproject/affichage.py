@@ -46,10 +46,8 @@ class Main_window(QWidget):
         self.layout.addSpacing(10)
 
         # Création des actions utiliseables dans les menus
-        self.attach_detachAction: QAction = QAction(
-            "&Détacher les contrôles", self)
-        self.attach_detachAction.triggered.connect(
-            self.attach_detach_controles)
+        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
+        self.attach_detachAction.triggered.connect(self.attach_detach_controles)
 
         self.licenseAction: QAction = QAction("&Lire la licence", self)
         self.licenseAction.triggered.connect(self.affich_licence)
@@ -61,6 +59,9 @@ class Main_window(QWidget):
         self.affichageMenu: QMenu = QMenu("&Affichage", self.menuBar)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
+        
+        self.configMenu: QMenu = QMenu("&Configuration", self.menuBar)
+        self.menuBar.addMenu(self.configMenu)#TODO : ajout du selecteur de langue
 
         self.helpMenu: QMenu = QMenu("&Help", self.menuBar)
         self.menuBar.addMenu(self.helpMenu)
