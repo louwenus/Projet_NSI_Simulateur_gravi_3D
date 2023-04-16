@@ -1,0 +1,36 @@
+{
+"en":{
+        "T":"Display",
+
+        "M1":"Dis&play",
+        "M1_1":"&Detach controls",
+        "M1_2":"&Attach controls",
+        "M2":"&Settings",
+        "M4":"&Help",
+        "M4_1":"&Read the license",
+        
+        "C1":"Direct add",
+        "C2":"Adding spheres",
+        "C2_1":"Number of spheres :",
+        "C2_2":"X coordinate :",
+        "C2_3":"Y coordinate :",
+        "C2_4":"Z coordinate :"
+    },
+    "fr":{
+        "T":"Affichage",
+
+        "M1":"&Affichage",
+        "M1_1":"&Détacher les contrôles",
+        "M1_2":"&Attacher les contrôles",
+        "M2":"&Configuration",
+        "M4":"A&ide",
+        "M4_1":"&Lire la licence",
+        
+        "C1":"Ajout direct",
+        "C2":"Ajouter des sphères",
+        "C2_1":"Nombre de sphères :",
+        "C2_2":"Coordonnée X :",
+        "C2_3":"Coordonnée Y :",
+        "C2_4":"Coordonnée Z :"
+    }
+}

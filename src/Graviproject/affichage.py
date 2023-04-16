@@ -21,7 +21,7 @@ except ModuleNotFoundError as e:
     raise e
 
 from . import gravilib #Importation du module gravilib du répertoire courant
-from .affichage3D import SphereItem, Renderer3D #Importation des class SphereItem, Renderer3D du module affichage3D dans le répertoire courant
+from . affichage3D import Renderer3D #Importation de la class Renderer3D du module affichage3D dans le répertoire courant
 
 import os #Importation de la librairie os
 if logging >= 3:
@@ -30,6 +30,8 @@ if logging >= 3:
 app: QApplication = QApplication(sys.argv)
 
 """ Import des fonctions, attributs... utilisez dans le projet."""
+
+lang:str=settings.get("affichage.langue") #récupération de la langue des textes
 
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
