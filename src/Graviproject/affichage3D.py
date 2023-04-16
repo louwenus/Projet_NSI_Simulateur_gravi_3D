@@ -49,10 +49,15 @@ class Camera():
         matrix3_3 = tuple[tuple[float, float, float],
                           tuple[float, float, float],
                           tuple[float, float, float]]
-        # yaw = y,  pith = x,  roll = Z
-        self.matrix: matrix3_3 = ((sin(self.pitch)*sin(self.yaw)*sin(self.roll) + cos(self.yaw)*cos(self.roll),   sin(self.pitch)*sin(self.yaw)*cos(self.roll) - cos(self.yaw)*sin(self.roll),   cos(self.pitch)*sin(self.yaw)),
-                                  (cos(self.pitch)*sin(self.roll),                                                    cos(self.pitch)*cos(self.roll),                                                    -sin(self.pitch)),
-                                  (sin(self.pitch)*cos(self.yaw)*sin(self.roll) - sin(self.yaw)*cos(self.roll),   sin(self.pitch)*cos(self.yaw)*cos(self.roll) + sin(self.yaw)*sin(self.roll),   cos(self.pitch)*cos(self.yaw)))
+        # yaw = y,  pith = x,  roll = z
+        #   yaw
+        #[cos -sin 0] [cos  0 sin] [1  0   0  ]
+        #[sin cos  0]*[ 0   1  0 ]*[0 cos -sin]
+        #[ 0   0   1] [-sin 0 cos] [0 sin cos ]
+        self.matrix: matrix3_3 = (
+        (cos(self.yaw)*cos(self.roll) - sin(self.pitch)*sin(self.yaw)*sin(self.roll) , -cos(self.pitch)*sin(self.roll) , sin(self.pitch)*cos(self.yaw)*sin(self.roll) + sin(self.yaw)*cos(self.roll)),
+        (sin(self.pitch)*sin(self.yaw)*cos(self.roll) + cos(self.yaw)*sin(self.roll) , cos(self.pitch)*cos(self.roll) ,  sin(self.yaw)*sin(self.roll) - sin(self.pitch)*cos(self.yaw)*cos(self.roll)),
+        (-cos(self.pitch)*sin(self.yaw) ,                                              sin(self.pitch) ,                 cos(self.pitch)*cos(self.yaw)))
 
 
     def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
@@ -71,6 +76,9 @@ class Camera():
                  coord[0]*self.matrix[2][0] + coord[1]*self.matrix[2][1] + coord[2]*self.matrix[2][2])
         
         if coord_finale[2] > 1:
+            #x(0) vers la droite
+            #y(1) vers le bas
+            #z(2) vers le fond
             coord_plan: tuple[float, float] = (
                 coord_finale[0]/coord_finale[2]*self.zoom+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)
