@@ -49,10 +49,10 @@ class Camera():
         matrix3_3 = tuple[tuple[float, float, float],
                           tuple[float, float, float],
                           tuple[float, float, float]]
-        # yaw = x,  pith = Y,  roll = Z
-        self.matrix: matrix3_3 = ((sin(self.yaw)*sin(self.pitch)*sin(self.roll) + cos(self.pitch)*cos(self.roll),   sin(self.yaw)*sin(self.pitch)*cos(self.roll) - cos(self.pitch)*sin(self.roll),   cos(self.yaw)*sin(self.pitch)),
-                                  (cos(self.yaw)*sin(self.roll),                                                    cos(self.yaw)*cos(self.roll),                                                    -sin(self.yaw)),
-                                  (sin(self.yaw)*cos(self.pitch)*sin(self.roll) - sin(self.pitch)*cos(self.roll),   sin(self.yaw)*cos(self.pitch)*cos(self.roll) + sin(self.pitch)*sin(self.roll),   cos(self.yaw)*cos(self.pitch)))
+        # yaw = y,  pith = x,  roll = Z
+        self.matrix: matrix3_3 = ((sin(self.pitch)*sin(self.yaw)*sin(self.roll) + cos(self.yaw)*cos(self.roll),   sin(self.pitch)*sin(self.yaw)*cos(self.roll) - cos(self.yaw)*sin(self.roll),   cos(self.pitch)*sin(self.yaw)),
+                                  (cos(self.pitch)*sin(self.roll),                                                    cos(self.pitch)*cos(self.roll),                                                    -sin(self.pitch)),
+                                  (sin(self.pitch)*cos(self.yaw)*sin(self.roll) - sin(self.yaw)*cos(self.roll),   sin(self.pitch)*cos(self.yaw)*cos(self.roll) + sin(self.yaw)*sin(self.roll),   cos(self.pitch)*cos(self.yaw)))
 
 
     def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
