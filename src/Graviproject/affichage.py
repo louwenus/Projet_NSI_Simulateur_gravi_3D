@@ -21,7 +21,9 @@ except ModuleNotFoundError as e:
     raise e
 
 from . import gravilib #Importation du module gravilib du répertoire courant
-from . affichage3D import Renderer3D #Importation de la class Renderer3D du module affichage3D dans le répertoire courant
+from .affichage3D import Renderer3D #Importation de la class Renderer3D du module affichage3D dans le répertoire courant
+
+from . import langue #import des textes affichés selon la langue choisie
 
 import os #Importation de la librairie os
 if logging >= 3:
@@ -31,8 +33,6 @@ app: QApplication = QApplication(sys.argv)
 
 """ Import des fonctions, attributs... utilisez dans le projet."""
 
-lang:str=settings.get("affichage.langue") #récupération de la langue des textes
-
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
 
@@ -41,31 +41,31 @@ class Main_window(QWidget):
         self.setFocusPolicy(Qt.ClickFocus)
         self.affichage_controles: bool = True
 
-        self.setWindowTitle("Affichage")
+        self.setWindowTitle(langue.get("title"))
 
         self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
         self.layout.addSpacing(10)
 
         # Création des actions utiliseables dans les menus
-        self.attach_detachAction: QAction = QAction("&Détacher les contrôles", self)
+        self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
 
-        self.licenseAction: QAction = QAction("&Lire la licence", self)
+        self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
         self.licenseAction.triggered.connect(self.affich_licence)
 
         # Création des menus
         self.menuBar: QWidget = QMenuBar(self)
         self.menuBar.setFixedWidth(self.size().width())
 
-        self.affichageMenu: QMenu = QMenu("&Affichage", self.menuBar)
+        self.affichageMenu: QMenu = QMenu(langue.get("menu.display.title"), self.menuBar)
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
         
-        self.configMenu: QMenu = QMenu("&Configuration", self.menuBar)
+        self.configMenu: QMenu = QMenu(langue.get("menu.settings.title"), self.menuBar)
         self.menuBar.addMenu(self.configMenu)#TODO : ajout du selecteur de langue
 
-        self.helpMenu: QMenu = QMenu("&Help", self.menuBar)
+        self.helpMenu: QMenu = QMenu(langue.get("menu.help.title"), self.menuBar)
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
@@ -106,14 +106,14 @@ class Main_window(QWidget):
         if self.affichage_controles:
             self.controles.hide()
             controles_graphiques.show()
-            self.attach_detachAction.setText("&Attacher les contrôles")
+            self.attach_detachAction.setText(langue.get("menu.display.attach"))
             self.affichage_controles = False
             if logging >= 2:
                 print("controles déttachés")
         else:
             self.controles.show()
             controles_graphiques.hide()
-            self.attach_detachAction.setText("&Détacher les contrôles")
+            self.attach_detachAction.setText(langue.get("menu.display.detach"))
             self.affichage_controles = True
             if logging >= 2:
                 print("controles attachés")
@@ -185,27 +185,27 @@ class Controles(QWidget):
     """
     """Ce QWidget permet de gérer les différents contrôles."""
     fenetre_ajoute: QWidget = QScrollArea()
-    fenetre_ajoute.setWindowTitle("Ajoutez des sphères !")
+    fenetre_ajoute.setWindowTitle(langue.get("control.add_settings.title"))
     layout_aj_sph: QLayout = QGridLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
     amount = QSpinBox(minimum=0, maximum=10000, value=100)
-    layout_aj_sph.addWidget(QLabel('nb sphères:'), 0,0)
+    layout_aj_sph.addWidget(QLabel(langue.get("control.add_settings.nb")), 0,0)
     layout_aj_sph.addWidget(amount,0,1)
 
     xmean = QSpinBox(minimum=-500000, maximum=500000, value=0)
     xrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
-    for i,widget in enumerate((QLabel('coordonnées X:'), xmean, QLabel('+-'),xrand)):
+    for i,widget in enumerate((QLabel(langue.get("control.add_settings.x")), xmean, QLabel('+-'),xrand)):
         layout_aj_sph.addWidget(widget,1,i)
 
     ymean = QSpinBox(minimum=-500000, maximum=500000, value=0)
     yrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
-    for i,widget in enumerate((QLabel('coordonnées Y:'), ymean, QLabel('+-'),yrand)):
+    for i,widget in enumerate((QLabel(langue.get("control.add_settings.y")), ymean, QLabel('+-'),yrand)):
         layout_aj_sph.addWidget(widget,2,i)
     
     zmean = QSpinBox(minimum=-500000, maximum=500000, value=0)
     zrand = QSpinBox(minimum=-500000, maximum=500000, value=2000)
-    for i,widget in enumerate((QLabel('coordonnées Z:'), zmean, QLabel('+-'),zrand)):
+    for i,widget in enumerate((QLabel(langue.get("control.add_settings.z")), zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
     
     #Valeurs multipliées par le nombre de balles à changer pour le projet final
@@ -233,7 +233,7 @@ class Controles(QWidget):
             var = gravilib.PyBaseSphere(x, y, z, randint(10000, 100000000), randint(30000, 40000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
-    bouton_val_aj: QAbstractButton = QPushButton("Ajouter les sphères")
+    bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))
     layout_aj_sph.addWidget(bouton_val_aj)
     bouton_val_aj.clicked.connect(ajouter_spheres)
 
@@ -246,11 +246,11 @@ class Controles(QWidget):
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        boutton1: QAbstractButton = QPushButton("Ajout direct")
+        boutton1: QAbstractButton = QPushButton(langue.get("control.simple_add.title"))
         boutton1.clicked.connect(Controles.ajouter_spheres)
         self.layout.addWidget(boutton1)
 
-        self.boutt_show_aj_sph: QAbstractButton = QPushButton("Ajouter des sphères")
+        self.boutt_show_aj_sph: QAbstractButton = QPushButton(langue.get("control.add_settings.title"))
         self.layout.addWidget(self.boutt_show_aj_sph)
         self.boutt_show_aj_sph.clicked.connect(self.fenetre_ajoute.show)
 

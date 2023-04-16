@@ -1,17 +1,31 @@
 {
-    "T":"Affichage",
-
-    "M1":"&Affichage",
-    "M1_1":"&Détacher les contrôles",
-    "M1_2":"&Attacher les contrôles",
-    "M2":"&Configuration",
-    "M4":"A&ide",
-    "M4_1":"&Lire la licence",
-    
-    "C1":"Ajout direct",
-    "C2":"Ajouter des sphères",
-    "C2_1":"Nombre de sphères :",
-    "C2_2":"Coordonnée X :",
-    "C2_3":"Coordonnée Y :",
-    "C2_4":"Coordonnée Z :"
+    "title":"Affichage",
+    "menu":{
+        "display":{
+            "title":"&Affichage",
+            "detach":"&Détacher les contrôles",
+            "attach":"&Attacher les contrôles"
+        },
+        "settings":{
+            "title":"&Configuration"
+        },
+        "help":{
+            "title":"A&ide",
+            "license":"&Lire la licence"
+        }
+    },
+    "control":{
+        "simple_add":{
+            "title":"Ajout direct"
+        },
+        "add_settings":{
+            "title":"Ajouter des sphères",
+            "nb":"Nombre de sphères :",
+            "x":"Coordonnée X :",
+            "y":"Coordonnée Y :",
+            "z":"Coordonnée Z :",
+            "valid":"Ajouter les sphères"
+        }
+    },
+    "404":"Texte introuvable : regardez les logs."
 }

@@ -1,17 +1,31 @@
 {
-    "T":"Display",
-
-    "M1":"Dis&play",
-    "M1_1":"&Detach controls",
-    "M1_2":"&Attach controls",
-    "M2":"&Settings",
-    "M4":"&Help",
-    "M4_1":"&Read the license",
-    
-    "C1":"Direct add",
-    "C2":"Adding spheres",
-    "C2_1":"Number of spheres :",
-    "C2_2":"X coordinate :",
-    "C2_3":"Y coordinate :",
-    "C2_4":"Z coordinate :"
+    "title":"Display",
+    "menu":{
+        "display":{
+            "title":"Dis&play",
+            "detach":"&Detach controls",
+            "attach":"&Attach controls"
+        },
+        "settings":{
+            "title":"&Settings"
+        },
+        "help":{
+            "title":"&Help",
+            "license":"&Read the license"
+        }
+    },
+    "control":{
+        "simple_add":{
+            "title":"Direct add"
+        },
+        "add_settings":{
+            "title":"Adding spheres",
+            "nb":"Number of spheres :",
+            "x":"X coordinate :",
+            "y":"Y coordinate :",
+            "z":"Z coordinate :",
+            "valid":"Add the spheres"
+        }
+    },
+    "404":"Text not found : look at logs."
 }
