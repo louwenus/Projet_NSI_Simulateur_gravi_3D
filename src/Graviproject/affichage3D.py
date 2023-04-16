@@ -75,12 +75,12 @@ class Camera():
                  coord[0]*self.matrix[1][0] + coord[1]*self.matrix[1][1] + coord[2]*self.matrix[1][2],
                  coord[0]*self.matrix[2][0] + coord[1]*self.matrix[2][1] + coord[2]*self.matrix[2][2])
         
-        if coord_finale[2] > 1:
+        if coord_finale[2] > 0:
             #x(0) vers la droite
             #y(1) vers le bas
             #z(2) vers le fond
             coord_plan: tuple[float, float] = (
-                coord_finale[0]/coord_finale[2]*self.zoom+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom+self.offsetY)
+                coord_finale[0]/coord_finale[2]*self.zoom*self.offsetX+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom*self.offsetX+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)
             
         else:
@@ -299,23 +299,23 @@ class Renderer3D(QWidget):
             self.wid_con.ajouter_spheres(False)
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
-            "fait tourner vers le haut de 0.001 radian"
-            self.cam.pitch+=0.001
+            "fait tourner vers le haut de 0.01 radian"
+            self.cam.pitch-=0.01
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
-            "fait tourner vers le bas de 0.001 radian"
-            self.cam.pitch-=0.001
+            "fait tourner vers le bas de 0.01 radian"
+            self.cam.pitch+=0.01
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
-            "fait tourner vers la gauche de 0.001 radian"
-            self.cam.yaw-=0.001
+            "fait tourner vers la gauche de 0.01 radian"
+            self.cam.yaw+=0.01
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
-            "fait tourner vers la droite de 0.001 radian"
-            self.cam.yaw+=0.001
+            "fait tourner vers la droite de 0.01 radian"
+            self.cam.yaw-=0.01
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
