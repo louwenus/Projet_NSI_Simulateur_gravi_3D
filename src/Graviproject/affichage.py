@@ -82,9 +82,9 @@ class Main_window(QWidget):
         self.dimension = gravilib.PyBaseDimension(self.widget_3D)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
-        self.ticktime:float=1/settings.get("simulation.fps")
+        self.ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
         self.timer: QTimer = QTimer(self)
-        self.timer.setInterval(self.ticktime*1000)
+        self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
         if logging >= 2:
@@ -215,12 +215,12 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmean=Controles.xmean.value()*2000
-        xrand=Controles.xrand.value()*2000
-        ymean=Controles.ymean.value()*2000
-        yrand=Controles.yrand.value()*2000
-        zmean=Controles.zmean.value()*20
-        zrand=Controles.zrand.value()*20
+        xmean=Controles.xmean.value()*200
+        xrand=Controles.xrand.value()*200
+        ymean=Controles.ymean.value()*200
+        yrand=Controles.yrand.value()*200
+        zmean=Controles.zmean.value()*200
+        zrand=Controles.zrand.value()*200
         for _ in range(Controles.amount.value()):
             dist:float=random()**(2/3)
             x: float=random()
@@ -230,7 +230,7 @@ class Controles(QWidget):
             x=xmean+sqrt(x*dist)*xrand*1000*(int(randint(0,1))*2-1)
             y=ymean+sqrt(y*dist)*yrand*1000*(int(randint(0,1))*2-1)
             z=zmean+sqrt(z*dist)*zrand*1000*(int(randint(0,1))*2-1)
-            var = gravilib.PyBaseSphere(x, y, z, randint(10000, 100000000), randint(30000, 40000), randint(-4000, 4000), randint(-4000, 4000), randint(-30, 30), randint(1,15))
+            var = gravilib.PyBaseSphere(x, y, z, randint(10000, 100000), randint(3000000, 4000000), randint(-400, 400), randint(-400, 400), randint(-400, 400), randint(1,15))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))
