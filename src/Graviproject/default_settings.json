@@ -3,20 +3,20 @@
     "fps": 10,
     "defaultzoom": 1,
     "controles": {
-      "avancer":    "F",
-      "reculer":    "B",
+      "avancer":    "A",
+      "reculer":    "E",
       "droite":     "D",
       "gauche":     "Q",
       "monter":     "Z",
       "descendre":  "S",
       "home":       "H",
-      "ajouter":    "A",
-      "rot_haut":   "O",
-      "rot_bas":    "L",
-      "rot_gauche": "K",
-      "rot_droite": "M",
-      "roul_gauche":"Y",
-      "roul_droite":"U"
+      "ajouter":    "Shift++",
+      "rot_haut":   "Shift+Z",
+      "rot_bas":    "Shift+S",
+      "rot_gauche": "Shift+Q",
+      "rot_droite": "Shift+D",
+      "roul_gauche":"Shift+A",
+      "roul_droite":"Shift+E"
     }
   },
   "logging": 2
