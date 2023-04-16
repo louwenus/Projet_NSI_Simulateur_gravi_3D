@@ -1,4 +1,8 @@
 {
+  "affichage": {
+    "langue":"fr",
+    "theme":"tkt"
+  },
   "simulation": {
     "fps": 10,
     "defaultzoom": 1,

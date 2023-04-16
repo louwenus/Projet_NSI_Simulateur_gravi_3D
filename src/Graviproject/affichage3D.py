@@ -299,23 +299,23 @@ class Renderer3D(QWidget):
             self.wid_con.ajouter_spheres(False)
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
-            "fait tourner vers le haut de 0.1 radian"
-            self.cam.pitch+=0.1
+            "fait tourner vers le haut de 0.001 radian"
+            self.cam.pitch+=0.001
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
-            "fait tourner vers le bas de 0.1 radian"
-            self.cam.pitch-=0.1
+            "fait tourner vers le bas de 0.001 radian"
+            self.cam.pitch-=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
-            "fait tourner vers la gauche de 0.1 radian"
-            self.cam.yaw-=0.1
+            "fait tourner vers la gauche de 0.001 radian"
+            self.cam.yaw-=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
-            "fait tourner vers la droite de 0.1 radian"
-            self.cam.yaw+=0.1
+            "fait tourner vers la droite de 0.001 radian"
+            self.cam.yaw+=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
