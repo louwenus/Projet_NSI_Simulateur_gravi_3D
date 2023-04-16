@@ -82,9 +82,9 @@ class Main_window(QWidget):
         self.dimension = gravilib.PyBaseDimension(self.widget_3D)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
-        self.ticktime:float=1/settings.get("simulation.fps")
+        self.ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
         self.timer: QTimer = QTimer(self)
-        self.timer.setInterval(self.ticktime*1000)
+        self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
         if logging >= 2:

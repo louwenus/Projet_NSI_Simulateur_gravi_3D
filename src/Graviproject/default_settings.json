@@ -5,6 +5,7 @@
   },
   "simulation": {
     "fps": 10,
+    "simspeed":1,
     "defaultzoom": 1,
     "controles": {
       "avancer":    "A",
