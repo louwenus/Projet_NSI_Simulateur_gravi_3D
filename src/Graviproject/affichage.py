@@ -163,9 +163,9 @@ class Main_window(QWidget):
             print("total:", time()-totalstart,"on",self.ticktime,"normaly")
     else:
         def update_simulation(self) -> None:
-            #self.dimension.gravite_all(self.ticktime)
-            #self.dimension.move_all(self.ticktime)
-            #self.dimension.gerer_colision()
+            self.dimension.gravite_all(self.ticktime)
+            self.dimension.move_all(self.ticktime)
+            self.dimension.gerer_colision()
             self.widget_3D.repaint()
 
     def resizeEvent(self, event: QResizeEvent) -> None:
