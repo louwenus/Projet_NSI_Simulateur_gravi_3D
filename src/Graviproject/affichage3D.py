@@ -49,10 +49,10 @@ class Camera():
         matrix3_3 = tuple[tuple[float, float, float],
                           tuple[float, float, float],
                           tuple[float, float, float]]
-
-        self.matrix: matrix3_3 = ((cos(self.yaw)*cos(self.pitch),  cos(self.yaw)*sin(self.pitch)*sin(self.roll) - sin(self.yaw)*cos(self.roll),  cos(self.yaw)*sin(self.pitch)*cos(self.roll) + sin(self.yaw)*sin(self.roll)),
-                                  (sin(self.yaw)*cos(self.pitch),  sin(self.yaw)*sin(self.pitch)*sin(self.roll) + cos(self.yaw)*cos(self.roll),  sin(self.yaw)*sin(self.pitch)*cos(self.roll) - cos(self.yaw)*sin(self.roll)),
-                                  (-sin(self.pitch),               cos(self.pitch)*sin(self.roll),                                               cos(self.pitch)*cos(self.roll)))
+        # yaw = y,  pith = x,  roll = Z
+        self.matrix: matrix3_3 = ((sin(self.pitch)*sin(self.yaw)*sin(self.roll) + cos(self.yaw)*cos(self.roll),   sin(self.pitch)*sin(self.yaw)*cos(self.roll) - cos(self.yaw)*sin(self.roll),   cos(self.pitch)*sin(self.yaw)),
+                                  (cos(self.pitch)*sin(self.roll),                                                    cos(self.pitch)*cos(self.roll),                                                    -sin(self.pitch)),
+                                  (sin(self.pitch)*cos(self.yaw)*sin(self.roll) - sin(self.yaw)*cos(self.roll),   sin(self.pitch)*cos(self.yaw)*cos(self.roll) + sin(self.yaw)*sin(self.roll),   cos(self.pitch)*cos(self.yaw)))
 
 
     def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
@@ -66,13 +66,13 @@ class Camera():
             tuple[tuple[float,float],float]: Un tuple des coordonnées de la projection et sa taille.
         """
         coord = (coord[0]-self.x, coord[1]-self.y, coord[2]-self.z)  # vecteur origine_camera/sphere
-        coord = (coord[0]*self.matrix[0][0] + coord[1]*self.matrix[0][1] + coord[2]*self.matrix[0][2],  # rotation du vecteur en fonction de l'orientation de la caméra
+        coord_finale = (coord[0]*self.matrix[0][0] + coord[1]*self.matrix[0][1] + coord[2]*self.matrix[0][2],  # rotation du vecteur en fonction de l'orientation de la caméra
                  coord[0]*self.matrix[1][0] + coord[1]*self.matrix[1][1] + coord[2]*self.matrix[1][2],
                  coord[0]*self.matrix[2][0] + coord[1]*self.matrix[2][1] + coord[2]*self.matrix[2][2])
         
-        if coord[2] > 1:
+        if coord_finale[2] > 1:
             coord_plan: tuple[float, float] = (
-                coord[0]/coord[2]*self.zoom+self.offsetX, coord[1]/coord[2]*self.zoom+self.offsetY)
+                coord_finale[0]/coord_finale[2]*self.zoom+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom+self.offsetY)
             radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)
             
         else:
@@ -291,33 +291,33 @@ class Renderer3D(QWidget):
             self.wid_con.ajouter_spheres(False)
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
-            "fait tourner vers le haut de 0.1 radian"
-            self.cam.roll-=0.1
+            "fait tourner vers le haut de 0.001 radian"
+            self.cam.pitch+=0.001
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
-            "fait tourner vers le bas de 0.1 radian"
-            self.cam.roll+=0.1
+            "fait tourner vers le bas de 0.001 radian"
+            self.cam.pitch-=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
-            "fait tourner vers la gauche de 0.1 radian"
-            self.cam.pitch+=0.1
+            "fait tourner vers la gauche de 0.001 radian"
+            self.cam.yaw-=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
-            "fait tourner vers la droite de 0.1 radian"
-            self.cam.pitch-=0.1
+            "fait tourner vers la droite de 0.001 radian"
+            self.cam.yaw+=0.001
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
             "fait rouler vers la gauche de 0.1 radian"
-            self.cam.yaw+=0.1
+            self.cam.roll+=0.1
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_droite"]:
             "fait rouler vers la droite de 0.1 radian"
-            self.cam.yaw-=0.1
+            self.cam.roll-=0.1
             self.cam.update_matrix()
     
     
