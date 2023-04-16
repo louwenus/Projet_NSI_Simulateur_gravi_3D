@@ -1,5 +1,5 @@
 {
-"en":{
+    "en":{
         "T":"Display",
 
         "M1":"Dis&play",
@@ -32,5 +32,22 @@
         "C2_2":"Coordonnée X :",
         "C2_3":"Coordonnée Y :",
         "C2_4":"Coordonnée Z :"
+    },
+    "it":{
+        "T":"je",
+
+        "M1":"suis",
+        "M1_1":"pas",
+        "M1_2":"contant",
+        "M2":"ça",
+        "M4":"marchait",
+        "M4_1":"mon",
+        
+        "C1":"système",
+        "C2":"je",
+        "C2_1":"vais",
+        "C2_2":"aller",
+        "C2_3":"bouder",
+        "C2_4":"NA !"
     }
 }
