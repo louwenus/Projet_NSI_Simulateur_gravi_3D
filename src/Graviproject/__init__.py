@@ -5,7 +5,7 @@
 import sys #Importation de la librairie sys
 
 if "--license" in sys.argv:  # Disclaimer & parsing des options passées à l'appel
-    with open("LICENSCE_FR") as license:
+    with open("LICENCE_FR") as license:
         print(license.read())
         exit(0)
 if "--help" in sys.argv or "-h" in sys.argv:

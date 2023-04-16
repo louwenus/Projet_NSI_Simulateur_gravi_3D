@@ -121,17 +121,17 @@ class Main_window(QWidget):
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
         self.fenetre_license: QWidget = QScrollArea()
-        self.fenetre_license.setWindowTitle("LICENSE")
+        self.fenetre_license.setWindowTitle(langue.get("file.license"))
         try:
             path: str = os.path.abspath(os.path.dirname(__file__))
-            path = os.path.join(path, "LICENSCE_FR")
+            path = os.path.join(path, langue.get("file.license"))
             with open(path) as file:
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
             if logging >= 1:
                 print("The french licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
-                "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENSCE_FR")
+                "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENCE_FR")
         self.fenetre_license.setWidget(self.licenseTextlabel)
         self.fenetre_license.show()
 

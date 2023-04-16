@@ -27,5 +27,8 @@
             "valid":"Ajouter les sphères"
         }
     },
+    "file":{
+        "license":"LICENCE_FR"
+    },
     "404":"Texte introuvable : regardez les logs."
 }

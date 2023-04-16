@@ -27,5 +27,8 @@
             "valid":"Add the spheres"
         }
     },
+    "file":{
+        "license":"LICENSE"
+    },
     "404":"Text not found : look at logs."
 }
