@@ -223,12 +223,12 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmean=Controles.xmean.value()*200
-        xrand=Controles.xrand.value()*200
-        ymean=Controles.ymean.value()*200
-        yrand=Controles.yrand.value()*200
-        zmean=Controles.zmean.value()*200
-        zrand=Controles.zrand.value()*200
+        xmean=Controles.xmean.value()*200000
+        xrand=Controles.xrand.value()*200000
+        ymean=Controles.ymean.value()*200000
+        yrand=Controles.yrand.value()*200000
+        zmean=Controles.zmean.value()*200000
+        zrand=Controles.zrand.value()*200000
         mmin=Controles.massemin.value()*100
         mmax=Controles.massemax.value()*100
         rmin=Controles.rayonmin.value()*100
