@@ -113,7 +113,6 @@ class SphereItem():
             paint(self,painter,camera): peint la boule sur le painter
             update_masse(self,masse:int): update la couleur de la boule selon la nouvelle masse
         """
-        super().__init__()
         self.getcoords: Callable[[], tuple[int, int, int]] = getcoords
         self.radius: Callable[[], int] = rayon
         self.radius2D: float = 0
@@ -181,7 +180,7 @@ class Renderer3D(QWidget):
         for item in self.sphlist:
             
             try:
-                item.paint(painter)
+                item.paint(painter,self.cam)
                 
             except:
                 self.remove_from_display(item)
