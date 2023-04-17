@@ -1,0 +1,36 @@
+{
+    "title":"Visualizzazione",
+    "menu":{
+        "display":{
+            "title":"&Visualizzazione",
+            "detach":"&Staccare i controlli",
+            "attach":"&Allegare i controlli"
+        },
+        "settings":{
+            "title":"&Configurazione"
+        },
+        "help":{
+            "title":"A&iuto",
+            "license":"&Leggere la licenza"
+        }
+    },
+    "control":{
+        "simple_add":{
+            "title":"Aggiunta diretta"
+        },
+        "add_settings":{
+            "title":"Aggiungere sfere",
+            "nb":"Numero di sfere :",
+            "x":"Coordinata X :",
+            "y":"Coordinata Y :",
+            "z":"Coordinata Z :",
+            "m":"Massa :",
+            "r":"Raggio :",
+            "valid":"Aggiungere le sfere"
+        }
+    },
+    "file":{
+        "license":"LICENSE"
+    },
+    "404":"Testo inesistente : consultare i logs."
+}

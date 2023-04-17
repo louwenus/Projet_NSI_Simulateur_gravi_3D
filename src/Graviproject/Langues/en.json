@@ -11,7 +11,7 @@
         },
         "help":{
             "title":"&Help",
-            "license":"&Read the license"
+            "license":"Read the &license"
         }
     },
     "control":{

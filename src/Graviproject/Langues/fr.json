@@ -2,7 +2,7 @@
     "title":"Affichage",
     "menu":{
         "display":{
-            "title":"&Affichage",
+            "title":"A&ffichage",
             "detach":"&Détacher les contrôles",
             "attach":"&Attacher les contrôles"
         },
@@ -10,8 +10,8 @@
             "title":"&Configuration"
         },
         "help":{
-            "title":"A&ide",
-            "license":"&Lire la licence"
+            "title":"Aid&e",
+            "license":"Lire la &licence"
         }
     },
     "control":{
