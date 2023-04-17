@@ -23,12 +23,12 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     llco coo;
     DummySphere *sphere = (*iterator++);
     ulli sanitize;
-    uli masse = sphere->gravite_stats(temps, coo, sanitize);
+    ulli masse = sphere->gravite_stats(temps, coo, sanitize);
     lco accel = {0, 0, 0};
 
     llco temp_co;
     ulli sanitize2;
-    uli masse2;
+    ulli masse2;
     ulli divide;
     for (; iterator != end; ++iterator)
     {
