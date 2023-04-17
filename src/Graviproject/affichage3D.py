@@ -4,11 +4,10 @@ from typing import Callable
 from random import *
 import sys
 import traceback
-import types
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent, QKeySequence
 from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
-from math import cos, sin
+from math import cos, sin, log2
 
 from . import settings
 """ Import des fonctions, attributs... utilisez dans le projet."""
@@ -101,52 +100,49 @@ class Camera():
 
 
 class SphereItem():
-    """Cette classe est chargée de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    couleur = ["#26F8DE", "#30E42B", "#2B71E4", "#E6BD30", "#EA34E1", "#DF1D1D"]
+    """Cette classe est chargée de l'affichage d'une sphere, a l'aide d'un painter passé a sa fonction paint"""
     
-    def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]]) -> None:
+    def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]], masse) -> None:
         """Initialise un item de rendu sphérique de rayon fixe et faisant appel à la fonction getcoord pour update ses coordonées.
 
         Args:
-            rayon (int): le rayon de la sphère
-            getcoord (function): Une fonction renvoyant un tuple de coordonées entières x,y,z
+            rayon (callable): doit renvoyer le rayon de la sphère lors de l'appel
+            getcoord (callable): Une fonction renvoyant un tuple de coordonées entières x,y,z
 
         Methode Custom:
-        update_pos(self) -> None: Met à jour la position de l'item selon la position de la sphère
+            paint(self,painter,camera): peint la boule sur le painter
+            update_masse(self,masse:int): update la couleur de la boule selon la nouvelle masse
         """
         super().__init__()
         self.getcoords: Callable[[], tuple[int, int, int]] = getcoords
         self.radius: Callable[[], int] = rayon
         self.radius2D: float = 0
-        self.compteur: int = 0
         self.pos = QPointF(0,0)
+        self.update_masse(masse)
 
-
-    def update_pos(self, camera: Camera) -> None:
-        """Met à jour la position de l'item selon la position de la sphère"""
-
-        coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
-
-        self.pos=QPointF(*coord2D)
-
-
-    def paint(self, painter) -> None:
+    def update_masse(self,masse:int):
+        scale=log2(masse)*8 # la masse étant positive sur 64 bits, on devrait avoir un résultat entre 1 et 512
+        if scale>512:
+            scale=512
+            if settings.get("logging")>=1:
+                print("over-sized masse passed as arg to display item (should not have been > 2⁶⁴)")
+        if scale<=256:
+            self.color=QColor(0,256-scale,scale)
+        else:
+            self.color=QColor(scale-257,0,512-scale)
+    def paint(self, painter:QPainter, camera:Camera) -> None:
         """Permet de gérer le rendu graphique.
 
         Args:
             painter (class 'PySide6.QtGui.QPainter'): Permettant de modifier le rendu graphique.
         """
+        coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
+        self.pos=QPointF(*coord2D)
+
         painter.setPen(QPen(Qt.black, 0.5))
-        painter.setBrush(QBrush(self.couleur[self.compteur]))
+        painter.setBrush(QBrush(self.color))
 
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
-
-
-    def change_couleur(self, indice):
-        """ Modifie la couleur de la sphere en une couleur prédéfinie de la liste couleur."""
-        self.compteur = indice
-
-
 
 
 class Renderer3D(QWidget):
@@ -185,11 +181,12 @@ class Renderer3D(QWidget):
         for item in self.sphlist:
             
             try:
-                item.update_pos(self.cam)
                 item.paint(painter)
                 
             except:
                 self.remove_from_display(item)
+                if settings.get("logging")>=1:
+                    print("an errored item was removed from display",file=sys.stderr)
                 
         painter.end()
 
