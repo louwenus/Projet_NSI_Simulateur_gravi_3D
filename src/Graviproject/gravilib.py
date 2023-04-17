@@ -61,15 +61,26 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord)
-        
-        if masse < 33300000:
+        self.attribuer_couleur()
+    
+    def attribuer_couleur (self):
+        if self.get_masse() < 28000:
             self.render_item.change_couleur(0)
             
-        elif masse < 66600000:
+        elif self.get_masse() < 46000:
             self.render_item.change_couleur(1)
+        
+        elif self.get_masse() < 64000:
+            self.render_item.change_couleur(2)
+        
+        elif self.get_masse() < 82000:
+            self.render_item.change_couleur(3)
+            
+        elif self.get_masse() > 100000:
+            self.render_item.change_couleur(5)
             
         else:
-            self.render_item.change_couleur(2)
+            self.render_item.change_couleur(4)
 
     def get_render_items(self) -> list[SphereItem]:
         """Renvoie les items de SphereItem d'affichage3D
@@ -100,12 +111,14 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
             
             if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                 absorption(sphere, sphere2)
+                sphere.attribuer_couleur()
                 self.add_sphere(sphere)
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
                     
             elif (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 absorption(sphere2, sphere)
+                sphere2.attribuer_couleur()
                 self.add_sphere(sphere2)
                 for render in sphere.get_render_items():
                     self.render.remove_from_display(render)

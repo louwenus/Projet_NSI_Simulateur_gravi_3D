@@ -102,7 +102,7 @@ class Camera():
 
 class SphereItem():
     """Cette classe est chargée de l'affichage d'une sphere, sous classe un QGraphicsItem, et est donc utiliseable dans un QGraphicsView"""
-    couleur = ["darkorange", "cyan", "lime"]
+    couleur = ["#26F8DE", "#30E42B", "#2B71E4", "#E6BD30", "#EA34E1", "#DF1D1D"]
     
     def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]]) -> None:
         """Initialise un item de rendu sphérique de rayon fixe et faisant appel à la fonction getcoord pour update ses coordonées.
