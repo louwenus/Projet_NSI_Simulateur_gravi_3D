@@ -24,6 +24,8 @@
             "x":"Coordonnée X :",
             "y":"Coordonnée Y :",
             "z":"Coordonnée Z :",
+            "m":"Masse :",
+            "r":"Rayon :",
             "valid":"Ajouter les sphères"
         }
     },
