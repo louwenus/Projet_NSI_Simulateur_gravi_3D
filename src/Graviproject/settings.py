@@ -1,7 +1,8 @@
-#Importation de lirbairie
+#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+# encoding = utf8
 import json
 import os
-from typing import Any, Iterable
+from typing import Any
 from sys import stderr, argv
 
 settings: dict = {}

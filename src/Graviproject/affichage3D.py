@@ -1,28 +1,36 @@
-#Importation des librairies et modules
-#Ceci est une ligne inutile pour que mes camarades null puissent faire fonctionner ce ptn de programme de ces morts
-from typing import Callable
-from random import *
+#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+# encoding = utf8
+
+"""Ce fichier et composé de classes utilisé pour le rendu 3D des sphères :
+Camera (gestion du point de vue)
+SphereItem (affichage d'une sphère, lié a cette dernière)
+Renderer3D (widget dans lequel le rendu est effectué)"""
 import sys
 import traceback
-from PySide6.QtWidgets import *
+from typing import Callable
+
+from PySide6.QtWidgets import QWidget,QLayout,QHBoxLayout
 from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent, QKeySequence
-from PySide6.QtCore import Qt, QPointF, QRectF, QTimer
+from PySide6.QtCore import Qt, QPointF
 from math import cos, sin, log2
 
 from . import settings
-""" Import des fonctions, attributs... utilisez dans le projet."""
 
-
-
+matrix3_3 = tuple[tuple[float, float, float],
+                  tuple[float, float, float],
+                  tuple[float, float, float]]
 
 class Camera():
-    def __init__(self, zoom:float=1, offsetX:float=0, offsetY:float=0, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
+    def __init__(self, offsetX, offsetY, zoom:float=1, x:int=0, y:int=0, z:int=0, yaw:float=0, pitch:float=0, roll:float=0) -> None:
         """Camera attributes.
 
         Args:
-            x (int, optional): x abscisse de la caméra. 0 par défault.
-            y (int, optional): y ordonnée de la caméra. 0 par défault.
-            z (int, optional): z profondeur de la caméra. 0 par défault.
+            offsetX (float): devrait etre la moitié de la largeur de la fenetre
+            offsetY (float): devrait etre la moitié de la hauteur de la fenetre
+            zoom (float, optional): zoom initial, positif non-null. 1 par default.
+            x (int, optional): abscisse initiale de la caméra. 0 par défault.
+            y (int, optional): ordonnée initiale de la caméra. 0 par défault.
+            z (int, optional): profondeur initiale de la caméra. 0 par défault.
             yaw (float, optional): Rotation de la caméra sur les abscisse. 0 par défault.
             pitch (float, optional): Rotation de la caméra sur les ordonnées. 0 par défault.
             roll (float, optional): Rotation de la caméra sur la profondeur. 0 par défault.
@@ -45,9 +53,6 @@ class Camera():
 
     def update_matrix(self) -> None:
         """Met à jour la matrice de rotation de la caméra."""
-        matrix3_3 = tuple[tuple[float, float, float],
-                          tuple[float, float, float],
-                          tuple[float, float, float]]
         # yaw = y,  pith = x,  roll = z
         #   yaw
         #[cos -sin 0] [cos  0 sin] [1  0   0  ]
@@ -91,7 +96,7 @@ class Camera():
     
     
     def move(self, cote:int=0, elev:int=0, profondeur:int=0):
-
+        """deplace la caméra, avec cote, elev et profondeur en coordonées locales (tient compte de la rotation de la cam)"""
         self.x += cote*self.matrix[0][0] + elev*self.matrix[1][0] + profondeur*self.matrix[2][0] 
         self.y += cote*self.matrix[0][1] + elev*self.matrix[1][1] + profondeur*self.matrix[2][1] 
         self.z += cote*self.matrix[0][2] + elev*self.matrix[1][2] + profondeur*self.matrix[2][2] 
@@ -163,9 +168,9 @@ class Renderer3D(QWidget):
         self.setLayout(self.mainlayout)
         self.sphlist: list[SphereItem]=[]
 
-        zoom: float = settings.get("simulation.defaultzoom")
-        
-        self.cam: Camera = Camera(zoom=zoom, offsetX=self.size().width()/2, offsetY=self.size().height()/2)
+        self.cam: Camera = Camera(offsetX=self.size().width()/2,
+                                  offsetY=self.size().height()/2,
+                                  zoom=settings.get("simulation.defaultzoom"))
         self.reload_controlles()
         
         

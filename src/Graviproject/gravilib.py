@@ -1,12 +1,7 @@
+#  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
+# encoding = utf8
 import sys
 from math import sqrt
-
-try:
-    import cython
-    
-except ModuleNotFoundError:
-    print("Le module cython devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails.")
-    exit(1)
 
 try:
     from . import cppgravilib
@@ -32,15 +27,6 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             vx,vy,vz (int): Vitesse de départ de la sphère
             d (int) : Dureté de la sphère
         """
-        #Il ne faut pas faire ça, arrété de le remettre dans le code
-        #Et ne supprimez pas ce commentaire, il est là pour une raison
-        #Utiliser
-        #self.get_speed() et self.set_speed((vx,vy,vz))
-        #et de meme pour la masse, le rayon et la position, merci
-        #self.vx,self.vy,self.vz=vx,vy,vz
-        #self.masse=masse
-        #self.rayon = rayon
-        
         self.durete = d
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.render_item: SphereItem = SphereItem(
@@ -70,7 +56,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self,render:Renderer3D) -> None:
         self.init_c_container()
-        self.render: Renderer3D=render #D'une façon à ce que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
+        self.render: Renderer3D=render #pour que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
 
     def gerer_colision(self) -> None:
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
@@ -111,8 +97,8 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     vitessex = int(sqrt((m1*vx1**2 + m2*vx2**2)/masse_final), 0)    #gain (ou perte) de vitesse
-    vitessey = int(sqrt((m1*vy1**2 + m2*vy2**2)/masse_final), 0)    #selon la formule energie cinétique
-    vitessez = int(sqrt((m1*vz1**2 + m2*vz2**2)/masse_final), 0)    #=masse*vitesse**2.
+    vitessey = int(sqrt((m1*vy1**2 + m2*vy2**2)/masse_final), 0)    #selon la formule energie cinétique=masse*vitesse**2.
+    vitessez = int(sqrt((m1*vz1**2 + m2*vz2**2)/masse_final), 0)    #NB le /2 n'est pas utile car on repasse directement a une vitesse
     sphere1.set_masse(masse_final)
     sphere1.set_speed(vitessex, vitessey, vitessez)
     

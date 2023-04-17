@@ -1,16 +1,12 @@
 #  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
-
 # encoding = utf8
 
-
-from . import settings #Importation du module settings du répertoire courant
-#as logging is used realy often, put it in a var to decrease acess time
-logging:int = settings.get("logging")
-import sys 
+import sys
+import os
 from sys import stderr
 from math import cos, pi, sin
+# import des différentes librairies non-standard avec debug en cas de librairie manquante
 try:
-    # importation de PySide6
     from PySide6.QtCore import *
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
@@ -20,18 +16,16 @@ except ModuleNotFoundError as e:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails", file=stderr)
     raise e
 
-from . import gravilib #Importation du module gravilib du répertoire courant
-from .affichage3D import Renderer3D #Importation de la class Renderer3D du module affichage3D dans le répertoire courant
+from . import settings
+from . import gravilib
+from .affichage3D import Renderer3D 
+from . import langue
 
-from . import langue #import des textes affichés selon la langue choisie
-
-import os #Importation de la librairie os
-if logging >= 3:
+if settings.get("logging") >= 3:
     from time import time #importation de la libraire time
 
-app: QApplication = QApplication(sys.argv)
 
-""" Import des fonctions, attributs... utilisez dans le projet."""
+app: QApplication = QApplication(sys.argv)
 
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
@@ -87,7 +81,7 @@ class Main_window(QWidget):
         self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         self.timer.timeout.connect(self.update_simulation)
         self.timer.start()
-        if logging >= 2:
+        if settings.get("logging") >= 2:
             print("main windows initialized")
 
 
@@ -108,14 +102,14 @@ class Main_window(QWidget):
             controles_graphiques.show()
             self.attach_detachAction.setText(langue.get("menu.display.attach"))
             self.affichage_controles = False
-            if logging >= 2:
+            if settings.get("logging") >= 2:
                 print("controles déttachés")
         else:
             self.controles.show()
             controles_graphiques.hide()
             self.attach_detachAction.setText(langue.get("menu.display.detach"))
             self.affichage_controles = True
-            if logging >= 2:
+            if settings.get("logging") >= 2:
                 print("controles attachés")
 
     def affich_licence(self) -> None:
@@ -128,7 +122,7 @@ class Main_window(QWidget):
             with open(path) as file:
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
-            if logging >= 1:
+            if settings.get("logging") >= 1:
                 print("The french licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
                 "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENCE_FR")
@@ -144,7 +138,7 @@ class Main_window(QWidget):
         self.dimension.add_sphere(sph)
         for rendu in sph.get_render_items():
             self.widget_3D.add_to_display(rendu)
-    if  logging>=3:
+    if  settings.get("logging")>=3:
         def update_simulation(self) -> None:
             totalstart = time()
             start = time()
@@ -266,8 +260,6 @@ class Controles(QWidget):
 
 
 controles_graphiques: QWidget = Controles()
+
 Fenetre_principale: QWidget = Main_window()
-
-
-
-Fenetre_principale.showMaximized() # en fait les gestionnaire chaint prennet ca juste pour un show mais ne plantent pas
+Fenetre_principale.showMaximized()
