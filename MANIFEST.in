@@ -1,1 +1,2 @@
 graft ./lib
+graft ./src/Graviproject/Langues

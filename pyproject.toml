@@ -23,11 +23,12 @@ dependencies = [
 [tool.setuptools]
 zip-safe = false
 license-files = ["LICENSE"]
+include-package-data = true
+packages = ["Graviproject", "Graviproject.Langues"]
+package-dir = {"" = "src"}
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["Graviproject"]
-namespaces = false
+[tool.setuptools.package-data]
+"Graviproject.Langues" = ["*.json"]
 
 [project.scripts]
 Graviproject = "Graviproject.main:launch_app"
