@@ -11,9 +11,9 @@ on:
 permissions:
   contents: read
 
+
 jobs:
   build-on-ubuntu:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -30,22 +30,18 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build
+        python3 -m pip install --upgrade build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
     - name: Build
       run: |
-        python -m build
+        python -m build -nxw
     - name: 'Upload Wheel'
       uses: actions/upload-artifact@v3
       with:
         name: 'build_wheel_linux'
         path: dist/*.whl
-    - name: 'Upload tar.gz'
-      uses: actions/upload-artifact@v3
-      with:
-        name: 'build_archive'
-        path: dist/*.tar.gz
-  build-on-windows:
 
+
+  build-on-windows:
     runs-on: windows-latest
 
     steps:
@@ -62,10 +58,10 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade build
+        python3 -m pip install --upgrade build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-win_amd64.whl"
     - name: Build
       run: |
-        python -m build -w
+        python -m build -nxw
     - name: 'Upload Windows Wheel'
       uses: actions/upload-artifact@v3
       with:
