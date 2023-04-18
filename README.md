@@ -33,7 +33,7 @@ Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
       - Pour pacman (Arch, Manjaro...) :<br/>
         `pacman -S python python-pip`
     
-  - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.hd.free.fr/downloads/graviproject/) *(les wheel linux sont build sur le ubuntu-latest de github)* puis installez la avec :<br/>
+  - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(si votre platforme n'est pas présente, vous devez compiler)* puis installez la avec :<br/>
   `python3.10 -m pip install nom_du_fichier.whl`<br/>
   - Vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path.
 - En compilant :<br/>
