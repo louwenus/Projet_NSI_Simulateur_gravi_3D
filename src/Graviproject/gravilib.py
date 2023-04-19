@@ -2,6 +2,8 @@
 # encoding = utf8
 import sys
 from math import sqrt
+from random import randint
+from . import affichage
 
 try:
     from . import cppgravilib
@@ -77,6 +79,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     
             else:
                 transfert_v(sphere,sphere2)
+                explosion(sphere2)
                 self.add_sphere(sphere)
                 self.add_sphere(sphere2)
     
@@ -101,7 +104,22 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vitessez = int(sqrt((m1*vz1**2 + m2*vz2**2)/masse_final), 0)    #NB le /2 n'est pas utile car on repasse directement a une vitesse
     sphere1.set_masse(masse_final)
     sphere1.set_speed(vitessex, vitessey, vitessez)
-    
+
+def explosion (sphere:PyBaseSphere):
+    """Sépare la sphère en paramètre en plusieurs morceaux.
+
+    Args:
+        sphere (PyBaseSphere): class PyBaseSphere de gravilib.py
+    """
+    vx,vy,vz=sphere.get_speed()
+    m = sphere.get_masse()                         # ça marche mais c'est archi-pas optimisé.
+    r = sphere.get_rayon()
+    x,y,z = sphere.get_coord()
+    nb_petit = randint(2,5)
+    for _ in range (nb_petit):
+        var = PyBaseSphere(x, y, z, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(1,15))
+        affichage.Fenetre_principale.ajouter_sphere(var)
+   
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
