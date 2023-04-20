@@ -22,8 +22,7 @@ ctypedef long long int lli
 ctypedef unsigned long int uli
 ctypedef unsigned long long int ulli
 
-def is_128_bit() -> bool:
-    return cppgravilib.is_128_bit
+is_128_bit:bool = cppgravilib.is_128_bit
 
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything

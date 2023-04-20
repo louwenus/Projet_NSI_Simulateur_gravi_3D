@@ -2,6 +2,8 @@
 # encoding = utf8
 from typing import Generator
 
+is_128_bit:bool
+
 class CyDummySphere:
     def init_c_container(self):                             
         """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass 
