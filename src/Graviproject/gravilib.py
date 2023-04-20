@@ -135,7 +135,7 @@ def explosion (sphere:PyBaseSphere):
     nb_petit = randint(2,5)
     if int(round(m/nb_petit,0)) != 0:
         for _ in range (nb_petit):
-            var = PyBaseSphere(x, y, z, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(1,15))
+            var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(10,1000000))
             affichage.Fenetre_principale.ajouter_sphere(var)
    
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
