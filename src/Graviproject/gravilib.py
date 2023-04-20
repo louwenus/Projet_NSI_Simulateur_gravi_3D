@@ -46,14 +46,6 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         """
         return [self.render_item]
 
-    def rebond(self) -> None:
-        """Inverse la trajectoire d'une sphère."""
-        vx,vy,vz=self.get_speed()
-        vx = vx*(-1)
-        vy = vy*(-1)
-        vz = vz*(-1)
-        self.set_speed((vx, vy, vz))
-
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
     def __init__(self,render:Renderer3D,ticktime:float) -> None:
@@ -161,7 +153,7 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     
-    e=(2*sqrt(d1*d2))/(d1+d2)
+    e=(2*sqrt(d1*d2))/(d1+d2) #calcul de l'elasticité lors de la collision
     
     somme_m=m1+m2
     
@@ -182,7 +174,7 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vfy2=int((mvy1+mvy2+em1*(vy1-vy2))/(somme_m))
 
     vfz1=int((mvz1+mvz2+em2*(vz2-vz1))/(somme_m))
-    vfz2=int((mvz1+mvz2+em1*(vz1-vz2))/(somme_m))
+    vfz2=int((mvz1+mvz2+em1*(vz1-vz2))/(somme_m)) #transfert de vitesses
     
     sphere1.set_speed((vfx1, vfy1, vfz1))
     sphere2.set_speed((vfx2, vfy2, vfz2))
