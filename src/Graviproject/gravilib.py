@@ -64,23 +64,36 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
         
         for sphere, sphere2 in self.collisions():
-            
-            if (sphere.get_rayon() > sphere2.get_rayon() * 3):
-                absorption(sphere, sphere2)
-                self.add_sphere(sphere)
-                for render in sphere2.get_render_items():
-                    self.render.remove_from_display(render)
+            vx1,vy1,vz1=sphere.get_speed()
+            vx2,vy2,vz2=sphere2.get_speed()
+            if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
+                if (sphere.get_rayon() > sphere2.get_rayon() * 3):
+                    absorption(sphere, sphere2)
+                    self.add_sphere(sphere)
+                    for render in sphere2.get_render_items():
+                        self.render.remove_from_display(render)
                     
-            elif (sphere2.get_rayon() > sphere.get_rayon() * 3):
-                absorption(sphere2, sphere)
-                self.add_sphere(sphere2)
-                for render in sphere.get_render_items():
-                    self.render.remove_from_display(render)
-                    
-            else:
+                else:
+                    absorption(sphere2, sphere)
+                    self.add_sphere(sphere2)
+                    for render in sphere.get_render_items():
+                        self.render.remove_from_display(render)
+                # explosion à faire si trop grande différence énergie / dureté.
+            elif (vx1 + vy1 + vz1 - vx2 -vy2 -vz2)/3 < 50000000:
                 transfert_v(sphere,sphere2)
                 self.add_sphere(sphere)
                 self.add_sphere(sphere2)
+            elif sphere.durete < sphere2.durete:
+                # changement de vitesse pour la sphère non explosé à implémenter
+                explosion(sphere)
+                for render in sphere.get_render_items():
+                    self.render.remove_from_display(render)
+                self.add_sphere(sphere2)
+            else:
+                explosion(sphere2)
+                for render in sphere2.get_render_items():
+                    self.render.remove_from_display(render)
+                self.add_sphere(sphere)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, et réalise l'absorption de la deuxiemme par la première
@@ -102,7 +115,7 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vitessey = int((m1*vy1*2 + m2*vy2*2)/masse_final)   #selon la formule momen cinétique = m*v
     vitessez = int((m1*vz1*2 + m2*vz2*2)/masse_final)
     sphere1.set_masse(masse_final)
-    sphere1.set_speed(vitessex, vitessey, vitessez)
+    sphere1.set_speed((vitessex, vitessey, vitessez))
 
 def explosion (sphere:PyBaseSphere):
     """Sépare la sphère en paramètre en plusieurs morceaux.
@@ -115,9 +128,10 @@ def explosion (sphere:PyBaseSphere):
     r = sphere.get_rayon()
     x,y,z = sphere.get_coord()
     nb_petit = randint(2,5)
-    for _ in range (nb_petit):
-        var = PyBaseSphere(x, y, z, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(1,15))
-        affichage.Fenetre_principale.ajouter_sphere(var)
+    if int(round(m/nb_petit,0)) != 0:
+        for _ in range (nb_petit):
+            var = PyBaseSphere(x, y, z, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(1,15))
+            affichage.Fenetre_principale.ajouter_sphere(var)
    
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
