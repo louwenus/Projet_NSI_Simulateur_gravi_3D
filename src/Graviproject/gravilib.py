@@ -99,9 +99,9 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     masse_final: int= m1+m2
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
-    vitessex = int(sqrt((m1*vx1**2 + m2*vx2**2)/masse_final), 0)    #gain (ou perte) de vitesse
-    vitessey = int(sqrt((m1*vy1**2 + m2*vy2**2)/masse_final), 0)    #selon la formule energie cinétique=masse*vitesse**2.
-    vitessez = int(sqrt((m1*vz1**2 + m2*vz2**2)/masse_final), 0)    #NB le /2 n'est pas utile car on repasse directement a une vitesse
+    vitessex = int((m1*vx1*2 + m2*vx2*2)/masse_final)   #gain (ou perte) de vitesse
+    vitessey = int((m1*vy1*2 + m2*vy2*2)/masse_final)   #selon la formule momen cinétique = m*v
+    vitessez = int((m1*vz1*2 + m2*vz2*2)/masse_final)
     sphere1.set_masse(masse_final)
     sphere1.set_speed(vitessex, vitessey, vitessez)
 
