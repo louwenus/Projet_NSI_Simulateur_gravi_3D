@@ -119,7 +119,7 @@ class Main_window(QWidget):
         try:
             path: str = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(path, langue.get("file.license"))
-            with open(path) as file:
+            with open(path, encoding="utf-8") as file:
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
             if settings.get("logging") >= 1:
