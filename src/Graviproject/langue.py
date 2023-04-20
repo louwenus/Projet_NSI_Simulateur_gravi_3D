@@ -8,7 +8,7 @@ lang: dict = {}
 
 path: str = os.path.abspath(os.path.dirname(__file__))
 path = os.path.join(path, "Langues/"+settings.get("affichage.langue")+".json")  
-with open(path, 'r') as setfile:
+with open(path, 'r', encoding="utf-8") as setfile:
     lang = json.load(setfile)
 
 

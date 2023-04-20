@@ -12,7 +12,7 @@ try:
     path: str = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(path, "default_settings.json")
     
-    with open(path, 'r') as setfile:
+    with open(path, 'r', encoding="utf-8") as setfile:
         defaults = json.load(setfile)
         
 except Exception as e:
@@ -27,7 +27,7 @@ else:
     path = os.path.join(path, "settings.json")
     
     try:
-        with open(path, 'r') as setfile:
+        with open(path, 'r', encoding="utf-8") as setfile:
             settings = json.load(setfile)
             
     except:
@@ -93,7 +93,7 @@ def save() -> bool:
     """
     
     try:
-        with open(path, 'w') as setfile:
+        with open(path, 'w', encoding="utf-8") as setfile:
             json.dump(settings, setfile, indent=2)
             return True
         

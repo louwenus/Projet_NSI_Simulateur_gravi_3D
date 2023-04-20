@@ -4,11 +4,11 @@
 import sys
 
 if "--license" in sys.argv:  # Disclaimer & parsing de certaines options passées à l'appel
-    with open("LICENCE_FR") as license:
+    with open("LICENCE_FR", encoding="utf-8") as license:
         print(license.read())
         exit(0)
 if "--licence-en" in sys.argv:
-    with open("LICENSE") as license:
+    with open("LICENSE", encoding="utf-8") as license:
         print(license.read())
         exit(0)
 if "--help" in sys.argv or "-h" in sys.argv:
