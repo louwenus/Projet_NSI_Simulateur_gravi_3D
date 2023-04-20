@@ -7,7 +7,13 @@
             "attach":"&Attacher les contrôles"
         },
         "settings":{
-            "title":"&Configuration"
+            "title":"&Configuration",
+            "speak":"&Langues",
+            "theme":{
+                "title":"&Thèmes",
+                "light":"Clair",
+                "dark":"Sombre"
+            }
         },
         "help":{
             "title":"Aid&e",

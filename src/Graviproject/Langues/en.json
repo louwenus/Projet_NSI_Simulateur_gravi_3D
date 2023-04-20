@@ -7,7 +7,13 @@
             "attach":"&Attach controls"
         },
         "settings":{
-            "title":"&Settings"
+            "title":"&Settings",
+            "speak":"&Languages",
+            "theme":{
+                "title":"&Themes",
+                "light":"Light",
+                "dark":"Dark"
+            }
         },
         "help":{
             "title":"&Help",
