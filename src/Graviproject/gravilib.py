@@ -129,13 +129,14 @@ def explosion (sphere:PyBaseSphere):
         sphere (PyBaseSphere): class PyBaseSphere de gravilib.py
     """
     vx,vy,vz=sphere.get_speed()
+    d=sphere.durete
     m = sphere.get_masse()                         # ça marche mais c'est archi-pas optimisé.
     r = sphere.get_rayon()
     x,y,z = sphere.get_coord()
     nb_petit = randint(2,5)
     if int(round(m/nb_petit,0)) != 0:
         for _ in range (nb_petit):
-            var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), randint(10,1000000))
+            var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d)
             affichage.Fenetre_principale.ajouter_sphere(var)
    
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):

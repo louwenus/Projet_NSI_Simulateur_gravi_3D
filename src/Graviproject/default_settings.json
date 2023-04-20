@@ -1,7 +1,7 @@
 {
   "affichage": {
     "langue":"fr",
-    "theme":"tkt"
+    "theme":"todo"
   },
   "simulation": {
     "fps": 10,

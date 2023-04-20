@@ -246,7 +246,7 @@ class Controles(QWidget):
         """Méthode constructeur, permet de créer les boutons cliquables d'ajout de sphères.
         """
         super().__init__()
-        self.setWindowTitle("Controles")
+        self.setWindowTitle(langue.get("control.title"))
         # layout des controles widget
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)

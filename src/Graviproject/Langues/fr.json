@@ -15,6 +15,7 @@
         }
     },
     "control":{
+        "title":"Contrôles",
         "simple_add":{
             "title":"Ajout direct"
         },

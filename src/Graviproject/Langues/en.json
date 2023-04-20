@@ -15,6 +15,7 @@
         }
     },
     "control":{
+        "title":"Controls",
         "simple_add":{
             "title":"Direct add"
         },
