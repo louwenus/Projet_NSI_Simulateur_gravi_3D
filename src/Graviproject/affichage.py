@@ -67,6 +67,7 @@ class Main_window(QWidget):
         self.affichage_controles: bool = True
         self.controles = Controles()
         self.layout.addWidget(self.controles)
+        self.controles.setFixedHeight(self.controles.minimumSizeHint().height())
 
         # Widget de rendu3D
         self.widget_3D: Renderer3D = Renderer3D(self.controles)
@@ -83,7 +84,6 @@ class Main_window(QWidget):
         self.timer.start()
         if settings.get("logging") >= 2:
             print("main windows initialized")
-
 
     def closeEvent(self, event) -> None:
         """Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
@@ -165,6 +165,7 @@ class Main_window(QWidget):
             event (QResizeEvent): évenement de resize dans le widget.
         """
         self.menuBar.setFixedWidth(self.size().width())
+        self.controles.setFixedHeight(self.controles.minimumSizeHint().height())
 
 
 class Controles(QWidget):
