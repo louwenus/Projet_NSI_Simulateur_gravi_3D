@@ -10,15 +10,16 @@ public:
     virtual ~DummySphere(); // constructeur par default requis pour etre virtuel
 
     // fonctions pour la collision
-    virtual bool t_collision_avec(DummySphere *instance) = 0;        // teste la collsion avec une autre sphere
-    virtual bool t_collision_coord(llco pos, uli rayon) const = 0;   // teste rapidement (faux positifs) la collsion
-    virtual bool t_colli_rapide(llco posmin, llco posmax) const = 0; // teste mieux la collision
+    virtual bool t_collision_avec(DummySphere *instance) = 0;       // test de collision avec une autre sphere
+    virtual bool t_collision_coord(llco pos, uli rayon) const = 0;  // teste rapidement (faux positifs) la collsion
+    virtual bool t_colli_rapide(llco posmin, llco posmax) const = 0;// teste mieux la collision
     virtual bool t_colli_nextf(llco pos,uli rayon) const = 0;
 
-    virtual ulli gravite_stats(llco &return_pos, ulli &sane_min_r, ulli &range) const = 0; // masse (interval,position out)     obtention des stats de gravitation.  la masse est divisé par le temps
-    virtual void accel(lco accel) = 0;                                                    // application d'un vecteur acceleration
     virtual void move() = 0;                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
+    virtual double gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const = 0; // masse (pos,rayon,range)
+    virtual void accel(const lco accel) = 0;                                              // vecteur acceleration
     virtual void debug() const = 0;
+    virtual void set_speed(li x,li y,li z) = 0;
     virtual void set_ticktime(const float ticktime) = 0;
 
     // variable
@@ -30,7 +31,7 @@ class SimpleSphere : public DummySphere
 public:
     // constructeurs et destructeur
     // SimpleSphere();
-    SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, uli rayon, li vx, li vy, li vz);
+    SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, uli rayon, li vx, li vy, li vz);
 
     // fonctions pour la collision
     virtual bool t_collision_avec(DummySphere *instance); // test de collision avec une autre sphere
@@ -39,24 +40,24 @@ public:
     virtual bool t_colli_nextf(llco pos,uli rayon) const;
 
     virtual void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
-    virtual ulli gravite_stats(llco &return_pos, ulli &sane_min_r, ulli &range) const; // masse (interval,position out)
+    virtual double gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const; // masse (pos,rayon,range)
     virtual void accel(const lco accel);                                              // vecteur acceleration
     virtual void debug() const;
     virtual void set_speed(li x,li y,li z);
     virtual void set_ticktime(const float ticktime);
-    virtual void set_masse(ulli masse);
+    virtual void set_masse(double masse);
 
     llco pos; // declared public to be easily accessible from cython (and then python)
     uli rayon;
     atlco speed;
-    ulli masse;
+    double masse;
 
 protected:
-    ulli masse_time;
+    double masse_time;
     llco posmin; // utilisé pour les tests de collision rapide
     llco posmax; // utilisé pour les tests de collision rapide
     float ticktime;
-    ulli range;   // distance 
+    double range;   // distance 
 };
 
 #endif

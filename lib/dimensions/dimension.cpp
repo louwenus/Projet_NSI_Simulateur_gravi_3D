@@ -10,7 +10,7 @@ BS::thread_pool BaseDimension::tpool = BS::thread_pool();
 BaseDimension::BaseDimension(): objets() {}
 BaseDimension::~BaseDimension() {}
 
-const std::list<DummySphere *> BaseDimension::get_sph_list()
+const std::list<DummySphere *> BaseDimension::get_sph_list() const
 {
     return this->objets;
 }
@@ -23,15 +23,15 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     llco coo;
     DummySphere *sphere = (*iterator++);
     ulli sanitize;
-    ulli range1;
-    ulli masse = sphere->gravite_stats(coo, sanitize, range1);
+    double range1;
+    double masse = sphere->gravite_stats(coo, sanitize, range1);
     lco accel = {0, 0, 0};
 
     llco temp_co;
-    ulli range2;
+    double range2;
     ulli sanitize2;
-    ulli masse2;
-    ulli divide;
+    double masse2;
+    double divide;
     for (; iterator != end; ++iterator)
     {
         masse2 = (*iterator)->gravite_stats(temp_co, sanitize2, range2);      // on stock la pos dans temp_co
@@ -47,26 +47,25 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
         }
         if (divide < range1)
         {
+            divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
             if (divide < range1 and divide < range2)
             {
-                divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
                 // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
-                (*iterator)->accel({(li)(-1 * (temp_co.x * masse) / divide), (li)(-1 * (temp_co.y * masse) / divide), (li)(-1 * (temp_co.z * masse) / divide)});
+                (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
                 // Enfin on calcule celle sur l'élément externe
                 accel.x += (li)((temp_co.x * masse2) / divide);
                 accel.y += (li)((temp_co.y * masse2) / divide);
                 accel.z += (li)((temp_co.z * masse2) / divide);
             } else {
-                divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
-                (*iterator)->accel({(li)(-1 * (temp_co.x * masse) / divide), (li)(-1 * (temp_co.y * masse) / divide), (li)(-1 * (temp_co.z * masse) / divide)});
+                (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
             }
             
         } else if (divide < range2)
         {
             divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
-            accel.x += (li)((temp_co.x * masse2) / divide);
-            accel.y += (li)((temp_co.y * masse2) / divide);
-            accel.z += (li)((temp_co.z * masse2) / divide);
+            accel.x += (li)((masse2 * temp_co.x) / divide);
+            accel.y += (li)((masse2 * temp_co.y) / divide);
+            accel.z += (li)((masse2 * temp_co.z) / divide);
         }
     }
     sphere->accel(accel);
@@ -119,7 +118,7 @@ std::list<PyObject *> BaseDimension::detect_collisions()
     }
     return liste;
 }
-void BaseDimension::debug()
+void BaseDimension::debug() const
 {
     std::cout << "Debuging BaseDimension\n";
     for (auto iter = this->objets.begin(); iter != this->objets.end(); ++iter)

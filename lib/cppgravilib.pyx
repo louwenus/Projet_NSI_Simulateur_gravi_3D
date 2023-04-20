@@ -123,7 +123,7 @@ cdef class CySimpleSphere(CyDummySphere):
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
     def get_masse(self) -> ulli:
         return self.c_simple_sphere.masse
-    def set_masse(self,masse:ulli) -> None:
+    def set_masse(self,masse:double) -> None:
         self.c_simple_sphere.set_masse(masse)
     def set_ticktime(self,ticktime:float) -> None:
         self.c_simple_sphere.set_ticktime(<const float>ticktime)

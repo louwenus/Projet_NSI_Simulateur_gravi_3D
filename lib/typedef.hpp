@@ -11,12 +11,14 @@
 #include <atomic>
 #include <iostream>
 #include "Python.h"
-
 // for easier args typing
 typedef uint64_t ulli;
 typedef int64_t lli;
 typedef int32_t li;
 typedef uint32_t uli;
+
+
+
 struct llco
 {
     lli x;
