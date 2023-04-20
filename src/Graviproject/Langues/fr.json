@@ -3,8 +3,8 @@
     "menu":{
         "display":{
             "title":"A&ffichage",
-            "detach":"&Détacher les contrôles",
-            "attach":"&Attacher les contrôles"
+            "detach":"&DÃ©tacher les contrÃ´les",
+            "attach":"&Attacher les contrÃ´les"
         },
         "settings":{
             "title":"&Configuration"
@@ -19,14 +19,14 @@
             "title":"Ajout direct"
         },
         "add_settings":{
-            "title":"Ajouter des sphères",
-            "nb":"Nombre de sphères :",
-            "x":"Coordonnée X :",
-            "y":"Coordonnée Y :",
-            "z":"Coordonnée Z :",
+            "title":"Ajouter des sphÃ¨res",
+            "nb":"Nombre de sphÃ¨res :",
+            "x":"CoordonnÃ©e X :",
+            "y":"CoordonnÃ©e Y :",
+            "z":"CoordonnÃ©e Z :",
             "m":"Masse :",
             "r":"Rayon :",
-            "valid":"Ajouter les sphères"
+            "valid":"Ajouter les sphÃ¨res"
         }
     },
     "file":{
