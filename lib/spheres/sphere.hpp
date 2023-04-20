@@ -18,7 +18,6 @@ public:
     virtual void move() = 0;                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual double gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const = 0; // masse (pos,rayon,range)
     virtual void accel(const lco accel) = 0;                                              // vecteur acceleration
-    virtual void debug() const = 0;
     virtual void set_speed(li x,li y,li z) = 0;
     virtual void set_ticktime(const float ticktime) = 0;
 
@@ -42,7 +41,6 @@ public:
     virtual void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual double gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const; // masse (pos,rayon,range)
     virtual void accel(const lco accel);                                              // vecteur acceleration
-    virtual void debug() const;
     virtual void set_speed(li x,li y,li z);
     virtual void set_ticktime(const float ticktime);
     virtual void set_masse(double masse);

@@ -75,11 +75,6 @@ bool SimpleSphere::t_colli_rapide(llco posmin, llco posmax) const
 {                                                                                                                                                                          // cette fonction teste rapidement (faux positifs) si cette sphere en touche une autre
     return (this->posmin.x<posmax.x &&this->posmin.y<posmax.y &&this->posmin.z<posmax.z &&this->posmax.x> posmin.x &&this->posmax.y> posmin.y &&this->posmax.z> posmin.z); // test de collision rectangles
 }
-
-void SimpleSphere::debug() const
-{
-    std::cout << "Position:" << this->pos.x << '/' << this->pos.y << '/' << this->pos.z << " Vitesse:" << this->speed.x << '/' << this->speed.y << '/' << this->speed.z << '\n';
-}
 void SimpleSphere::set_speed(li x,li y,li z)
 {
     this->speed.x = x;

@@ -18,6 +18,7 @@ ctypedef unsigned long int uli
 ctypedef unsigned long long int ulli
 
 cdef extern from "typedef.hpp":
+    bint is_128_bit
     struct llco:
         lli x
         lli y
@@ -53,6 +54,5 @@ cdef extern from "dimensions/dimension.hpp":
         void add_sphere(DummySphere*)
         void gravite_all()
         void move_all()
-        void debug() const
         clist[PyObjPtr] detect_collisions()
         const clist[DummySpherePtr] get_sph_list() const

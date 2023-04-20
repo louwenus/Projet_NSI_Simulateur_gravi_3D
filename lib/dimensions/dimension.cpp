@@ -118,11 +118,3 @@ std::list<PyObject *> BaseDimension::detect_collisions()
     }
     return liste;
 }
-void BaseDimension::debug() const
-{
-    std::cout << "Debuging BaseDimension\n";
-    for (auto iter = this->objets.begin(); iter != this->objets.end(); ++iter)
-    {
-        (*iter)->debug();
-    }
-}

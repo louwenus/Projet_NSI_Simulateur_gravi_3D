@@ -22,6 +22,9 @@ ctypedef long long int lli
 ctypedef unsigned long int uli
 ctypedef unsigned long long int ulli
 
+def is_128_bit() -> bool:
+    return cppgravilib.is_128_bit
+
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
 
@@ -33,9 +36,7 @@ cdef class CyBaseDimension:
     def __dealloc__(self):
         if type(self) is CyBaseDimension:
             del self.c_base_dim
-    def debug(self) -> None:
-        self.c_base_dim.debug()
-    
+
     def gravite_all(self) -> None:
         self.c_base_dim.gravite_all()
     def move_all(self) -> None:
@@ -123,7 +124,7 @@ cdef class CySimpleSphere(CyDummySphere):
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
     def get_masse(self) -> ulli:
         return self.c_simple_sphere.masse
-    def set_masse(self,masse:double) -> None:
+    def set_masse(self,double masse) -> None:
         self.c_simple_sphere.set_masse(masse)
     def set_ticktime(self,ticktime:float) -> None:
         self.c_simple_sphere.set_ticktime(<const float>ticktime)
