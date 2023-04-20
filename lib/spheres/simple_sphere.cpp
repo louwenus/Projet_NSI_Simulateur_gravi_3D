@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, uli rayon, li vx, li vy, li vz) :
+SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, uli rayon, li vx, li vy, li vz) :
     DummySphere(parent),
     pos{x,y,z},
     rayon(rayon),
@@ -15,7 +15,6 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
 
 void SimpleSphere::move()
 {   
-    ;
     this->pos.x += (int)(this->speed.x) * this->ticktime;
     this->pos.y += (int)(this->speed.y) * this->ticktime;
     this->pos.z += (int)(this->speed.z) * this->ticktime;
@@ -24,7 +23,7 @@ void SimpleSphere::move()
     this->posmax = {this->pos.x + this->rayon, this->pos.y + this->rayon, this->pos.z + this->rayon};
 }
 // gravitation
-ulli SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r, ulli &range) const
+double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const
 { // cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos = this->pos;
     sane_min_r = this->rayon;
@@ -33,9 +32,9 @@ ulli SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r, ulli &range
 }
 void SimpleSphere::accel(const lco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
-    this->speed.x += accel.x;
-    this->speed.y += accel.y;
-    this->speed.z += accel.z;
+    this->speed.x.fetch_add(accel.x,std::memory_order_relaxed);
+    this->speed.y.fetch_add(accel.y,std::memory_order_relaxed);
+    this->speed.z.fetch_add(accel.z,std::memory_order_relaxed);
 }
 
 // collision
@@ -48,9 +47,9 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
     if (instance->t_collision_coord(this->pos, this->rayon))
     {   
         llco postemp=this->pos;
-        postemp.x+=(int)(this->speed.x);
-        postemp.y+=(int)(this->speed.y);
-        postemp.z+=(int)(this->speed.z);
+        postemp.x+=(li)(this->speed.x);
+        postemp.y+=(li)(this->speed.y);
+        postemp.z+=(li)(this->speed.z);
         if (instance->t_colli_nextf(postemp,this->rayon)){
             return true;
         }
@@ -58,7 +57,7 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
     return false;
 }
 bool SimpleSphere::t_colli_nextf(llco pos,uli rayon) const {
-    if (pow(pos.x - this->pos.x - (int)(this->speed.x), 2) + pow(pos.y - this->pos.y - (int)(this->speed.y), 2) + pow(pos.z - this->pos.z - (int)(this->speed.z), 2) < pow(rayon + this->rayon, 2))
+    if (pow(pos.x - this->pos.x - (li)(this->speed.x), 2) + pow(pos.y - this->pos.y - (li)(this->speed.y), 2) + pow(pos.z - this->pos.z - (li)(this->speed.z), 2) < pow(rayon + this->rayon, 2))
     {
         return true;
     }
@@ -91,12 +90,12 @@ void SimpleSphere::set_ticktime(const float ticktime)
 {
     this->ticktime=ticktime;
     this->masse_time=masse*ticktime;
-    this->range=this->masse_time*this->ticktime;
+    this->range=this->masse_time;
 }
 
-void SimpleSphere::set_masse(ulli masse)
+void SimpleSphere::set_masse(double masse)
 {
     this->masse=masse;
     this->masse_time=masse*this->ticktime;
-    this->range=this->masse_time*this->ticktime;
+    this->range=this->masse_time;
 }

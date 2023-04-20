@@ -220,8 +220,8 @@ class Controles(QWidget):
         yrand=Controles.yrand.value()*200000
         zmean=Controles.zmean.value()*200000
         zrand=Controles.zrand.value()*200000
-        mmin=Controles.massemin.value()*100
-        mmax=Controles.massemax.value()*100
+        mmin=Controles.massemin.value()*1000000
+        mmax=Controles.massemax.value()*1000000
         rmin=Controles.rayonmin.value()*100
         rmax=Controles.rayonmax.value()*100
         for _ in range(Controles.amount.value()):

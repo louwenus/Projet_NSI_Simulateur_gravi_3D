@@ -125,7 +125,7 @@ class SphereItem():
         self.update_masse(masse)
 
     def update_masse(self,masse:int):
-        scale=log2(masse)*8 # la masse étant positive sur 64 bits, on devrait avoir un résultat entre 1 et 512
+        scale=log2(masse)/2 # la masse étant un double sur 64 bits, on devrait avoir un résultat entre 1 et 512
         if scale>512:
             scale=512
             if settings.get("logging")>=1:

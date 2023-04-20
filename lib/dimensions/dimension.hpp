@@ -21,9 +21,9 @@ public:
     virtual void gravite_all();
     virtual void move_all();
     virtual void add_sphere(DummySphere *instance);
-    virtual void debug();
+    virtual void debug() const;
     virtual std::list<PyObject *> detect_collisions();
-    virtual const std::list<DummySphere *> get_sph_list();
+    virtual const std::list<DummySphere *> get_sph_list() const;
 
 protected:
     // Variables

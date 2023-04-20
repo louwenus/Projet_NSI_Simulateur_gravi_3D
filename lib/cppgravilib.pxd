@@ -37,13 +37,13 @@ cdef extern from "spheres/sphere.hpp":
         DummySphere(PyObject* parent) except +
         PyObject* pyparent
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(PyObject* parent,lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz) except +
+        SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,uli rayon,li vx,li vy,li vz) except +
         llco pos
         uli rayon
-        ulli masse
+        double masse
         atlco speed
         void set_speed(li x,li y,li z)
-        void set_masse(ulli masse)
+        void set_masse(double masse)
         void set_ticktime(const float ticktime)
 ctypedef DummySphere* DummySpherePtr        
 
@@ -53,6 +53,6 @@ cdef extern from "dimensions/dimension.hpp":
         void add_sphere(DummySphere*)
         void gravite_all()
         void move_all()
-        void debug()
+        void debug() const
         clist[PyObjPtr] detect_collisions()
-        clist[DummySpherePtr] get_sph_list()
+        const clist[DummySpherePtr] get_sph_list() const
