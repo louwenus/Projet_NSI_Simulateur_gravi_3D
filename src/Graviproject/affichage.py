@@ -202,8 +202,8 @@ class Controles(QWidget):
     for i,widget in enumerate((QLabel(langue.get("control.add_settings.z")), zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
     
-    massemin = QDoubleSpinBox(minimum=1, maximum=10**9, value=10**3,decimals=0)
-    massemax = QDoubleSpinBox(minimum=1,maximum=10**9,value=10**4,decimals=0)
+    massemin = QDoubleSpinBox(minimum=1, maximum=float(10**17), value=10**3,decimals=0)
+    massemax = QDoubleSpinBox(minimum=1,maximum=float(10**17),value=10**4,decimals=0)
     for i,widget in enumerate((QLabel(langue.get("control.add_settings.m")), massemin, QLabel("<?<"),massemax)):
         layout_aj_sph.addWidget(widget,4,i)
     rayonmin = QDoubleSpinBox(minimum=1,maximum=10**7,value=3*10**4,decimals=0)
