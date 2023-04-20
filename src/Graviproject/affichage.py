@@ -89,11 +89,6 @@ class Main_window(QWidget):
         """Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme
         """
         app.exit(0)
-        
-    def keyPressEvent(self, event):
-        # Permet de fermer toutes les fenêtres lors de la fermeture de la fenêtre principale, et de terminer le programme grace aux touches
-        if event.key() == Qt.Key_Escape:
-            app.exit(0)
     
     def attach_detach_controles(self) -> None: 
         """Permet d'afficher les controles dans une fenètre séparée de la principale."""
