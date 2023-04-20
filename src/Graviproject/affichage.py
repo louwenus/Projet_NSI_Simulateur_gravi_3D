@@ -73,10 +73,10 @@ class Main_window(QWidget):
         self.layout.addWidget(self.widget_3D)
 
         # Dimension affichée par la fenètre de rendu
-        self.dimension = gravilib.PyBaseDimension(self.widget_3D)
+        self.ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
+        self.dimension = gravilib.PyBaseDimension(self.widget_3D,self.ticktime)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
-        self.ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
         self.timer: QTimer = QTimer(self)
         self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         self.timer.timeout.connect(self.update_simulation)
@@ -138,15 +138,16 @@ class Main_window(QWidget):
         self.dimension.add_sphere(sph)
         for rendu in sph.get_render_items():
             self.widget_3D.add_to_display(rendu)
+    
     if  settings.get("logging")>=3:
         def update_simulation(self) -> None:
             totalstart = time()
             start = time()
             print("starting update")
-            self.dimension.gravite_all(self.ticktime)
+            self.dimension.gravite_all()
             print("grav time:", time()-start)
             start = time()
-            self.dimension.move_all(self.ticktime)
+            self.dimension.move_all()
             print("move time:", time()-start)
             start = time()
             self.dimension.gerer_colision()
@@ -157,8 +158,8 @@ class Main_window(QWidget):
             print("total:", time()-totalstart,"on",self.ticktime,"normaly")
     else:
         def update_simulation(self) -> None:
-            self.dimension.gravite_all(self.ticktime)
-            self.dimension.move_all(self.ticktime)
+            self.dimension.gravite_all()
+            self.dimension.move_all()
             self.dimension.gerer_colision()
             self.widget_3D.repaint()
 

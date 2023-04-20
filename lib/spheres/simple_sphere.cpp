@@ -12,21 +12,21 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
     posmax{x+rayon,y+rayon,z+rayon}
 {}
 
-void SimpleSphere::move(float temps)
+void SimpleSphere::move()
 {
-    this->pos.x += this->speed.x * temps;
-    this->pos.y += this->speed.y * temps;
-    this->pos.z += this->speed.z * temps;
+    this->pos.x += this->speed.x * this->ticktime;
+    this->pos.y += this->speed.y * this->ticktime;
+    this->pos.z += this->speed.z * this->ticktime;
 
     this->posmin = {this->pos.x - this->rayon, this->pos.y - this->rayon, this->pos.z - this->rayon};
     this->posmax = {this->pos.x + this->rayon, this->pos.y + this->rayon, this->pos.z + this->rayon};
 }
 // gravitation
-ulli SimpleSphere::gravite_stats(float temps, llco &return_pos, ulli &sane_min_r) const
+ulli SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
 { // cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos = this->pos;
     sane_min_r = this->rayon;
-    return this->masse * temps;
+    return this->masse_time;
 }
 void SimpleSphere::accel(const lco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
@@ -83,4 +83,16 @@ void SimpleSphere::set_speed(li x,li y,li z)
     this->speed.x = x;
     this->speed.y = y;
     this->speed.z = z;
+}
+void SimpleSphere::set_ticktime(const float ticktime)
+{
+    this->ticktime=ticktime;
+    this->range=(lli)sqrt(this->masse*this->ticktime);
+    this->masse_time=masse*ticktime;
+}
+
+void SimpleSphere::set_masse(ulli masse)
+{
+    this->masse=masse;
+    this->masse_time=masse*this->ticktime;
 }

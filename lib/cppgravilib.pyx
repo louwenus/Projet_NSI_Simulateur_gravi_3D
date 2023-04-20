@@ -36,10 +36,10 @@ cdef class CyBaseDimension:
     def debug(self) -> None:
         self.c_base_dim.debug()
     
-    def gravite_all(self,float temps) -> None:
-        self.c_base_dim.gravite_all(temps)
-    def move_all(self,float temps) -> None:
-        self.c_base_dim.move_all(temps)
+    def gravite_all(self) -> None:
+        self.c_base_dim.gravite_all()
+    def move_all(self) -> None:
+        self.c_base_dim.move_all()
     def add_sphere(self,CyDummySphere instance) -> None:
         self.c_base_dim.add_sphere(instance.c_sphere)
     
@@ -97,6 +97,8 @@ cdef class CyDummySphere:
         return 0,0,0
     def set_speed(self,speed:Tuple[li,li,li]) -> None:
         pass
+    def set_ticktime(self,ticktime:float) -> None:
+        pass
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
@@ -122,4 +124,6 @@ cdef class CySimpleSphere(CyDummySphere):
     def get_masse(self) -> ulli:
         return self.c_simple_sphere.masse
     def set_masse(self,masse:ulli) -> None:
-        self.c_simple_sphere.masse = masse
+        self.c_simple_sphere.set_masse(masse)
+    def set_ticktime(self,ticktime:float) -> None:
+        self.c_simple_sphere.set_ticktime(<const float>ticktime)
