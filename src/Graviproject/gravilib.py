@@ -84,7 +84,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     
             else:
                 transfert_v(sphere,sphere2)
-                explosion(sphere2)
                 self.add_sphere(sphere)
                 self.add_sphere(sphere2)
     
