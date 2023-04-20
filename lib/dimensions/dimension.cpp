@@ -15,7 +15,7 @@ const std::list<DummySphere *> BaseDimension::get_sph_list()
     return this->objets;
 }
 
-void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphere *>::iterator end, const float temps)
+void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphere *>::iterator end)
 {
     /* Cette fonction calcule et applique la gravitation entre la sphère pointée par iterator, et toute les suivante sur cet iterateur jusqu'à end.
     end doit évidement être un itérateur sur le meme objet que iterator, et situé après lui. temps et la constante de temps passé aux gravite_stats. */
@@ -23,7 +23,7 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     llco coo;
     DummySphere *sphere = (*iterator++);
     ulli sanitize;
-    ulli masse = sphere->gravite_stats(temps, coo, sanitize);
+    ulli masse = sphere->gravite_stats(coo, sanitize);
     lco accel = {0, 0, 0};
 
     llco temp_co;
@@ -32,7 +32,7 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     ulli divide;
     for (; iterator != end; ++iterator)
     {
-        masse2 = (*iterator)->gravite_stats(temps, temp_co, sanitize2);      // on stock la pos dans temp_co
+        masse2 = (*iterator)->gravite_stats(temp_co, sanitize2);      // on stock la pos dans temp_co
         temp_co = {temp_co.x - coo.x, temp_co.y - coo.y, temp_co.z - coo.z}; // puis on y mets le vecteur distance
         // divide = distance^2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction (optimisation)
         divide = temp_co.x * temp_co.x + temp_co.y * temp_co.y + temp_co.z * temp_co.z;
@@ -54,12 +54,12 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     sphere->accel(accel);
 }
 
-void BaseDimension::gravite_all(float temps)
+void BaseDimension::gravite_all()
 {
 
     for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
     {
-        this->tpool.push_task(grav, iterator, this->objets.end(), temps);
+        this->tpool.push_task(grav, iterator, this->objets.end());
     }
     this->tpool.wait_for_tasks();
 }
@@ -68,11 +68,11 @@ void BaseDimension::add_sphere(DummySphere *instance)
     // Py_INCREF(instance->pyparent);
     this->objets.push_back(instance);
 }
-void BaseDimension::move_all(float temps)
+void BaseDimension::move_all()
 {
     for (auto iter = this->objets.begin(); iter != this->objets.end(); ++iter)
     {
-        (*iter)->move(temps);
+        (*iter)->move();
     }
 }
 std::list<PyObject *> BaseDimension::detect_collisions()

@@ -15,10 +15,11 @@ public:
     virtual bool t_colli_rapide(llco posmin, llco posmax) const = 0; // teste mieux la collision
     virtual bool t_colli_nextf(llco pos,uli rayon) const = 0;
 
-    virtual ulli gravite_stats(float temps, llco &return_pos, ulli &sane_min_r) const = 0; // masse (interval,position out)     obtention des stats de gravitation.  la masse est divisé par le temps
+    virtual ulli gravite_stats(llco &return_pos, ulli &sane_min_r) const = 0; // masse (interval,position out)     obtention des stats de gravitation.  la masse est divisé par le temps
     virtual void accel(lco accel) = 0;                                                    // application d'un vecteur acceleration
-    virtual void move(float temps) = 0;                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
+    virtual void move() = 0;                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     virtual void debug() const = 0;
+    virtual void set_ticktime(const float ticktime) = 0;
 
     // variable
     PyObject *pyparent;
@@ -37,11 +38,13 @@ public:
     virtual bool t_colli_rapide(llco posmin, llco posmax) const;
     virtual bool t_colli_nextf(llco pos,uli rayon) const;
 
-    virtual void move(float temps);                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
-    virtual ulli gravite_stats(float temps, llco &return_pos, ulli &sane_min_r) const; // masse (interval,position out)
+    virtual void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
+    virtual ulli gravite_stats(llco &return_pos, ulli &sane_min_r) const; // masse (interval,position out)
     virtual void accel(const lco accel);                                              // vecteur acceleration
     virtual void debug() const;
     virtual void set_speed(li x,li y,li z);
+    virtual void set_ticktime(const float ticktime);
+    virtual void set_masse(ulli masse);
 
     llco pos; // declared public to be easily accessible from cython (and then python)
     uli rayon;
@@ -49,8 +52,11 @@ public:
     ulli masse;
 
 protected:
+    ulli masse_time;
     llco posmin; // utilisé pour les tests de collision rapide
     llco posmax; // utilisé pour les tests de collision rapide
+    float ticktime;
+    lli range;   // distance 
 };
 
 #endif

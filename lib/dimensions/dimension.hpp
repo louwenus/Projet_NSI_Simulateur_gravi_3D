@@ -18,8 +18,8 @@ public:
     BaseDimension();
     virtual ~BaseDimension();
     // Autre méthodes
-    virtual void gravite_all(float temps);
-    virtual void move_all(float temps);
+    virtual void gravite_all();
+    virtual void move_all();
     virtual void add_sphere(DummySphere *instance);
     virtual void debug();
     virtual std::list<PyObject *> detect_collisions();

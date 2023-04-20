@@ -43,14 +43,16 @@ cdef extern from "spheres/sphere.hpp":
         ulli masse
         atlco speed
         void set_speed(li x,li y,li z)
+        void set_masse(ulli masse)
+        void set_ticktime(const float ticktime)
 ctypedef DummySphere* DummySpherePtr        
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
         BaseDimension() except +
         void add_sphere(DummySphere*)
-        void gravite_all(float temps)
-        void move_all(float temps)
+        void gravite_all()
+        void move_all()
         void debug()
         clist[PyObjPtr] detect_collisions()
         clist[DummySpherePtr] get_sph_list()

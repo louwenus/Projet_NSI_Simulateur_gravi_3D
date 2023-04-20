@@ -56,9 +56,14 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
 
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
-    def __init__(self,render:Renderer3D) -> None:
+    def __init__(self,render:Renderer3D,ticktime:float) -> None:
         self.init_c_container()
         self.render: Renderer3D=render #pour que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
+        self.ticktime=ticktime
+        
+    def add_sphere(self, instance: cppgravilib.CyDummySphere) -> None:
+        instance.set_ticktime(self.ticktime)
+        super().add_sphere(instance)
 
     def gerer_colision(self) -> None:
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
