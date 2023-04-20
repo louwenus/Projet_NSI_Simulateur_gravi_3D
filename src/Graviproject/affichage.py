@@ -44,6 +44,22 @@ class Main_window(QWidget):
         # Création des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+        
+        self.frAction : QAction = QAction("Français", self)
+        #self.frAction.triggered.connect()
+        
+        self.enAction : QAction = QAction("English", self)
+        #self.enAction.triggered.connect()
+        
+        self.itAction : QAction = QAction("Italiano", self)
+        #self.itAction.triggered.connect()
+        
+        self.lightAction : QAction = QAction(langue.get("menu.settings.theme.light"), self)
+        #self.lightAction.triggered.connect()
+        
+        self.darkAction : QAction = QAction(langue.get("menu.settings.theme.dark"), self)
+        #self.darkAction.triggered.connect()
+        #TODO : ajout des actions (en commentaire) et voir s'il est possible de le faire avec moins de QAction : car tâches identiques
 
         self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
         self.licenseAction.triggered.connect(self.affich_licence)
@@ -56,8 +72,14 @@ class Main_window(QWidget):
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
         
-        self.configMenu: QMenu = QMenu(langue.get("menu.settings.title"), self.menuBar)
-        self.menuBar.addMenu(self.configMenu)#TODO : ajout du selecteur de langue
+        self.configMenu : QMenu = QMenu(langue.get("menu.settings.title"), self.menuBar)
+        self.menuBar.addMenu(self.configMenu)
+        self.langMenu : QMenu = QMenu(langue.get("menu.settings.speak"), self.configMenu)
+        self.configMenu.addMenu(self.langMenu)
+        self.langMenu.addActions([self.frAction,self.enAction,self.itAction])
+        self.themeMenu : QMenu = QMenu(langue.get("menu.settings.theme.title"), self.configMenu)
+        self.configMenu.addMenu(self.themeMenu)
+        self.themeMenu.addActions([self.lightAction,self.darkAction])
 
         self.helpMenu: QMenu = QMenu(langue.get("menu.help.title"), self.menuBar)
         self.menuBar.addMenu(self.helpMenu)
