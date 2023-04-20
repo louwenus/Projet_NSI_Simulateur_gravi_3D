@@ -9,14 +9,16 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, ulli masse, ul
     speed{vx,vy,vz},
     masse(masse),
     posmin{x-rayon, y-rayon, z-rayon},
-    posmax{x+rayon,y+rayon,z+rayon}
+    posmax{x+rayon,y+rayon,z+rayon},
+    ticktime{1}
 {}
 
 void SimpleSphere::move()
-{
-    this->pos.x += this->speed.x * this->ticktime;
-    this->pos.y += this->speed.y * this->ticktime;
-    this->pos.z += this->speed.z * this->ticktime;
+{   
+    ;
+    this->pos.x += (int)(this->speed.x) * this->ticktime;
+    this->pos.y += (int)(this->speed.y) * this->ticktime;
+    this->pos.z += (int)(this->speed.z) * this->ticktime;
 
     this->posmin = {this->pos.x - this->rayon, this->pos.y - this->rayon, this->pos.z - this->rayon};
     this->posmax = {this->pos.x + this->rayon, this->pos.y + this->rayon, this->pos.z + this->rayon};
@@ -46,9 +48,9 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
     if (instance->t_collision_coord(this->pos, this->rayon))
     {   
         llco postemp=this->pos;
-        postemp.x+=this->speed.x;
-        postemp.y+=this->speed.y;
-        postemp.z+=this->speed.z;
+        postemp.x+=(int)(this->speed.x);
+        postemp.y+=(int)(this->speed.y);
+        postemp.z+=(int)(this->speed.z);
         if (instance->t_colli_nextf(postemp,this->rayon)){
             return true;
         }
@@ -56,7 +58,7 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
     return false;
 }
 bool SimpleSphere::t_colli_nextf(llco pos,uli rayon) const {
-    if (pow(pos.x - this->pos.x - this->speed.x, 2) + pow(pos.y - this->pos.y - this->speed.y, 2) + pow(pos.z - this->pos.z - this->speed.z, 2) < pow(rayon + this->rayon, 2))
+    if (pow(pos.x - this->pos.x - (int)(this->speed.x), 2) + pow(pos.y - this->pos.y - (int)(this->speed.y), 2) + pow(pos.z - this->pos.z - (int)(this->speed.z), 2) < pow(rayon + this->rayon, 2))
     {
         return true;
     }
