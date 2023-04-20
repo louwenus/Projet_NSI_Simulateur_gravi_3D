@@ -165,7 +165,6 @@ class Main_window(QWidget):
             event (QResizeEvent): évenement de resize dans le widget.
         """
         self.menuBar.setFixedWidth(self.size().width())
-        self.controles.setFixedHeight(self.controles.minimumSizeHint().height())
 
 
 class Controles(QWidget):
