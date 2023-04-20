@@ -6,6 +6,8 @@ Utilisation de [Cython](https://github.com/cython/cython).<br/><br/>
 Licence GPLV3+ :
 Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
 
+Utilisation de [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C++17 Thread Pool for High-Performance Scientific Computing.
+
 ## Installation :<br/>
 - Avec les versions déjà compilées :<br/>
   *NB : Cette méthode peut ne pas fonctionner en cas de différence trop importante entre le serveur sur lequel les wheel sont build et votre ordinateur.*
