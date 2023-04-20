@@ -59,7 +59,7 @@ class Main_window(QWidget):
         
         self.darkAction : QAction = QAction(langue.get("menu.settings.theme.dark"), self)
         #self.darkAction.triggered.connect()
-        #TODO : ajout des actions (en commentaire)
+        #TODO : ajout des actions (en commentaire) et voir s'il est possible de le faire avec moins de QAction : car tâches identiques
 
         self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
         self.licenseAction.triggered.connect(self.affich_licence)
