@@ -23,16 +23,18 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     llco coo;
     DummySphere *sphere = (*iterator++);
     ulli sanitize;
-    ulli masse = sphere->gravite_stats(coo, sanitize);
+    ulli range1;
+    ulli masse = sphere->gravite_stats(coo, sanitize, range1);
     lco accel = {0, 0, 0};
 
     llco temp_co;
+    ulli range2;
     ulli sanitize2;
     ulli masse2;
     ulli divide;
     for (; iterator != end; ++iterator)
     {
-        masse2 = (*iterator)->gravite_stats(temp_co, sanitize2);      // on stock la pos dans temp_co
+        masse2 = (*iterator)->gravite_stats(temp_co, sanitize2, range2);      // on stock la pos dans temp_co
         temp_co = {temp_co.x - coo.x, temp_co.y - coo.y, temp_co.z - coo.z}; // puis on y mets le vecteur distance
         // divide = distance^2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction (optimisation)
         divide = temp_co.x * temp_co.x + temp_co.y * temp_co.y + temp_co.z * temp_co.z;
@@ -43,13 +45,29 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
         {
             divide = sanitize2;
         }
-        divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
-        // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
-        (*iterator)->accel({(li)(-1 * (temp_co.x * masse) / divide), (li)(-1 * (temp_co.y * masse) / divide), (li)(-1 * (temp_co.z * masse) / divide)});
-        // Enfin on calcule celle sur l'élément externe
-        accel.x += (li)((temp_co.x * masse2) / divide);
-        accel.y += (li)((temp_co.y * masse2) / divide);
-        accel.z += (li)((temp_co.z * masse2) / divide);
+        if (divide < range1)
+        {
+            if (divide < range1 and divide < range2)
+            {
+                divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
+                // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
+                (*iterator)->accel({(li)(-1 * (temp_co.x * masse) / divide), (li)(-1 * (temp_co.y * masse) / divide), (li)(-1 * (temp_co.z * masse) / divide)});
+                // Enfin on calcule celle sur l'élément externe
+                accel.x += (li)((temp_co.x * masse2) / divide);
+                accel.y += (li)((temp_co.y * masse2) / divide);
+                accel.z += (li)((temp_co.z * masse2) / divide);
+            } else {
+                divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
+                (*iterator)->accel({(li)(-1 * (temp_co.x * masse) / divide), (li)(-1 * (temp_co.y * masse) / divide), (li)(-1 * (temp_co.z * masse) / divide)});
+            }
+            
+        } else if (divide < range2)
+        {
+            divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
+            accel.x += (li)((temp_co.x * masse2) / divide);
+            accel.y += (li)((temp_co.y * masse2) / divide);
+            accel.z += (li)((temp_co.z * masse2) / divide);
+        }
     }
     sphere->accel(accel);
 }
