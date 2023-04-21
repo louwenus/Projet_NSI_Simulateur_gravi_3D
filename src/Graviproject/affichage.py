@@ -48,6 +48,7 @@ class Main_window(QWidget):
         # Création des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+        self.changeLangSignal.connect(self.attach_detach_texte)
         
         self.langAction = []
         for speak in (("Français","fr"),("English","en"),("Italiano","it")):
@@ -118,7 +119,6 @@ class Main_window(QWidget):
             self.controles.hide()
             controles_graphiques.show()
             self.attach_detachAction.setText(langue.get("menu.display.attach"))
-            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.attach"))
             self.affichage_controles = False
             if settings.get("logging") >= 2:
                 print("controles déttachés")
@@ -126,10 +126,15 @@ class Main_window(QWidget):
             self.controles.show()
             controles_graphiques.hide()
             self.attach_detachAction.setText(langue.get("menu.display.detach"))
-            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.detach"))
             self.affichage_controles = True
             if settings.get("logging") >= 2:
                 print("controles attachés")
+                
+    def attach_detach_texte(self):
+        if self.affichage_controles:
+            self.attach_detachAction.setText(langue.get("menu.display.detach"))
+        else :
+            self.attach_detachAction.setText(langue.get("menu.display.attach"))
 
     def change_lang(self, lang):
         settings.set("affichage.langue",lang)
