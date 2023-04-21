@@ -5,6 +5,7 @@ import sys
 import os
 from sys import stderr
 from math import cos, pi, sin
+from functools import partial
 # import des différentes librairies non-standard avec debug en cas de librairie manquante
 try:
     from PySide6.QtCore import *
@@ -45,14 +46,10 @@ class Main_window(QWidget):
         self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
         
-        self.frAction : QAction = QAction("Français", self)
-        #self.frAction.triggered.connect()
-        
-        self.enAction : QAction = QAction("English", self)
-        #self.enAction.triggered.connect()
-        
-        self.itAction : QAction = QAction("Italiano", self)
-        #self.itAction.triggered.connect()
+        self.langAction = []
+        for speak in (("Français","fr"),("English","en"),("Italiano","it")):
+            self.langAction.append(QAction(speak[0], self))
+            self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
         self.lightAction : QAction = QAction(langue.get("menu.settings.theme.light"), self)
         #self.lightAction.triggered.connect()
@@ -76,7 +73,7 @@ class Main_window(QWidget):
         self.menuBar.addMenu(self.configMenu)
         self.langMenu : QMenu = QMenu(langue.get("menu.settings.speak"), self.configMenu)
         self.configMenu.addMenu(self.langMenu)
-        self.langMenu.addActions([self.frAction,self.enAction,self.itAction])
+        self.langMenu.addActions(self.langAction)
         self.themeMenu : QMenu = QMenu(langue.get("menu.settings.theme.title"), self.configMenu)
         self.configMenu.addMenu(self.themeMenu)
         self.themeMenu.addActions([self.lightAction,self.darkAction])
@@ -128,6 +125,10 @@ class Main_window(QWidget):
             self.affichage_controles = True
             if settings.get("logging") >= 2:
                 print("controles attachés")
+
+    def change_lang(self, lang):
+        settings.set("affichage.langue",lang)
+        settings.save()
 
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
