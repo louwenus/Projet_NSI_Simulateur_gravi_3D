@@ -5,6 +5,7 @@ import sys
 import os
 from sys import stderr
 from math import cos, pi, sin
+from functools import partial
 # import des différentes librairies non-standard avec debug en cas de librairie manquante
 try:
     from PySide6.QtCore import *
@@ -24,7 +25,7 @@ from . import langue
 if settings.get("logging") >= 3:
     from time import time #importation de la libraire time
 
-
+ticktime=1
 app: QApplication = QApplication(sys.argv)
 
 class Main_window(QWidget):
@@ -45,14 +46,10 @@ class Main_window(QWidget):
         self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
         
-        self.frAction : QAction = QAction("Français", self)
-        #self.frAction.triggered.connect()
-        
-        self.enAction : QAction = QAction("English", self)
-        #self.enAction.triggered.connect()
-        
-        self.itAction : QAction = QAction("Italiano", self)
-        #self.itAction.triggered.connect()
+        self.langAction = []
+        for speak in (("Français","fr"),("English","en"),("Italiano","it")):
+            self.langAction.append(QAction(speak[0], self))
+            self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
         self.lightAction : QAction = QAction(langue.get("menu.settings.theme.light"), self)
         #self.lightAction.triggered.connect()
@@ -76,7 +73,7 @@ class Main_window(QWidget):
         self.menuBar.addMenu(self.configMenu)
         self.langMenu : QMenu = QMenu(langue.get("menu.settings.speak"), self.configMenu)
         self.configMenu.addMenu(self.langMenu)
-        self.langMenu.addActions([self.frAction,self.enAction,self.itAction])
+        self.langMenu.addActions(self.langAction)
         self.themeMenu : QMenu = QMenu(langue.get("menu.settings.theme.title"), self.configMenu)
         self.configMenu.addMenu(self.themeMenu)
         self.themeMenu.addActions([self.lightAction,self.darkAction])
@@ -96,8 +93,8 @@ class Main_window(QWidget):
         self.layout.addWidget(self.widget_3D)
 
         # Dimension affichée par la fenètre de rendu
-        self.ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
-        self.dimension = gravilib.PyBaseDimension(self.widget_3D,self.ticktime)
+        ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
+        self.dimension = gravilib.PyBaseDimension(self.widget_3D,ticktime)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
         self.timer: QTimer = QTimer(self)
@@ -128,6 +125,10 @@ class Main_window(QWidget):
             self.affichage_controles = True
             if settings.get("logging") >= 2:
                 print("controles attachés")
+
+    def change_lang(self, lang):
+        settings.set("affichage.langue",lang)
+        settings.save()
 
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
@@ -172,7 +173,7 @@ class Main_window(QWidget):
             start = time()
             self.widget_3D.repaint()
             print("graph time:", time()-start)
-            print("total:", time()-totalstart,"on",self.ticktime,"normaly")
+            print("total:", time()-totalstart,"on",ticktime,"normaly")
     else:
         def update_simulation(self) -> None:
             self.dimension.gravite_all()
@@ -252,7 +253,7 @@ class Controles(QWidget):
             x=xmean+xrand*dist*sin(teta)*cos(phi)
             y=ymean+yrand*dist*sin(teta)*sin(phi)
             z=zmean+zrand*dist*cos(teta)
-            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-1000000, 1000000), randint(-1000000, 1000000), randint(-100000,100000), randint(10,1000000))
+            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-1000000, 1000000), randint(-1000000, 1000000), randint(-100000,100000), randint(10,1000000), ticktime)
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))

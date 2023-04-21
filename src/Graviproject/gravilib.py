@@ -4,7 +4,7 @@ import sys
 from math import sqrt
 from random import randint
 from . import affichage
-
+from . import settings
 try:
     from . import cppgravilib
     
@@ -13,14 +13,14 @@ except ModuleNotFoundError as e:
     raise (e)
 
 from .affichage3D import Renderer3D, SphereItem
-
+ticktime=1
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
 
     Args:
         cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
     """
-    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int) -> None:
+    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int, ticktime:float) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
@@ -30,7 +30,9 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             d (int) : Dureté de la sphère
         """
         self.durete = d
+        ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
         self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
+        self.set_ticktime(ticktime)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord,masse)
     
@@ -54,7 +56,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         self.ticktime=ticktime
         
     def add_sphere(self, instance: cppgravilib.CyDummySphere) -> None:
-        instance.set_ticktime(self.ticktime)
+        
         super().add_sphere(instance)
 
     def gerer_colision(self) -> None:
@@ -85,11 +87,13 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 explosion(sphere)
                 for render in sphere.get_render_items():
                     self.render.remove_from_display(render)
+                transfert_v(sphere2)
                 self.add_sphere(sphere2)
             else:
                 explosion(sphere2)
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
+                transfert_v(sphere2)
                 self.add_sphere(sphere)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
@@ -134,7 +138,7 @@ def explosion (sphere:PyBaseSphere):
     nb_petit = randint(2,5)
     if int(round(m/nb_petit,0)) != 0:
         for _ in range (nb_petit):
-            var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d)
+            var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d, ticktime)
             affichage.Fenetre_principale.ajouter_sphere(var)
    
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
