@@ -23,11 +23,10 @@ void SimpleSphere::move()
     this->posmax = {this->pos.x + this->rayon, this->pos.y + this->rayon, this->pos.z + this->rayon};
 }
 // gravitation
-double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r, double &range) const
+double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
 { // cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos = this->pos;
     sane_min_r = this->rayon;
-    range = this->range;
     return this->masse_time;
 }
 void SimpleSphere::accel(const lco accel)
@@ -85,12 +84,10 @@ void SimpleSphere::set_ticktime(const float ticktime)
 {
     this->ticktime=ticktime;
     this->masse_time=masse*ticktime;
-    this->range=this->masse_time;
 }
 
 void SimpleSphere::set_masse(double masse)
 {
     this->masse=masse;
     this->masse_time=masse*this->ticktime;
-    this->range=this->masse_time;
 }
