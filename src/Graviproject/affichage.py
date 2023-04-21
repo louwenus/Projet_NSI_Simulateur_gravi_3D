@@ -252,7 +252,7 @@ class Controles(QWidget):
             x=xmean+xrand*dist*sin(teta)*cos(phi)
             y=ymean+yrand*dist*sin(teta)*sin(phi)
             z=zmean+zrand*dist*cos(teta)
-            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-400, 400), randint(-400, 400), randint(-400, 400), randint(10,1000000))
+            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-1000000, 1000000), randint(-1000000, 1000000), randint(-100000,100000), randint(10,1000000))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))
