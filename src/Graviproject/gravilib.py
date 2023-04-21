@@ -63,9 +63,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
         
         for sphere, sphere2 in self.collisions():
-            self.add_sphere(sphere)
-            self.add_sphere(sphere2)
-            """
             vx1,vy1,vz1=sphere.get_speed()
             vx2,vy2,vz2=sphere2.get_speed()
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
@@ -98,7 +95,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     self.render.remove_from_display(render)
                 transfert_v(sphere2)
                 self.add_sphere(sphere)
-                """
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     """ Fonction prenant en paramètre 2 sphères, et réalise l'absorption de la deuxiemme par la première
