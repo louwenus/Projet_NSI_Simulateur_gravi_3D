@@ -59,13 +59,9 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install --upgrade wheel setuptools setuptools-scm build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-win_amd64.whl"
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        platform: x64
     - name: Build
       run: |
-        CXX=mingw CC=mingw python -m build -nx -w
+        CXX=mingw64 CC=mingw64 python -m build -nx -w
     - name: 'Upload Windows Wheel'
       uses: actions/upload-artifact@v3
       with:
