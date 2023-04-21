@@ -310,6 +310,9 @@ class Controles(QWidget):
 
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
+
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.bouton_val_aj.setText,"control.add_settings.valid"))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.fenetre_ajoute.setWindowTitle,"control.add_settings.title"))
 for label,setloc in ((Controles.amountl,"control.add_settings.nb"),
                      (Controles.xlabel,"control.add_settings.x"),
                      (Controles.ylabel,"control.add_settings.y"),
