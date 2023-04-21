@@ -71,19 +71,21 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                     self.add_sphere(sphere)
                     for render in sphere2.get_render_items():
                         self.render.remove_from_display(render)
+                    """
                     if difference_energie(sphere):
                         explosion(sphere)
                         for render in sphere.get_render_items():
-                           self.render.remove_from_display(render)
+                           self.render.remove_from_display(render)"""# à revoir
                 else:
                     absorption(sphere2, sphere)
                     self.add_sphere(sphere2)
                     for render in sphere.get_render_items():
                         self.render.remove_from_display(render)
+                    """
                     if difference_energie(sphere2):
                         explosion(sphere2)
                         for render in sphere2.get_render_items():
-                           self.render.remove_from_display(render)
+                           self.render.remove_from_display(render)"""
                 
             elif (vx1 + vy1 + vz1 - vx2 -vy2 -vz2)/3 < 50000000:
                 transfert_v(sphere,sphere2)
@@ -129,7 +131,7 @@ def difference_energie(sphere:PyBaseSphere):
     vx,vy,vz=sphere.get_speed()
     m = sphere.get_masse()
     energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
-    return energie_degagee/sphere.durete < 10**24
+    return energie_degagee/sphere.durete < 10**305
 
 def explosion (sphere:PyBaseSphere):
     """Sépare la sphère en paramètre en plusieurs morceaux.
