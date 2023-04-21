@@ -4,7 +4,7 @@
     avec chaque modification des classes publiques de gravilib.cpp */
 
 #include "dimension.hpp" //importation des scripts dans dimension.hpp
-
+#include "chrono"
 BS::thread_pool BaseDimension::tpool = BS::thread_pool();
 
 BaseDimension::BaseDimension(): objets() {}
@@ -94,6 +94,7 @@ void BaseDimension::move_all()
 }
 std::list<PyObject *> BaseDimension::detect_collisions()
 {
+    auto start = std::chrono::high_resolution_clock::now();
     std::list<PyObject *> liste = {};
     std::list<DummySphere *>::iterator iterator = this->objets.begin();
     while (iterator != this->objets.end())
@@ -116,5 +117,8 @@ std::list<PyObject *> BaseDimension::detect_collisions()
         ++iterator;
     detect_collision_endloop:;
     }
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    std::cout << "detection time in ms:" << duration.count();
     return liste;
 }
