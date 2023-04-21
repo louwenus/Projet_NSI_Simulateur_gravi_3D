@@ -65,18 +65,25 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             vx1,vy1,vz1=sphere.get_speed()
             vx2,vy2,vz2=sphere2.get_speed()
-            print(difference_energie(sphere))
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                     absorption(sphere, sphere2)
                     self.add_sphere(sphere)
                     for render in sphere2.get_render_items():
                         self.render.remove_from_display(render)
+                    if difference_energie(sphere):
+                        explosion(sphere)
+                        for render in sphere.get_render_items():
+                           self.render.remove_from_display(render)
                 else:
                     absorption(sphere2, sphere)
                     self.add_sphere(sphere2)
                     for render in sphere.get_render_items():
                         self.render.remove_from_display(render)
+                    if difference_energie(sphere2):
+                        explosion(sphere2)
+                        for render in sphere2.get_render_items():
+                           self.render.remove_from_display(render)
                 
             elif (vx1 + vy1 + vz1 - vx2 -vy2 -vz2)/3 < 50000000:
                 transfert_v(sphere,sphere2)
@@ -122,7 +129,7 @@ def difference_energie(sphere:PyBaseSphere):
     vx,vy,vz=sphere.get_speed()
     m = sphere.get_masse()
     energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
-    return energie_degagee/sphere.durete
+    return energie_degagee/sphere.durete < 10**24
 
 def explosion (sphere:PyBaseSphere):
     """Sépare la sphère en paramètre en plusieurs morceaux.
