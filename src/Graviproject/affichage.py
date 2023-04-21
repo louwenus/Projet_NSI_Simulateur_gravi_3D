@@ -39,7 +39,7 @@ class Main_window(QWidget):
         self.affichage_controles: bool = True
 
         self.setWindowTitle(langue.get("title"))
-        self.changeLangSignal.connect(langue.lazyEval(partial(Main_window.setWindowTitle,self),"title"))
+        self.changeLangSignal.connect(langue.lazyEval(self.setWindowTitle,"title"))
 
         self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -210,8 +210,8 @@ class Controles(QWidget):
     fenetre_ajoute.setLayout(layout_aj_sph)
 
     amount = QSpinBox(minimum=0, maximum=10000, value=100)
-    amoutl = QLabel(langue.get("control.add_settings.nb"))
-    layout_aj_sph.addWidget(amoutl, 0,0)
+    amountl = QLabel(langue.get("control.add_settings.nb"))
+    layout_aj_sph.addWidget(amountl, 0,0)
     layout_aj_sph.addWidget(amount,0,1)
 
     xmean = QDoubleSpinBox(minimum=-500000, maximum=500000, value=0,decimals=0)
@@ -298,6 +298,7 @@ class Controles(QWidget):
 
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
-
+for label,setloc in ((Controles.amountl,"control.add_settings.nb"),(Controles.xlabel,"control.add_settings.x"),(Controles.ylabel,"control.add_settings.y"),(Controles.zlabel,"control.add_settings.z")):
+    Fenetre_principale.changeLangSignal.connect(langue.lazyEval(label.setText,setloc))
 
 Fenetre_principale.showMaximized()
