@@ -12,7 +12,8 @@ try:
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
     from random import *
-    
+
+    Signal()
 except ModuleNotFoundError as e:
     print("le module PySide6 devrait être installé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails", file=stderr)
     raise e
@@ -213,31 +214,38 @@ class Controles(QWidget):
     fenetre_ajoute.setLayout(layout_aj_sph)
 
     amount = QSpinBox(minimum=0, maximum=10000, value=100)
-    layout_aj_sph.addWidget(QLabel(langue.get("control.add_settings.nb")), 0,0)
+    amoutl = QLabel(langue.get("control.add_settings.nb"))
+    layout_aj_sph.addWidget(amoutl, 0,0)
     layout_aj_sph.addWidget(amount,0,1)
 
     xmean = QDoubleSpinBox(minimum=-500000, maximum=500000, value=0,decimals=0)
     xrand = QDoubleSpinBox(minimum=-500000, maximum=500000, value=2000,decimals=0)
-    for i,widget in enumerate((QLabel(langue.get("control.add_settings.x")), xmean, QLabel('+-'),xrand)):
+    xlabel = QLabel(langue.get("control.add_settings.x"))
+    for i,widget in enumerate((xlabel, xmean, QLabel('+-'),xrand)):
         layout_aj_sph.addWidget(widget,1,i)
 
     ymean = QDoubleSpinBox(minimum=-500000, maximum=500000, value=0,decimals=0)
     yrand = QDoubleSpinBox(minimum=-500000, maximum=500000, value=2000,decimals=0)
-    for i,widget in enumerate((QLabel(langue.get("control.add_settings.y")), ymean, QLabel('+-'),yrand)):
+    ylabel = QLabel(langue.get("control.add_settings.y"))
+    for i,widget in enumerate((ylabel, ymean, QLabel('+-'),yrand)):
         layout_aj_sph.addWidget(widget,2,i)
     
     zmean = QDoubleSpinBox(minimum=-500000, maximum=500000, value=0,decimals=0)
     zrand = QDoubleSpinBox(minimum=-500000, maximum=500000, value=2000,decimals=0)
-    for i,widget in enumerate((QLabel(langue.get("control.add_settings.z")), zmean, QLabel('+-'),zrand)):
+    zlabel = QLabel(langue.get("control.add_settings.z"))
+    for i,widget in enumerate((zlabel, zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
     
     massemin = QDoubleSpinBox(minimum=1, maximum=float(10**17), value=10**3,decimals=0)
     massemax = QDoubleSpinBox(minimum=1,maximum=float(10**17),value=10**10,decimals=0)
-    for i,widget in enumerate((QLabel(langue.get("control.add_settings.m")), massemin, QLabel("<?<"),massemax)):
+    massel = QLabel(langue.get("control.add_settings.m"))
+    for i,widget in enumerate((massel, massemin, QLabel("<?<"),massemax)):
         layout_aj_sph.addWidget(widget,4,i)
+        
     rayonmin = QDoubleSpinBox(minimum=1,maximum=10**7,value=3*10**4,decimals=0)
     rayonmax = QDoubleSpinBox(minimum=1,maximum=10**7,value=4*10**4,decimals=0)
-    for i,widget in enumerate((QLabel(langue.get("control.add_settings.r")), rayonmin, QLabel("<?<"),rayonmax)):
+    rayonl = QLabel(langue.get("control.add_settings.r"))
+    for i,widget in enumerate((rayonl, rayonmin, QLabel("<?<"),rayonmax)):
         layout_aj_sph.addWidget(widget,5,i)
     
     def ajouter_spheres(*_) -> None:
@@ -293,6 +301,7 @@ class Controles(QWidget):
 
 
 controles_graphiques: QWidget = Controles()
-
 Fenetre_principale: QWidget = Main_window()
+
+
 Fenetre_principale.showMaximized()

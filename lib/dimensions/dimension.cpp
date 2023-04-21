@@ -23,18 +23,16 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
     llco coo;
     DummySphere *sphere = (*iterator++);
     ulli sanitize;
-    double range1;
-    double masse = sphere->gravite_stats(coo, sanitize, range1);
+    double masse = sphere->gravite_stats(coo, sanitize);
     lco accel = {0, 0, 0};
 
     llco temp_co;
-    double range2;
     ulli sanitize2;
     double masse2;
     double divide;
     for (; iterator != end; ++iterator)
     {
-        masse2 = (*iterator)->gravite_stats(temp_co, sanitize2, range2);      // on stock la pos dans temp_co
+        masse2 = (*iterator)->gravite_stats(temp_co, sanitize2);      // on stock la pos dans temp_co
         temp_co = {temp_co.x - coo.x, temp_co.y - coo.y, temp_co.z - coo.z}; // puis on y mets le vecteur distance
         // divide = distance^2 (force gravi) + sum(abs(composante de temp_co)) car on va remultiplier par ces composante pour la direction (optimisation)
         divide = temp_co.x * temp_co.x + temp_co.y * temp_co.y + temp_co.z * temp_co.z;
@@ -45,10 +43,10 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
         {
             divide = sanitize2;
         }
-        if (divide < range1)
+        if (divide < masse)
         {
             divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
-            if (divide < range1 and divide < range2)
+            if (divide < masse and divide < masse2)
             {
                 // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
                 (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
@@ -60,7 +58,7 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
                 (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
             }
             
-        } else if (divide < range2)
+        } else if (divide < masse2)
         {
             divide += (abs(temp_co.x) + abs(temp_co.y) + abs(temp_co.z));
             accel.x += (li)((masse2 * temp_co.x) / divide);
