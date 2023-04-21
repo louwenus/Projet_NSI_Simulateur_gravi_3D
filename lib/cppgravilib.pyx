@@ -8,19 +8,21 @@
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
-#from libcpp.string cimport string
 cimport cppgravilib
 from cython.operator import postincrement,dereference
 from cpython cimport Py_DECREF, Py_INCREF, PyObject
 from libcpp.list cimport list as clist
 from typing import Generator, Tuple
 
+cdef extern from "typedef.hpp":
+    ctypedef int li
+    ctypedef int lli
+    ctypedef int uli
+    ctypedef int ulli
+
+
 ctypedef PyObject* PyObjPtr
 ctypedef cppgravilib.DummySphere* DummyPtr
-ctypedef long int li
-ctypedef long long int lli
-ctypedef unsigned long int uli
-ctypedef unsigned long long int ulli
 
 is_128_bit:bool = cppgravilib.is_128_bit
 

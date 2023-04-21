@@ -7,17 +7,18 @@
 # cython: c_string_type=unicode, c_string_encoding=utf8
 # cython: language_level=3
 
-from cython import operator
+from cython import operator, typedef
 from cpython cimport PyObject
 from libcpp.atomic cimport atomic
 from libcpp.list cimport list as clist
 ctypedef PyObject* PyObjPtr
-ctypedef long int li
-ctypedef long long int lli
-ctypedef unsigned long int uli
-ctypedef unsigned long long int ulli
+
 
 cdef extern from "typedef.hpp":
+    ctypedef int li
+    ctypedef int lli
+    ctypedef int uli
+    ctypedef int ulli
     bint is_128_bit
     struct llco:
         lli x

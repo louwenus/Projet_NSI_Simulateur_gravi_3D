@@ -11,7 +11,8 @@
 #include <atomic>
 #include <iostream>
 #include "Python.h"
-// for easier args typing
+
+
 #if __SIZEOF_INT128__
 typedef __uint128_t ulli;
 typedef __int128_t lli;
@@ -25,7 +26,6 @@ typedef int32_t li;
 typedef uint32_t uli;
 const bool is_128_bit = false;
 #endif
-
 
 struct llco
 {
