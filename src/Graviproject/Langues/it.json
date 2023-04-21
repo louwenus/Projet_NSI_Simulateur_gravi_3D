@@ -37,7 +37,7 @@
         }
     },
     "file":{
-        "license":"LICENZA_IT"
+        "license":"LICENSE"
     },
     "404":"Testo inesistente : consultare i logs."
 }
