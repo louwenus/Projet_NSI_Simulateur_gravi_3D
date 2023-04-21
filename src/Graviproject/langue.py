@@ -3,6 +3,7 @@
 import json
 import os
 from . import settings
+from functools import partial
 
 lang: dict = {}
 
@@ -31,3 +32,9 @@ def reload() -> None :
     path = os.path.join(path, "Langues/"+settings.get("affichage.langue")+".json")
     with open(path, 'r', encoding="utf-8") as setfile:
         lang = json.load(setfile)
+        
+def __lazyInternal(function : callable, setloc : str) -> None:
+    function(get(setloc))
+
+def lazyEval(function : callable, setloc : str) -> callable:
+    return partial(__lazyInternal,function,setloc)

@@ -30,13 +30,15 @@ app: QApplication = QApplication(sys.argv)
 
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
-
+    changeLangSignal : Signal = Signal()
+    
     def __init__(self) -> None:
         super().__init__()
         self.setFocusPolicy(Qt.ClickFocus)
         self.affichage_controles: bool = True
 
         self.setWindowTitle(langue.get("title"))
+        self.changeLangSignal.connect(langue.lazyEval(partial(Main_window.setWindowTitle,self),"title"))
 
         self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -115,6 +117,7 @@ class Main_window(QWidget):
             self.controles.hide()
             controles_graphiques.show()
             self.attach_detachAction.setText(langue.get("menu.display.attach"))
+            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.attach"))
             self.affichage_controles = False
             if settings.get("logging") >= 2:
                 print("controles déttachés")
@@ -122,6 +125,7 @@ class Main_window(QWidget):
             self.controles.show()
             controles_graphiques.hide()
             self.attach_detachAction.setText(langue.get("menu.display.detach"))
+            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.detach"))
             self.affichage_controles = True
             if settings.get("logging") >= 2:
                 print("controles attachés")
@@ -130,16 +134,8 @@ class Main_window(QWidget):
         settings.set("affichage.langue",lang)
         settings.save()
         langue.reload()
-        self.langMenu.setTitle(langue.get("menu.settings.speak"))
-        self.helpMenu.setTitle(langue.get("menu.help.title"))
-        self.themeMenu.setTitle(langue.get("menu.settings.theme.title"))
-        self.affichageMenu.setTitle(langue.get("menu.display.title"))
-        self.configMenu.setTitle(langue.get("menu.settings.title"))
-        if self.affichage_controles:
-            self.attach_detachAction.setText(langue.get("menu.display.attach"))
-        else:
-            self.attach_detachAction.setText(langue.get("menu.display.detach"))
-
+        self.changeLangSignal.emit()
+        
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
         self.fenetre_license: QWidget = QScrollArea()
