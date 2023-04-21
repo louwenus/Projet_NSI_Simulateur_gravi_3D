@@ -264,7 +264,7 @@ class Controles(QWidget):
             y=ymean+yrand*dist*sin(teta)*sin(phi)
             z=zmean+zrand*dist*cos(teta)
             if _ == 1 :
-                var = gravilib.PyBaseSphere(0, 0, 100000000, 10**80, rmax*30,0, 0, 0, 10*9, ticktime)
+                var = gravilib.PyBaseSphere(0, 0, 100000000, 10**80, rmax,0, 0, 0, 10*9, ticktime)
                 Fenetre_principale.ajouter_sphere(var)
             else :
                 var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-1000000, 1000000), randint(-1000000, 1000000), randint(-100000,100000), randint(10,1000000), ticktime)
