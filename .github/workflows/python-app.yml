@@ -61,7 +61,8 @@ jobs:
         python3 -m pip install --upgrade wheel setuptools setuptools-scm build "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-win_amd64.whl"
     - name: Build
       run: |
-        CXX=mingw64 CC=mingw64 python -m build -nx -w
+        %APPDATA%\Local\Programs\Common\Microsoft\Visual C++ for Python\9.0\vcvarsall.bat amd64
+        python -m build -nx -w
     - name: 'Upload Windows Wheel'
       uses: actions/upload-artifact@v3
       with:
