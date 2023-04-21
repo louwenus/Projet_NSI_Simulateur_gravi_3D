@@ -37,7 +37,7 @@
         }
     },
     "file":{
-        "license":"LICENSE"
+        "license":"LICENSE_EN"
     },
     "404":"Text not found : look at logs."
 }

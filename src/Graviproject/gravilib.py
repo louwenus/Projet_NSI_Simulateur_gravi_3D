@@ -63,19 +63,19 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             vx1,vy1,vz1=sphere.get_speed()
             vx2,vy2,vz2=sphere2.get_speed()
+            print(difference_energie(sphere))
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                     absorption(sphere, sphere2)
                     self.add_sphere(sphere)
                     for render in sphere2.get_render_items():
                         self.render.remove_from_display(render)
-                    
                 else:
                     absorption(sphere2, sphere)
                     self.add_sphere(sphere2)
                     for render in sphere.get_render_items():
                         self.render.remove_from_display(render)
-                # explosion à faire si trop grande différence énergie / dureté.
+                
             elif (vx1 + vy1 + vz1 - vx2 -vy2 -vz2)/3 < 50000000:
                 transfert_v(sphere,sphere2)
                 self.add_sphere(sphere)
@@ -109,10 +109,16 @@ def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     vitessex = int((m1*vx1*2 + m2*vx2*2)/masse_final)   #gain (ou perte) de vitesse
-    vitessey = int((m1*vy1*2 + m2*vy2*2)/masse_final)   #selon la formule momen cinétique = m*v
+    vitessey = int((m1*vy1*2 + m2*vy2*2)/masse_final)   #selon la formule moment cinétique = m*v
     vitessez = int((m1*vz1*2 + m2*vz2*2)/masse_final)
     sphere1.set_masse(masse_final)
     sphere1.set_speed((vitessex, vitessey, vitessez))
+
+def difference_energie(sphere:PyBaseSphere):
+    vx,vy,vz=sphere.get_speed()
+    m = sphere.get_masse()
+    energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
+    return energie_degagee/sphere.durete
 
 def explosion (sphere:PyBaseSphere):
     """Sépare la sphère en paramètre en plusieurs morceaux.
