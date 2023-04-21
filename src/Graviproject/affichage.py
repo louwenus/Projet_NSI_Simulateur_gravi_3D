@@ -303,7 +303,12 @@ class Controles(QWidget):
 
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
-for label,setloc in ((Controles.amountl,"control.add_settings.nb"),(Controles.xlabel,"control.add_settings.x"),(Controles.ylabel,"control.add_settings.y"),(Controles.zlabel,"control.add_settings.z")):
+for label,setloc in ((Controles.amountl,"control.add_settings.nb"),
+                     (Controles.xlabel,"control.add_settings.x"),
+                     (Controles.ylabel,"control.add_settings.y"),
+                     (Controles.zlabel,"control.add_settings.z"),
+                     (Controles.rayonl,"control.add_settings.r"),
+                     (Controles.massel,"control.add_settings.m")):
     Fenetre_principale.changeLangSignal.connect(langue.lazyEval(label.setText,setloc))
 
 Fenetre_principale.showMaximized()
