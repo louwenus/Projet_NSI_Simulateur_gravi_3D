@@ -129,6 +129,16 @@ class Main_window(QWidget):
     def change_lang(self, lang):
         settings.set("affichage.langue",lang)
         settings.save()
+        langue.reload()
+        self.langMenu.setTitle(langue.get("menu.settings.speak"))
+        self.helpMenu.setTitle(langue.get("menu.help.title"))
+        self.themeMenu.setTitle(langue.get("menu.settings.theme.title"))
+        self.affichageMenu.setTitle(langue.get("menu.display.title"))
+        self.configMenu.setTitle(langue.get("menu.settings.title"))
+        if self.affichage_controles:
+            self.attach_detachAction.setText(langue.get("menu.display.attach"))
+        else:
+            self.attach_detachAction.setText(langue.get("menu.display.detach"))
 
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
