@@ -50,19 +50,21 @@ class Main_window(QWidget):
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
         self.changeLangSignal.connect(self.attach_detach_texte)
         
-        self.langAction = []
+        self.langAction: list(QAction) = []
         for speak in (("Français","fr"),("English","en"),("Italiano","it")):
             self.langAction.append(QAction(speak[0], self))
             self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
-        self.lightAction : QAction = QAction(langue.get("menu.settings.theme.light"), self)
-        #self.lightAction.triggered.connect()
-        
-        self.darkAction : QAction = QAction(langue.get("menu.settings.theme.dark"), self)
-        #self.darkAction.triggered.connect()
-        #TODO : ajout des actions (en commentaire) et voir s'il est possible de le faire avec moins de QAction : car tâches identiques
+        self.themeAction: list(QAction) = []
+        for theme in ("light","dark"):
+            self.themeAction.append(QAction(langue.get("menu.settings.theme."+theme), self))
+            self.changeLangSignal.connect(langue.lazyEval(self.themeAction[-1].setText,"menu.settings.theme."+theme))
+            #self.themeAction[-1].triggered.connect()
+
+        #TODO : ajout de l'action pour le thème 
 
         self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
+        self.changeLangSignal.connect(langue.lazyEval(self.licenseAction.setText,"menu.help.license"))
         self.licenseAction.triggered.connect(self.affich_licence)
 
         # Création des menus
@@ -70,19 +72,24 @@ class Main_window(QWidget):
         self.menuBar.setFixedWidth(self.size().width())
 
         self.affichageMenu: QMenu = QMenu(langue.get("menu.display.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.affichageMenu.setTitle,"menu.display.title"))
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
         
         self.configMenu : QMenu = QMenu(langue.get("menu.settings.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.configMenu.setTitle,"menu.settings.title"))
         self.menuBar.addMenu(self.configMenu)
         self.langMenu : QMenu = QMenu(langue.get("menu.settings.speak"), self.configMenu)
+        self.changeLangSignal.connect(langue.lazyEval(self.langMenu.setTitle,"menu.settings.speak"))
         self.configMenu.addMenu(self.langMenu)
         self.langMenu.addActions(self.langAction)
         self.themeMenu : QMenu = QMenu(langue.get("menu.settings.theme.title"), self.configMenu)
+        self.changeLangSignal.connect(langue.lazyEval(self.themeMenu.setTitle,"menu.settings.theme.title"))
         self.configMenu.addMenu(self.themeMenu)
-        self.themeMenu.addActions([self.lightAction,self.darkAction])
+        self.themeMenu.addActions(self.themeAction)
 
         self.helpMenu: QMenu = QMenu(langue.get("menu.help.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.helpMenu.setTitle,"menu.help.title"))
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
