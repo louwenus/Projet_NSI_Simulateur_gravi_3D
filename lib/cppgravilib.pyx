@@ -102,7 +102,7 @@ cdef class CyDummySphere:
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere
-    def init_c_container(self,lli x,lli y,lli z,ulli masse,uli rayon,li vx,li vy,li vz):
+    def init_c_container(self,lli x,lli y,lli z,double masse,uli rayon,li vx,li vy,li vz):
         """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
         self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
     
