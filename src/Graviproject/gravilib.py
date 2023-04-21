@@ -126,11 +126,11 @@ def explosion (sphere:PyBaseSphere):
     """Sépare la sphère en paramètre en plusieurs morceaux.
 
     Args:
-        sphere (PyBaseSphere): class PyBaseSphere de gravilib.py
+        sphere (PyBaseSphere): classe PyBaseSphere de gravilib.py
     """
     vx,vy,vz=sphere.get_speed()
     d=sphere.durete
-    m = sphere.get_masse()                         # ça marche mais c'est archi-pas optimisé.
+    m = sphere.get_masse()
     r = sphere.get_rayon()
     x,y,z = sphere.get_coord()
     nb_petit = randint(2,5)
@@ -140,6 +140,12 @@ def explosion (sphere:PyBaseSphere):
             affichage.Fenetre_principale.ajouter_sphere(var)
    
 def transfer_e(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
+    """Prend en paramètre 2 sphères, calcul l'énergie libéré par leur collision et modifie les vitesses en conséquence.
+
+    Args:
+        sphere1 (PyBaseSphere): classe PyBaseSphere de gravilib.py
+        sphere2 (PyBaseSphere): classe PyBaseSphere de gravilib.py
+    """
     vx1,vy1,vz1=sphere1.get_speed()
     vx2,vy2,vz2=sphere2.get_speed()
     m1 = sphere1.get_masse()
@@ -173,7 +179,7 @@ def transfert_v(sphere1:PyBaseSphere, sphere2:PyBaseSphere):
     mvz2=m2*vz2
     
     em1=e*m1
-    em2=e*m2    #sert à faire moins de calculs pour optimiser
+    em2=e*m2
     
     vfx1=int((mvx1+mvx2+em2*(vx2-vx1))/(somme_m))
     vfx2=int((mvx1+mvx2+em1*(vx1-vx2))/(somme_m))
