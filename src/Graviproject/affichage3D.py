@@ -266,28 +266,28 @@ class Renderer3D(QWidget):
         """
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
-            """ Fait s'élever la camera de 20000000 px"""
-            self.cam.move(elev=-20000000)
+            """ Fait s'élever la camera de 5000000 px"""
+            self.cam.move(elev=-5000000)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
-            """ Fait descendre la camera de 20000000 px"""
-            self.cam.move(elev=20000000)
+            """ Fait descendre la camera de 5000000 px"""
+            self.cam.move(elev=5000000)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 20000000 px"""
-            self.cam.move(cote=20000000)
+            """ Fait se décaler à droite la camera de 5000000 px"""
+            self.cam.move(cote=5000000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 20000000 px"""
-            self.cam.move(cote=-20000000)
+            """ Fait se décaler à gauche la camera de 5000000 px"""
+            self.cam.move(cote=-5000000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
-            """ Fait avancer la camera de 20000000 px"""
-            self.cam.move(profondeur=20000000)
+            """ Fait avancer la camera de 5000000 px"""
+            self.cam.move(profondeur=5000000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
-            """ Fait reculer la camera de 20000000 px"""
-            self.cam.move(profondeur=-20000000)
+            """ Fait reculer la camera de 5000000 px"""
+            self.cam.move(profondeur=-5000000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
@@ -300,23 +300,23 @@ class Renderer3D(QWidget):
             self.wid_con.ajouter_spheres(False)
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
-            "fait tourner vers le haut de 0.01 radian"
-            self.cam.pitch-=0.01
+            "fait tourner vers le haut de 0.02 radian"
+            self.cam.pitch-=0.02
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
-            "fait tourner vers le bas de 0.01 radian"
-            self.cam.pitch+=0.01
+            "fait tourner vers le bas de 0.02 radian"
+            self.cam.pitch+=0.02
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
-            "fait tourner vers la gauche de 0.01 radian"
-            self.cam.yaw+=0.01
+            "fait tourner vers la gauche de 0.02 radian"
+            self.cam.yaw+=0.02
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
-            "fait tourner vers la droite de 0.01 radian"
-            self.cam.yaw-=0.01
+            "fait tourner vers la droite de 0.02 radian"
+            self.cam.yaw-=0.02
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
