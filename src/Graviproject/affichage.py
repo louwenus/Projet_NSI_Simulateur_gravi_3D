@@ -98,6 +98,8 @@ class Main_window(QWidget):
         self.controles = Controles()
         self.layout.addWidget(self.controles)
         self.controles.setFixedHeight(self.controles.minimumSizeHint().height())
+        self.changeLangSignal.connect(langue.lazyEval(self.controles.boutton1.setText,"control.simple_add.title"))
+        self.changeLangSignal.connect(langue.lazyEval(self.controles.boutt_show_aj_sph.setText,"control.add_settings.title"))
 
         # Widget de rendu3D
         self.widget_3D: Renderer3D = Renderer3D(self.controles)
@@ -299,9 +301,9 @@ class Controles(QWidget):
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        boutton1: QAbstractButton = QPushButton(langue.get("control.simple_add.title"))
-        boutton1.clicked.connect(Controles.ajouter_spheres)
-        self.layout.addWidget(boutton1)
+        self.boutton1: QAbstractButton = QPushButton(langue.get("control.simple_add.title"))
+        self.boutton1.clicked.connect(Controles.ajouter_spheres)
+        self.layout.addWidget(self.boutton1)
 
         self.boutt_show_aj_sph: QAbstractButton = QPushButton(langue.get("control.add_settings.title"))
         self.layout.addWidget(self.boutt_show_aj_sph)
@@ -320,5 +322,7 @@ for label,setloc in ((Controles.amountl,"control.add_settings.nb"),
                      (Controles.rayonl,"control.add_settings.r"),
                      (Controles.massel,"control.add_settings.m")):
     Fenetre_principale.changeLangSignal.connect(langue.lazyEval(label.setText,setloc))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.boutton1.setText,"control.simple_add.title"))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.boutt_show_aj_sph.setText,"control.add_settings.title"))
 
 Fenetre_principale.showMaximized()
