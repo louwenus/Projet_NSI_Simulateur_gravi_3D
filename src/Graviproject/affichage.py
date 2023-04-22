@@ -48,20 +48,23 @@ class Main_window(QWidget):
         # Création des actions utiliseables dans les menus
         self.attach_detachAction: QAction = QAction(langue.get("menu.display.detach"), self)
         self.attach_detachAction.triggered.connect(self.attach_detach_controles)
+        self.changeLangSignal.connect(self.attach_detach_texte)
         
-        self.langAction = []
+        self.langAction: list(QAction) = []
         for speak in (("Français","fr"),("English","en"),("Italiano","it")):
             self.langAction.append(QAction(speak[0], self))
             self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
-        self.lightAction : QAction = QAction(langue.get("menu.settings.theme.light"), self)
-        #self.lightAction.triggered.connect()
-        
-        self.darkAction : QAction = QAction(langue.get("menu.settings.theme.dark"), self)
-        #self.darkAction.triggered.connect()
-        #TODO : ajout des actions (en commentaire) et voir s'il est possible de le faire avec moins de QAction : car tâches identiques
+        self.themeAction: list(QAction) = []
+        for theme in ("light","dark"):
+            self.themeAction.append(QAction(langue.get("menu.settings.theme."+theme), self))
+            self.changeLangSignal.connect(langue.lazyEval(self.themeAction[-1].setText,"menu.settings.theme."+theme))
+            #self.themeAction[-1].triggered.connect()
+
+        #TODO : ajout de l'action pour le thème 
 
         self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
+        self.changeLangSignal.connect(langue.lazyEval(self.licenseAction.setText,"menu.help.license"))
         self.licenseAction.triggered.connect(self.affich_licence)
 
         # Création des menus
@@ -69,19 +72,24 @@ class Main_window(QWidget):
         self.menuBar.setFixedWidth(self.size().width())
 
         self.affichageMenu: QMenu = QMenu(langue.get("menu.display.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.affichageMenu.setTitle,"menu.display.title"))
         self.menuBar.addMenu(self.affichageMenu)
         self.affichageMenu.addAction(self.attach_detachAction)
         
         self.configMenu : QMenu = QMenu(langue.get("menu.settings.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.configMenu.setTitle,"menu.settings.title"))
         self.menuBar.addMenu(self.configMenu)
         self.langMenu : QMenu = QMenu(langue.get("menu.settings.speak"), self.configMenu)
+        self.changeLangSignal.connect(langue.lazyEval(self.langMenu.setTitle,"menu.settings.speak"))
         self.configMenu.addMenu(self.langMenu)
         self.langMenu.addActions(self.langAction)
         self.themeMenu : QMenu = QMenu(langue.get("menu.settings.theme.title"), self.configMenu)
+        self.changeLangSignal.connect(langue.lazyEval(self.themeMenu.setTitle,"menu.settings.theme.title"))
         self.configMenu.addMenu(self.themeMenu)
-        self.themeMenu.addActions([self.lightAction,self.darkAction])
+        self.themeMenu.addActions(self.themeAction)
 
         self.helpMenu: QMenu = QMenu(langue.get("menu.help.title"), self.menuBar)
+        self.changeLangSignal.connect(langue.lazyEval(self.helpMenu.setTitle,"menu.help.title"))
         self.menuBar.addMenu(self.helpMenu)
         self.helpMenu.addAction(self.licenseAction)
 
@@ -90,6 +98,8 @@ class Main_window(QWidget):
         self.controles = Controles()
         self.layout.addWidget(self.controles)
         self.controles.setFixedHeight(self.controles.minimumSizeHint().height())
+        self.changeLangSignal.connect(langue.lazyEval(self.controles.boutton1.setText,"control.simple_add.title"))
+        self.changeLangSignal.connect(langue.lazyEval(self.controles.boutt_show_aj_sph.setText,"control.add_settings.title"))
 
         # Widget de rendu3D
         self.widget_3D: Renderer3D = Renderer3D(self.controles)
@@ -118,7 +128,6 @@ class Main_window(QWidget):
             self.controles.hide()
             controles_graphiques.show()
             self.attach_detachAction.setText(langue.get("menu.display.attach"))
-            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.attach"))
             self.affichage_controles = False
             if settings.get("logging") >= 2:
                 print("controles déttachés")
@@ -126,10 +135,15 @@ class Main_window(QWidget):
             self.controles.show()
             controles_graphiques.hide()
             self.attach_detachAction.setText(langue.get("menu.display.detach"))
-            self.changeLangSignal.connect(langue.lazyEval(partial(self.attach_detachAction.setText,self),"menu.display.detach"))
             self.affichage_controles = True
             if settings.get("logging") >= 2:
                 print("controles attachés")
+                
+    def attach_detach_texte(self):
+        if self.affichage_controles:
+            self.attach_detachAction.setText(langue.get("menu.display.detach"))
+        else :
+            self.attach_detachAction.setText(langue.get("menu.display.attach"))
 
     def change_lang(self, lang):
         settings.set("affichage.langue",lang)
@@ -287,9 +301,9 @@ class Controles(QWidget):
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
 
-        boutton1: QAbstractButton = QPushButton(langue.get("control.simple_add.title"))
-        boutton1.clicked.connect(Controles.ajouter_spheres)
-        self.layout.addWidget(boutton1)
+        self.boutton1: QAbstractButton = QPushButton(langue.get("control.simple_add.title"))
+        self.boutton1.clicked.connect(Controles.ajouter_spheres)
+        self.layout.addWidget(self.boutton1)
 
         self.boutt_show_aj_sph: QAbstractButton = QPushButton(langue.get("control.add_settings.title"))
         self.layout.addWidget(self.boutt_show_aj_sph)
@@ -298,6 +312,9 @@ class Controles(QWidget):
 
 controles_graphiques: QWidget = Controles()
 Fenetre_principale: QWidget = Main_window()
+
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.bouton_val_aj.setText,"control.add_settings.valid"))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.fenetre_ajoute.setWindowTitle,"control.add_settings.title"))
 for label,setloc in ((Controles.amountl,"control.add_settings.nb"),
                      (Controles.xlabel,"control.add_settings.x"),
                      (Controles.ylabel,"control.add_settings.y"),
@@ -305,5 +322,7 @@ for label,setloc in ((Controles.amountl,"control.add_settings.nb"),
                      (Controles.rayonl,"control.add_settings.r"),
                      (Controles.massel,"control.add_settings.m")):
     Fenetre_principale.changeLangSignal.connect(langue.lazyEval(label.setText,setloc))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.boutton1.setText,"control.simple_add.title"))
+Fenetre_principale.changeLangSignal.connect(langue.lazyEval(controles_graphiques.boutt_show_aj_sph.setText,"control.add_settings.title"))
 
 Fenetre_principale.showMaximized()
