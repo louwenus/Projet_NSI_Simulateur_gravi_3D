@@ -102,7 +102,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 explosion(sphere2)
                 for render in sphere2.get_render_items():
                     self.render.remove_from_display(render)
-                transfert_v(sphere2)
+                transfert_v(sphere2,sphere)
                 self.add_sphere(sphere)
     
 def absorption (sphere1:PyBaseSphere, sphere2:PyBaseSphere):
