@@ -28,11 +28,11 @@
         "add_settings":{
             "title":"Adding spheres",
             "nb":"Number of spheres :",
-            "x":"X coordinate :",
-            "y":"Y coordinate :",
-            "z":"Z coordinate :",
-            "m":"Masse :",
-            "r":"Rayon :",
+            "x":"X coordinate (km):",
+            "y":"Y coordinate (km):",
+            "z":"Z coordinate (km):",
+            "m":"Masse (kg):",
+            "r":"Rayon (km):",
             "valid":"Add the spheres"
         }
     },
