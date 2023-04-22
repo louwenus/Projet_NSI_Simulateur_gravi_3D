@@ -250,16 +250,16 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmean=Controles.xmean.value()*200000
-        xrand=Controles.xrand.value()*200000
-        ymean=Controles.ymean.value()*200000
-        yrand=Controles.yrand.value()*200000
-        zmean=Controles.zmean.value()*200000
-        zrand=Controles.zrand.value()*200000
-        mmin=Controles.massemin.value()*1000000
-        mmax=Controles.massemax.value()*1000000
-        rmin=Controles.rayonmin.value()*100
-        rmax=Controles.rayonmax.value()*100
+        xmean=Controles.xmean.value()*30765857481000 #en km
+        xrand=Controles.xrand.value()*30765857481000 #en km
+        ymean=Controles.ymean.value()*30765857481000 #en km
+        yrand=Controles.yrand.value()*30765857481000 #en km
+        zmean=Controles.zmean.value()*30765857481000 #en km
+        zrand=Controles.zrand.value()*30765857481000 #en km
+        mmin=Controles.massemin.value()*1943539063490205027173 #en kg
+        mmax=Controles.massemax.value()*1943539063490205027173 #en kg
+        rmin=Controles.rayonmin.value()*30765857481000 #en km
+        rmax=Controles.rayonmax.value()*30765857481000 #en km
         for _ in range(Controles.amount.value()):
             dist:float=random()**(1/3)
             teta=random()*2*pi

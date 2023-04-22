@@ -47,5 +47,11 @@ struct atlco
 
     operator lco() {return {(li)this->x,(li)this->y,(li)this->z};}
 };
+struct flco
+{
+    float x;
+    float y;
+    float z;
+};
 
 #endif
