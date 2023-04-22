@@ -143,7 +143,7 @@ class SphereItem():
         coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
         self.pos=QPointF(*coord2D)
 
-        painter.setPen(QPen(Qt.black, 0.5))
+        painter.setPen(QPen(QColor("black"),0.5))
         painter.setBrush(QBrush(self.color))
 
         painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
