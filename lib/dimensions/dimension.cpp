@@ -44,7 +44,7 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
         {
             divide = sanitize2;
         }
-        
+        divide = divide*sqrt(divide);
         // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
         (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
         // Enfin on calcule celle sur l'élément externe
