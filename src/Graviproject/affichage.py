@@ -264,16 +264,16 @@ class Controles(QWidget):
         Args:
             boo (int): le nombre de sphères à ajouter.
         """
-        xmean=Controles.xmean.value()*30765857481000*10**4 
-        xrand=Controles.xrand.value()*30765857481000*10**4  
-        ymean=Controles.ymean.value()*30765857481000*10**4  
-        yrand=Controles.yrand.value()*30765857481000*10**4  
-        zmean=Controles.zmean.value()*30765857481000*10**4  
-        zrand=Controles.zrand.value()*30765857481000*10**4  
-        mmin=Controles.massemin.value()*1943539063490205027173*10**24 
-        mmax=Controles.massemax.value()*1943539063490205027173*10**24 #1943539063490205027173 = 1 kg soit environ 2*10**22
-        rmin=Controles.rayonmin.value()*30765857481000 
-        rmax=Controles.rayonmax.value()*30765857481000 #30765857481000 = 1 km soit environ 3*10**14
+        xmean=Controles.xmean.value()*1000
+        xrand=Controles.xrand.value()*1000
+        ymean=Controles.ymean.value()*1000
+        yrand=Controles.yrand.value()*1000
+        zmean=Controles.zmean.value()*1000
+        zrand=Controles.zrand.value()*1000
+        mmin=Controles.massemin.value()*1000
+        mmax=Controles.massemax.value()*1000
+        rmin=Controles.rayonmin.value()*1000
+        rmax=Controles.rayonmax.value()*1000
         for _ in range(Controles.amount.value()):
             dist:float=random()**(1/3)
             teta=random()*2*pi
@@ -285,7 +285,7 @@ class Controles(QWidget):
                 #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9, ticktime)
                 #Fenetre_principale.ajouter_sphere(var)
             #else :
-            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), randint(-1000000, 1000000), randint(-1000000, 1000000), randint(-100000,100000), randint(10,1000000), ticktime)
+            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1000000, 1000000), vy=randint(-1000000, 1000000), vz=randint(-100000,100000), d=randint(10,1000000), ticktime=ticktime)
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))

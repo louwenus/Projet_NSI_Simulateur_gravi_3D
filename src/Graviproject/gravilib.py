@@ -3,6 +3,7 @@
 import sys
 from math import sqrt
 from random import randint
+import langue
 from . import settings
 try:
     from . import cppgravilib
@@ -12,25 +13,39 @@ except ModuleNotFoundError as e:
     raise (e)
 
 from .affichage3D import Renderer3D, SphereItem
-ticktime:float=1
+if cppgravilib.is_128_bit:
+    lighspeed=9_223_372_036_854_775_808 #lightspeed = numerical speed limit (64-bit signed C++ integer)
+
+else:
+    if settings.get("logging")>=2:
+        print(langue.get("warnings.64-bits"))
+    lighspeed=2_147_483_647 #lightspeed = numerical speed limit (32-bit signed C++ integer)
+
+udPerMeter=int(299_792_458/lighspeed) #computing metter size based on lightspeed (c/lightspeed)
+umPerKg=int((299_792_458/lighspeed)**3*(1/6.674_301_5)*10**11) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
+
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
 
     Args:
         cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
     """
-    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int, ticktime:float) -> None:
+    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int, soft:bool=True) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
-            x,y,z (int): Position de départ de la sphère
-            masse,rayon (int): Variable de la masse et du rayon de la sphère
-            vx,vy,vz (int): Vitesse de départ de la sphère
+            x,y,z (int): Position de départ de la sphère (en m)
+            masse,rayon (int): Variable de la masse et du rayon de la sphère (en kg)
+            vx,vy,vz (int): Vitesse de départ de la sphère (en m/s)
             d (int) : Dureté de la sphère
+            soft (bool) : si les valeurs des args sont en m / kg ou en valeurs interne (ud/um). default en m et kg
         """
         self.durete: int = d
         ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
-        self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
+        if soft:
+            self.init_c_container(x*udPerMeter, y*udPerMeter, z*udPerMeter, masse*umPerKg, rayon*udPerMeter, vx*udPerMeter, vy*udPerMeter, vz*udPerMeter)
+        else:
+            self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
         self.set_ticktime(ticktime)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord,masse)
@@ -145,8 +160,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         x,y,z = sphere.get_coord()
         nb_petit = randint(2,5)
         if int(round(m/nb_petit,0)) != 0:
-            for _ in range (nb_petit):
-                var = PyBaseSphere(x+_*r, y+_*r, z+_*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d, ticktime)
+            for i in range (nb_petit):
+                var = PyBaseSphere(x+i*r, y+i*r, z+i*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d, self.ticktime, False)
                 for render in var.get_render_items():
                     self.render.add_to_display(render)
                 self.add_sphere(var)
