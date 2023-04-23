@@ -101,6 +101,7 @@ cdef class CyDummySphere:
         pass
     def set_ticktime(self,ticktime:float) -> None:
         pass
+    def get_render_items(self) -> list: return []
 
 cdef class CySimpleSphere(CyDummySphere):
     cdef cppgravilib.SimpleSphere *c_simple_sphere

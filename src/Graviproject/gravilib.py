@@ -7,15 +7,14 @@ from . import langue
 from . import settings
 try:
     from . import cppgravilib
-    
 except ModuleNotFoundError as e:
     print("cppravilib doit etre compilé pour que ce programme puisse fonctionner, lisez README.md pour plus de détails.", file=sys.stderr)
     raise (e)
 
 from .affichage3D import Renderer3D, SphereItem
+
 if cppgravilib.is_128_bit:
     lighspeed=9_223_372_036_854_775_808 #lightspeed = numerical speed limit (64-bit signed C++ integer)
-
 else:
     if settings.get("logging")>=2:
         print(langue.get("warnings.64-bits"))
@@ -30,7 +29,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
     Args:
         cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
     """
-    def __init__(self, x: int, y: int, z: int, masse: int, rayon: int, vx: int, vy: int, vz: int, d: int, soft:bool=True) -> None:
+    def __init__(self, x: float, y: float, z: float, masse: float, rayon: float, vx: float, vy: float, vz: float, d: float, soft:bool=True) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
@@ -40,24 +39,53 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             d (int) : Dureté de la sphère
             soft (bool) : si les valeurs des args sont en m / kg ou en valeurs interne (ud/um). default en m et kg
         """
-        self.durete: int = d
-        ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
+        self.durete: float = d
         if soft:
             self.init_c_container(x*udPerMeter, y*udPerMeter, z*udPerMeter, masse*umPerKg, rayon*udPerMeter, vx*udPerMeter, vy*udPerMeter, vz*udPerMeter)
         else:
             self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
-        self.set_ticktime(ticktime)
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord,masse)
     
-    def set_masse(self, masse: int,soft=True) -> None:
+    def set_masse(self, masse: float,soft=True) -> None:
         if soft:
             masse*=umPerKg
         self.render_item.update_masse(masse)
         super().set_masse(masse)
-    def get_masse(self,soft) -> int:
+    def get_masse(self,soft=True) -> float:
+        if soft:
+            return super().get_masse()/umPerKg
         return super().get_masse()
-
+    def get_coord(self,soft=True) -> tuple[float, float, float]:
+        if soft:
+            return tuple(c/udPerMeter for c in super().get_coord())
+        return super().get_coord()
+    def set_coord(self,coord:tuple[float,float,float],soft=True) -> None:
+        if soft:
+            super().set_coord(tuple(c*udPerMeter for c in coord))
+        else:
+            super().set_coord(coord)
+    def get_speed(self,soft=True) -> tuple[float,float,float]:
+        if soft:
+            return tuple(s/udPerMeter for s in super().get_speed())
+        return super().get_speed()
+    def set_speed(self,speed:tuple[float,float,float],soft=True):
+        if soft:
+            super().set_speed(tuple(s*udPerMeter for s in speed))
+        else :
+            super().set_speed(speed)
+    def get_rayon(self,soft=True) -> float:
+        if soft:
+            return super().get_rayon()/udPerMeter
+        return super().get_rayon()
+    def set_rayon(self,rayon:float,soft=True) -> None:
+        if soft:
+            super().set_rayon(rayon*udPerMeter)
+        else:
+            super().set_rayon(rayon)
+    
+    
+    
     def get_render_items(self) -> list[SphereItem]:
         """Renvoie les items de SphereItem d'affichage3D
 
@@ -72,9 +100,12 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         self.init_c_container()
         self.render: Renderer3D=render #pour que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
         self.ticktime: float=ticktime
-        
+    def set_ticktime(self,ticktime:float) -> None:
+        self.ticktime=ticktime
+        for sphere in self.get_spheres():
+            sphere.set_ticktime(ticktime)
     def add_sphere(self, instance: cppgravilib.CyDummySphere) -> None:
-        
+        instance.set_ticktime(self.ticktime)
         super().add_sphere(instance)
 
     def gerer_colision(self) -> None:
@@ -130,28 +161,28 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
                 sphere2 (PyBaseSphere): sphere absorbé
         """
         
-        volume: int=sphere1.get_rayon()**3
+        volume=sphere1.get_rayon()**3
         volume +=(sphere2.get_rayon()**3)
-        rayon =int(volume**(1/3))
+        rayon =volume**(1/3)
         sphere1.set_rayon(rayon)
         m1 = sphere1.get_masse()
         m2 = sphere2.get_masse()
-        masse_final: int= m1+m2
+        masse_final= m1+m2
         vx1,vy1,vz1=sphere1.get_speed()
         vx2,vy2,vz2=sphere2.get_speed()
-        vitessex = int((m1*vx1*2 + m2*vx2*2)/masse_final)   #gain (ou perte) de vitesse
-        vitessey = int((m1*vy1*2 + m2*vy2*2)/masse_final)   #selon la formule moment cinétique = m*v
-        vitessez = int((m1*vz1*2 + m2*vz2*2)/masse_final)
+        vitessex = (m1*vx1*2 + m2*vx2*2)/masse_final   #gain (ou perte) de vitesse
+        vitessey = (m1*vy1*2 + m2*vy2*2)/masse_final   #selon la formule moment cinétique = m*v
+        vitessez = (m1*vz1*2 + m2*vz2*2)/masse_final
         sphere1.set_masse(masse_final)
         sphere1.set_speed((vitessex, vitessey, vitessez))
 
-    def difference_energie(self,sphere:PyBaseSphere):
+    def difference_energie(self,sphere:PyBaseSphere) -> float:
         vx,vy,vz=sphere.get_speed()
         m = sphere.get_masse()
         energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
-        return energie_degagee/sphere.durete < 10**305
+        return energie_degagee/sphere.durete < 10**250
 
-    def explosion (self,sphere:PyBaseSphere):
+    def explosion (self,sphere:PyBaseSphere) -> None:
         """Sépare la sphère en paramètre en plusieurs morceaux.
 
         Args:
@@ -163,14 +194,14 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         r = sphere.get_rayon()
         x,y,z = sphere.get_coord()
         nb_petit = randint(2,5)
-        if int(round(m/nb_petit,0)) != 0:
+        if m/nb_petit >= 10**-10:
             for i in range (nb_petit):
-                var = PyBaseSphere(x+i*r, y+i*r, z+i*r, int(round(m/nb_petit,0)) , int(round(r/nb_petit)), int(round(vx/2)), int(round(vy/2)), int(round(vz/2)), d, self.ticktime, False)
+                var = PyBaseSphere(x+i*r, y+i*r, z+i*r, m/nb_petit,0 , r/nb_petit, vx/2, vy/2, vz/2, d)
                 for render in var.get_render_items():
                     self.render.add_to_display(render)
                 self.add_sphere(var)
     
-    def transfer_e(self,sphere1:PyBaseSphere, sphere2:PyBaseSphere):
+    def transfer_e(self,sphere1:PyBaseSphere, sphere2:PyBaseSphere) -> None:
         """Prend en paramètre 2 sphères, calcul l'énergie libéré par leur collision et modifie les vitesses en conséquence.
 
         Args:
@@ -212,14 +243,14 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         em1=e*m1
         em2=e*m2
         
-        vfx1=int((mvx1+mvx2+em2*(vx2-vx1))/(somme_m))
-        vfx2=int((mvx1+mvx2+em1*(vx1-vx2))/(somme_m))
+        vfx1=(mvx1+mvx2+em2*(vx2-vx1))/(somme_m)
+        vfx2=(mvx1+mvx2+em1*(vx1-vx2))/(somme_m)
 
-        vfy1=int((mvy1+mvy2+em2*(vy2-vy1))/(somme_m))
-        vfy2=int((mvy1+mvy2+em1*(vy1-vy2))/(somme_m))
+        vfy1=(mvy1+mvy2+em2*(vy2-vy1))/(somme_m)
+        vfy2=(mvy1+mvy2+em1*(vy1-vy2))/(somme_m)
 
-        vfz1=int((mvz1+mvz2+em2*(vz2-vz1))/(somme_m))
-        vfz2=int((mvz1+mvz2+em1*(vz1-vz2))/(somme_m)) #transfert de vitesses
+        vfz1=(mvz1+mvz2+em2*(vz2-vz1))/(somme_m)
+        vfz2=(mvz1+mvz2+em1*(vz1-vz2))/(somme_m) #transfert de vitesses
         
         sphere1.set_speed((vfx1, vfy1, vfz1))
         sphere2.set_speed((vfx2, vfy2, vfz2))
