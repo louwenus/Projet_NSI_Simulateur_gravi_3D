@@ -70,11 +70,11 @@ void SimpleSphere::set_speed(li x,li y,li z)
 void SimpleSphere::set_ticktime(const float ticktime)
 {
     this->ticktime=ticktime;
-    this->masse_time=masse*ticktime;
+    this->masse_time=masse*ticktime*ticktime;
 }
 
 void SimpleSphere::set_masse(double masse)
 {
     this->masse=masse;
-    this->masse_time=masse*this->ticktime;
+    this->masse_time=masse*this->ticktime*this->ticktime;
 }
