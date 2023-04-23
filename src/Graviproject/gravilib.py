@@ -3,7 +3,7 @@
 import sys
 from math import sqrt
 from random import randint
-import langue
+from . import langue
 from . import settings
 try:
     from . import cppgravilib
@@ -50,9 +50,13 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         self.render_item: SphereItem = SphereItem(
             self.get_rayon, self.get_coord,masse)
     
-    def set_masse(self, masse: int) -> None:
+    def set_masse(self, masse: int,soft=True) -> None:
+        if soft:
+            masse*=umPerKg
         self.render_item.update_masse(masse)
         super().set_masse(masse)
+    def get_masse(self,soft) -> int:
+        return super().get_masse()
 
     def get_render_items(self) -> list[SphereItem]:
         """Renvoie les items de SphereItem d'affichage3D
