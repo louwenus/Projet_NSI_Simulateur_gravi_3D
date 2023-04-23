@@ -91,7 +91,6 @@ void detect_internal(std::list<DummySphere *>::reverse_iterator iterator, const 
 }
 
 std::list<PyObject*> BaseDimension::detect_collisions() {
-    
     for (std::list<DummySphere*>::reverse_iterator iterator = this->objets.rbegin(); iterator != this->objets.rend();++iterator)
     {
         this->tpool.push_task(detect_internal, iterator, this->objets.rend());
@@ -108,19 +107,20 @@ std::list<PyObject*> BaseDimension::detect_collisions() {
 
     std::list<PyObject*> liste = {};
 
-    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();++iterator){
+    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();){
         DummySphere* sph = (*iterator);
         if (sph->touche!=this->objets.end())
         {   
-            liste.push_back(sph->pyparent);
-            
             auto iter2=sph->touche;
+            liste.push_back(sph->pyparent);
             liste.push_back((*iter2)->pyparent);
 
             this->objets.erase(iter2);
             iterator = this->objets.erase(iterator);
+        }else {
+            ++iterator;
         }
     }
-
+    
     return liste;
 }
