@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-DummySphere::DummySphere(PyObject *parent) : 
+DummySphere::DummySphere(PyObject* parent) : 
     pyparent(parent)
     {}
 DummySphere::~DummySphere() {}

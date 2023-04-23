@@ -20,13 +20,13 @@ public:
     // Autre méthodes
     virtual void gravite_all();
     virtual void move_all();
-    virtual void add_sphere(DummySphere *instance);
+    virtual void add_sphere(DummySphere* instance);
     virtual std::list<PyObject*> detect_collisions();
-    virtual const std::list<DummySphere *> get_sph_list() const;
+    virtual const std::list<DummySphere*> get_sph_list() const;
 
 protected:
     // Variables
-    std::list<DummySphere *> objets;
+    std::list<DummySphere*> objets;
     static BS::thread_pool tpool;
 };
 #endif

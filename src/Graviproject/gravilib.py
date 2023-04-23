@@ -18,8 +18,8 @@ if cppgravilib.is_128_bit:
 else:
     lighspeed=2_147_483_647 #lightspeed = numerical speed limit (32-bit signed C++ integer)
 
-udPerMeter=int(299_792_458/lighspeed) #computing metter size based on lightspeed (c/lightspeed)
-umPerKg=int((299_792_458/lighspeed)**3*(1/6.674_301_5)*10**11) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
+udPerMeter=int(lighspeed/299_792_458) #computing metter size based on lightspeed (c/lightspeed)
+umPerKg=int((lighspeed/299_792_458)**3*(1/6.674_301_5)*10**11) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
