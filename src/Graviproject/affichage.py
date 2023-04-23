@@ -29,6 +29,22 @@ if settings.get("logging") >= 3:
 ticktime=1
 app: QApplication = QApplication(sys.argv)
 
+warnwin = QScrollArea()
+warnwintxt = QLabel(warnwin)
+warnwin.setWidget(warnwintxt)
+warnwin.setWindowTitle("WARNINGS:")
+
+def warn(warning:str)->None:
+    if settings.get("affichage.warn"):
+        warnwintxt.setText(warnwintxt.text() + "\n\n" + langue.get("warnings."+warning))
+        warnwin.show()
+    else:
+        if settings.get("logging")>=2:
+            print(langue.get("warnings."+warning))
+
+if not gravilib.cppgravilib.is_128_bit:
+    warn("64-bits")
+
 class Main_window(QWidget):
     """Cette class définit la fenètre principale du programme, à partir d'un QWidget."""
     changeLangSignal : Signal = Signal()

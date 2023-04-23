@@ -1,7 +1,8 @@
 {
   "affichage": {
     "langue":"fr",
-    "theme":"dark"
+    "theme":"dark",
+    "warn":true
   },
   "simulation": {
     "fps": 10,

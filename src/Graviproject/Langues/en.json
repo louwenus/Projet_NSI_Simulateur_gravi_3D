@@ -40,7 +40,7 @@
         "license":"LICENSE"
     },
     "warnings":{
-        "64-bits":"Warning: your compiler/platform do not support (easily) 128 bits ints, as such, 64 and 32 bits int are used instead of 128 and 64 ones,\nresulting in lower numeric limits. Constant augments of values will take it in account, so you should not account to much for it,\nHOWEVER, program precision will basicaly be halved (or worse)\n\nIf you find a way to enable 128bits-int on your platform and get a reliable build, we will welcome the sugestion on github (https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D) "
+        "64-bits":"Warning: your compiler/platform do not support (easily) 128 bits ints, as such, 64 and 32 bits int are used instead of 128 and 64 ones,\nresulting in lower numeric limits. Constant augments of values will take it in account, so you should not account to much for it,\nHOWEVER, program precision will basicaly be halved (or worse)\n\nIf you find a way to enable 128bits-int on your platform and get a reliable build, we will welcome the sugestion on github (https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D)"
     },
     "404":"Text not found : look at logs."
 }

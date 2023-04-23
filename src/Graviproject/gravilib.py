@@ -16,8 +16,6 @@ from .affichage3D import Renderer3D, SphereItem
 if cppgravilib.is_128_bit:
     lighspeed=9_223_372_036_854_775_808 #lightspeed = numerical speed limit (64-bit signed C++ integer)
 else:
-    if settings.get("logging")>=2:
-        print(langue.get("warnings.64-bits"))
     lighspeed=2_147_483_647 #lightspeed = numerical speed limit (32-bit signed C++ integer)
 
 udPerMeter=int(299_792_458/lighspeed) #computing metter size based on lightspeed (c/lightspeed)
