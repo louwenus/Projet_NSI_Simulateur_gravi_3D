@@ -67,6 +67,7 @@ void BaseDimension::gravite_all()
 void BaseDimension::add_sphere(DummySphere *instance)
 {
     // Py_INCREF(instance->pyparent);
+    instance->touche=this->objets.end();
     this->objets.push_back(instance);
 }
 void BaseDimension::move_all()
@@ -76,33 +77,53 @@ void BaseDimension::move_all()
         (*iter)->move();
     }
 }
-std::list<PyObject *> BaseDimension::detect_collisions()
+void detect_internal(std::list<DummySphere *>::reverse_iterator iterator, const std::list<DummySphere *>::reverse_iterator end)
 {
-    auto start = std::chrono::high_resolution_clock::now();
-    std::list<PyObject *> liste = {};
-    std::list<DummySphere *>::iterator iterator = this->objets.begin();
-    while (iterator != this->objets.end())
+    DummySphere *sphere = (*iterator++);
+    while ( iterator != end)
     {
-        std::list<DummySphere *>::iterator iterator2 = this->objets.begin();
-        while (iterator2 != iterator)
-        {
-            if ((*iterator)->t_collision_avec(*iterator2))
-            {
-                liste.push_back((*iterator)->pyparent);
-                // Py_DECREF((*iterator)->pyparent);
-                liste.push_back((*iterator2)->pyparent);
-                // Py_DECREF((*iterator2)->pyparent);
-                this->objets.erase(iterator2);
-                iterator = this->objets.erase(iterator);
-                goto detect_collision_endloop;
-            }
-            ++iterator2;
+        if (sphere->t_collision_avec(*iterator)){
+            sphere->touche=(++iterator).base();
+            return;
         }
         ++iterator;
-    detect_collision_endloop:;
+    }
+}
+
+std::list<PyObject*> BaseDimension::detect_collisions() {
+    auto start = std::chrono::high_resolution_clock::now();
+    
+    for (std::list<DummySphere *>::reverse_iterator iterator = this->objets.rbegin(); iterator != this->objets.rend();++iterator)
+    {
+        this->tpool.push_task(detect_internal, iterator, this->objets.rend());
+    }
+    this->tpool.wait_for_tasks();
+    
+    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();++iterator){
+        DummySphere* sphere = (*iterator);
+        if (sphere->touche != this->objets.end()){
+            (*(sphere->touche))->touche=iterator;
+            sphere->touche=this->objets.end();
+        }
+    }
+
+    std::list<PyObject*> liste = {};
+
+    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();++iterator){
+        DummySphere* sph = (*iterator);
+        if (sph->touche!=this->objets.end())
+        {   
+            auto iter2=sph->touche;
+            liste.push_back(sph->pyparent);
+            liste.push_back((*iter2)->pyparent);
+
+            this->objets.erase(iter2);
+            iterator = this->objets.erase(iterator);
+        }
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
     std::cout << "detection time in ms:" << duration.count();
+
     return liste;
 }

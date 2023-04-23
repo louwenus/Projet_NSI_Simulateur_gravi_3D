@@ -4,10 +4,8 @@
 #define TYPEDEF_GRAVI_CPP
 // external includes
 #include <cmath>
-#include <string>
-#include <array>
 #include <list>
-#include <future>
+#include <functional>
 #include <atomic>
 #include <iostream>
 #include "Python.h"

@@ -11,7 +11,7 @@ public:
 
     // fonctions pour la collision
     virtual bool t_collision_avec(DummySphere *instance) = 0;       // test de collision avec une autre sphere
-    virtual bool t_collision_coord(llco pos, uli rayon) const = 0;  // teste rapidement (faux positifs) la collsion
+    virtual bool t_collision_coord(llco pos, ulli rayon) const = 0;  // teste rapidement (faux positifs) la collsion
     virtual bool t_colli_rapide(llco posmin, llco posmax) const = 0;// teste mieux la collision
 
     virtual void move() = 0;                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
@@ -22,6 +22,7 @@ public:
 
     // variable
     PyObject *pyparent;
+    std::list<DummySphere*>::iterator touche;
 };
 
 class SimpleSphere : public DummySphere
@@ -29,11 +30,11 @@ class SimpleSphere : public DummySphere
 public:
     // constructeurs et destructeur
     // SimpleSphere();
-    SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, uli rayon, li vx, li vy, li vz);
+    SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, lli rayon, li vx, li vy, li vz);
 
     // fonctions pour la collision
     virtual bool t_collision_avec(DummySphere *instance); // test de collision avec une autre sphere
-    virtual bool t_collision_coord(llco pos, uli rayon) const;
+    virtual bool t_collision_coord(llco pos, ulli rayon) const;
     virtual bool t_colli_rapide(llco posmin, llco posmax) const;
 
     virtual void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
@@ -44,7 +45,7 @@ public:
     virtual void set_masse(double masse);
 
     llco pos; // declared public to be easily accessible from cython (and then python)
-    uli rayon;
+    ulli rayon;
     atlco speed;
     double masse;
 
