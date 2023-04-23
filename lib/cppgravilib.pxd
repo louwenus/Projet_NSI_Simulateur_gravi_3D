@@ -39,7 +39,7 @@ cdef extern from "spheres/sphere.hpp":
         DummySphere(PyObject* parent) except +
         PyObject* pyparent
     cdef cppclass SimpleSphere(DummySphere):
-        SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,uli rayon,li vx,li vy,li vz) except +
+        SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,lli rayon,li vx,li vy,li vz) except +
         llco pos
         uli rayon
         double masse
