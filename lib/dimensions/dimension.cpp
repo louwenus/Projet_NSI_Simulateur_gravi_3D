@@ -91,7 +91,6 @@ void detect_internal(std::list<DummySphere *>::reverse_iterator iterator, const 
 }
 
 std::list<PyObject*> BaseDimension::detect_collisions() {
-    auto start = std::chrono::high_resolution_clock::now();
     
     for (std::list<DummySphere *>::reverse_iterator iterator = this->objets.rbegin(); iterator != this->objets.rend();++iterator)
     {
@@ -121,9 +120,6 @@ std::list<PyObject*> BaseDimension::detect_collisions() {
             iterator = this->objets.erase(iterator);
         }
     }
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout << "detection time in ms:" << duration.count();
 
     return liste;
 }
