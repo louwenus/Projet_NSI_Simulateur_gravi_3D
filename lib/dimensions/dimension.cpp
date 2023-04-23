@@ -112,8 +112,9 @@ std::list<PyObject*> BaseDimension::detect_collisions() {
         DummySphere* sph = (*iterator);
         if (sph->touche!=this->objets.end())
         {   
-            auto iter2=sph->touche;
             liste.push_back(sph->pyparent);
+            
+            auto iter2=sph->touche;
             liste.push_back((*iter2)->pyparent);
 
             this->objets.erase(iter2);
