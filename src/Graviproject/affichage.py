@@ -67,7 +67,7 @@ class Main_window(QWidget):
         self.changeLangSignal.connect(self.attach_detach_texte)
         
         self.langAction: list(QAction) = []
-        for speak in (("Français","fr"),("English","en"),("Italiano","it")):
+        for speak in (("Français","fr"),("English","en"),("Italiano","it"),("Español","esp")):
             self.langAction.append(QAction(speak[0], self))
             self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
