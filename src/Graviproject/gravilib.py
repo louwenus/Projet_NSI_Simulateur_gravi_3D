@@ -112,27 +112,27 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             vx1,vy1,vz1=sphere.get_speed()
             vx2,vy2,vz2=sphere2.get_speed()
+            print(self.difference_energie(sphere))
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                     self.absorption(sphere, sphere2)
                     self.add_sphere(sphere)
                     for render in sphere2.get_render_items():
                         self.render.remove_from_display(render)
-                    """
-                    if difference_energie(sphere):
-                        explosion(sphere)
+                    if self.difference_energie(sphere):
+                        self.explosion(sphere)
                         for render in sphere.get_render_items():
-                           self.render.remove_from_display(render)"""# à revoir
+                           self.render.remove_from_display(render)
                 else:
                     self.absorption(sphere2, sphere)
                     self.add_sphere(sphere2)
                     for render in sphere.get_render_items():
                         self.render.remove_from_display(render)
-                    """
-                    if difference_energie(sphere2):
-                        explosion(sphere2)
+                    
+                    if self.difference_energie(sphere2):
+                        self.explosion(sphere2)
                         for render in sphere2.get_render_items():
-                           self.render.remove_from_display(render)"""
+                           self.render.remove_from_display(render)
                 
             elif (vx1 + vy1 + vz1 - vx2 -vy2 -vz2)/3 < 50000000:
                 self.transfert_v(sphere,sphere2)
@@ -178,7 +178,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         vx,vy,vz=sphere.get_speed()
         m = sphere.get_masse()
         energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
-        return energie_degagee/sphere.durete < 10**250
+        return energie_degagee/sphere.durete < 10**18
 
     def explosion (self,sphere:PyBaseSphere) -> None:
         """Sépare la sphère en paramètre en plusieurs morceaux.
