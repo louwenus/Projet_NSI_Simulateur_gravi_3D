@@ -112,7 +112,6 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         for sphere, sphere2 in self.collisions():
             vx1,vy1,vz1=sphere.get_speed()
             vx2,vy2,vz2=sphere2.get_speed()
-            print(self.difference_energie(sphere))
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                     self.absorption(sphere, sphere2)
