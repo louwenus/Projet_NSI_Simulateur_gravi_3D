@@ -15,6 +15,7 @@ from PySide6.QtCore import Qt, QPointF
 from math import cos, sin, log2
 
 from . import settings
+from .settings import shared_vars
 
 matrix3_3 = tuple[tuple[float, float, float],
                   tuple[float, float, float],
@@ -267,27 +268,27 @@ class Renderer3D(QWidget):
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
             """ Fait s'élever la camera de 5000000 px"""
-            self.cam.move(elev=-5*10**18)
+            self.cam.move(elev=-shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
             """ Fait descendre la camera de 5000000 px"""
-            self.cam.move(elev=5*10**18)
+            self.cam.move(elev=shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 5000000 px"""
-            self.cam.move(cote=5*10**18)
+            self.cam.move(cote=shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
             """ Fait se décaler à gauche la camera de 5000000 px"""
-            self.cam.move(cote=-5*10**18)
+            self.cam.move(cote=-shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 5000000 px"""
-            self.cam.move(profondeur=5*10**18)
+            self.cam.move(profondeur=shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 5000000 px"""
-            self.cam.move(profondeur=-5*10**18)
+            self.cam.move(profondeur=-shared_vars["udpermeter"]*1000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""

@@ -7,6 +7,7 @@ from sys import stderr, argv
 
 settings: dict = {}
 defaults: dict = {}
+shared_vars={}
 
 try:
     path: str = os.path.abspath(os.path.dirname(__file__))
