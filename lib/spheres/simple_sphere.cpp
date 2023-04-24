@@ -14,11 +14,11 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, 
 {}
 
 void SimpleSphere::move()
-{   
-    this->pos.x += (int)(this->speed.x) * this->ticktime;
-    this->pos.y += (int)(this->speed.y) * this->ticktime;
-    this->pos.z += (int)(this->speed.z) * this->ticktime;
-
+{
+    std::cout << "hey, debug" ;
+    this->pos.x += (lli)((li)(this->speed.x) * this->ticktime);
+    this->pos.y += (lli)((li)(this->speed.y) * this->ticktime);
+    this->pos.z += (lli)((li)(this->speed.z) * this->ticktime);
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
 }
@@ -51,7 +51,7 @@ bool SimpleSphere::t_collision_avec(DummySphere *instance)
 }
 bool SimpleSphere::t_collision_coord(llco pos, ulli rayon) const
 { // cette fonction test exactement la présence ou non d'une collision entre 2 spheres
-    if (pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2) + pow(pos.z - this->pos.z, 2) < pow(rayon + this->rayon, 2))
+    if (pow((float)(pos.x - this->pos.x), 2) + pow((float)(pos.y - this->pos.y), 2) + pow((float)(pos.z - this->pos.z), 2) < pow((float)(rayon + this->rayon), 2))
     {
         return true;
     }
