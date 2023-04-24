@@ -5,7 +5,7 @@ from math import sqrt
 from random import randint
 from . import langue
 from . import settings
-from .settings import shared_vars
+
 try:
     from . import cppgravilib
 except ModuleNotFoundError as e:
@@ -21,7 +21,7 @@ else:
 
 udPerMeter=int(lighspeed/299_792_458) #computing metter size based on lightspeed (c/lightspeed)
 umPerKg=int((lighspeed/299_792_458)**3*(1/6.674_301_5)*10**11) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
-shared_vars["udpermeter"]=udPerMeter
+
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
 

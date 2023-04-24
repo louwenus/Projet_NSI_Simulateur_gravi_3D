@@ -15,7 +15,7 @@ from PySide6.QtCore import Qt, QPointF
 from math import cos, sin, log2
 
 from . import settings
-from .settings import shared_vars
+
 
 matrix3_3 = tuple[tuple[float, float, float],
                   tuple[float, float, float],
@@ -98,6 +98,9 @@ class Camera():
     
     def move(self, cote:int=0, elev:int=0, profondeur:int=0):
         """deplace la caméra, avec cote, elev et profondeur en coordonées locales (tient compte de la rotation de la cam)"""
+        cote/=self.zoom
+        elev/=self.zoom
+        profondeur/=self.zoom
         self.x += cote*self.matrix[0][0] + elev*self.matrix[1][0] + profondeur*self.matrix[2][0] 
         self.y += cote*self.matrix[0][1] + elev*self.matrix[1][1] + profondeur*self.matrix[2][1] 
         self.z += cote*self.matrix[0][2] + elev*self.matrix[1][2] + profondeur*self.matrix[2][2] 
@@ -267,28 +270,28 @@ class Renderer3D(QWidget):
         """
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
-            """ Fait s'élever la camera de 5000000 px"""
-            self.cam.move(elev=-shared_vars["udpermeter"]*1000)
+            """ Fait s'élever la camera de 50_000_000 metres"""
+            self.cam.move(elev=-50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
-            """ Fait descendre la camera de 5000000 px"""
-            self.cam.move(elev=shared_vars["udpermeter"]*1000)
+            """ Fait descendre la camera de 50_000_000 metres"""
+            self.cam.move(elev=50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 5000000 px"""
-            self.cam.move(cote=shared_vars["udpermeter"]*1000)
+            """ Fait se décaler à droite la camera de 50_000_000 metres"""
+            self.cam.move(cote=50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 5000000 px"""
-            self.cam.move(cote=-shared_vars["udpermeter"]*1000)
+            """ Fait se décaler à gauche la camera de 50_000_000 metres"""
+            self.cam.move(cote=-50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
-            """ Fait avancer la camera de 5000000 px"""
-            self.cam.move(profondeur=shared_vars["udpermeter"]*1000)
+            """ Fait avancer la camera de 50_000_000 metres"""
+            self.cam.move(profondeur=50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
-            """ Fait reculer la camera de 5000000 px"""
-            self.cam.move(profondeur=-shared_vars["udpermeter"]*1000)
+            """ Fait reculer la camera de 50_000_000 metres"""
+            self.cam.move(profondeur=-50_000_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
