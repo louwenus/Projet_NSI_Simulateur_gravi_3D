@@ -244,26 +244,26 @@ class Controles(QWidget):
     layout_aj_sph.addWidget(amountl, 0,0)
     layout_aj_sph.addWidget(amount,0,1)
 
-    xmean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    xrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=50000000,decimals=0)
+    xmean = QDoubleSpinBox(minimum=-2_000_000_000, maximum=2_000_000_00, value=0,decimals=0)
+    xrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     xlabel = QLabel(langue.get("control.add_settings.x"))
     for i,widget in enumerate((xlabel, xmean, QLabel('+-'),xrand)):
         layout_aj_sph.addWidget(widget,1,i)
 
-    ymean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    yrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=50000000,decimals=0)
+    ymean = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=0,decimals=0)
+    yrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     ylabel = QLabel(langue.get("control.add_settings.y"))
     for i,widget in enumerate((ylabel, ymean, QLabel('+-'),yrand)):
         layout_aj_sph.addWidget(widget,2,i)
     
-    zmean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    zrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=50000000,decimals=0)
+    zmean = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=0,decimals=0)
+    zrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     zlabel = QLabel(langue.get("control.add_settings.z"))
     for i,widget in enumerate((zlabel, zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
     
     massemin = QDoubleSpinBox(minimum=1, maximum=float(10**17), value=3*10**2,decimals=0)
-    massemax = QDoubleSpinBox(minimum=1,maximum=float(10**17),value=3*10**7,decimals=0)
+    massemax = QDoubleSpinBox(minimum=1,maximum=float(10**17),value=3*10**8,decimals=0)
     massel = QLabel(langue.get("control.add_settings.m"))
     for i,widget in enumerate((massel, massemin, QLabel("<?<"),massemax)):
         layout_aj_sph.addWidget(widget,4,i)
@@ -301,7 +301,7 @@ class Controles(QWidget):
                 #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9, ticktime)
                 #Fenetre_principale.ajouter_sphere(var)
             #else :
-            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, -1_000_000), vy=randint(-1_000_000, -1_000_000), vz=randint(-1_000_000, -1_000_000), d=randint(10,1000000))
+            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))
             Fenetre_principale.ajouter_sphere(var)
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))
