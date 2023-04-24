@@ -178,7 +178,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         vx,vy,vz=sphere.get_speed()
         m = sphere.get_masse()
         energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
-        return energie_degagee/sphere.durete < 10**18
+        return energie_degagee/sphere.durete > 10**18
 
     def explosion (self,sphere:PyBaseSphere) -> None:
         """Sépare la sphère en paramètre en plusieurs morceaux.
