@@ -14,8 +14,8 @@ Utilisation de [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C
   - Installez python3.10 et pip :
 
     - Pour windows :<br/>
-      Installez [python3.10](https://www.python.org/downloads/windows).<br/>
-      *NB : Selectionnez bien python3.10 puisque les wheel sont build sous python3.10.*
+      Installez [python3.11](https://www.python.org/downloads/windows).<br/>
+      *NB : Selectionnez bien python3.11 puisque les wheel sont build sous python3.11.*
 
     - Pour linux :<br/>
       Installez python3.10 et pip :<br/>
@@ -36,7 +36,7 @@ Utilisation de [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C
         `pacman -S python python-pip`
     
   - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(si votre platforme n'est pas présente, vous devez compiler)* puis installez la avec :<br/>
-  `python3.10 -m pip install nom_du_fichier.whl`<br/>
+  `python3 -m pip install nom_du_fichier.whl`<br/>
   - Vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path.
 - En compilant :<br/>
   - Vous devez compiler du c++ et du cython :
