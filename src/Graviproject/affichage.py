@@ -244,20 +244,20 @@ class Controles(QWidget):
     layout_aj_sph.addWidget(amountl, 0,0)
     layout_aj_sph.addWidget(amount,0,1)
 
-    xmean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    xrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=20000000,decimals=0)
+    xmean = QDoubleSpinBox(minimum=-2_000_000_000, maximum=2_000_000_00, value=0,decimals=0)
+    xrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     xlabel = QLabel(langue.get("control.add_settings.x"))
     for i,widget in enumerate((xlabel, xmean, QLabel('+-'),xrand)):
         layout_aj_sph.addWidget(widget,1,i)
 
-    ymean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    yrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=20000000,decimals=0)
+    ymean = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=0,decimals=0)
+    yrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     ylabel = QLabel(langue.get("control.add_settings.y"))
     for i,widget in enumerate((ylabel, ymean, QLabel('+-'),yrand)):
         layout_aj_sph.addWidget(widget,2,i)
     
-    zmean = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=0,decimals=0)
-    zrand = QDoubleSpinBox(minimum=-2000000000, maximum=2000000000, value=20000000,decimals=0)
+    zmean = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=0,decimals=0)
+    zrand = QDoubleSpinBox(minimum=-2_000_000_00, maximum=2_000_000_00, value=20_000_000,decimals=0)
     zlabel = QLabel(langue.get("control.add_settings.z"))
     for i,widget in enumerate((zlabel, zmean, QLabel('+-'),zrand)):
         layout_aj_sph.addWidget(widget,3,i)
