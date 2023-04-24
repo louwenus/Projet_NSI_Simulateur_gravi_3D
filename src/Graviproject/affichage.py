@@ -56,6 +56,15 @@ class Main_window(QWidget):
 
         self.setWindowTitle(langue.get("title"))
         self.changeLangSignal.connect(langue.lazyEval(self.setWindowTitle,"title"))
+        
+        #Ajout du logo
+        try :
+            path: str = os.path.abspath(os.path.dirname(__file__))
+            path = os.path.join(path, "Images/logo.png")
+            self.setWindowIcon(QIcon(path))
+        except :
+            if settings.get("logging") >= 1:
+                print("Le logo n'a pas été trouvé ici :", path, file=stderr)
 
         self.layout: QLayout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -67,7 +76,7 @@ class Main_window(QWidget):
         self.changeLangSignal.connect(self.attach_detach_texte)
         
         self.langAction: list(QAction) = []
-        for speak in (("Français","fr"),("English","en"),("Italiano","it"),("Español","esp")):
+        for speak in (("Français","fra"),("English","eng"),("Italiano","ita"),("Español","spa")):
             self.langAction.append(QAction(speak[0], self))
             self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
