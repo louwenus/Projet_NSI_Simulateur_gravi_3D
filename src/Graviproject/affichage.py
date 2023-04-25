@@ -88,7 +88,7 @@ class Main_window(QWidget):
         self.changeLangSignal.connect(self.attach_detach_texte)
         
         self.langAction: list(QAction) = []
-        for speak in (("Français","fra"),("English","eng"),("Italiano","ita"),("Español","spa")):
+        for speak in (("Français","fr"),("English","en"),("Italiano","it"),("Español","es")):
             self.langAction.append(QAction(speak[0], self))
             self.langAction[-1].triggered.connect(partial(self.change_lang,speak[1]))
         
@@ -96,7 +96,7 @@ class Main_window(QWidget):
         for theme in ("light","dark","system"):
             self.themeAction.append(QAction(langue.get("menu.settings.theme."+theme), self))
             self.changeLangSignal.connect(langue.lazyEval(self.themeAction[-1].setText,"menu.settings.theme."+theme))
-            #self.themeAction[-1].triggered.connect()
+            self.themeAction[-1].triggered.connect(partial(self.change_theme,theme))
 
         #TODO : ajout de l'action pour le thème 
 
@@ -187,6 +187,10 @@ class Main_window(QWidget):
         settings.save()
         langue.reload()
         self.changeLangSignal.emit()
+        
+    def change_theme(self, theme):
+        settings.set("affichage.theme",theme)
+        settings.save()
         
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
