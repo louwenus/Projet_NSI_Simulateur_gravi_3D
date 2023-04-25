@@ -12,7 +12,8 @@
             "theme":{
                 "title":"&Temi",
                 "light":"Chiaro",
-                "dark":"Scuro"
+                "dark":"Scuro",
+                "system":"Sistema"
             }
         },
         "help":{

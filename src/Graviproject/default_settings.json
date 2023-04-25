@@ -1,7 +1,7 @@
 {
   "affichage": {
     "langue":"fra",
-    "theme":"dark",
+    "theme":"system",
     "warn":true
   },
   "simulation": {
