@@ -65,7 +65,7 @@ class Camera():
         (-cos(self.pitch)*sin(self.yaw) ,                                              sin(self.pitch) ,                 cos(self.pitch)*cos(self.yaw)))
 
 
-    def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float]:
+    def projection_sphere(self, coord: tuple[int, int, int], radius: int) -> tuple[tuple[float, float], float] | None:
         """Projette la sphère 3D sur l'écran de la caméra 2D.
 
         Args:
@@ -86,12 +86,9 @@ class Camera():
             #z(2) vers le fond
             coord_plan: tuple[float, float] = (
                 coord_finale[0]/coord_finale[2]*self.zoom*self.offsetX+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom*self.offsetX+self.offsetY)
-            radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)
-            
+            radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)        
         else:
-            #Améliorable ? Oui, TODO: faire une valeur de retour None/False qui evite complétement le draw.
-            coord_plan: tuple[float, float] = (0, 0)
-            radius_plan: float = 0
+            return None
 
         return (coord_plan, radius_plan)
     
@@ -144,13 +141,16 @@ class SphereItem():
         Args:
             painter (class 'PySide6.QtGui.QPainter'): Permettant de modifier le rendu graphique.
         """
-        coord2D, self.radius2D = camera.projection_sphere(self.getcoords(), self.radius())
-        self.pos=QPointF(*coord2D)
+        statsDessin = camera.projection_sphere(self.getcoords(), self.radius())
 
-        painter.setPen(QPen(QColor("black"),0.5))
-        painter.setBrush(QBrush(self.color))
+        if statsDessin != None :
+            coord2D, self.radius2D = statsDessin
+            self.pos=QPointF(*coord2D)
 
-        painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
+            painter.setPen(QPen(QColor("black"),0.5))
+            painter.setBrush(QBrush(self.color))
+
+            painter.drawEllipse(self.pos, self.radius2D, self.radius2D)
 
 
 class Renderer3D(QWidget):
