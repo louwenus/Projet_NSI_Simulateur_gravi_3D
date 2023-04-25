@@ -10,18 +10,18 @@ BS::thread_pool BaseDimension::tpool = BS::thread_pool();
 BaseDimension::BaseDimension(): objets() {}
 BaseDimension::~BaseDimension() {}
 
-const std::list<DummySphere *> BaseDimension::get_sph_list() const
+const std::list<SimpleSphere *> BaseDimension::get_sph_list() const
 {
     return this->objets;
 }
 
-void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphere *>::iterator end)
+void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSphere *>::iterator end)
 {
     /* Cette fonction calcule et applique la gravitation entre la sphère pointée par iterator, et toute les suivante sur cet iterateur jusqu'à end.
     end doit évidement être un itérateur sur le meme objet que iterator, et situé après lui. temps et la constante de temps passé aux gravite_stats. */
 
     llco coo;
-    DummySphere* sphere = (*iterator++);
+    SimpleSphere* sphere = (*iterator++);
     ulli sanitize;
     double masse = sphere->gravite_stats(coo, sanitize);
     lco accel = {0, 0, 0};
@@ -58,13 +58,13 @@ void grav(std::list<DummySphere *>::iterator iterator, const std::list<DummySphe
 void BaseDimension::gravite_all()
 {
 
-    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
+    for (std::list<SimpleSphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end(); ++iterator)
     {
         this->tpool.push_task(grav, iterator, this->objets.end());
     }
     this->tpool.wait_for_tasks();
 }
-void BaseDimension::add_sphere(DummySphere *instance)
+void BaseDimension::add_sphere(SimpleSphere *instance)
 {
     // Py_INCREF(instance->pyparent);
     instance->touche=this->objets.end();
@@ -77,9 +77,9 @@ void BaseDimension::move_all()
         (*iter)->move();
     }
 }
-void detect_internal(std::list<DummySphere *>::reverse_iterator iterator, const std::list<DummySphere *>::reverse_iterator end)
+void detect_internal(std::list<SimpleSphere *>::reverse_iterator iterator, const std::list<SimpleSphere *>::reverse_iterator end)
 {
-    DummySphere* sphere = (*iterator++);
+    SimpleSphere* sphere = (*iterator++);
     while ( iterator != end)
     {
         if (sphere->t_collision_avec(*iterator)){
@@ -91,14 +91,14 @@ void detect_internal(std::list<DummySphere *>::reverse_iterator iterator, const 
 }
 
 std::list<PyObject*> BaseDimension::detect_collisions() {
-    for (std::list<DummySphere*>::reverse_iterator iterator = this->objets.rbegin(); iterator != this->objets.rend();++iterator)
+    for (std::list<SimpleSphere*>::reverse_iterator iterator = this->objets.rbegin(); iterator != this->objets.rend();++iterator)
     {
         this->tpool.push_task(detect_internal, iterator, this->objets.rend());
     }
     this->tpool.wait_for_tasks();
     
-    for (std::list<DummySphere*>::iterator iterator = this->objets.begin(); iterator != this->objets.end();++iterator){
-        DummySphere* sphere = (*iterator);
+    for (std::list<SimpleSphere*>::iterator iterator = this->objets.begin(); iterator != this->objets.end();++iterator){
+        SimpleSphere* sphere = (*iterator);
         if (sphere->touche != this->objets.end()){
             (*(sphere->touche))->touche=iterator;
             sphere->touche=this->objets.end();
@@ -107,8 +107,8 @@ std::list<PyObject*> BaseDimension::detect_collisions() {
 
     std::list<PyObject*> liste = {};
 
-    for (std::list<DummySphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();){
-        DummySphere* sph = (*iterator);
+    for (std::list<SimpleSphere *>::iterator iterator = this->objets.begin(); iterator != this->objets.end();){
+        SimpleSphere* sph = (*iterator);
         if (sph->touche!=this->objets.end())
         {   
             auto iter2=sph->touche;
