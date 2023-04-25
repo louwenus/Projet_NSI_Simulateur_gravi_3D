@@ -15,7 +15,6 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, 
 
 void SimpleSphere::move()
 {
-    std::cout << "hey, debug" ;
     this->pos.x += (lli)((li)(this->speed.x) * this->ticktime);
     this->pos.y += (lli)((li)(this->speed.y) * this->ticktime);
     this->pos.z += (lli)((li)(this->speed.z) * this->ticktime);

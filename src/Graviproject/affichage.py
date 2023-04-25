@@ -248,7 +248,7 @@ class Controles(QWidget):
     layout_aj_sph: QLayout = QGridLayout()
     fenetre_ajoute.setLayout(layout_aj_sph)
 
-    amount = QSpinBox(minimum=0, maximum=10000, value=100)
+    amount = QSpinBox(minimum=0, maximum=10000, value=0)
     amountl = QLabel(langue.get("control.add_settings.nb"))
     layout_aj_sph.addWidget(amountl, 0,0)
     layout_aj_sph.addWidget(amount,0,1)
@@ -299,19 +299,33 @@ class Controles(QWidget):
         mmax=Controles.massemax.value()*1000
         rmin=Controles.rayonmin.value()*1000
         rmax=Controles.rayonmax.value()*1000
-        for _ in range(Controles.amount.value()):
-            dist:float=random()**(1/3)
-            teta=random()*2*pi
-            phi=random()*2*pi
-            x=xmean+xrand*dist*sin(teta)*cos(phi)
-            y=ymean+yrand*dist*sin(teta)*sin(phi)
-            z=zmean+zrand*dist*cos(teta)
-            #if _ == 1 :
+        if Controles.amount.value() :
+            for _ in range(Controles.amount.value()):
+                dist:float=random()**(1/3)
+                teta=random()*2*pi
+                phi=random()*2*pi
+                x=xmean+xrand*dist*sin(teta)*cos(phi)
+                y=ymean+yrand*dist*sin(teta)*sin(phi)
+                z=zmean+zrand*dist*cos(teta)
+                #if _ == 1 :
                 #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9, ticktime)
                 #Fenetre_principale.ajouter_sphere(var)
-            #else :
-            var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))
-            Fenetre_principale.ajouter_sphere(var)
+                #else :
+                var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))
+                Fenetre_principale.ajouter_sphere(var)
+        else :
+
+            #rayon des planètes multiplisé par 10 pour plus de visibilité
+            varsol = gravilib.PyBaseSphere(0, 0, 10_000, 1.9889*10**30, 696_000,0, 0, 0, 100_000)
+            #vartest = gravilib.PyBaseSphere(8_000_000, 0, 10_000, 1.9889*10**2, 200_000,0, 0, 0, 100_000)
+            varmerc = gravilib.PyBaseSphere(58_000_000, 0, 10_000, 3.302*10**23, 240_400,0, 0, 0, 100_000)
+            varven = gravilib.PyBaseSphere(108_000_000, 0, 10_000, 4.8685*10**24, 65_020,0, 0, 0, 100_000)
+
+            Fenetre_principale.ajouter_sphere(varsol)
+            #Fenetre_principale.ajouter_sphere(vartest)
+            Fenetre_principale.ajouter_sphere(varmerc)
+            Fenetre_principale.ajouter_sphere(varven)
+
 
     bouton_val_aj: QAbstractButton = QPushButton(langue.get("control.add_settings.valid"))
     layout_aj_sph.addWidget(bouton_val_aj)

@@ -174,7 +174,8 @@ class Renderer3D(QWidget):
 
         self.cam: Camera = Camera(offsetX=self.size().width()/2,
                                   offsetY=self.size().height()/2,
-                                  zoom=settings.get("simulation.defaultzoom"))
+                                  zoom=settings.get("simulation.defaultzoom"),
+                                  z=-3_000_000)
         self.reload_controlles()
         
         
@@ -234,6 +235,7 @@ class Renderer3D(QWidget):
         Args:
             event (class 'PySide6.QtGui.QWheelEvent'): Evenement, ici molette de la souris.
         """
+        
         if event.angleDelta().y() > 0:
             self.cam.zoom*=1.25
             
@@ -279,19 +281,19 @@ class Renderer3D(QWidget):
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 50_000_000 metres"""
-            self.cam.move(cote=50_000_000)
+            self.cam.move(cote=58_000_000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
             """ Fait se décaler à gauche la camera de 50_000_000 metres"""
-            self.cam.move(cote=-50_000_000)
+            self.cam.move(cote=-58_000_000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=50_000_000)
+            self.cam.move(profondeur=500_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=-50_000_000)
+            self.cam.move(profondeur=-500_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
