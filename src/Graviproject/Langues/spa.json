@@ -12,7 +12,8 @@
             "theme":{
                 "title":"&Temas",
                 "light":"Clair",
-                "dark":"Oscuro"
+                "dark":"Oscuro",
+                "system":"Sistema"
             }
         },
         "help":{
