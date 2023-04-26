@@ -1,54 +1,104 @@
-# Projet_NSI_Simulateur_gravi_3D
+# Le GraviProject !
 
-Projet de simulateur de gravitation en 3D, avec une librairie calculatoire en C++ et un frontend en python :<br/>
-Utilisation de [Cython](https://github.com/cython/cython).<br/><br/>
 
-Licence GPLV3+ :
-Lisez LICENSE ou https://www.gnu.org/licenses/ pour plus de détails.
+Projet de simulateur de gravitation en 3D, avec une librairie calculatoire en C++ et un frontend en python
 
-Utilisation de [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C++17 Thread Pool for High-Performance Scientific Computing.
 
-## Installation :<br/>
-- Avec les versions déjà compilées :<br/>
-  *NB : Cette méthode peut ne pas fonctionner en cas de différence trop importante entre le serveur sur lequel les wheel sont build et votre ordinateur.*
-  - Installez python3.10 et pip :
+Table des matières
+ 1. [Installation](#installation)
+ 2. [Crédits](#crédits)
 
-    - Pour windows :<br/>
-      Installez [python3.11](https://www.python.org/downloads/windows).<br/>
-      *NB : Selectionnez bien python3.11 puisque les wheel sont build sous python3.11.*
 
-    - Pour linux :<br/>
-      Installez python3.10 et pip :<br/>
-      *NB : Au moment d'écrire ce README, python 3.10 et le standard sous linux, donc le python3 par default. Modifiez au besoin.*
+## Installation :
+
+Il est possible d'installer le GraviProject de 2 manière différente:
+En utilisant une version précompilé, selon votre platforme:
+- [Windows x86_64 et python3.11](#windows)
+- [Linux x86_64 ou aarch64 et python3.10](#Linux)
+
+Si votre platforme ou que votre version de python ne correspond pas (et qu vous ne désirez pas le mettre a jour), [vous devez compiler le projet](#en-compilant)
+
+
+- Avec les versions déjà compilées :
+
+  **NB : La platforme et la version de python doivent correspondre éxactement**
+  - ### Windows
+    - Si vous ne l'avez pas déja fait, installez ou mettez a jour python, [disponible ici](https://www.python.org/downloads/windows).
+    **Séléctionnez bien la version 3.11** *(La dernière en date au moment d'écrire cette documentation)*
+    - Allez chercher [la dernière wheel disponible ici](https://mwaserv.fr.to/downloads/graviproject/windows_wheel_x86_64/) puis installez la avec pip : `pip install nom_du_fichier.whl`
+
+  - ### Linux
+    - Si vous ne l'avez pas déja fait, installez ou mettez a jour python3.10 et pip :<br/>
+    *NB : Au moment d'écrire ce README, python 3.10 et le standard sous linux, donc le python3 par default. Adaptez si besoin*
       - Pour apt (Ubuntu, Debian...) :<br/>
-        `sudo apt-get install python3 python3-pip`
+      `sudo apt-get install python3 python3-pip`
       - Pour yum (CentOS, RHEL...) :<br/>
-        `sudo yum install python3 python3-pip`
+      `sudo yum install python3 python3-pip`
       - Pour dnf (Fedora...) :<br/>
-        `sudo dnf install python3 python3-pip`
+      `sudo dnf install python3 python3-pip`
       - Pour zypper (openSUSE...) :<br/>
-        `sudo zypper in python3 python3-pip`
+      `sudo zypper in python3 python3-pip`
       - Pour apk (Alpine...) :<br/>
-        `sudo apk add python3 py3-pip`
+      `sudo apk add python3 py3-pip`
       - Pour apt-cyg (Cygwin...) :<br/>
-        `apt-cyg install python3 python3-pip`
+      `sudo apt-cyg install python3 python3-pip`
       - Pour pacman (Arch, Manjaro...) :<br/>
-        `pacman -S python python-pip`
-    
-  - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(si votre platforme n'est pas présente, vous devez compiler)* puis installez la avec :<br/>
-  `python3 -m pip install nom_du_fichier.whl`<br/>
-  - Vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path.
-- En compilant :<br/>
-  - Vous devez compiler du c++ et du cython :
-    - Pour Windows :
+      `sudo pacman -S python python-pip`
+      
+    - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(prenez bien la dernière en date)* puis installez la avec :<br/>
+    `python3 -m pip install nom_du_fichier.whl`
 
-      Installez [python3](https://www.python.org/downloads/windows/).<br/>
-      *NB : Normalement, les header python.h et pip sont installés en meme temps.*<br/>
-      Installez un compilateur c++ de votre choix capable de compiler du C++20, par exemple [msvc](https://aka.ms/vs/17/release/vs_BuildTools.exe).
+    - Vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path, sinon:
+      ```
+      python3
+      from Graviproject.main import launch_app
+      launch_app()
+      ```
+- ### En compilant
+  - [Windows](#windows-1)
+  - [Linux](#linux-1)
+  - [autre systèmes](#autres-systèmes)
+  - ### Windows
+    - Installez [python3](https://www.python.org/downloads/windows/).
+    *NB : Normalement, les header python.h et pip sont installés en meme temps.*
 
-    - Pour Linux :
+    - Installez un compilateur c++ de votre choix capable de compiler du C++20, par exemple [msvc](https://aka.ms/vs/17/release/vs_BuildTools.exe).
 
-      Vous avez besoin de python3, pip d'un compilateur pour le C++20 (par exemple `gcc`), et des headers python (`python.h`), instalables selon votre distribution :
+    - Installez le système de build python et les dépendances :
+
+      `python.exe -m pip install --upgrade build "cython @ git+https://github.com/cython/cython" setuptools pyside6`<br/>
+    - Copiez le repo git :
+
+      `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D.git`<br/>
+    *NB : La version git de cython et réquise jusqu'a ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2)*
+    - Compilez:
+
+      Entrez dans le répertoire du repo git:<br/>
+      `cd Projet_NSI_Simulateur_gravi_3D`
+
+      - Pour une utilisation locale:<br/>
+        `python.exe setup.py build_ext`
+
+        Lancez ensuite le programme avec le fichier launch.py (dans le répertoire src)<br/>
+        `python.exe src\launch.py`
+
+      - pour creer une wheel et pouvoir installer le programme<br/>
+        `python.exe -m build -nx -w`
+
+        La wheel est disponible dans le dossier dist, vous pouvez l'installer avec<br/>
+        `pip install dist\nom_du_fichier.whl` *NB: vous pouvez autocompléter les noms de fichier avec la touche Tab*
+
+        Il est désormais possible de lancer le programme sous le nom `Graviproject` (si les scripts de pip sont bien dans le PATH) ou de la manière suivante:
+        ```
+        python.exe
+        from Graviproject.main import launch_app
+        launch_app()
+        ```
+
+  - ### Linux
+
+    - Installez python3, pip, un compilateur pour le C++20 (par exemple `gcc`), et des headers python (`python.h`).Les commandes suivantes fonctionent selon votre distribution :
+
       - Pour apt (Ubuntu, Debian...) :<br/>
         `sudo apt-get install python3 python3-pip g++ python3-dev`
       - Pour yum (CentOS, RHEL...) :<br/>
@@ -66,23 +116,86 @@ Utilisation de [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C
       
       *NB : python3-dev couvre seulement l'instalation par default de python, si vous utilisez une version spécifique, par exemple python 3.8, vous devez installer python3.8-dev.*
       
-    - Pour MacOS :
+    - Installez le système de build python et les dépendances :
 
-      Aucun d'entre nous n'a de mac sous la main pour tester, si quelqu'un peut fournir des instructions, ce sera avec plaisir.<br/>
-      Vous avez besoin de python3, pip, d'un compilateur C++20 et peut-être des headers python3 (`Python.h`).
+      `python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython" setuptools pyside6`<br/>
+    *NB : La version git de cython et réquise jusqu'a ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2)*
+    - Copiez le repo git:
+
+      `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D.git`
+    
+    - Compilez:
+
+      Entrez dans le répertoire du repo git:<br/>
+      `cd Projet_NSI_Simulateur_gravi_3D`
+      - Pour une utilisation locale:<br/>
+        `python3 setup.py build_ext`
+
+        Lancez ensuite le programme avec le fichier launch.py (dans le répertoire src)<br/>
+        `python3 src\launch.py`
+
+      - pour creer une wheel et pouvoir installer le programme<br/>
+        `python3 -m build -nx -w`
+
+        La wheel est disponible dans le dossier dist, vous pouvez l'installer avec<br/>
+        `python3 -m pip install dist\nom_du_fichier.whl` *NB: vous pouvez autocompléter les noms de fichier avec la touche Tab*
+
+        Il est désormais possible de lancer le programme sous le nom `Graviproject` (si les scripts de pip sont bien dans le PATH) ou de la manière suivante:
+        ```
+        python3
+        from Graviproject.main import launch_app
+        launch_app()
+        ```
+
+    
+      
+  - ### Autres systèmes:
+
+    Si vous avez des instruction plus spécifiques pour un système donné après une installation réussie, dites-le nous, nous les ajouterons avec plaisir!
+
+    Installez python3, pip, un compilateur C++20 (si possible supportant gnu++20) et peut-être les headers python3 (`Python.h`) si ils ne sont pas installés par défaults avec python.
   
-  - Installez le système de build python et les dépendances :<br/>
-  `python3 -m pip install --upgrade build "cython @ git+https://github.com/cython/cython" setuptools pyside6`<br/>
+    - Installez le système de build python et les dépendances :<br/>
+    `python -m pip install --upgrade build "cython @ git+https://github.com/cython/cython" setuptools pyside6`
 
-  *NB : La version git de cython et réquise jusqu'a ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2)*
+    *NB : La version git de cython et réquise jusqu'a ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2)*
 
-  - Copiez le repo git :<br/>
-  `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D`<br/>
-  `cd Projet_NSI_Simulateur_gravi_3D`<br/>
-  - Si vous voulez compiler pour une utilisation dans ce repertoire:
-    - compilez avec: `python3 setup.py build_ext --force`<br/>
-    - lancez le programme avec la commande `python3 src/launch.py`
-  - si vous voulez installer le paquet pip pour avoir une commande accessible partout et pouvoir retirer tout le repertoire git
-    - compilez avec: `python3 -m build -w`
-    - installez la wheel: `python3 -m pip install dist/nom_du_fichier.whl`
-    - Vous pouvez maintenant lancer `Graviproject`
+    - Copiez le repo git:
+
+      `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D.git`
+    
+    - Compilez:
+
+      Entrez dans le répertoire du repo git:<br/>
+      `cd Projet_NSI_Simulateur_gravi_3D`
+
+      - Pour une utilisation locale:<br/>
+        `python3 setup.py build_ext`
+
+        Lancez ensuite le programme avec le fichier launch.py (dans le répertoire src)<br/>
+        `python3 src\launch.py`
+      - pour creer une wheel et pouvoir installer le programme<br/>
+        `python3 -m build -nx -w`
+
+        La wheel est disponible dans le dossier dist, vous pouvez l'installer avec<br/>
+        `python3 -m pip install dist\nom_du_fichier.whl` *NB: vous pouvez autocompléter les noms de fichier avec la touche Tab*
+
+        Il est désormais possible de lancer le programme sous le nom `Graviproject` (si les scripts de pip sont bien dans le PATH) ou de la manière suivante:
+        ```
+        python3
+        from Graviproject.main import launch_app
+        launch_app()
+        ```
+## Crédits:
+
+Afin de faire une librairie C++ accessible en python, nous utilison [Cython](https://github.com/cython/cython).
+
+Pour de haute performance de multithreading, nous utilisons [BS::thread_pool](https://github.com/bshoshany/thread-pool) : A C++17 Thread Pool for High-Performance Scientific Computing.
+
+Pour gerer nos fenêtres et l'affichage en général, nous utilisons [PySide6](https://pypi.org/project/PySide6/) (wrapper python autour de Qt6)
+
+## Licence
+Ce programme et son code source sont disponible sous les termes de la licence GNU General Public License version 3 or later (GPLV3+), 
+lisez le fichier LICENSE (en anglais), sa traduction francaise dans le fichier LICENSE_FR ou référez vous à https://www.gnu.org/licenses/ pour plus de détails.
+
+Les textes de présentations et de documentation (tel que ce README.md) sont disponibles sous la license [Creative Common Attribution-ShareAlike (CC-BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
