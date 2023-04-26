@@ -215,11 +215,16 @@ class Main_window(QWidget):
         elif settings.get("affichage.theme")=="system":
             self.setStyleSheet(""" """)
 
-    def change_speed(self):
-        a=1
-        settings.set("simulation.simspeed",a)
+    def change_speed(self,sim):
+        if sim == "journée" :
+            sec=86_400
+        elif sim == "mois" :
+            sec=2_592_000
+        elif sim == "année" :
+            sec=946_080_000
+        
+        settings.set("simulation.simspeed",sec)
         settings.save()
-        pass
 
 
     def affich_licence(self) -> None:
