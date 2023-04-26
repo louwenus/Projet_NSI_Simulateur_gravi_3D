@@ -100,6 +100,12 @@ class Main_window(QWidget):
             self.changeLangSignal.connect(langue.lazyEval(self.themeAction[-1].setText,"menu.settings.theme."+theme))
             self.themeAction[-1].triggered.connect(partial(self.change_theme,theme))
 
+        self.simAction: list(QAction) = []
+        for sim in ("journée","mois","années"):
+            self.simAction.append(QAction(langue.get("menu.settings.sim."+sim), self))
+            self.changeLangSignal.connect(langue.lazyEval(self.simAction[-1].setText,"menu.settings.sim."+sim))
+            self.simAction[-1].triggered.connect(partial(self.change_speed,sim))
+
         self.licenseAction: QAction = QAction(langue.get("menu.help.license"), self)
         self.changeLangSignal.connect(langue.lazyEval(self.licenseAction.setText,"menu.help.license"))
         self.licenseAction.triggered.connect(self.affich_licence)
@@ -124,6 +130,11 @@ class Main_window(QWidget):
         self.changeLangSignal.connect(langue.lazyEval(self.themeMenu.setTitle,"menu.settings.theme.title"))
         self.configMenu.addMenu(self.themeMenu)
         self.themeMenu.addActions(self.themeAction)
+
+        self.simMenu : QMenu = QMenu(langue.get("menu.settings.sim.title"), self.configMenu)
+        self.changeLangSignal.connect(langue.lazyEval(self.simMenu.setTitle,"menu.settings.sim.title"))
+        self.configMenu.addMenu(self.simMenu)
+        self.simMenu.addActions(self.simAction)
 
         self.helpMenu: QMenu = QMenu(langue.get("menu.help.title"), self.menuBar)
         self.changeLangSignal.connect(langue.lazyEval(self.helpMenu.setTitle,"menu.help.title"))
@@ -203,7 +214,14 @@ class Main_window(QWidget):
             """)
         elif settings.get("affichage.theme")=="system":
             self.setStyleSheet(""" """)
-        
+
+    def change_speed(self):
+        a=1
+        settings.set("simulation.simspeed",a)
+        settings.save()
+        pass
+
+
     def affich_licence(self) -> None:
         """Cette fonction permet d'afficher la licence du projet"""
         self.fenetre_license: QWidget = QScrollArea()
@@ -312,11 +330,8 @@ class Controles(QWidget):
     rayonl = QLabel(langue.get("control.add_settings.r"))
     for i,widget in enumerate((rayonl, rayonmin, QLabel("<?<"),rayonmax)):
         layout_aj_sph.addWidget(widget,5,i)
-    
-    def editspeed (self):
-        a=1
-        settings.set("simulation.simspeed",a)
-    
+
+
     def ajouter_spheres(*_) -> None:
         """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
 
