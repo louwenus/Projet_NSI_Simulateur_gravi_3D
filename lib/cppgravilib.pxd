@@ -33,27 +33,31 @@ cdef extern from "typedef.hpp":
         atomic[li] y
         atomic[li] z
         atlco(lco)
+    struct flco:
+        float x
+        float y
+        float z
 
 cdef extern from "spheres/sphere.hpp":
-    cdef cppclass DummySphere:
-        DummySphere(PyObject* parent) except +
-        PyObject* pyparent
-    cdef cppclass SimpleSphere(DummySphere):
+    cdef cppclass SimpleSphere:
         SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,lli rayon,li vx,li vy,li vz) except +
+        PyObject* pyparent
         llco pos
         uli rayon
         double masse
-        atlco speed
         void set_speed(li x,li y,li z)
+        flco get_speed()
+        void set_energie(float x,float y,float z)
+        flco get_energie()
         void set_masse(double masse)
         void set_ticktime(const float ticktime)
-ctypedef DummySphere* DummySpherePtr        
+ctypedef SimpleSphere* SpherePtr        
 
 cdef extern from "dimensions/dimension.hpp":
     cdef cppclass BaseDimension :
         BaseDimension() except +
-        void add_sphere(DummySphere*)
+        void add_sphere(SimpleSphere*)
         void gravite_all()
         void move_all()
         clist[PyObjPtr] detect_collisions()
-        const clist[DummySpherePtr] get_sph_list() const
+        const clist[SpherePtr] get_sph_list() const

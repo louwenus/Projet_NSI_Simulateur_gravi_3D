@@ -19,6 +19,9 @@ public:
     double gravite_stats(llco &return_pos, ulli &sane_min_r) const; // masse (pos,rayon)
     void accel(const flco accel);                                              // vecteur acceleration
     void set_speed(li x,li y,li z);
+    flco get_speed() const;
+    void set_energie(float x,float y,float z);
+    flco get_energie() const;
     void set_ticktime(const float ticktime);
     void set_masse(double masse);
 
@@ -27,7 +30,7 @@ public:
     ulli rayon;
     atflco energie;
     double masse;
-    std::list<const SimpleSphere*>::iterator touche;
+    std::list<SimpleSphere*>::iterator touche;
 protected:
     double masse_time;  //utilisé dans gravitation (évite le recalcul de masse * ticktime a chaque intéraction a chaque frame)
     llco posmin; // utilisé pour les tests de collision rapide

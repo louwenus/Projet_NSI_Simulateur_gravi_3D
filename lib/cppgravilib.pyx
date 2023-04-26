@@ -19,10 +19,14 @@ cdef extern from "typedef.hpp":
     ctypedef int lli
     ctypedef int uli
     ctypedef int ulli
+    struct flco:
+        float x
+        float y
+        float z
 
 
 ctypedef PyObject* PyObjPtr
-ctypedef cppgravilib.DummySphere* DummyPtr
+ctypedef cppgravilib.SimpleSphere* SpherePtr
 
 is_128_bit:bool = cppgravilib.is_128_bit
 
@@ -42,10 +46,10 @@ cdef class CyBaseDimension:
         self.c_base_dim.gravite_all()
     def move_all(self) -> None:
         self.c_base_dim.move_all()
-    def add_sphere(self,CyDummySphere instance) -> None:
-        self.c_base_dim.add_sphere(instance.c_sphere)
+    def add_sphere(self,CySimpleSphere instance) -> None:
+        self.c_base_dim.add_sphere(instance.c_simple_sphere)
     
-    def collisions(self) -> Generator:
+    def collisions(self) -> Generator[Tuple[CySimpleSphere,CySimpleSphere]]:
         """Détecte les collisions dans une dimension, puis retourne un iterator sur les sphères.
         
         Args:
@@ -62,52 +66,21 @@ cdef class CyBaseDimension:
             obje = <object>dereference(postincrement(iterator))
             obje2 = <object>dereference(postincrement(iterator))
             yield obje,obje2
-    def get_spheres(self) -> Generator:
-        cdef clist[DummyPtr] liste = self.c_base_dim.get_sph_list()
-        cdef clist[DummyPtr].iterator iterator = liste.begin()
-        cdef DummyPtr obj
+    def get_spheres(self) -> Generator[CySimpleSphere]:
+        cdef clist[SpherePtr] liste = self.c_base_dim.get_sph_list()
+        cdef clist[SpherePtr].iterator iterator = liste.begin()
+        cdef SpherePtr obj
         while iterator!=liste.end():
             obj = dereference(postincrement(iterator))
             yield <object>(obj.pyparent)
-    #@property  #! pas pour les trucs privés
-    #def hello_text(self) -> str:
-    #    return self.c_dim.hello_text
-    #@hello_text.setter
-    #def hello_text(self, str text) -> None:
-    #    self.c_dim.hello_text=text
 
-cdef class CyDummySphere:
-    cdef cppgravilib.DummySphere *c_sphere
-    def init_c_container(self):                             
-        """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
-        self.c_sphere = NULL
-    def __dealloc__(self):
-        del self.c_sphere
-    def debug(self) -> None:
-        """print out debuging info on stdout"""
-        print("this is a dummy sphere")
-    
-    def get_coord(self) -> Tuple[lli,lli,lli]:
-        return 0,0,0
-    def set_coord(self,coord:Tuple[lli,lli,lli]) -> None:
-        pass
-    def get_rayon(self) -> uli:
-        return 0
-    def set_rayon(self,rayon:uli) -> None:
-        pass
-    def get_speed(self) -> Tuple[li,li,li]:
-        return 0,0,0
-    def set_speed(self,speed:Tuple[li,li,li]) -> None:
-        pass
-    def set_ticktime(self,ticktime:float) -> None:
-        pass
-    def get_render_items(self) -> list: return []
 
-cdef class CySimpleSphere(CyDummySphere):
+
+cdef class CySimpleSphere():
     cdef cppgravilib.SimpleSphere *c_simple_sphere
     def init_c_container(self,lli x,lli y,lli z,double masse,lli rayon,li vx,li vy,li vz):
         """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass (aka, need to be called by python derivative)"""
-        self.c_simple_sphere = self.c_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
+        self.c_simple_sphere = new cppgravilib.SimpleSphere(<PyObject*>self,x,y,z,masse,rayon,vx,vy,vz)
     
     def get_coord(self) -> Tuple[lli,lli,lli]:
         return self.c_simple_sphere.pos.x, self.c_simple_sphere.pos.y, self.c_simple_sphere.pos.z
@@ -119,11 +92,16 @@ cdef class CySimpleSphere(CyDummySphere):
         return self.c_simple_sphere.rayon
     def set_rayon(self,rayon:uli) -> None:
         self.c_simple_sphere.rayon=rayon
-    def get_speed(self) -> Tuple[li,li,li]:
-        speed = <cppgravilib.lco>self.c_simple_sphere.speed
+    def get_speed(self) -> Tuple[float,float,float]:
+        cdef flco speed = self.c_simple_sphere.get_speed()
         return speed.x,speed.y,speed.z
     def set_speed(self,speed:Tuple[li,li,li]) -> None:
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
+    def get_energie(self) -> Tuple[float,float,float]:
+        cdef flco energie = self.c_simple_sphere.get_energie()
+        return energie.x,energie.y,energie.z
+    def set_energie(self, energie:Tuple[float,float,float]) -> None:
+        self.c_simple_sphere.set_energie(energie[0],energie[1],energie[2])
     def get_masse(self) -> ulli:
         return self.c_simple_sphere.masse
     def set_masse(self,double masse) -> None:

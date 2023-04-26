@@ -103,7 +103,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         self.ticktime=ticktime
         for sphere in self.get_spheres():
             sphere.set_ticktime(ticktime)
-    def add_sphere(self, instance: cppgravilib.CyDummySphere) -> None:
+    def add_sphere(self, instance: cppgravilib.CySimpleSphere) -> None:
         instance.set_ticktime(self.ticktime)
         super().add_sphere(instance)
 

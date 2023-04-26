@@ -11,16 +11,35 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, 
     posmax{x+rayon,y+rayon,z+rayon},
     ticktime{1}
 {
-    this->set_speed(vx,vy,vz)
+    this->set_speed(vx,vy,vz);
 }
 
 void SimpleSphere::move()
 {
-    this->pos.x += (lli)((li)(this->speed.x) * this->ticktime);
-    this->pos.y += (lli)((li)(this->speed.y) * this->ticktime);
-    this->pos.z += (lli)((li)(this->speed.z) * this->ticktime);
+    // using Ec=y^2/y*mv^2 with y=lorentz's gamma
+    // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
+    // and vector v = v/e*vector e
+    //energie cinétique
+    float E=sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    //vitesse
+    float v=c*sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    //vitesse/energie
+    float factor=v/E;
+    pos = {pos.x + (lli)(energie.x*factor), pos.y + (lli)(energie.y*factor), pos.z + (lli)(energie.x*factor)};
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
+}
+flco SimpleSphere::get_speed() const {
+    // using Ec=y^2/y*mv^2 with y=lorentz's gamma
+    // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
+    // and vector v = v/e*vector e
+    //energie cinétique
+    float E=sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    //vitesse
+    float v=c*sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    //vitesse/energie
+    float factor=v/E;
+    return {energie.x*factor,energie.y*factor,energie.x*factor};
 }
 // gravitation
 double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
@@ -76,6 +95,14 @@ void SimpleSphere::set_speed(li x,li y,li z)
     this->energie.x = x*ev;
     this->energie.y = y*ev;
     this->energie.z = z*ev;
+}
+void SimpleSphere::set_energie(float x,float y,float z){
+    energie.x=x;
+    energie.y=y;
+    energie.z=z;
+}
+flco SimpleSphere::get_energie() const{
+    return (flco){(float)energie.x,(float)energie.y,(float)energie.z};
 }
 void SimpleSphere::set_ticktime(const float ticktime)
 {

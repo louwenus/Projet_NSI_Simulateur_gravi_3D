@@ -16,14 +16,16 @@ typedef __int128_t lli;
 typedef int64_t li;
 typedef uint64_t uli;
 const bool is_128_bit = true;
-#define c INT64_MAX
-#define c2 ((float)INT64_MAX*(float)INT64_MAX)
+const float c = (float)INT64_MAX;
+const float c2 = ((float)INT64_MAX*(float)INT64_MAX);
 #else
 typedef uint64_t ulli;
 typedef int64_t lli;
 typedef int32_t li;
 typedef uint32_t uli;
 const bool is_128_bit = false;
+const float c (float)INT32_MAX;
+const float c2 ((float)INT32_MAX*(float)INT32_MAX);
 #endif
 
 struct llco

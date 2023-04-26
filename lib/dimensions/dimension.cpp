@@ -24,7 +24,7 @@ void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSp
     SimpleSphere* sphere = (*iterator++);
     ulli sanitize;
     double masse = sphere->gravite_stats(coo, sanitize);
-    lco accel = {0, 0, 0};
+    flco accel = {0, 0, 0};
 
     llco coo2;
     flco temp_co;
@@ -46,11 +46,15 @@ void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSp
         }
         divide = divide*sqrt(divide);
         // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
-        (*iterator)->accel({(li)(-1 * (masse * temp_co.x) / divide), (li)(-1 * (masse * temp_co.y) / divide), (li)(-1 * (masse * temp_co.z) / divide)});
+        masse2=masse*masse2;
+        temp_co.x=masse2*temp_co.x/divide;
+        temp_co.y=masse2*temp_co.y/divide;
+        temp_co.z=masse2*temp_co.z/divide;
+        (*iterator)->accel({-1* temp_co.x, -1 * temp_co.y,-1 * temp_co.z });
         // Enfin on calcule celle sur l'élément externe
-        accel.x += (li)((temp_co.x * masse2) / divide);
-        accel.y += (li)((temp_co.y * masse2) / divide);
-        accel.z += (li)((temp_co.z * masse2) / divide);
+        accel.x += temp_co.x;
+        accel.y += temp_co.y;
+        accel.z += temp_co.z;
     }
     sphere->accel(accel);
 }
