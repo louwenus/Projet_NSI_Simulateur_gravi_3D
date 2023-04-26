@@ -271,6 +271,8 @@ class Controles(QWidget):
         QWidget (class 'Shiboken.ObjectType'): permet l'utilisation de Widgets.
     """
     """Ce QWidget permet de gérer les différents contrôles."""
+
+    
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle(langue.get("control.add_settings.title"))
     layout_aj_sph: QLayout = QGridLayout()
@@ -311,6 +313,10 @@ class Controles(QWidget):
     for i,widget in enumerate((rayonl, rayonmin, QLabel("<?<"),rayonmax)):
         layout_aj_sph.addWidget(widget,5,i)
     
+    def editspeed (self):
+        a=1
+        settings.set("simulation.simspeed",a)
+    
     def ajouter_spheres(*_) -> None:
         """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
 
@@ -349,6 +355,7 @@ class Controles(QWidget):
             rmin = rmax
             rmax = tmp
 
+
         if Controles.amount.value()>0 :
             for _ in range(Controles.amount.value()):
                 dist:float=random()**(1/3)
@@ -365,7 +372,7 @@ class Controles(QWidget):
                 Fenetre_principale.ajouter_sphere(var)
         else :
 
-            #rayon des planètes multiplié par 10 pour plus de visibilité
+            #rayon des planètes multiplisé par 10 pour plus de visibilité
             varsol = gravilib.PyBaseSphere(0, 0, 10_000, 1.9889*10**30, 696_000,0, 0, 0, 100_000)
             #vartest = gravilib.PyBaseSphere(8_000_000, 0, 10_000, 1.9889*10**2, 200_000,0, 0, 0, 100_000)
             varmerc = gravilib.PyBaseSphere(58_000_000, 0, 10_000, 3.302*10**23, 24_400,0, 0, 0, 100_000)
