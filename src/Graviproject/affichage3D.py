@@ -133,6 +133,24 @@ class SphereItem():
                 print("over-sized masse passed as arg to display item (should not have been > 2⁶⁴)")
         if scale<=256:
             self.color=QColor(0,256-scale,scale)
+
+        elif masse == 1.9889*10**30 :
+            self.color=QColor(255,230,230)#soleil
+
+        elif masse == 3.302*10**23 :
+            self.color=QColor(80,80,80)#mercure
+
+        elif masse == 4.8685*10**24 :
+            self.color=QColor(123,104,238)#venus
+
+        elif masse == 5.9736*10**24 :
+            self.color=QColor(0,0,255)#terre
+
+        elif masse == 6.4185*10**23 :
+            self.color=QColor(255,165,0)#mars
+
+        elif masse == 1.8986*10**27 :
+            self.color=QColor(200,105,0) #jupiter
         else:
             self.color=QColor(scale-257,0,512-scale)
     def paint(self, painter:QPainter, camera:Camera) -> None:
