@@ -55,7 +55,6 @@ double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
 }
 void SimpleSphere::accel(const dbco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
-    std::cout << "acc" << accel.x << accel.y << accel.z ;
     this->energie.x.fetch_add(accel.x,std::memory_order_relaxed);
     this->energie.y.fetch_add(accel.y,std::memory_order_relaxed);
     this->energie.z.fetch_add(accel.z,std::memory_order_relaxed);
