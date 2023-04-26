@@ -111,8 +111,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         """ Fonction s'occupant des collisions, faisant rebondir ou s'absorber 2 objet sphères de la class PyBaseSphere."""
         
         for sphere, sphere2 in self.collisions():
-            vx1,vy1,vz1=sphere.get_speed()
-            vx2,vy2,vz2=sphere2.get_speed()
+            vx1,vy1,vz1=sphere.get_energie()
+            vx2,vy2,vz2=sphere2.get_energie()
             if (sphere.get_rayon() > sphere2.get_rayon() * 3) or (sphere2.get_rayon() > sphere.get_rayon() * 3):
                 if (sphere.get_rayon() > sphere2.get_rayon() * 3):
                     self.absorption(sphere, sphere2)
@@ -166,16 +166,16 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         m1 = sphere1.get_masse()
         m2 = sphere2.get_masse()
         masse_final= m1+m2
-        vx1,vy1,vz1=sphere1.get_speed()
-        vx2,vy2,vz2=sphere2.get_speed()
+        vx1,vy1,vz1=sphere1.get_energie()
+        vx2,vy2,vz2=sphere2.get_energie()
         vitessex = (m1*vx1*2 + m2*vx2*2)/masse_final   #gain (ou perte) de vitesse
         vitessey = (m1*vy1*2 + m2*vy2*2)/masse_final   #selon la formule moment cinétique = m*v
         vitessez = (m1*vz1*2 + m2*vz2*2)/masse_final
         sphere1.set_masse(masse_final)
-        sphere1.set_speed((vitessex, vitessey, vitessez))
+        sphere1.set_energie((vitessex, vitessey, vitessez))
 
     def difference_energie(self,sphere:PyBaseSphere) -> float:
-        vx,vy,vz=sphere.get_speed()
+        vx,vy,vz=sphere.get_energie()
         m = sphere.get_masse()
         energie_degagee = 0.5 * m * ((vx + vy + vz)/3)**2
         return energie_degagee/sphere.durete > 10**18
@@ -186,7 +186,7 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         Args:
             sphere (PyBaseSphere): classe PyBaseSphere de gravilib.py
         """
-        vx,vy,vz=sphere.get_speed()
+        vx,vy,vz=sphere.get_energie()
         d=sphere.durete
         m = sphere.get_masse()
         r = sphere.get_rayon()
@@ -206,15 +206,15 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
             sphere1 (PyBaseSphere): classe PyBaseSphere de gravilib.py
             sphere2 (PyBaseSphere): classe PyBaseSphere de gravilib.py
         """
-        vx1,vy1,vz1=sphere1.get_speed()
-        vx2,vy2,vz2=sphere2.get_speed()
+        vx1,vy1,vz1=sphere1.get_energie()
+        vx2,vy2,vz2=sphere2.get_energie()
         m1 = sphere1.get_masse()
         m2 = sphere2.get_masse()
         v_comx = (m1 * vx1 + m2 * vx2) / (m1 + m2)
         v_comy = (m1 * vy1 + m2 * vy2) / (m1 + m2)
         v_comz = (m1 * vz1 + m2 * vz2) / (m1 + m2)
-        sphere1.set_speed((2 * m2 * v_comx - 2 * m1 * vx1) / (m1 + m2), (2 * m2 * v_comy - 2 * m1 * vy1) / (m1 + m2), (2 * m2 * v_comz - 2 * m1 * vz1) / (m1 + m2))
-        sphere2.set_speed((2 * m1 * v_comx - 2 * m2 * vx2) / (m1 + m2), (2 * m1 * v_comy - 2 * m2 * vy2) / (m1 + m2), (2 * m1 * v_comz - 2 * m2 * vz2) / (m1 + m2))
+        sphere1.set_energie((2 * m2 * v_comx - 2 * m1 * vx1) / (m1 + m2), (2 * m2 * v_comy - 2 * m1 * vy1) / (m1 + m2), (2 * m2 * v_comz - 2 * m1 * vz1) / (m1 + m2))
+        sphere2.set_energie((2 * m1 * v_comx - 2 * m2 * vx2) / (m1 + m2), (2 * m1 * v_comy - 2 * m2 * vy2) / (m1 + m2), (2 * m1 * v_comz - 2 * m2 * vz2) / (m1 + m2))
         
     def transfert_v(self,sphere1:PyBaseSphere, sphere2:PyBaseSphere):
         """Prend en paramètre 2 sphères et calcule le transfert de vitesse après impact."""
@@ -224,8 +224,8 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         m1=sphere1.get_masse()
         m2=sphere2.get_masse()
         
-        vx1,vy1,vz1=sphere1.get_speed()
-        vx2,vy2,vz2=sphere2.get_speed()
+        vx1,vy1,vz1=sphere1.get_energie()
+        vx2,vy2,vz2=sphere2.get_energie()
         
         e=(2*sqrt(d1*d2))/(d1+d2) #calcul de l'elasticité lors de la collision
         
@@ -250,5 +250,5 @@ class PyBaseDimension(cppgravilib.CyBaseDimension):
         vfz1=(mvz1+mvz2+em2*(vz2-vz1))/(somme_m)
         vfz2=(mvz1+mvz2+em1*(vz1-vz2))/(somme_m) #transfert de vitesses
         
-        sphere1.set_speed((vfx1, vfy1, vfz1))
-        sphere2.set_speed((vfx2, vfy2, vfz2))
+        sphere1.set_energie((vfx1, vfy1, vfz1))
+        sphere2.set_energie((vfx2, vfy2, vfz2))

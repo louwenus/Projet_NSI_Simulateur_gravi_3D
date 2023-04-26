@@ -327,6 +327,28 @@ class Controles(QWidget):
         mmax=Controles.massemax.value()*1000
         rmin=Controles.rayonmin.value()*1000
         rmax=Controles.rayonmax.value()*1000
+
+        if xmean>xrand :
+            tmp = xmean
+            xmean = xrand
+            xrand = tmp
+        if ymean>yrand :
+            tmp = ymean
+            ymean = yrand
+            yrand = tmp
+        if zmean>zrand :
+            tmp = zmean
+            zmean = zrand
+            zrand = tmp
+        if mmin>mmax :
+            tmp = mmin
+            mmin = mmax
+            mmax = tmp
+        if rmin>rmax :
+            tmp = rmin
+            rmin = rmax
+            rmax = tmp
+
         if Controles.amount.value()>0 :
             for _ in range(Controles.amount.value()):
                 dist:float=random()**(1/3)
