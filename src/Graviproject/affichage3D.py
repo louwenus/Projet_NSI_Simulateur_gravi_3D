@@ -126,8 +126,9 @@ class SphereItem():
         self.update_masse(masse)
 
     def update_masse(self,masse:int):
-        scale=log2(masse)/2 # la masse étant un double sur 64 bits, on devrait avoir un résultat entre 1 et 512
-
+        scale=(masse/(1.5*10**20))*512 # la masse étant un double sur 64 bits, on devrait avoir un résultat entre 1 et 512
+        if scale<1 :
+            scale =1
         if masse == 1.9889*10**30 :
             self.color=QColor(255,210,190)#soleil
 
@@ -147,9 +148,7 @@ class SphereItem():
             self.color=QColor(200,105,0) #jupiter
 
         elif scale>512:
-            scale=512
-            if settings.get("logging")>=1:
-                print("over-sized masse passed as arg to display item (should not have been > 2⁶⁴)")
+            self.color=QColor(0,0,0)       
         elif scale<=256:
             self.color=QColor(0,256-scale,scale)
 
