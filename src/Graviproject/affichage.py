@@ -365,7 +365,7 @@ class Controles(QWidget):
                 Fenetre_principale.ajouter_sphere(var)
         else :
 
-            #rayon des planètes multiplisé par 10 pour plus de visibilité
+            #rayon des planètes multiplié par 10 pour plus de visibilité
             varsol = gravilib.PyBaseSphere(0, 0, 10_000, 1.9889*10**30, 696_000,0, 0, 0, 100_000)
             #vartest = gravilib.PyBaseSphere(8_000_000, 0, 10_000, 1.9889*10**2, 200_000,0, 0, 0, 100_000)
             varmerc = gravilib.PyBaseSphere(58_000_000, 0, 10_000, 3.302*10**23, 24_400,0, 0, 0, 100_000)
