@@ -271,6 +271,8 @@ class Controles(QWidget):
         QWidget (class 'Shiboken.ObjectType'): permet l'utilisation de Widgets.
     """
     """Ce QWidget permet de gérer les différents contrôles."""
+
+    
     fenetre_ajoute: QWidget = QScrollArea()
     fenetre_ajoute.setWindowTitle(langue.get("control.add_settings.title"))
     layout_aj_sph: QLayout = QGridLayout()
@@ -311,6 +313,10 @@ class Controles(QWidget):
     for i,widget in enumerate((rayonl, rayonmin, QLabel("<?<"),rayonmax)):
         layout_aj_sph.addWidget(widget,5,i)
     
+    def editspeed (self):
+        a=1
+        settings.set("simulation.simspeed",a)
+    
     def ajouter_spheres(*_) -> None:
         """Permet d'ajouter un nombre définie de sphères dans la plage de coordonnées selectionné.
 
@@ -348,6 +354,7 @@ class Controles(QWidget):
             tmp = rmin
             rmin = rmax
             rmax = tmp
+
 
         if Controles.amount.value()>0 :
             for _ in range(Controles.amount.value()):
