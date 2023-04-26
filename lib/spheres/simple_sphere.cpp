@@ -102,7 +102,7 @@ void SimpleSphere::set_energie(float x,float y,float z){
     energie.z=z;
 }
 flco SimpleSphere::get_energie() const{
-    return (flco){(float)energie.x,(float)energie.y,(float)energie.z};
+    return {(float)energie.x,(float)energie.y,(float)energie.z};
 }
 void SimpleSphere::set_ticktime(const float ticktime)
 {
