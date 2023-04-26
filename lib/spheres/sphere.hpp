@@ -17,18 +17,18 @@ public:
 
     void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     double gravite_stats(llco &return_pos, ulli &sane_min_r) const; // masse (pos,rayon)
-    void accel(const flco accel);                                              // vecteur acceleration
+    void accel(const dbco accel);                                              // vecteur acceleration
     void set_speed(li x,li y,li z);
-    flco get_speed() const;
-    void set_energie(float x,float y,float z);
-    flco get_energie() const;
+    dbco get_speed() const;
+    void set_energie(double x,double y,double z);
+    dbco get_energie() const;
     void set_ticktime(const float ticktime);
     void set_masse(double masse);
 
     PyObject *pyparent;
     llco pos; // declared public to be easily accessible from cython (and then python)
     ulli rayon;
-    atflco energie;
+    atdbco energie;
     double masse;
     std::list<SimpleSphere*>::iterator touche;
 protected:

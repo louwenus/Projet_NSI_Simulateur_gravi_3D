@@ -19,10 +19,10 @@ cdef extern from "typedef.hpp":
     ctypedef int lli
     ctypedef int uli
     ctypedef int ulli
-    struct flco:
-        float x
-        float y
-        float z
+    struct dbco:
+        double x
+        double y
+        double z
 
 
 ctypedef PyObject* PyObjPtr
@@ -92,15 +92,15 @@ cdef class CySimpleSphere():
         return self.c_simple_sphere.rayon
     def set_rayon(self,rayon:uli) -> None:
         self.c_simple_sphere.rayon=rayon
-    def get_speed(self) -> Tuple[float,float,float]:
-        cdef flco speed = self.c_simple_sphere.get_speed()
+    def get_speed(self) -> Tuple[double,double,double]:
+        cdef dbco speed = self.c_simple_sphere.get_speed()
         return speed.x,speed.y,speed.z
     def set_speed(self,speed:Tuple[li,li,li]) -> None:
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
-    def get_energie(self) -> Tuple[float,float,float]:
-        cdef flco energie = self.c_simple_sphere.get_energie()
+    def get_energie(self) -> Tuple[double,double,double]:
+        cdef dbco energie = self.c_simple_sphere.get_energie()
         return energie.x,energie.y,energie.z
-    def set_energie(self, energie:Tuple[float,float,float]) -> None:
+    def set_energie(self, energie:Tuple[double,double,double]) -> None:
         self.c_simple_sphere.set_energie(energie[0],energie[1],energie[2])
     def get_masse(self) -> ulli:
         return self.c_simple_sphere.masse

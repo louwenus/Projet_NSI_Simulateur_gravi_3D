@@ -33,10 +33,10 @@ cdef extern from "typedef.hpp":
         atomic[li] y
         atomic[li] z
         atlco(lco)
-    struct flco:
-        float x
-        float y
-        float z
+    struct dbco:
+        double x
+        double y
+        double z
 
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass SimpleSphere:
@@ -46,9 +46,9 @@ cdef extern from "spheres/sphere.hpp":
         uli rayon
         double masse
         void set_speed(li x,li y,li z)
-        flco get_speed()
-        void set_energie(float x,float y,float z)
-        flco get_energie()
+        dbco get_speed()
+        void set_energie(double x,double y,double z)
+        dbco get_energie()
         void set_masse(double masse)
         void set_ticktime(const float ticktime)
 ctypedef SimpleSphere* SpherePtr        

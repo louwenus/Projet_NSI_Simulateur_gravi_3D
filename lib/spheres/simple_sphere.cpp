@@ -20,25 +20,30 @@ void SimpleSphere::move()
     // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
     // and vector v = v/e*vector e
     //energie cinétique
-    float E=sqrtf(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //vitesse
-    float v=c*sqrtf(E*(2*c2*masse+E))/(c2*masse+E);
+    double v;
+    if (isinf(E)) {
+        v=c;
+    } else {
+        v=c*(double)sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    }
     //vitesse/energie
-    float factor=v/E;
+    double factor=v/E;
     pos = {pos.x + (lli)(energie.x*factor), pos.y + (lli)(energie.y*factor), pos.z + (lli)(energie.x*factor)};
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
 }
-flco SimpleSphere::get_speed() const {
+dbco SimpleSphere::get_speed() const {
     // using Ec=y^2/y*mv^2 with y=lorentz's gamma
     // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
     // and vector v = v/e*vector e
     //energie cinétique
-    float E=sqrtf(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //vitesse
-    float v=c*sqrtf(E*(2*c2*masse+E))/(c2*masse+E);
+    double v=c*(double)sqrt(E*(2*c2*masse+E))/(c2*masse+E);
     //vitesse/energie
-    float factor=v/E;
+    double factor=v/E;
     return {energie.x*factor,energie.y*factor,energie.x*factor};
 }
 // gravitation
@@ -48,8 +53,9 @@ double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
     sane_min_r = this->rayon;
     return this->masse_time;
 }
-void SimpleSphere::accel(const flco accel)
+void SimpleSphere::accel(const dbco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
+    std::cout << "acc" << accel.x << accel.y << accel.z ;
     this->energie.x.fetch_add(accel.x,std::memory_order_relaxed);
     this->energie.y.fetch_add(accel.y,std::memory_order_relaxed);
     this->energie.z.fetch_add(accel.z,std::memory_order_relaxed);
@@ -70,7 +76,7 @@ bool SimpleSphere::t_collision_avec(const SimpleSphere *instance) const
 }
 bool SimpleSphere::t_collision_coord(const llco pos,const ulli rayon) const
 { // cette fonction test exactement la présence ou non d'une collision entre 2 spheres
-    if (pow((float)(pos.x - this->pos.x), 2) + pow((float)(pos.y - this->pos.y), 2) + pow((float)(pos.z - this->pos.z), 2) < pow((float)(rayon + this->rayon), 2))
+    if (pow((double)(pos.x - this->pos.x), 2) + pow((double)(pos.y - this->pos.y), 2) + pow((double)(pos.z - this->pos.z), 2) < pow((double)(rayon + this->rayon), 2))
     {
         return true;
     }
@@ -84,25 +90,25 @@ void SimpleSphere::set_speed(li x,li y,li z)
 {
     // We store Ec, not speed, so calculating Ec based on target speed
     //square speed
-    float v2 = x*x + y*y + z*z;
+    double v2 = x*x + y*y + z*z;
     //gamma de lorentz
-    float g = 1/sqrtf(1.0-v2/c2);
+    double g = 1/(double)sqrt((double)1.0-v2/c2);
     //energie cinetique (formule relativiste)
-    float e = v2*this->masse*(g*g)/(g+1);
+    double e = v2*this->masse*(g*g)/(g+1);
     // ->         ->
     // Ec = (e/v)*v
-    float ev=e*sqrtf(v2); 
+    double ev=e*(double)sqrt(v2); 
     this->energie.x = x*ev;
     this->energie.y = y*ev;
     this->energie.z = z*ev;
 }
-void SimpleSphere::set_energie(float x,float y,float z){
+void SimpleSphere::set_energie(double x,double y,double z){
     energie.x=x;
     energie.y=y;
     energie.z=z;
 }
-flco SimpleSphere::get_energie() const{
-    return {(float)energie.x,(float)energie.y,(float)energie.z};
+dbco SimpleSphere::get_energie() const{
+    return {(double)energie.x,(double)energie.y,(double)energie.z};
 }
 void SimpleSphere::set_ticktime(const float ticktime)
 {

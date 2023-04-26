@@ -24,17 +24,17 @@ void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSp
     SimpleSphere* sphere = (*iterator++);
     ulli sanitize;
     double masse = sphere->gravite_stats(coo, sanitize);
-    flco accel = {0, 0, 0};
+    dbco accel = {0, 0, 0};
 
     llco coo2;
-    flco temp_co;
+    dbco temp_co;
     ulli sanitize2;
     double masse2;
     double divide;
     for (; iterator != end; ++iterator)
     {
         masse2 = (*iterator)->gravite_stats(coo2, sanitize2);      // on stock la pos dans temp_co
-        temp_co = {(float)(coo2.x - coo.x), (float)(coo2.y - coo.y), (float)(coo2.z - coo.z)}; // puis on y mets le vecteur distance
+        temp_co = {(double)(coo2.x - coo.x), (double)(coo2.y - coo.y), (double)(coo2.z - coo.z)}; // puis on y mets le vecteur distance
         // divide = distance^2
         divide = temp_co.x * temp_co.x + temp_co.y * temp_co.y + temp_co.z * temp_co.z;
         // l'étape de "sanitisation" permet de mettre une borne inf à dist^2 égale à sum(rayon)^2 (pour éviter une gravitée trop forte sur deux objets très proches)
@@ -44,17 +44,18 @@ void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSp
         {
             divide = sanitize2;
         }
-        divide = divide*sqrt(divide);
+        divide = divide*(double)sqrt(divide);
         // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
         masse2=masse*masse2;
         temp_co.x=masse2*temp_co.x/divide;
         temp_co.y=masse2*temp_co.y/divide;
         temp_co.z=masse2*temp_co.z/divide;
-        (*iterator)->accel({-1* temp_co.x, -1 * temp_co.y,-1 * temp_co.z });
-        // Enfin on calcule celle sur l'élément externe
+
         accel.x += temp_co.x;
         accel.y += temp_co.y;
         accel.z += temp_co.z;
+
+        (*iterator)->accel({-1.0*temp_co.x, -1.0 *temp_co.y, -1.0*temp_co.z });
     }
     sphere->accel(accel);
 }
