@@ -9,7 +9,7 @@ copt: dict[str, list[str]] = {# 'unix': ['-std=gnu++20', '-g', '-Og', '-pthread'
                               'unix': ['-std=gnu++20','-O3','-pthread','-ffast-math']  ,
                               'mingw32': ['-std=gnu++20', '-O3', '-pthread', '-ffast-math'],
                               'mingw64': ['-std=gnu++20', '-O3', '-pthread', '-ffast-math'],
-                              'msvc': ['/O2', '/std:c++20', '/cgthreads8'],
+                              'msvc': ['/std:c++20', '/cgthreads8', '/O2', '/GL'],
                               # 'cygiwin' : []
                               }
 sourcesfiles: list[str] = []
