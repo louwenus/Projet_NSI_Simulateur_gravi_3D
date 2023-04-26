@@ -20,9 +20,9 @@ void SimpleSphere::move()
     // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
     // and vector v = v/e*vector e
     //energie cinétique
-    float E=sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    float E=sqrtf(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //vitesse
-    float v=c*sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    float v=c*sqrtf(E*(2*c2*masse+E))/(c2*masse+E);
     //vitesse/energie
     float factor=v/E;
     pos = {pos.x + (lli)(energie.x*factor), pos.y + (lli)(energie.y*factor), pos.z + (lli)(energie.x*factor)};
@@ -34,9 +34,9 @@ flco SimpleSphere::get_speed() const {
     // aka v=c*sqrt(E(2c^2m+E))/(C^2m+n)
     // and vector v = v/e*vector e
     //energie cinétique
-    float E=sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    float E=sqrtf(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //vitesse
-    float v=c*sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    float v=c*sqrtf(E*(2*c2*masse+E))/(c2*masse+E);
     //vitesse/energie
     float factor=v/E;
     return {energie.x*factor,energie.y*factor,energie.x*factor};
@@ -86,12 +86,12 @@ void SimpleSphere::set_speed(li x,li y,li z)
     //square speed
     float v2 = x*x + y*y + z*z;
     //gamma de lorentz
-    float g = 1/sqrt(1.-v2/c2);
+    float g = 1/sqrtf(1.0-v2/c2);
     //energie cinetique (formule relativiste)
     float e = v2*this->masse*(g*g)/(g+1);
     // ->         ->
     // Ec = (e/v)*v
-    float ev=e*sqrt(v2); 
+    float ev=e*sqrtf(v2); 
     this->energie.x = x*ev;
     this->energie.y = y*ev;
     this->energie.z = z*ev;
