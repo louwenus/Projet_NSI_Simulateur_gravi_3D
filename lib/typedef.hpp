@@ -24,8 +24,8 @@ typedef int64_t lli;
 typedef int32_t li;
 typedef uint32_t uli;
 const bool is_128_bit = false;
-const float c (float)INT32_MAX;
-const float c2 ((float)INT32_MAX*(float)INT32_MAX);
+const float c = (float)INT32_MAX;
+const float c2 = ((float)INT32_MAX*(float)INT32_MAX);
 #endif
 
 struct llco
