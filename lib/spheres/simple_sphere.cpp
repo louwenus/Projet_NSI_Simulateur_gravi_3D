@@ -29,7 +29,7 @@ void SimpleSphere::move()
     }
     //vitesse/energie
     double factor=v/E*ticktime;
-    pos = {pos.x + (lli)(energie.x*factor), pos.y + (lli)(energie.y*factor), pos.z + (lli)(energie.x*factor)};
+    pos = {pos.x + (lli)((double)energie.x*factor), pos.y + (lli)((double)energie.y*factor), pos.z + (lli)((double)energie.x*factor)};
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
 }
@@ -40,10 +40,15 @@ dbco SimpleSphere::get_speed() const {
     //energie cinétique
     double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //vitesse
-    double v=c*(double)sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    double v;
+    if (isinf(E)) {
+        v=c;
+    } else {
+        v=c*(double)sqrt(E*(2*c2*masse+E))/(c2*masse+E);
+    }
     //vitesse/energie
     double factor=v/E;
-    return {energie.x*factor,energie.y*factor,energie.x*factor};
+    return {(double)energie.x*factor,(double)energie.y*factor,(double)energie.x*factor};
 }
 // gravitation
 double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
