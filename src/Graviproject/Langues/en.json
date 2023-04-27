@@ -17,6 +17,7 @@
             },
             "sim":{
                 "title":"Elapsed time per second",
+                "second":"second",
                 "day":"Day",
                 "month":"Month",
                 "year":"Year"

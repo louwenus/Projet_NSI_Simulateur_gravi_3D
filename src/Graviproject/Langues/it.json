@@ -17,6 +17,7 @@
             },
             "sim":{
                 "title":"Tempo trascorso al secondo",
+                "second":"Secondo",
                 "day":"Giorno",
                 "month":"Meso",
                 "year":"Anno"

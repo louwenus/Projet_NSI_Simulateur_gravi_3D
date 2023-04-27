@@ -17,6 +17,7 @@
             },
             "sim":{
                 "title":"Temps écoulé par seconde",
+                "second":"Seconde",
                 "day":"Journée",
                 "month":"Mois",
                 "year":"Année"

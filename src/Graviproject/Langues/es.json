@@ -17,6 +17,7 @@
             },
             "sim":{
                 "title":"Tiempo transcurrido por segundo",
+                "second":"Segundo",
                 "day":"Dia",
                 "month":"Mes",
                 "year":"Año"

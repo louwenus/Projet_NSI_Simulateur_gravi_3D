@@ -101,7 +101,7 @@ class Main_window(QWidget):
             self.themeAction[-1].triggered.connect(partial(self.change_theme,theme))
 
         self.simAction: list(QAction) = []
-        for sim in ("day","month","year"):
+        for sim in ("second","day","month","year"):
             self.simAction.append(QAction(langue.get("menu.settings.sim."+sim), self))
             self.changeLangSignal.connect(langue.lazyEval(self.simAction[-1].setText,"menu.settings.sim."+sim))
             self.simAction[-1].triggered.connect(partial(self.change_speed,sim))
@@ -216,7 +216,9 @@ class Main_window(QWidget):
             self.setStyleSheet(""" """)
 
     def change_speed(self,sim):
-        if sim == "journée" :
+        if sim == "second":
+            sec=1
+        elif sim == "journée" :
             sec=86_400
         elif sim == "mois" :
             sec=2_592_000
