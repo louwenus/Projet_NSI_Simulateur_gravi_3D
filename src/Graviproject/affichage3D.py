@@ -166,7 +166,7 @@ class Renderer3D(QWidget):
         self.cam: Camera = Camera(offsetX=self.size().width()/2,
                                   offsetY=self.size().height()/2,
                                   zoom=settings.get("simulation.defaultzoom"),
-                                  z=-30_000_000)
+                                  z=-100_000_000)
         self.reload_controlles()
         
         
