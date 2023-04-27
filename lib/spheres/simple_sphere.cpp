@@ -59,7 +59,7 @@ dbco SimpleSphere::get_speed() const {
     }
     //vitesse/energie
     double factor=v/E;
-    return {(double)energie.x*factor,(double)energie.y*factor,(double)energie.x*factor};
+    return {(double)energie.x*factor,(double)energie.y*factor,(double)energie.z*factor};
 }
 // gravitation
 double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
