@@ -108,7 +108,7 @@ class Camera():
 class SphereItem():
     """Cette classe est chargée de l'affichage d'une sphere, a l'aide d'un painter passé a sa fonction paint"""
     
-    def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]], masse) -> None:
+    def __init__(self, rayon: Callable[[], int], getcoords: Callable[[], tuple[int, int, int]], color: QColor) -> None:
         """Initialise un item de rendu sphérique de rayon fixe et faisant appel à la fonction getcoord pour update ses coordonées.
 
         Args:
@@ -123,46 +123,8 @@ class SphereItem():
         self.radius: Callable[[], int] = rayon
         self.radius2D: float = 0
         self.pos = QPointF(0,0)
-        self.update_masse(masse)
-
-    def update_masse(self,masse:int):
-        scale=(masse/(1.5*10**20))*512 # la masse étant un double sur 64 bits, on devrait avoir un résultat entre 1 et 512
-        if scale<1 :
-            scale =1
-        if masse == 1.9889*10**30 :
-            self.color=QColor(255,210,190)#soleil
-
-        elif masse == 3.302*10**23 :
-            self.color=QColor(80,80,80)#mercure
-
-        elif masse == 4.8685*10**24 :
-            self.color=QColor(123,104,238)#venus
-
-        elif masse == 5.9736*10**24 :
-            self.color=QColor(0,0,255)#terre
-
-        elif masse == 6.4185*10**23 :
-            self.color=QColor(255,165,0)#mars
-
-        elif masse == 1.8986*10**27 :
-            self.color=QColor(200,105,0) #jupiter
+        self.color: QColor=color
         
-        elif masse ==  5.6846*10**26:
-            self.color=QColor(255,255,0) #saturne
-
-        elif masse ==  8.6832*10**25:
-            self.color=QColor(30,30,255) #uranus
-        
-        elif masse ==  1.0243*10**26:
-            self.color=QColor(0,0,255) #neptune
-
-        elif scale>512:
-            self.color=QColor(0,0,0)       
-        elif scale<=256:
-            self.color=QColor(0,256-scale,scale)
-
-        else:
-            self.color=QColor(scale-257,0,512-scale)
     def paint(self, painter:QPainter, camera:Camera) -> None:
         """Permet de gérer le rendu graphique.
 

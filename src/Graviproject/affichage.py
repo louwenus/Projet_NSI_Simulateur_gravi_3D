@@ -395,16 +395,16 @@ class Controles(QWidget):
         else :
 
             #rayon des planètes multiplisé par 10 pour plus de visibilité
-            varsol = gravilib.PyBaseSphere(0, 0, 10_000, 1.9889*10**30, 696_000,0, 0, 0, 100_000)
+            varsol = gravilib.PyBaseSphere(0, 0, 10_000, 1.9889*10**30, 696_000,0, 0, 0, 100_000,QColor("yellow"))
             #vartest = gravilib.PyBaseSphere(8_000_000, 0, 10_000, 1.9889*10**2, 200_000,0, 0, 0, 100_000)
-            varmerc = gravilib.PyBaseSphere(58_000_000, 0, 10_000, 3.302*10**23, 24_400,0, 0, 0, 100_000)
-            varven = gravilib.PyBaseSphere(108_000_000, 0, 10_000, 4.8685*10**24, 65_020,0, 0, 0, 100_000)
-            varter = gravilib.PyBaseSphere(149_597_870, 0, 10_000, 5.9736*10**24, 63_710,0, 0, 0, 100_000)
-            varmars = gravilib.PyBaseSphere(249_000_000, 0, 10_000, 6.4185*10**23, 33_900,0, 0, 0, 100_000)
-            varjup = gravilib.PyBaseSphere(778_300_000, 0, 10_000, 1.8986*10**27, 699_110,0, 0, 0, 100_000)
-            varsat = gravilib.PyBaseSphere(1_344_900_000, 0, 10_000, 5.6846*10**26, 582_320,0, 0, 0, 100_000)
-            varur = gravilib.PyBaseSphere(2_870_000_000, 0, 10_000, 8.6832*10**25, 253_620,0, 0, 0, 100_000)
-            varnept = gravilib.PyBaseSphere(4_500_000_000, 0, 10_000, 1.0243*10**26, 246_620,0, 0, 0, 100_000)
+            varmerc = gravilib.PyBaseSphere(58_000_000, 0, 10_000, 3.302*10**23, 24_400,0, 0, 0, 100_000,QColor(128,128,128))
+            varven = gravilib.PyBaseSphere(108_000_000, 0, 10_000, 4.8685*10**24, 65_020,0, 0, 0, 100_000,QColor(183,112,48))
+            varter = gravilib.PyBaseSphere(149_597_870, 0, 10_000, 5.9736*10**24, 63_710,0, 0, 0, 100_000,QColor(37,107,204))
+            varmars = gravilib.PyBaseSphere(249_000_000, 0, 10_000, 6.4185*10**23, 33_900,0, 0, 0, 100_000,QColor(170,22,0))
+            varjup = gravilib.PyBaseSphere(778_300_000, 0, 10_000, 1.8986*10**27, 699_110,0, 0, 0, 100_000,QColor(252,110,96))
+            varsat = gravilib.PyBaseSphere(1_344_900_000, 0, 10_000, 5.6846*10**26, 582_320,0, 0, 0, 100_000,QColor(191,134,76))
+            varur = gravilib.PyBaseSphere(2_870_000_000, 0, 10_000, 8.6832*10**25, 253_620,0, 0, 0, 100_000,QColor(166,191,46))
+            varnept = gravilib.PyBaseSphere(4_500_000_000, 0, 10_000, 1.0243*10**26, 246_620,0, 0, 0, 100_000,QColor(74,196,216))
 
 
             Fenetre_principale.ajouter_sphere(varsol)

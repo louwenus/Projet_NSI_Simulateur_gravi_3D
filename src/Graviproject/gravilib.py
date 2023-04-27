@@ -1,10 +1,11 @@
 #  Code sous liscence GPL3+. Plus de détail a <https://www.gnu.org/licenses/> ou dans le fichier LICENCE
 # encoding = utf8
 import sys
-from math import sqrt
+from math import log10, log2, sqrt
 from random import randint
 from . import langue
 from . import settings
+from PySide6.QtGui import QColor
 
 try:
     from . import cppgravilib
@@ -29,7 +30,8 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
     Args:
         cppgravilib (None): importe une CySimpleSphere de cppgravilib, permettant l'utilisation de cette dernière.
     """
-    def __init__(self, x: float, y: float, z: float, masse: float, rayon: float, vx: float, vy: float, vz: float, d: float, soft:bool=True) -> None:
+
+    def __init__(self, x: float, y: float, z: float, masse: float, rayon: float, vx: float, vy: float, vz: float, d: float,color:QColor=None, soft:bool=True) -> None:
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
@@ -44,14 +46,34 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             self.init_c_container(x*udPerMeter, y*udPerMeter, z*udPerMeter, masse*umPerKg, rayon*udPerMeter, vx*udPerMeter, vy*udPerMeter, vz*udPerMeter)
         else:
             self.init_c_container(x, y, z, masse, rayon, vx, vy, vz)
+
         self.render_item: SphereItem = SphereItem(
-            self.get_rayon, self.get_coord,masse)
+            self.get_rayon, self.get_coord,color)
+
+        if color==None:
+            self.autocolor=True
+            self.colorwithmasse()
+        else:
+            self.autocolor=False
     
+    def colorwithmasse(self) -> None:
+        scale=log10(self.get_masse())*20
+        if scale<1:
+            scale=1
+        if scale>512:
+            color=QColor(0,0,0)       
+        elif scale<=256:
+            color=QColor(0,256-scale,scale)
+        else:
+            color=QColor(scale-257,0,512-scale)
+        self.render_item.color=color
+        
     def set_masse(self, masse: float,soft=True) -> None:
         if soft:
             masse*=umPerKg
-        self.render_item.update_masse(masse)
         super().set_masse(masse)
+        if self.autocolor:
+            self.colorwithmasse()
     def get_masse(self,soft=True) -> float:
         if soft:
             return super().get_masse()/umPerKg
