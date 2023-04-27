@@ -104,7 +104,7 @@ void SimpleSphere::set_speed(li x,li y,li z)
 {
     // We store Ec, not speed, so calculating Ec based on target speed
     //square speed
-    double v2 = x*x + y*y + z*z;
+    double v2 = (double)x*x + (double)y*y + (double)z*z;
     if (v2==0) [[unlikely]]
     {
         this->energie.x = 0;
