@@ -21,7 +21,7 @@ else:
 
 udPerMeter=int(lighspeed/299_792_458) #computing metter size based on lightspeed (c/lightspeed)
 G=6.674_30*10**-11
-umPerKg=int(sqrt((udPerMeter**2)*G)) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
+umPerKg=int(sqrt((udPerMeter**3)*G)) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
