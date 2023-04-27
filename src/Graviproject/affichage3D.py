@@ -292,12 +292,6 @@ class Renderer3D(QWidget):
             self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -30_000_000, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
-
-        if event.keyCombination().toCombined() == self.controles["système_sol"]:
-            """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom =0, 0, 0, settings.get("simulation.defaultzoom")
-            self.cam.pitch, self.cam.roll, self.cam.yaw = 0.1, 0, 0
-            self.cam.update_matrix()
             
         if event.keyCombination().toCombined() == self.controles["ajouter"]:
             "Ajoute des sphères"
