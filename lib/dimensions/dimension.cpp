@@ -5,6 +5,9 @@
 
 #include "dimension.hpp" //importation des scripts dans dimension.hpp
 #include "chrono"
+
+float ticktime=1;
+
 BS::thread_pool BaseDimension::tpool = BS::thread_pool();
 
 BaseDimension::BaseDimension(): objets() {}
@@ -44,12 +47,11 @@ void grav(std::list<SimpleSphere *>::iterator iterator, const std::list<SimpleSp
         {
             divide = sanitize2;
         }
-        divide = divide*(double)sqrt(divide);
+        double factor = masse*masse2*ticktime/(divide*(double)sqrt(divide));
         // on calcule l'accélération sur l'élément de la boucle interne et  on l'applique
-        masse2=masse*masse2;
-        temp_co.x=masse2*temp_co.x/divide;
-        temp_co.y=masse2*temp_co.y/divide;
-        temp_co.z=masse2*temp_co.z/divide;
+        temp_co.x=factor*temp_co.x;
+        temp_co.y=factor*temp_co.y;
+        temp_co.z=factor*temp_co.z;
 
         accel.x += temp_co.x;
         accel.y += temp_co.y;

@@ -20,7 +20,8 @@ else:
     lighspeed=2_147_483_647 #lightspeed = numerical speed limit (32-bit signed C++ integer)
 
 udPerMeter=int(lighspeed/299_792_458) #computing metter size based on lightspeed (c/lightspeed)
-umPerKg=int((lighspeed/299_792_458)**3*(1/6.674_301_5)*10**11) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
+G=6.674_30*10**-11
+umPerKg=int(sqrt((udPerMeter**2)*G)) #computing Kg weight based on udPerMeter and gravitation constant (c/lightspedd)³/G
 
 class PyBaseSphere(cppgravilib.CySimpleSphere):
     """classe utilisée pour gérer et collisioner les sphères.
@@ -95,16 +96,10 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
 
 
 class PyBaseDimension(cppgravilib.CyBaseDimension):
-    def __init__(self,render:Renderer3D,ticktime:float) -> None:
+    def __init__(self,render:Renderer3D) -> None:
         self.init_c_container()
         self.render: Renderer3D=render #pour que l'on puisse utiliser self.render.remove_from_display(self, item: SphereItem)
-        self.ticktime: float=ticktime
-    def set_ticktime(self,ticktime:float) -> None:
-        self.ticktime=ticktime
-        for sphere in self.get_spheres():
-            sphere.set_ticktime(ticktime)
     def add_sphere(self, instance: cppgravilib.CySimpleSphere) -> None:
-        instance.set_ticktime(self.ticktime)
         super().add_sphere(instance)
 
     def gerer_colision(self) -> None:

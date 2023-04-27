@@ -45,5 +45,5 @@ struct atdbco
     std::atomic<double> y;
     std::atomic<double> z;
 };
-
+extern float ticktime;
 #endif

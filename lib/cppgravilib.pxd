@@ -20,6 +20,7 @@ cdef extern from "typedef.hpp":
     ctypedef int uli
     ctypedef int ulli
     bint is_128_bit
+    float ticktime
     struct llco:
         lli x
         lli y
@@ -50,7 +51,6 @@ cdef extern from "spheres/sphere.hpp":
         void set_energie(double x,double y,double z)
         dbco get_energie()
         void set_masse(double masse)
-        void set_ticktime(const float ticktime)
 ctypedef SimpleSphere* SpherePtr        
 
 cdef extern from "dimensions/dimension.hpp":
