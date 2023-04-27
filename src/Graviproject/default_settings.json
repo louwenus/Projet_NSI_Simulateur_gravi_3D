@@ -22,7 +22,8 @@
       "rot_gauche": "Shift+Q",
       "rot_droite": "Shift+D",
       "roul_gauche":"Shift+A",
-      "roul_droite":"Shift+E"
+      "roul_droite":"Shift+E",
+      "système_sol":"Shift+N"
     }
   },
   "logging": 2

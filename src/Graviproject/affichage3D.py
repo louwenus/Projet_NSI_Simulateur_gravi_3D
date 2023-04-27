@@ -146,6 +146,15 @@ class SphereItem():
 
         elif masse == 1.8986*10**27 :
             self.color=QColor(200,105,0) #jupiter
+        
+        elif masse ==  5.6846*10**26:
+            self.color=QColor(255,255,0) #saturne
+
+        elif masse ==  8.6832*10**25:
+            self.color=QColor(30,30,255) #uranus
+        
+        elif masse ==  1.0243*10**26:
+            self.color=QColor(0,0,255) #neptune
 
         elif scale>512:
             self.color=QColor(0,0,0)       
@@ -279,7 +288,8 @@ class Renderer3D(QWidget):
             "rot_gauche": QKeySequence(settings.get("simulation.controles.rot_gauche")),
             "rot_droite": QKeySequence(settings.get("simulation.controles.rot_droite")),
             "roul_gauche":QKeySequence(settings.get("simulation.controles.roul_gauche")),
-            "roul_droite":QKeySequence(settings.get("simulation.controles.roul_droite"))
+            "roul_droite":QKeySequence(settings.get("simulation.controles.roul_droite")),
+            "système_sol":QKeySequence(settings.get("simulation.controles.système_sol"))
         }
         
         
@@ -308,16 +318,22 @@ class Renderer3D(QWidget):
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=500_000)
+            self.cam.move(profondeur=5000_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=-500_000)
+            self.cam.move(profondeur=-5000_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, 0, settings.get("simulation.defaultzoom")
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -3_000_00, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
+            self.cam.update_matrix()
+
+        if event.keyCombination().toCombined() == self.controles["système_sol"]:
+            """ Recentre et réinitialise la camera à ses valeurs de départ"""
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom =0, 0, 0, settings.get("simulation.defaultzoom")
+            self.cam.pitch, self.cam.roll, self.cam.yaw = 0.1, 0, 0
             self.cam.update_matrix()
             
         if event.keyCombination().toCombined() == self.controles["ajouter"]:
