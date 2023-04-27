@@ -218,15 +218,11 @@ class Main_window(QWidget):
             self.setStyleSheet(""" """)
 
     def change_speed(self,sim):
-        if sim == "second":
-            sec=1
-        elif sim == "journée" :
-            sec=86_400
-        elif sim == "mois" :
-            sec=2_592_000
-        elif sim == "année" :
-            sec=946_080_000
-        
+        eq={"second":1,"day":86_400,"month":2_592_000,"year":946_080_000}
+        if sim not in eq:
+            raise ValueError(sim + "is not a valid time period")
+        sec=eq[sim]
+        set_ticktime(sec)
         settings.set("simulation.simspeed",sec)
         settings.save()
 
@@ -242,7 +238,7 @@ class Main_window(QWidget):
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
             if settings.get("logging") >= 1:
-                print("The french licence file was not found at", path, file=stderr)
+                print("The requested licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
                 "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENCE_FR")
         self.fenetre_license.setWidget(self.licenseTextlabel)
