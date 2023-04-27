@@ -61,9 +61,10 @@ class Main_window(QWidget):
         #style
 
         if settings.get("affichage.theme")=="dark":
-            path: str = os.path.abspath(os.path.dirname(__file__))
-            path = os.path.join(path, "test.qss")
-            self.setStyleSheet(path)
+            self.setStyleSheet("""
+            background-color: #262626;
+            color: #FFFFFF;
+            """)
         elif settings.get("affichage.theme")=="light":
             self.setStyleSheet("""
             background-color: #DADADA;
