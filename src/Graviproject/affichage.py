@@ -101,7 +101,7 @@ class Main_window(QWidget):
             self.themeAction[-1].triggered.connect(partial(self.change_theme,theme))
 
         self.simAction: list(QAction) = []
-        for sim in ("journée","mois","années"):
+        for sim in ("day","month","year"):
             self.simAction.append(QAction(langue.get("menu.settings.sim."+sim), self))
             self.changeLangSignal.connect(langue.lazyEval(self.simAction[-1].setText,"menu.settings.sim."+sim))
             self.simAction[-1].triggered.connect(partial(self.change_speed,sim))
