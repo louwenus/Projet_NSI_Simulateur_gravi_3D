@@ -14,6 +14,12 @@
                 "light":"Light",
                 "dark":"Dark",
                 "system":"System"
+            },
+            "sim":{
+                "title":"Elapsed time per second",
+                "day":"Day",
+                "month":"Month",
+                "year":"Year"
             }
         },
         "help":{
@@ -32,7 +38,7 @@
             "x":"X coordinate (km):",
             "y":"Y coordinate (km):",
             "z":"Z coordinate (km):",
-            "m":"Masse (tonne):",
+            "m":"Masse (10**12 kg):",
             "r":"Rayon (km):",
             "valid":"Add the spheres"
         }

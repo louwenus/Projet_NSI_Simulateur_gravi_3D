@@ -16,7 +16,7 @@
                 "system":"Système"
             },
             "sim":{
-                "title":"Changer la vitesse",
+                "title":"Temps écoulé par seconde",
                 "day":"Journée",
                 "month":"Mois",
                 "year":"Année"

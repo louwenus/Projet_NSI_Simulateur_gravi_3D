@@ -14,7 +14,14 @@
                 "light":"Clair",
                 "dark":"Oscuro",
                 "system":"Sistema"
+            },
+            "sim":{
+                "title":"Tiempo transcurrido por segundo",
+                "day":"Dia",
+                "month":"Mes",
+                "year":"Año"
             }
+        
         },
         "help":{
             "title":"Ayud&a",
@@ -32,7 +39,7 @@
             "x":"Coordenadas X (km):",
             "y":"Coordenadas Y (km):",
             "z":"Coordenadas Z (km):",
-            "m":"Masa (tonne):",
+            "m":"Masa (10**12 kg):",
             "r":"Rayón (km):",
             "valid":"Añadir las esferas"
         }
