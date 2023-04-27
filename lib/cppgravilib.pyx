@@ -100,7 +100,7 @@ cdef class CySimpleSphere():
     def get_speed(self) -> Tuple[double,double,double]:
         cdef dbco speed = self.c_simple_sphere.get_speed()
         return speed.x,speed.y,speed.z
-    def set_speed(self,speed:Tuple[li,li,li]) -> None:
+    def set_speed(self,speed:Tuple[float,float,float]) -> None:
         self.c_simple_sphere.set_speed(speed[0],speed[1],speed[2])
     def get_energie(self) -> Tuple[double,double,double]:
         cdef dbco energie = self.c_simple_sphere.get_energie()

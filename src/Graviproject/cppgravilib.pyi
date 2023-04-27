@@ -6,7 +6,7 @@ is_128_bit:bool
 def set_ticktime(ticktime:float)-> None: ...
 
 class CySimpleSphere():
-    def init_c_container(self,x:int,y:int,z:int,masse:int,rayon:int,vx:int,vy:int,vz:int) -> None:
+    def init_c_container(self,x:int,y:int,z:int,masse:int,rayon:int,vx:float,vy:float,vz:float) -> None:
         """For this class to work, this function HAVE TO BE CALLED, however, it can be skipped if c_base_dim is set by subclass
         (aka, need to be called by python derivative)"""
     def get_coord(self) -> tuple[int,int,int]: ...

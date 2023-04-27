@@ -2,7 +2,7 @@
 
 #include "sphere.hpp"
 
-SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, lli rayon, li vx, li vy, li vz) :
+SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, lli rayon, float vx, float vy, float vz) :
     pyparent(parent),
     pos{x,y,z},
     rayon((ulli)rayon),
@@ -100,7 +100,7 @@ bool SimpleSphere::t_colli_rapide(const llco posmin,const llco posmax) const
 {                                                                                                                                                                          // cette fonction teste rapidement (faux positifs) si cette sphere en touche une autre
     return (this->posmin.x<posmax.x &&this->posmin.y<posmax.y &&this->posmin.z<posmax.z &&this->posmax.x> posmin.x &&this->posmax.y> posmin.y &&this->posmax.z> posmin.z); // test de collision rectangles
 }
-void SimpleSphere::set_speed(li x,li y,li z)
+void SimpleSphere::set_speed(float x,float y,float z)
 {
     // We store Ec, not speed, so calculating Ec based on target speed
     //square speed

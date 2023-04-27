@@ -41,12 +41,12 @@ cdef extern from "typedef.hpp":
 
 cdef extern from "spheres/sphere.hpp":
     cdef cppclass SimpleSphere:
-        SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,lli rayon,li vx,li vy,li vz) except +
+        SimpleSphere(PyObject* parent,lli x,lli y,lli z,double masse,lli rayon,float vx,float vy,float vz) except +
         PyObject* pyparent
         llco pos
         uli rayon
         double masse
-        void set_speed(li x,li y,li z)
+        void set_speed(float x,float y,float z)
         dbco get_speed()
         void set_energie(double x,double y,double z)
         dbco get_energie()

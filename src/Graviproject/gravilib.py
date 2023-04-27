@@ -35,9 +35,9 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
         """Crée une PyBaseSphere sur la base d'une cySimpleSphere.
 
         Args:
-            x,y,z (int): Position de départ de la sphère (en m)
-            masse,rayon (int): Variable de la masse et du rayon de la sphère (en kg)
-            vx,vy,vz (int): Vitesse de départ de la sphère (en m/s)
+            x,y,z (float): Position de départ de la sphère (en m)
+            masse,rayon (float): Variable de la masse et du rayon de la sphère (en kg)
+            vx,vy,vz (float): Vitesse de départ de la sphère (en m/s)
             d (int) : Dureté de la sphère
             soft (bool) : si les valeurs des args sont en m / kg ou en valeurs interne (ud/um). default en m et kg
         """

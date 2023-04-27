@@ -8,7 +8,7 @@ class SimpleSphere
 public:
     // constructeurs et destructeur
     // SimpleSphere();
-    SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, lli rayon, li vx, li vy, li vz);
+    SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, lli rayon, float vx, float vy, float vz);
 
     // fonctions pour la collision
     bool t_collision_avec(const SimpleSphere *instance) const; // test de collision avec une autre sphere
@@ -18,7 +18,7 @@ public:
     void move();                                                   // dit a la sphere de se déplacer comme si temps seconde s'etait écoulé
     double gravite_stats(llco &return_pos, ulli &sane_min_r) const; // masse (pos,rayon)
     void accel(const dbco accel);                                              // vecteur acceleration
-    void set_speed(li x,li y,li z);
+    void set_speed(float x,float y,float z);
     dbco get_speed() const;
     void set_energie(double x,double y,double z);
     dbco get_energie() const;
