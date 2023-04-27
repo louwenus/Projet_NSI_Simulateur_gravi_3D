@@ -224,8 +224,8 @@ class Main_window(QWidget):
         if sim not in eq:
             raise ValueError(sim + "is not a valid time period")
         sec=eq[sim]
-        set_ticktime(sec)
-        settings.set("simulation.simspeed",sec/settings.get("simulation.fps"))
+        set_ticktime(sec/settings.get("simulation.fps"))
+        settings.set("simulation.simspeed",sec)
         settings.save()
 
 
