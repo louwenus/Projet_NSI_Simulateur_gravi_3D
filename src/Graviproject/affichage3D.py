@@ -166,7 +166,7 @@ class Renderer3D(QWidget):
         self.cam: Camera = Camera(offsetX=self.size().width()/2,
                                   offsetY=self.size().height()/2,
                                   zoom=settings.get("simulation.defaultzoom"),
-                                  z=-3_000_000)
+                                  z=-30_000_000)
         self.reload_controlles()
         
         
@@ -281,15 +281,15 @@ class Renderer3D(QWidget):
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=500_000)
+            self.cam.move(profondeur=5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
-            """ Fait reculer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=-500_000)
+            """ Fait reculer la camera de 5_000_000 km"""
+            self.cam.move(profondeur=-5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -3_000_000, settings.get("simulation.defaultzoom")
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -30_000_000, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
 
