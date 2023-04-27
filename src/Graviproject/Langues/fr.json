@@ -38,7 +38,7 @@
             "x":"Coordonnée X (km):",
             "y":"Coordonnée Y (km):",
             "z":"Coordonnée Z (km):",
-            "m":"Masse (tonne):",
+            "m":"Masse (10**12 kg):",
             "r":"Rayon (km):",
             "valid":"Ajouter les sphères"
         }
