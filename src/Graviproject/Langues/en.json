@@ -16,7 +16,7 @@
                 "system":"System"
             },
             "sim":{
-                "title":"Elapsed time per second",
+                "title":"&Elapsed time per second",
                 "second":"second",
                 "day":"Day",
                 "month":"Month",

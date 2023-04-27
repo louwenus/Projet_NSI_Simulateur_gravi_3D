@@ -59,6 +59,7 @@ class Main_window(QWidget):
         self.changeLangSignal.connect(langue.lazyEval(self.setWindowTitle,"title"))
         
         #style
+
         if settings.get("affichage.theme")=="dark":
             self.setStyleSheet("""
             background-color: #262626;
@@ -71,6 +72,7 @@ class Main_window(QWidget):
             """)
         elif settings.get("affichage.theme")=="system":
             self.setStyleSheet(""" """)
+
 
         #Ajout du logo
         try :
