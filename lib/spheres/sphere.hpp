@@ -22,7 +22,6 @@ public:
     dbco get_speed() const;
     void set_energie(double x,double y,double z);
     dbco get_energie() const;
-    void set_ticktime(const float ticktime);
     void set_masse(double masse);
 
     PyObject *pyparent;
@@ -32,10 +31,8 @@ public:
     double masse;
     std::list<SimpleSphere*>::iterator touche;
 protected:
-    double masse_time;  //utilisé dans gravitation (évite le recalcul de masse * ticktime a chaque intéraction a chaque frame)
     llco posmin; // utilisé pour les tests de collision rapide
     llco posmax; // utilisé pour les tests de collision rapide
-    float ticktime;
 };
 
 #endif

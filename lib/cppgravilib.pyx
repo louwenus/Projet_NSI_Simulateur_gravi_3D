@@ -29,6 +29,11 @@ ctypedef PyObject* PyObjPtr
 ctypedef cppgravilib.SimpleSphere* SpherePtr
 
 is_128_bit:bool = cppgravilib.is_128_bit
+def set_ticktime(float ticktime):
+    if ticktime==0:
+        raise ZeroDivisionError
+    cppgravilib.ticktime=ticktime
+
 
 cdef class CyBaseDimension:
     cdef cppgravilib.BaseDimension *c_base_dim  # Hold a C++ instance, and we forfward everything
@@ -106,5 +111,3 @@ cdef class CySimpleSphere():
         return self.c_simple_sphere.masse
     def set_masse(self,double masse) -> None:
         self.c_simple_sphere.set_masse(masse)
-    def set_ticktime(self,ticktime:float) -> None:
-        self.c_simple_sphere.set_ticktime(<const float>ticktime)

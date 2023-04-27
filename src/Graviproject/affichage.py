@@ -20,13 +20,14 @@ except ModuleNotFoundError as e:
 
 from . import settings
 from . import gravilib
+from .cppgravilib import set_ticktime
 from .affichage3D import Renderer3D 
 from . import langue
 
 if settings.get("logging") >= 3:
     from time import time #importation de la libraire time
 
-ticktime=1
+
 app: QApplication = QApplication(sys.argv)
 
 warnwin = QScrollArea()
@@ -156,7 +157,8 @@ class Main_window(QWidget):
 
         # Dimension affichée par la fenètre de rendu
         ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
-        self.dimension = gravilib.PyBaseDimension(self.widget_3D,ticktime)
+        set_ticktime(ticktime)
+        self.dimension = gravilib.PyBaseDimension(self.widget_3D)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
         self.timer: QTimer = QTimer(self)
@@ -217,15 +219,11 @@ class Main_window(QWidget):
             self.setStyleSheet(""" """)
 
     def change_speed(self,sim):
-        if sim == "second":
-            sec=1
-        elif sim == "journée" :
-            sec=86_400
-        elif sim == "mois" :
-            sec=2_592_000
-        elif sim == "année" :
-            sec=946_080_000
-        
+        eq={"second":1,"day":86_400,"month":2_592_000,"year":946_080_000}
+        if sim not in eq:
+            raise ValueError(sim + "is not a valid time period")
+        sec=eq[sim]
+        set_ticktime(sec)
         settings.set("simulation.simspeed",sec)
         settings.save()
 
@@ -241,7 +239,7 @@ class Main_window(QWidget):
                 self.licenseTextlabel: QWidget = QLabel(file.read())
         except:
             if settings.get("logging") >= 1:
-                print("The french licence file was not found at", path, file=stderr)
+                print("The requested licence file was not found at", path, file=stderr)
             self.licenseTextlabel: QWidget = QLabel(
                 "Ficher manquant ou chemin cassé.\n\nRendez vous sur :\nhttps://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D/blob/main/LICENCE_FR")
         self.fenetre_license.setWidget(self.licenseTextlabel)
@@ -273,7 +271,7 @@ class Main_window(QWidget):
             start = time()
             self.widget_3D.repaint()
             print("graph time:", time()-start)
-            print("total:", time()-totalstart,"on",ticktime,"normaly")
+            print("total:", time()-totalstart)
     else:
         def update_simulation(self) -> None:
             self.dimension.gravite_all()
@@ -388,7 +386,7 @@ class Controles(QWidget):
                 y=ymean+yrand*dist*sin(teta)*sin(phi)
                 z=zmean+zrand*dist*cos(teta)
                 #if _ == 1 :
-                #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9, ticktime)
+                #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9)
                 #Fenetre_principale.ajouter_sphere(var)
                 #else :
                 var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))

@@ -8,8 +8,7 @@ SimpleSphere::SimpleSphere(PyObject *parent, lli x, lli y, lli z, double masse, 
     rayon((ulli)rayon),
     masse(masse),
     posmin{x-rayon, y-rayon, z-rayon},
-    posmax{x+rayon,y+rayon,z+rayon},
-    ticktime{1}
+    posmax{x+rayon,y+rayon,z+rayon}
 {
     this->set_speed(vx,vy,vz);
 }
@@ -29,7 +28,7 @@ void SimpleSphere::move()
         v=c*(double)sqrt(E*(2*c2*masse+E))/(c2*masse+E);
     }
     //vitesse/energie
-    double factor=v/E;
+    double factor=v/E*ticktime;
     pos = {pos.x + (lli)(energie.x*factor), pos.y + (lli)(energie.y*factor), pos.z + (lli)(energie.x*factor)};
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
@@ -51,7 +50,7 @@ double SimpleSphere::gravite_stats(llco &return_pos, ulli &sane_min_r) const
 { // cette function retourne la position et la masse*le temps, utilisé pour faire de la gravitation
     return_pos = this->pos;
     sane_min_r = this->rayon;
-    return this->masse_time;
+    return this->masse;
 }
 void SimpleSphere::accel(const dbco accel)
 { // cette fonction aplique un vecteur acceleration a la sphere
@@ -93,7 +92,7 @@ void SimpleSphere::set_speed(li x,li y,li z)
     //gamma de lorentz
     double e;
     if (v2 >= c2){
-        e = pow(10,300);
+        e = 1e300;
     } else {
     double g = 1/(double)sqrt((double)1.0-v2/c2);
     //energie cinetique (formule relativiste)
@@ -114,14 +113,7 @@ void SimpleSphere::set_energie(double x,double y,double z){
 dbco SimpleSphere::get_energie() const{
     return {(double)energie.x,(double)energie.y,(double)energie.z};
 }
-void SimpleSphere::set_ticktime(const float ticktime)
-{
-    this->ticktime=ticktime;
-    this->masse_time=masse*ticktime;
-}
-
 void SimpleSphere::set_masse(double masse)
 {
     this->masse=masse;
-    this->masse_time=masse*this->ticktime;
 }
