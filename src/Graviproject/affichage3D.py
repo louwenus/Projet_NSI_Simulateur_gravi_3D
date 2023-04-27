@@ -326,7 +326,7 @@ class Renderer3D(QWidget):
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -3_000_00, settings.get("simulation.defaultzoom")
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -3_000_000, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
 
