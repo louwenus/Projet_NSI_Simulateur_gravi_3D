@@ -85,12 +85,13 @@ class Camera():
             #y(1) vers le bas
             #z(2) vers le fond
             coord_plan: tuple[float, float] = (
-                coord_finale[0]/coord_finale[2]*self.zoom*self.offsetX+self.offsetX, coord_finale[1]/coord_finale[2]*self.zoom*self.offsetX+self.offsetY)
-            radius_plan: float = radius/coord[2]*self.zoom*(self.offsetX+self.offsetY)        
+                coord_finale[0]/coord_finale[2]*self.zoom*self.offsetX+self.offsetX,
+                coord_finale[1]/coord_finale[2]*self.zoom*self.offsetX+self.offsetY)
+            radius_plan: float = radius/coord_finale[2]*self.zoom*(self.offsetX+self.offsetY)
+            
+            return (coord_plan, radius_plan)      
         else:
             return None
-
-        return (coord_plan, radius_plan)
     
     
     def move(self, cote:int=0, elev:int=0, profondeur:int=0):
@@ -264,27 +265,27 @@ class Renderer3D(QWidget):
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
             """ Fait s'élever la camera de 50_000_000 metres"""
-            self.cam.move(elev=-50_000_000)
+            self.cam.move(elev=-5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
             """ Fait descendre la camera de 50_000_000 metres"""
-            self.cam.move(elev=50_000_000)
+            self.cam.move(elev=5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 50_000_000 metres"""
-            self.cam.move(cote=58_000_000)
+            self.cam.move(cote=5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
             """ Fait se décaler à gauche la camera de 50_000_000 metres"""
-            self.cam.move(cote=-58_000_000)
+            self.cam.move(cote=-5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=5000_000)
+            self.cam.move(profondeur=500_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=-5000_000)
+            self.cam.move(profondeur=-500_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
@@ -303,23 +304,23 @@ class Renderer3D(QWidget):
             self.wid_con.ajouter_spheres(False)
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
-            "fait tourner vers le haut de 0.02 radian"
-            self.cam.pitch-=0.02
+            "fait tourner vers le haut"
+            self.cam.pitch-=0.04/self.cam.zoom
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
             "fait tourner vers le bas de 0.02 radian"
-            self.cam.pitch+=0.02
+            self.cam.pitch+=0.04/self.cam.zoom
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
             "fait tourner vers la gauche de 0.02 radian"
-            self.cam.yaw+=0.02
+            self.cam.yaw+=0.04/self.cam.zoom
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
             "fait tourner vers la droite de 0.02 radian"
-            self.cam.yaw-=0.02
+            self.cam.yaw-=0.04/self.cam.zoom
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
