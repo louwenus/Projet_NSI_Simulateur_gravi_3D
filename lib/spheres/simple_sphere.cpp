@@ -29,7 +29,7 @@ void SimpleSphere::move()
     }
     //vitesse/energie
     double factor=v/E*ticktime;
-    pos = {pos.x + (lli)((double)energie.x*factor), pos.y + (lli)((double)energie.y*factor), pos.z + (lli)((double)energie.x*factor)};
+    pos = {pos.x + (lli)((double)energie.x*factor), pos.y + (lli)((double)energie.y*factor), pos.z + (lli)((double)energie.z*factor)};
     this->posmin = {this->pos.x - (lli)this->rayon, this->pos.y - (lli)this->rayon, this->pos.z - (lli)this->rayon};
     this->posmax = {this->pos.x + (lli)this->rayon, this->pos.y + (lli)this->rayon, this->pos.z + (lli)this->rayon};
 }
