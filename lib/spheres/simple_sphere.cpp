@@ -20,6 +20,13 @@ void SimpleSphere::move()
     // and vector v = v/e*vector e
     //energie cinétique
     double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    //I don't know where the nan could come from ... but this a dirty fix for the time being
+    if (isnan(E)){
+        if (isnan(this->energie.x)){this->energie.x = 0;}
+        if (isnan(this->energie.y)){this->energie.y = 0;}
+        if (isnan(this->energie.z)){this->energie.z = 0;}
+        E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    }
     //vitesse
     double v;
     if (isinf(E)) {
@@ -39,6 +46,10 @@ dbco SimpleSphere::get_speed() const {
     // and vector v = v/e*vector e
     //energie cinétique
     double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
+    //I don't know where the nan could come from ... but this a dirty fix for the time being
+    if (isnan(E)){
+        return {0,0,0};
+    }
     //vitesse
     double v;
     if (isinf(E)) {
@@ -94,6 +105,13 @@ void SimpleSphere::set_speed(li x,li y,li z)
     // We store Ec, not speed, so calculating Ec based on target speed
     //square speed
     double v2 = x*x + y*y + z*z;
+    if (v2==0) [[unlikely]]
+    {
+        this->energie.x = 0;
+        this->energie.y = 0;
+        this->energie.z = 0;
+        return;
+    }
     //gamma de lorentz
     double e;
     if (v2 >= c2){
@@ -105,7 +123,7 @@ void SimpleSphere::set_speed(li x,li y,li z)
     }
     // ->         ->
     // Ec = (e/v)*v
-    double ev=e*(double)sqrt(v2);
+    double ev=e/(double)sqrt(v2);
     this->energie.x = x*ev;
     this->energie.y = y*ev;
     this->energie.z = z*ev;
