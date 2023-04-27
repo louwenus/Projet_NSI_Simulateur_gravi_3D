@@ -91,12 +91,17 @@ void SimpleSphere::set_speed(li x,li y,li z)
     //square speed
     double v2 = x*x + y*y + z*z;
     //gamma de lorentz
+    double e;
+    if (v2 >= c2){
+        e = pow(10,300);
+    } else {
     double g = 1/(double)sqrt((double)1.0-v2/c2);
     //energie cinetique (formule relativiste)
-    double e = v2*this->masse*(g*g)/(g+1);
+    e = v2*this->masse*(g*g)/(g+1);
+    }
     // ->         ->
     // Ec = (e/v)*v
-    double ev=e*(double)sqrt(v2); 
+    double ev=e*(double)sqrt(v2);
     this->energie.x = x*ev;
     this->energie.y = y*ev;
     this->energie.z = z*ev;
