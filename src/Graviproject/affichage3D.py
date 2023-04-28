@@ -264,32 +264,32 @@ class Renderer3D(QWidget):
         """
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
-            """ Fait s'élever la camera de 50_000_000 metres"""
+            """ Fait s'élever la camera"""
             self.cam.move(elev=-500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
-            """ Fait descendre la camera de 50_000_000 metres"""
-            self.cam.move(elev=500_000)
+            """ Fait descendre la camera"""
+            self.cam.move(elev=500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
-            """ Fait se décaler à droite la camera de 50_000_000 metres"""
-            self.cam.move(cote=500_000)
+            """ Fait se décaler à droite la camera"""
+            self.cam.move(cote=500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
-            """ Fait se décaler à gauche la camera de 50_000_000 metres"""
-            self.cam.move(cote=-500_000)
+            """ Fait se décaler à gauche la camera"""
+            self.cam.move(cote=-500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
-            """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=500_000)
+            """ Fait avancer la camera"""
+            self.cam.move(profondeur=500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 5_000_000 km"""
-            self.cam.move(profondeur=-500_000)
+            self.cam.move(profondeur=-500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -5_000_000, settings.get("simulation.defaultzoom")
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -100_000_000, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
             

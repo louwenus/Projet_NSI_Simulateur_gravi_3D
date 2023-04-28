@@ -60,18 +60,7 @@ class Main_window(QWidget):
         
         #style
 
-        if settings.get("affichage.theme")=="dark":
-            self.setStyleSheet("""
-            background-color: #262626;
-            color: #FFFFFF;
-            """)
-        elif settings.get("affichage.theme")=="light":
-            self.setStyleSheet("""
-            background-color: #DADADA;
-            color: #000000;
-            """)
-        elif settings.get("affichage.theme")=="system":
-            self.setStyleSheet(""" """)
+        self.change_theme()
 
 
         #Ajout du logo
@@ -203,21 +192,25 @@ class Main_window(QWidget):
         langue.reload()
         self.changeLangSignal.emit()
         
-    def change_theme(self, theme):
-        settings.set("affichage.theme",theme)
-        settings.save()
+    def change_theme(self, theme=None):
+        if theme!=None:
+            settings.set("affichage.theme",theme)
+            settings.save()
         if settings.get("affichage.theme")=="dark":
-            self.setStyleSheet("""
+            style = """
             background-color: #262626;
             color: #FFFFFF;
-            """)
+            """
         elif settings.get("affichage.theme")=="light":
-            self.setStyleSheet("""
+            style = """
             background-color: #DADADA;
             color: #000000;
-            """)
+            """
         elif settings.get("affichage.theme")=="system":
-            self.setStyleSheet(""" """)
+            style = """ """
+        self.setStyleSheet(style)
+        controles_graphiques.setStyleSheet(style)
+        Controles.fenetre_ajoute.setStyleSheet(style)
 
     def change_speed(self,sim):
         eq={"second":1,"day":86_400,"month":2_592_000,"year":946_080_000}
