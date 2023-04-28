@@ -224,6 +224,14 @@ class Main_window(QWidget):
         if sim not in eq:
             raise ValueError(sim + "is not a valid time period")
         sec=eq[sim]
+        if sec > 2_000_000:
+            if sec > 900_000_000:
+                settings.set("simulation.fps",200)
+            else:
+                settings.set("simulation.fps",50)
+        else:
+            settings.set("simulation.fps",10)
+        self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         set_ticktime(sec/settings.get("simulation.fps"))
         settings.set("simulation.simspeed",sec)
         settings.save()
@@ -387,7 +395,7 @@ class Controles(QWidget):
                 y=ymean+yrand*dist*sin(teta)*sin(phi)
                 z=zmean+zrand*dist*cos(teta)
                 if _ == 900 :
-                    var = gravilib.PyBaseSphere(x, y, z, randint(10**30,10**36), rmax,0, 0, 0, 10*9,QColor(255,255,255))
+                    var = gravilib.PyBaseSphere(x, y, z, randint(10**30,10**35), rmax,0, 0, 0, 10*9,QColor(255,255,255))
                     Fenetre_principale.ajouter_sphere(var)
                 else :
                     var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-25, 25), vy=randint(-25, 25), vz=randint(-25, 25), d=randint(10,1000000))
