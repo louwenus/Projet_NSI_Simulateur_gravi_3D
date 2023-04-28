@@ -22,9 +22,9 @@ void SimpleSphere::move()
     double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //I don't know where the nan could come from ... but this a dirty fix for the time being
     if (isnan(E)){
-        if (isnan(this->energie.x)){this->energie.x.exchange((double)0,std::memory_order::relaxed);}
-        if (isnan(this->energie.y)){this->energie.y.exchange((double)0,std::memory_order::relaxed);}
-        if (isnan(this->energie.z)){this->energie.z.exchange((double)0,std::memory_order::relaxed);}
+        if (isnan((double)this->energie.x)){this->energie.x.exchange((double)0,std::memory_order::relaxed);}
+        if (isnan((double)this->energie.y)){this->energie.y.exchange((double)0,std::memory_order::relaxed);}
+        if (isnan((double)this->energie.z)){this->energie.z.exchange((double)0,std::memory_order::relaxed);}
         E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     }
     //vitesse
