@@ -285,7 +285,7 @@ class Renderer3D(QWidget):
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 5_000_000 km"""
-            self.cam.move(profondeur=-20_000_000)
+            self.cam.move(profondeur=-5_000_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
