@@ -12,7 +12,7 @@ from typing import Callable
 from PySide6.QtWidgets import QWidget,QLayout,QHBoxLayout
 from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QResizeEvent, QKeySequence
 from PySide6.QtCore import Qt, QPointF
-from math import cos, sin, log2
+from math import cos, sin, sqrt
 
 from . import settings
 
@@ -265,31 +265,31 @@ class Renderer3D(QWidget):
          
         if event.keyCombination().toCombined() == self.controles["monter"]:
             """ Fait s'élever la camera de 50_000_000 metres"""
-            self.cam.move(elev=-5_000_000)
+            self.cam.move(elev=-500_000/self.cam.zoom)
             
         if event.keyCombination().toCombined() == self.controles["descendre"]:
             """ Fait descendre la camera de 50_000_000 metres"""
-            self.cam.move(elev=5_000_000)
+            self.cam.move(elev=500_000)
             
         if event.keyCombination().toCombined() == self.controles["droite"]:
             """ Fait se décaler à droite la camera de 50_000_000 metres"""
-            self.cam.move(cote=5_000_000)
+            self.cam.move(cote=500_000)
             
         if event.keyCombination().toCombined() == self.controles["gauche"]:
             """ Fait se décaler à gauche la camera de 50_000_000 metres"""
-            self.cam.move(cote=-5_000_000)
+            self.cam.move(cote=-500_000)
             
         if event.keyCombination().toCombined() == self.controles["avancer"]:
             """ Fait avancer la camera de 50_000_000 metres"""
-            self.cam.move(profondeur=5_000_000)
+            self.cam.move(profondeur=500_000)
             
         if event.keyCombination().toCombined() == self.controles["reculer"]:
             """ Fait reculer la camera de 5_000_000 km"""
-            self.cam.move(profondeur=-5_000_000)
+            self.cam.move(profondeur=-500_000)
             
         if event.keyCombination().toCombined() == self.controles["home"]:
             """ Recentre et réinitialise la camera à ses valeurs de départ"""
-            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -30_000_000, settings.get("simulation.defaultzoom")
+            self.cam.x, self.cam.y, self.cam.z, self.cam.zoom = 0, 0, -5_000_000, settings.get("simulation.defaultzoom")
             self.cam.pitch, self.cam.roll, self.cam.yaw = 0, 0, 0
             self.cam.update_matrix()
             
@@ -299,31 +299,31 @@ class Renderer3D(QWidget):
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
             "fait tourner vers le haut"
-            self.cam.pitch-=0.04/self.cam.zoom
+            self.cam.pitch-=0.04/sqrt(self.cam.zoom)
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
-            "fait tourner vers le bas de 0.02 radian"
-            self.cam.pitch+=0.04/self.cam.zoom
+            "fait tourner vers le bas"
+            self.cam.pitch+=0.04/sqrt(self.cam.zoom)
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
-            "fait tourner vers la gauche de 0.02 radian"
-            self.cam.yaw+=0.04/self.cam.zoom
+            "fait tourner vers la gauche"
+            self.cam.yaw+=0.04/sqrt(self.cam.zoom)
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
-            "fait tourner vers la droite de 0.02 radian"
-            self.cam.yaw-=0.04/self.cam.zoom
+            "fait tourner vers la droite"
+            self.cam.yaw-=0.04/sqrt(self.cam.zoom)
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
-            "fait rouler vers la gauche de 0.1 radian"
+            "fait rouler vers la gauche"
             self.cam.roll+=0.01
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_droite"]:
-            "fait rouler vers la droite de 0.1 radian"
+            "fait rouler vers la droite"
             self.cam.roll-=0.01
             self.cam.update_matrix()
     
