@@ -22,9 +22,9 @@ void SimpleSphere::move()
     double E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     //I don't know where the nan could come from ... but this a dirty fix for the time being
     if (isnan(E)){
-        if (isnan(this->energie.x)){this->energie.x = 0;}
-        if (isnan(this->energie.y)){this->energie.y = 0;}
-        if (isnan(this->energie.z)){this->energie.z = 0;}
+        if (isnan((double)this->energie.x)){this->energie.x.exchange((double)0,std::memory_order::relaxed);}
+        if (isnan((double)this->energie.y)){this->energie.y.exchange((double)0,std::memory_order::relaxed);}
+        if (isnan((double)this->energie.z)){this->energie.z.exchange((double)0,std::memory_order::relaxed);}
         E=(double)sqrt(energie.x*energie.x+energie.y*energie.y+energie.z*energie.z);
     }
     //vitesse
@@ -107,9 +107,9 @@ void SimpleSphere::set_speed(float x,float y,float z)
     double v2 = (double)x*x + (double)y*y + (double)z*z;
     if (v2==0) [[unlikely]]
     {
-        this->energie.x = 0;
-        this->energie.y = 0;
-        this->energie.z = 0;
+        this->energie.x = (double)0;
+        this->energie.y = (double)0;
+        this->energie.z = (double)0;
         return;
     }
     //gamma de lorentz
