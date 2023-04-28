@@ -12,7 +12,7 @@ Table des matières :
 ## Installation :
 
 Il est possible d'installer le GraviProject de 2 manières différentes :
-- ### En utilisant une version pré-compilée, selon votre platforme :
+- ### En utilisant une version pré-compilée, selon votre plateforme :
   - [Windows x86_64 et python3.11](#windows)
   - [Linux x86_64 ou aarch64 et python3.10](#Linux)
 
@@ -45,7 +45,7 @@ Il est possible d'installer le GraviProject de 2 manières différentes :
         - Pour pacman (Arch, Manjaro...) :<br/>
         `sudo pacman -S python python-pip`
         
-      - Allez chercher la wheel correspondant à votre platforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(prenez bien la dernière en date)* puis installez la avec :<br/>
+      - Allez chercher la wheel correspondant à votre plateforme [ici](https://mwaserv.fr.to/downloads/graviproject/) *(prenez bien la dernière en date)* puis installez la avec :<br/>
       `python3 -m pip install nom_du_fichier.whl`
 
       - Vous pouvez lancer le programme avec la commande `Graviproject` si les scripts générés par pip sont bien dans le path, sinon :
