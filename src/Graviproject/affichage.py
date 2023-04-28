@@ -386,12 +386,12 @@ class Controles(QWidget):
                 x=xmean+xrand*dist*sin(teta)*cos(phi)
                 y=ymean+yrand*dist*sin(teta)*sin(phi)
                 z=zmean+zrand*dist*cos(teta)
-                #if _ == 1 :
-                #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9)
-                #Fenetre_principale.ajouter_sphere(var)
-                #else :
-                var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))
-                Fenetre_principale.ajouter_sphere(var)
+                if _ == 900 :
+                    var = gravilib.PyBaseSphere(x, y, z, randint(10**30,10**36), rmax,0, 0, 0, 10*9,QColor(255,255,255))
+                    Fenetre_principale.ajouter_sphere(var)
+                else :
+                    var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-25, 25), vy=randint(-25, 25), vz=randint(-25, 25), d=randint(10,1000000))
+                    Fenetre_principale.ajouter_sphere(var)
         else :
 
                         #rayon des planètes multiplié par 100 et du soleil par 10 pour plus de visibilité
