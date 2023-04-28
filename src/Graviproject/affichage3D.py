@@ -54,8 +54,8 @@ class Camera():
 
     def update_matrix(self) -> None:
         """Met à jour la matrice de rotation de la caméra."""
-        # yaw = y,  pith = x,  roll = z
-        #   yaw
+        # yaw = y,  pitch = x,  roll = z
+        #   yaw          pitch         roll
         #[cos -sin 0] [cos  0 sin] [1  0   0  ]
         #[sin cos  0]*[ 0   1  0 ]*[0 cos -sin]
         #[ 0   0   1] [-sin 0 cos] [0 sin cos ]
@@ -104,6 +104,16 @@ class Camera():
         self.z += cote*self.matrix[0][2] + elev*self.matrix[1][2] + profondeur*self.matrix[2][2] 
         
         
+    def rotate(self, yaw=0, pitch=0, roll=0):
+        if yaw != 0:
+            self.yaw+=yaw*cos(self.roll)*cos(self.pitch)
+            self.pitch+=yaw*sin(self.roll)
+            self.roll+=yaw*sin(self.pitch)/10
+        if pitch != 0:
+            self.pitch+=pitch*cos(self.roll)
+            self.yaw+=pitch*-sin(self.roll)
+        if roll != 0:
+            self.roll+=roll
 
 
 class SphereItem():
@@ -303,32 +313,32 @@ class Renderer3D(QWidget):
         
         if event.keyCombination().toCombined() == self.controles["rot_haut"]:
             "fait tourner vers le haut"
-            self.cam.pitch-=0.04/sqrt(self.cam.zoom)
+            self.cam.rotate(pitch=-0.04/sqrt(self.cam.zoom))
             self.cam.update_matrix()
 
         if event.keyCombination().toCombined() == self.controles["rot_bas"]:
             "fait tourner vers le bas"
-            self.cam.pitch+=0.04/sqrt(self.cam.zoom)
+            self.cam.rotate(pitch=0.04/sqrt(self.cam.zoom))
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_gauche"]:
             "fait tourner vers la gauche"
-            self.cam.yaw+=0.04/sqrt(self.cam.zoom)
+            self.cam.rotate(yaw=0.04/sqrt(self.cam.zoom))
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["rot_droite"]:
             "fait tourner vers la droite"
-            self.cam.yaw-=0.04/sqrt(self.cam.zoom)
+            self.cam.rotate(yaw=-0.04/sqrt(self.cam.zoom))
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_gauche"]:
             "fait rouler vers la gauche"
-            self.cam.roll+=0.01
+            self.cam.rotate(roll=0.01)
             self.cam.update_matrix()
         
         if event.keyCombination().toCombined() == self.controles["roul_droite"]:
             "fait rouler vers la droite"
-            self.cam.roll-=0.01
+            self.cam.rotate(roll=-0.01)
             self.cam.update_matrix()
     
     
