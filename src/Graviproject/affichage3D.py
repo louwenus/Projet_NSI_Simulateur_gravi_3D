@@ -226,12 +226,16 @@ class Renderer3D(QWidget):
         Args:
             event (class 'PySide6.QtGui.QWheelEvent'): Evenement, ici molette de la souris.
         """
-        
-        if event.angleDelta().y() > 0:
-            self.cam.zoom*=1.25
+        y=event.angleDelta().y()
+        if y > 100:
+            self.cam.zoom*=1.3
             
+        elif y<-100:
+            self.cam.zoom/=1.3
+        elif y>0:
+            self.cam.zoom*=1+y/100*0.3
         else:
-            self.cam.zoom*=0.75
+            self.cam.zoom/=1-y/100*0.3
             
             
     def reload_controlles(self,*any) -> None:

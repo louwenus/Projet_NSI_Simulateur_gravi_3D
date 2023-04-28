@@ -213,10 +213,18 @@ class Main_window(QWidget):
         Controles.fenetre_ajoute.setStyleSheet(style)
 
     def change_speed(self,sim):
-        eq={"second":1,"day":86_400,"month":2_592_000,"year":946_080_000}
+        eq={"second":1,"day":86_400,"month":2_592_000,"year":31_536_000}
         if sim not in eq:
             raise ValueError(sim + "is not a valid time period")
         sec=eq[sim]
+        if sec > 2_000_000:
+            if sec > 30_000_000:
+                settings.set("simulation.fps",200)
+            else:
+                settings.set("simulation.fps",50)
+        else:
+            settings.set("simulation.fps",10)
+        self.timer.setInterval(1/settings.get("simulation.fps")*1000)
         set_ticktime(sec/settings.get("simulation.fps"))
         settings.set("simulation.simspeed",sec)
         settings.save()
@@ -379,12 +387,12 @@ class Controles(QWidget):
                 x=xmean+xrand*dist*sin(teta)*cos(phi)
                 y=ymean+yrand*dist*sin(teta)*sin(phi)
                 z=zmean+zrand*dist*cos(teta)
-                #if _ == 1 :
-                #var = gravilib.PyBaseSphere(0, 0, 100000000, 2,6*10**62, rmax,0, 0, 0, 10*9)
-                #Fenetre_principale.ajouter_sphere(var)
-                #else :
-                var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-1_000_000, 1_000_000), vy=randint(-1_000_000, 1_000_000), vz=randint(-1_000_000, 1_000_000), d=randint(10,1000000))
-                Fenetre_principale.ajouter_sphere(var)
+                if _ == 900 :
+                    var = gravilib.PyBaseSphere(x, y, z, randint(10**30,10**35), rmax,0, 0, 0, 10*9,QColor(255,255,255))
+                    Fenetre_principale.ajouter_sphere(var)
+                else :
+                    var = gravilib.PyBaseSphere(x, y, z, randint(mmin, mmax), randint(rmin, rmax), vx=randint(-25, 25), vy=randint(-25, 25), vz=randint(-25, 25), d=randint(10,1000000))
+                    Fenetre_principale.ajouter_sphere(var)
         else :
 
                         #rayon des planètes multiplié par 100 et du soleil par 10 pour plus de visibilité
