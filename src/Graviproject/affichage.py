@@ -220,12 +220,12 @@ class Main_window(QWidget):
             self.setStyleSheet(""" """)
 
     def change_speed(self,sim):
-        eq={"second":1,"day":86_400,"month":2_592_000,"year":946_080_000}
+        eq={"second":1,"day":86_400,"month":2_592_000,"year":31_536_000}
         if sim not in eq:
             raise ValueError(sim + "is not a valid time period")
         sec=eq[sim]
         if sec > 2_000_000:
-            if sec > 900_000_000:
+            if sec > 30_000_000:
                 settings.set("simulation.fps",200)
             else:
                 settings.set("simulation.fps",50)
