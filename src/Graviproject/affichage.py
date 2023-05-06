@@ -20,7 +20,7 @@ except ModuleNotFoundError as e:
 
 from . import settings
 from . import gravilib
-from .cppgravilib import set_ticktime
+#from .cppgravilib import set_ticktime      marche pas...
 from .affichage3D import Renderer3D 
 from . import langue
 
@@ -147,7 +147,7 @@ class Main_window(QWidget):
 
         # Dimension affichée par la fenètre de rendu
         ticktime:float=1/settings.get("simulation.fps")*settings.get("simulation.simspeed")
-        set_ticktime(ticktime)
+#        set_ticktime(ticktime)
         self.dimension = gravilib.PyBaseDimension(self.widget_3D)
         
         # A raffiner, mais est utilisé pour update la simulation à intervalles réguliers
@@ -225,7 +225,7 @@ class Main_window(QWidget):
         else:
             settings.set("simulation.fps",10)
         self.timer.setInterval(1/settings.get("simulation.fps")*1000)
-        set_ticktime(sec/settings.get("simulation.fps"))
+#        set_ticktime(sec/settings.get("simulation.fps"))
         settings.set("simulation.simspeed",sec)
         settings.save()
 

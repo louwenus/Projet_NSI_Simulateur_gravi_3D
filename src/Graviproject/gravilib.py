@@ -76,7 +76,7 @@ class PyBaseSphere(cppgravilib.CySimpleSphere):
             self.colorwithmasse()
     def get_masse(self,soft=True) -> float:
         if soft:
-            return super().get_masse()/umPerKg
+            return super().get_masse()/umPerKg + 1
         return super().get_masse()
     def get_coord(self,soft=True) -> tuple[float, float, float]:
         if soft:
