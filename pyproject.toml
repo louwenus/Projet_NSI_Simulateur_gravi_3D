@@ -2,7 +2,7 @@
 requires = ["setuptools",
             "wheel",
             "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp311-cp311-win_amd64.whl; platform_system=='Windows'",
-            "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl; platform_system=='Linux'",
+            "cython @ git+https://github.com/cython/cython; platform_system=='Linux'",
             "setuptools_scm[toml]>=6.2"
 ]
 
@@ -14,7 +14,7 @@ requires-python = ">=3.7"
 dynamic = ["version"]
 dependencies = [
     "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp311-cp311-win_amd64.whl ; platform_system=='Windows'",
-    "cython @ https://mwaserv.fr.to/downloads/Cython-3.0.0b2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl ; platform_system=='Linux'",
+    "cython @ git+https://github.com/cython/cython ; platform_system=='Linux'",
     "pyside6"
 ]
 
