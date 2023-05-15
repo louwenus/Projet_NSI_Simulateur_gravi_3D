@@ -70,7 +70,7 @@ Il est possible d'installer le GraviProject de 2 manières différentes :
     - Copiez le repo git :
 
       `git clone https://github.com/louwenus/Projet_NSI_Simulateur_gravi_3D.git`<br/>
-    *NB : La version git de cython et requise jusqu'à ce q'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2).*
+    *NB : La version git de cython et requise jusqu'à ce qu'une version post 31 mars 2023 soit disponible autrement (post version 3.0.0b2).*
     - Compilez:
 
       Entrez dans le répertoire du repo git :<br/>
