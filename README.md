@@ -28,8 +28,8 @@ Il est possible d'installer le GraviProject de 2 manières différentes :
       - Allez chercher [la dernière wheel disponible ici](https://mwaserv.fr.to/downloads/graviproject/windows_wheel_x86_64/) puis installez la avec pip : `pip install nom_du_fichier.whl`
 
     - ### Linux
-      - Si vous ne l'avez pas déjà fait, installez ou mettez à jour python3.10 et pip :<br/>
-      *NB : Au moment d'écrire ce README, python 3.10 et le standard sous linux, donc le python3 par default. Adaptez si besoin.*
+      - Si vous ne l'avez pas déjà fait, installez ou mettez à jour python3.10 ou 3.11 et pip :<br/>
+      *NB : seul le build 3.10 et disponible pour aarch64*
         - Pour apt (Ubuntu, Debian...) :<br/>
         `sudo apt-get install python3 python3-pip`
         - Pour yum (CentOS, RHEL...) :<br/>
