@@ -13,7 +13,7 @@ permissions:
 
 
 jobs:
-  build-on-ubuntu:
+  linux310:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,11 +37,37 @@ jobs:
     - name: 'Upload Wheel'
       uses: actions/upload-artifact@v3
       with:
-        name: 'build_wheel_linux'
+        name: 'build_wheel_linux3.10'
         path: dist/*.whl
 
+  linux311:
+    runs-on: ubuntu-latest
 
-  build-on-windows:
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+        check-latest: true
+        cache: 'pip'
+        cache-dependency-path: |
+          pyproject.toml
+          setup.py
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install --upgrade wheel setuptools setuptools-scm build "cython @ git+https://github.com/cython/cython"
+    - name: Build
+      run: |
+        python -m build -nx -w
+    - name: 'Upload Wheel'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'build_wheel_linux3.11'
+        path: dist/*.whl
+
+  windows311:
     runs-on: windows-latest
 
     steps:
