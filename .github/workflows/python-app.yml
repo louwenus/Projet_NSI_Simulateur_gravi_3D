@@ -13,7 +13,7 @@ permissions:
 
 
 jobs:
-  linux3.10:
+  linux310:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,7 @@ jobs:
         name: 'build_wheel_linux3.10'
         path: dist/*.whl
 
-  linux3.11:
+  linux311:
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +67,7 @@ jobs:
         name: 'build_wheel_linux3.11'
         path: dist/*.whl
 
-  windows3.11:
+  windows311:
     runs-on: windows-latest
 
     steps:
